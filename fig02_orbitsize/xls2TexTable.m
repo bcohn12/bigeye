@@ -66,7 +66,7 @@ columnLabels = {'Taxon'; 'Orbit Length (mm)'; 'Skull Length (mm)'; 'Reference'};
 matrix2latex(AveAP, filename, ...
     'columnLabels', columnLabels, ...
     'alignment', 'c', ...
-    'format', '%-4.2f');
+    'format', '%-4.0f');
 end
 
 function matrix2latex(matrix, filename, varargin)
@@ -191,7 +191,8 @@ function matrix2latex(matrix, filename, varargin)
     if(~isempty(rowLabels))
         fprintf(fid, 'l|');
     end
-    for i=1:width
+    fprintf(fid, '%c|', 'l');
+    for i=2:width
         fprintf(fid, '%c|', alignment);
     end
     fprintf(fid, '}\r\n');
