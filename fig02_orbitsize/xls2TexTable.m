@@ -6,30 +6,36 @@ function xls2TexTable()
 % 2.16.2016
 
 %% Read or Load XLS Data
-[~,XlsData.GS,~] = xlsread('bigEye_data.xlsx',1,'A21:B90');
-[~,~,XlsData.AP] = xlsread('bigEye_data.xlsx',1,'G21:I90');
-[~,~,XlsData.RefKey] = xlsread('bigEye_data.xlsx',1,'J21:J90');
+% [~,XlsData.GS,~] = xlsread('bigEye_data.xlsx',1,'A21:B90');
+% [~,~,XlsData.AP] = xlsread('bigEye_data.xlsx',1,'G21:I90');
+% [~,~,XlsData.RefKey] = xlsread('bigEye_data.xlsx',1,'J21:J90');
 
-% load('bigEyeData-AP-All.mat');
+load('bigEyeData-AP-All.mat');
 
 % Specify Needed Species Here
 % Needed Species' Index in the Spreedsheet File
-speciesIndex = [21,43,47,52,55]';
-speciesIndex = speciesIndex - 20; % Offset
-% 
-% Ind = {};
-% 
-% Ind = [Ind; {'Tetrapodomorph Fish',...
-%     find(strcmp('Tetrapodomorph Fish',XlsData.Genus))}];
-% 
-% Ind = [Ind; {'Palatinichthys',...
-%     find(strcmp('Palatinichthys',XlsData.Genus))}];
-% 
-% Ind = [Ind; {'Edenopteron',...
-%     find(strcmp('Edenopteron',XlsData.Genus))}];
+TFind = [22:60]' - 20; % Tetrapodomorph Fish
+STind = [63:90]' - 20;
+
+%% Convert to LaTeX Table
+loc_ConvData(XlsData,TFind,'TFout.tex');
+loc_ConvData(XlsData,STind,'STout.tex');
+
+disp('Done!!');
+
+end
+
+function loc_ConvData(XlsData,speciesIndex,filename)
+%% Crop Incomplete Data
+validInd = [];
+for i = 1:size(speciesIndex)
+    if length(XlsData.RefKey{speciesIndex(i)}) > 5
+        validInd = [validInd;speciesIndex(i)];
+    end
+end
 
 %% Convert RefData to Cited Reference
-citeRef = XlsData.RefKey(speciesIndex);
+citeRef = XlsData.RefKey(validInd);
 for i = 1:numel(citeRef)
     if length(citeRef{i}) > 5
         citeRef{i} = ['\cite{',citeRef{i},'}'];
@@ -39,31 +45,26 @@ for i = 1:numel(citeRef)
 end
 
 %% Assemble Format Genus and Species
-gs = XlsData.GS(speciesIndex,:);
+gs = XlsData.GS(validInd,:);
 gsFormated = cell(size(gs,1),1);
 
 for i = 1:size(gs,1)
     gsFormated{i,:} = strcat('\textit{',strjoin(gs(i,:)),'}');
 end
-% gsFormated = strcat('\textit{',gsFormated(:,1),'}, '),... % Genus
-%     strcat('\textit{',gsFormated(:,2),'}')];
-
 
 %% Get Average AP Data
 AveAP = [gsFormated,... % Genus, species
-    XlsData.AP(speciesIndex,3),... % Average AP (mm)
+    XlsData.AP(validInd,3),... % Average AP (mm)
     citeRef]; % AP-src BibTeX Reference Key
 
 %% Convert to LaTeX Table Format
 columnLabels = {'Genus, species'; 'Avg AP (mm)'; 'Reference'};
 
-matrix2latex(AveAP, 'out.tex', ...
+matrix2latex(AveAP, filename, ...
     'columnLabels', columnLabels, ...
     'alignment', 'c', ...
     'format', '%-6.2f');
-
-disp('Done!!');
-
+end
 
 function matrix2latex(matrix, filename, varargin)
 
@@ -232,3 +233,4 @@ function matrix2latex(matrix, filename, varargin)
     end
 
     fclose(fid);
+end
