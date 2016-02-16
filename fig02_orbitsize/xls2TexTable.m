@@ -40,7 +40,7 @@ end
 citeRef = XlsData.RefKey(validInd);
 for i = 1:numel(citeRef)
     if length(citeRef{i}) > 5
-        citeRef{i} = ['\cite{',citeRef{i},'}'];
+        citeRef{i} = ['\citet{',citeRef{i},'}'];
     else
         citeRef{i} = '-';
     end
@@ -61,7 +61,7 @@ AveAP = [gsFormated,... % Genus, species
     citeRef]; % AP-src BibTeX Reference Key
 
 %% Convert to LaTeX Table Format
-columnLabels = {'Genus, species'; 'Avg AP (mm)'; 'Skull Length (mm)'; 'Reference'};
+columnLabels = {'Taxon'; 'Orbit Length (mm)'; 'Skull Length (mm)'; 'Reference'};
 
 matrix2latex(AveAP, filename, ...
     'columnLabels', columnLabels, ...
