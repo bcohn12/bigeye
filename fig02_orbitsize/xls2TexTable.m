@@ -6,16 +6,12 @@ function xls2TexTable()
 % 2.16.2016
 
 %% Read or Load XLS Data
-% [~,XlsData.GS,~] = xlsread('bigEye_data.xlsx',1,'A21:B90');
-% [~,~,XlsData.AP] = xlsread('bigEye_data.xlsx',1,'G21:I90');
-% [~,~,XlsData.RefKey] = xlsread('bigEye_data.xlsx',1,'J21:J90');
+[~,XlsData.GS,~] = xlsread('bigEye_data.xlsx',3,'A3:B107');
+[~,~,XlsData.Eye] = xlsread('bigEye_data.xlsx',3,'O3:O107');
+[~,~,XlsData.Length] = xlsread('bigEye_data.xlsx',3,'M3:M107');
+[~,~,XlsData.RefKey] = xlsread('bigEye_data.xlsx',3,'I3:I107');
 
-% [~,XlsData.GS,~] = xlsread('bigEye_data.xlsx',3,'A3:B107');
-% [~,~,XlsData.Eye] = xlsread('bigEye_data.xlsx',3,'O3:O107');
-% [~,~,XlsData.Length] = xlsread('bigEye_data.xlsx',3,'M3:M107');
-% [~,~,XlsData.RefKey] = xlsread('bigEye_data.xlsx',3,'I3:I107');
-
-load('bigEyeData-AP-All.mat');
+% load('bigEyeData-AP-All.mat');
 
 % Specify Needed Species Here
 % Needed Species' Index in the Spreedsheet File
