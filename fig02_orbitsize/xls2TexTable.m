@@ -6,16 +6,17 @@ function xls2TexTable()
 % 2.16.2016
 
 %% Read or Load XLS Data
-% [~,XlsData.GS,~] = xlsread('bigEye_data.xlsx',1,'A21:B90');
-% [~,~,XlsData.AP] = xlsread('bigEye_data.xlsx',1,'G21:I90');
-% [~,~,XlsData.RefKey] = xlsread('bigEye_data.xlsx',1,'J21:J90');
+[~,XlsData.GS,~] = xlsread('bigEye_data.xlsx',3,'A3:B107');
+[~,~,XlsData.Eye] = xlsread('bigEye_data.xlsx',3,'O3:O107');
+[~,~,XlsData.Length] = xlsread('bigEye_data.xlsx',3,'M3:M107');
+[~,~,XlsData.RefKey] = xlsread('bigEye_data.xlsx',3,'I3:I107');
 
-load('bigEyeData-AP-All.mat');
+% load('bigEyeData-AP-All.mat');
 
 % Specify Needed Species Here
 % Needed Species' Index in the Spreedsheet File
-TFind = [22:60]' - 20; % Tetrapodomorph Fish
-STind = [63:90]' - 20;
+TFind = [3:51]' - 2;    % Tetrapodomorph Fish
+STind = [57:107]' - 2; % Stem Tetrapods
 
 %% Convert to LaTeX Table
 loc_ConvData(XlsData,TFind,'TFout.tex');
@@ -31,6 +32,7 @@ validInd = [];
 for i = 1:size(speciesIndex)
     if length(XlsData.RefKey{speciesIndex(i)}) > 5
         validInd = [validInd;speciesIndex(i)];
+        XlsData.RefKey{speciesIndex(i)} = strrep(XlsData.RefKey{speciesIndex(i)},'*','');
     end
 end
 
@@ -54,16 +56,17 @@ end
 
 %% Get Average AP Data
 AveAP = [gsFormated,... % Genus, species
-    XlsData.AP(validInd,3),... % Average AP (mm)
+    XlsData.Eye(validInd),...    % Average AP (mm)
+    XlsData.Length(validInd),... % Skull Length (mm)
     citeRef]; % AP-src BibTeX Reference Key
 
 %% Convert to LaTeX Table Format
-columnLabels = {'Genus, species'; 'Avg AP (mm)'; 'Reference'};
+columnLabels = {'Genus, species'; 'Avg AP (mm)'; 'Skull Length (mm)'; 'Reference'};
 
 matrix2latex(AveAP, filename, ...
     'columnLabels', columnLabels, ...
     'alignment', 'c', ...
-    'format', '%-6.2f');
+    'format', '%-4.2f');
 end
 
 function matrix2latex(matrix, filename, varargin)
