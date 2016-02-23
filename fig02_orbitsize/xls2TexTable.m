@@ -6,31 +6,70 @@ function xls2TexTable()
 % 2.16.2016
 
 %% Read or Load XLS Data
-[~,XlsData.GS,~] = xlsread('bigEye_data.xlsx',3,'A3:B107');
-[~,~,XlsData.Eye] = xlsread('bigEye_data.xlsx',3,'O3:O107');
-[~,~,XlsData.Length] = xlsread('bigEye_data.xlsx',3,'M3:M107');
-[~,~,XlsData.RefKey] = xlsread('bigEye_data.xlsx',3,'I3:I107');
+[~,XlsData.GS,~] = xlsread('bigEye.xlsx',1,'B3:C107');
+[~,~,XlsData.Eye] = xlsread('bigEye.xlsx',1,'O3:O107');
+[~,~,XlsData.Checked] = xlsread('bigEye.xlsx',1,'A3:A107');
+[~,~,XlsData.Length] = xlsread('bigEye.xlsx',1,'K3:K107');
+[~,~,XlsData.RefKey] = xlsread('bigEye.xlsx',1,'J3:J107');
 
 % load('bigEyeData-AP-All.mat');
 
 % Specify Needed Species Here
 % Needed Species' Index in the Spreedsheet File
-TFind = [3:51]' - 2;    % Tetrapodomorph Fish
-STind = [57:107]' - 2; % Stem Tetrapods
+TFind = [3:48]' ;    % Tetrapodomorph Fish
+STind = [54:103]' ; % Stem Tetrapods
 
 %% Convert to LaTeX Table
-loc_ConvData(XlsData,TFind,'TFout.tex');
-loc_ConvData(XlsData,STind,'STout.tex');
+TF_eye_length=loc_ConvData(XlsData,TFind,'TFout.tex');
+ST_eye_length=loc_ConvData(XlsData,STind,'STout.tex');
 
+TF_eye_length=cell2mat(TF_eye_length);
+ST_eye_length=cell2mat(ST_eye_length);
+
+
+datTF = log10(TF_eye_length(:,1)./TF_eye_length(:,2));
+datST = log10(ST_eye_length(:,1)./ST_eye_length(:,2));
+%datTF = (TF_eye_length(:,1)./TF_eye_length(:,2));
+%datST = (ST_eye_length(:,1)./ST_eye_length(:,2));
+
+figure(1)
+clf
+plot(sort(datTF),'ro'); hold on
+plot(length(datTF)+1:length(datTF)+length(datST),sort(datST),'bo')
+xlabel('Specimen')
+ylabel('Ratio of eye size to head length')
+
+figure(2)
+clf
+hold on
+histogram(datST, 6)
+histogram(datTF, 6)
+hold off
+legend('stem tetrapod', 'tetropodomorph fish')
+xlabel('log(eye/skull length)')
+
+%% T test
+disp('T Test')
+[h, p, ci, stats] = ttest2(datST, datTF, 'Vartype', 'unequal')
+
+%% Rank Sum?
+disp('Rank Sum:')
+[p,h,stats] = ranksum(datST, datTF)
+
+%% ks test on skull length
+disp('KS Test')
+[h,p,ks2stat] = kstest2(datST,datTF)
 disp('Done!!');
 
 end
 
-function loc_ConvData(XlsData,speciesIndex,filename)
+function eye_length= loc_ConvData(XlsData,speciesIndex,filename)
 %% Crop Incomplete Data
 validInd = [];
 for i = 1:size(speciesIndex)
-    if length(XlsData.RefKey{speciesIndex(i)}) > 5 && ~isnan(XlsData.Length{speciesIndex(i)}) 
+    %if length(XlsData.RefKey{speciesIndex(i)}) > 5 && ~isnan(XlsData.Length{speciesIndex(i)}) 
+
+    if length(XlsData.Checked{speciesIndex(i)}) >= 2 && ~(isnan(XlsData.Length{speciesIndex(i)}) || strcmp(XlsData.Length{speciesIndex(i)},'x')) 
         validInd = [validInd;speciesIndex(i)];
         XlsData.RefKey{speciesIndex(i)} = strrep(XlsData.RefKey{speciesIndex(i)},'*','');
     end
@@ -67,6 +106,8 @@ matrix2latex(AveAP, filename, ...
     'columnLabels', columnLabels, ...
     'alignment', 'c', ...
     'format', '%-4.0f');
+
+eye_length = [XlsData.Eye(validInd), XlsData.Length(validInd)];
 end
 
 function matrix2latex(matrix, filename, varargin)

@@ -99,13 +99,13 @@ plot(tet_len,tet_rat,'o')
 hold off
 
 %% T test
-
+disp('T Test:')
 [h, p, ci, stats] = ttest2(stem_rat, tet_rat, 'Vartype', 'unequal')
 
 %% Rank Sum?
-
+disp('Rank Sum:')
 [p,h,stats] = ranksum(stem_rat, tet_rat)
 
 %% ks test on skull length
-
+disp('KS Test')
 [h,p,ks2stat] = kstest2(stem_len,tet_len)
