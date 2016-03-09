@@ -7,23 +7,25 @@ function bigEye2TexTable()
 
 % Row addresses for the tetrapodomorph fish 
 tetrapodomorph_fish_startRow = 3;
-tetrapodomorph_fish_endRow = 25;
+tetrapodomorph_fish_endRow = 22;
 
 
 % Row addresses for the stem tetrapods 
-stem_tetrapod_startRow = 27;
-stem_tetrapod_endRow = 46;
+stem_tetrapod_startRow = 25;
+stem_tetrapod_endRow = 44;
 
 % Read bigEye
 gdat=GetGoogleSpreadsheet('1xlwAnje_WiQ0Owl6vBdQMF9odDUDE439ydRI3mU9cks');
 
 
 % Key column addresses in spreadsheet
+stageBegin=4;    % start of stratigraphic period
+stageEnd=5;      % end of stratigraphic period
 genusCol = 2;    % genus
 speciesCol = 3;  % species
-refKeyCol = 13;  % bibtex ref key
-lengthCol = 14;  % PPL 
-eyeCol = 18;     % OM
+refKeyCol = 15;  % bibtex ref key
+lengthCol = 16;  % PPL 
+eyeCol = 20;     % OM
 
 
 
@@ -34,8 +36,8 @@ STind = [stem_tetrapod_startRow:stem_tetrapod_endRow]' ; % Stem Tetrapods
 
 %% Convert to LaTeX Table
 
-TF_eye_length=loc_ConvData(gdat,TFind,lengthCol,refKeyCol,eyeCol,genusCol,speciesCol,'TFout.tex');
-ST_eye_length=loc_ConvData(gdat,STind,lengthCol,refKeyCol,eyeCol,genusCol,speciesCol,'STout.tex');
+[TF_orbit_length_span, gsTF]=loc_ConvData(gdat,TFind,lengthCol,refKeyCol,eyeCol,genusCol,speciesCol,stageBegin,stageEnd,'TFout.tex');
+[ST_orbit_length_span, gsST]=loc_ConvData(gdat,STind,lengthCol,refKeyCol,eyeCol,genusCol,speciesCol,stageBegin,stageEnd,'STout.tex');
 
 % Set up for two panel figure
 close all
@@ -65,8 +67,16 @@ ha1 = create_BE_axes(plotnoX,plotnoY,fig_props);
 % Data analysis on table information
 
 % ratio of OM to PPL
-datTF = (TF_eye_length(:,1)./TF_eye_length(:,2));
-datST = (ST_eye_length(:,1)./ST_eye_length(:,2));
+datTF = (TF_orbit_length_span(:,1)./TF_orbit_length_span(:,2));
+datST = (ST_orbit_length_span(:,1)./ST_orbit_length_span(:,2));
+padding =zeros(3,3);
+spanTF=[TF_orbit_length_span(:,4) TF_orbit_length_span(:,3)];
+spanST=[ST_orbit_length_span(:,4) ST_orbit_length_span(:,3)];
+
+durationTF=spanTF(:,2)-spanTF(:,1);
+durationST=spanST(:,2)-spanST(:,1);
+
+xlswrite('temp.xlsx',[spanTF durationTF; padding; spanST durationST])
 
 
 %hl=line(1:length(datTF),sort(100.*datTF),'linestyle','none','marker','o','markerEdgeColor','none', ...
@@ -74,6 +84,7 @@ datST = (ST_eye_length(:,1)./ST_eye_length(:,2));
 
 hl1=scatter(1:length(datTF),sort(100.*datTF),35,[1 0 0],'filled');
 hold on
+
 
 alpha(hl1,0.5)
 %line(length(datTF)+1:length(datTF)+length(datST),sort(100.*datST),'linestyle','none','marker','o','markerEdgeColor','blue')
@@ -93,9 +104,9 @@ ylabel('Eye length as % of skull length')
 plotnoX = 2;
 plotnoY = 1;
 ha2 = create_BE_axes(plotnoX,plotnoY,fig_props);
-histogram(log10(datST), 6)
+histogram(log10(datST), 5)
 hold on
-histogram(log10(datTF), 6)
+histogram(log10(datTF), 5)
 xlim([-1.4 -0.2])
 legend('ST', 'TF','Location','NorthWest')
 legend('boxoff')
@@ -121,9 +132,9 @@ disp('KS Test')
 
 % Format stat result text for paper
 formattedstring = [ ...
-'The ratio was $' num2str(mean(datTF),3) ' \pm ' num2str(std(datTF),1)  ...
+'The ratio was $' num2str(mean(datTF),'%2.3f') ' \pm ' num2str(std(datTF),'%2.2f')  ...
 '$  ($N=' num2str(length(datTF)) '$) (all numbers $\pm$ standard deviation) for the' ...
-' Tetrapodomorph Fish, and ' num2str(mean(datST),3) ' \pm  ' num2str(std(datTF),1)  ...
+' Tetrapodomorph Fish, and $' num2str(mean(datST),'%2.3f') ' \pm  ' num2str(std(datST),'%2.2f')  ...
 '$ ($N=' num2str(length(datST)) '$) for the Stem Tetrapods. A two-tailed  ' ...
 'T-test (assuming unequal variance) rejected the null hypothesis that the ' ...
 'means come from the same distribution ($p = ' sprintf('%.8f',ptt) '$). ' ...
@@ -134,12 +145,104 @@ fid = fopen('stat_string1.tex','w');
 fprintf(fid, '%s', formattedstring);
 fclose(fid);
 
+
+% Set up for two panel figure
+fig_props.noYsubplots = 1;
+fig_props.noXsubplots = 1;
+
+fig_props.figW = 18;   % cm
+fig_props.figH = 29;  % cm
+
+fig_props.ml = 0.8;
+fig_props.mt = 0.8;
+
+create_BE_figure
+fig_props.sub_pW = fig_props.sub_pW-.5;
+text_color = [0 0 0];
+text_size = 12;
+pn = {'Color','FontSize','FontWeight',};
+pv = {text_color,text_size,'bold'};
+
+plotnoX = 1;
+plotnoY = 1;
+ha3 = create_BE_axes(plotnoX,plotnoY,fig_props);
+
+totalspecies = length(datTF)+length(datST);
+
+
+yinc=3
+
+yaxpointsTF = [yinc:yinc:yinc*length(TF_orbit_length_span)]';
+
+linevecTF = [TF_orbit_length_span(:,4) TF_orbit_length_span(:,3) ...
+     yaxpointsTF yaxpointsTF]
+
+yoffset = yinc*(length(TF_orbit_length_span)-1)+2*yinc;
+yaxpointsST = [yoffset:yinc:yinc*(length(ST_orbit_length_span)-1)+yoffset]';
+
+hold on
+
+% sort by linevecTF(:,1)
+
+[b,idxTF]=sort(linevecTF(:,2),'descend');
+% form new ordered span matrix
+linevecTFS = [linevecTF(idxTF,1:2) linevecTF(1:length(datTF),3:4)];
+
+
+% plot horizontal lines for age span of fossil
+for j=1:length(linevecTF)
+    line(linevecTFS(j,1:2),linevecTFS(j,3:4),'Color',[1 0 0],'LineWidth',3)
+end
+
+% yoffsets for the stem tetrapods
+linevecST = [ST_orbit_length_span(:,4) ST_orbit_length_span(:,3) ...
+     yaxpointsST yaxpointsST]
+
+ % plot horizontal lines
+
+[b,idxST]=sort(linevecST(:,2),'descend');
+ 
+for j=1:length(linevecST)
+    line(linevecST(idxST(j),1:2),linevecST(j,3:4),'Color',[0 0 1],'LineWidth',3)
+    hold on
+end
+
+circleMax=60;
+
+for j=1:length(linevecTF)
+    circleSize = round(datTF(idxTF(j))*circleMax);
+    line(405,yaxpointsTF(j),'marker','o','markersize',circleSize,'markeredgecolor','none','markerfacecolor',[.5 .5 .5])
+    genus=cell2mat(gsTF(idxTF(j),1));
+    genusclip=[genus(1) '. '];
+    species=cell2mat(gsTF(idxTF(j),2));
+    text(410,yaxpointsTF(j),['\it ' genusclip species]) 
+end
+set(gca,'xlim',[260 440])
+
+for j=1:length(linevecST)
+    circleSize = round(datST(idxST(j))*circleMax);
+    line(405,yaxpointsST(j),'marker','o','markersize',circleSize,'markeredgecolor','none','markerfacecolor',[.5 .5 .5])
+    genus=cell2mat(gsST(idxST(j),1));
+    genusclip=[genus(1) '. '];
+    species=cell2mat(gsST(idxST(j),2));
+    if isempty(species)
+        genusclip = genus;
+    end
+    text(410,yaxpointsST(j),['\it ' genusclip species]) 
+end
+
+set(gca,'YTick',[])
+set(gca,'XTick',[260:20:400])
+set(gca,'ylim',[0 112])
+xlabel('Age of fossil (Myr)')
+print(gcf, '-dpdf','orbit_vs_time')
+
 disp('Done!!');
 
 
 end
 
-function eye_length= loc_ConvData(gdat,speciesIndex,lengthCol, refkeyCol,eyeCol,genusCol,speciesCol,filename)
+function [orbit_length_span, gs] = loc_ConvData(gdat,speciesIndex,lengthCol, refkeyCol,eyeCol,genusCol,speciesCol,stageBegin,stageEnd,filename)
 %% Crop Incomplete Data
 validInd = [];
 for i = 1:size(speciesIndex)    
@@ -163,6 +266,17 @@ end
 gs = gdat(validInd,genusCol:speciesCol);
 gsFormated = cell(size(gs,1),1);
 
+startend = gdat(validInd,stageBegin:stageEnd); % N x 2, with start stage and end stage
+
+span = [];
+for i = 1: length(startend)
+    MYaS = era2MYr_ICS2015_v01(cell2mat(startend(i,1))); % Start and end of start stage
+    MYaE = era2MYr_ICS2015_v01(cell2mat(startend(i,2))); % Start and end of end stage
+    % era2MYr returns the 
+    span = [span; MYaS(1) MYaE(2)]; % Start of start stage and end of end stage
+
+end
+    
 for i = 1:size(gs,1)
     gsFormated{i,:} = strcat('\textit{',strjoin(gs(i,:)),'}');
 end
@@ -191,10 +305,13 @@ matrix2latex(AveAP, filename, ...
     'alignment', 'c', ...
     'format', '%-4.0f');
 
-eye_length = [gdat(validInd,eyeCol), gdat(validInd,lengthCol)];
+orbit_length = [gdat(validInd,eyeCol), gdat(validInd,lengthCol)];
 
 % (Optional) Convert output from string to double
-eye_length = str2double(eye_length);
+orbit_length = str2double(orbit_length);
+
+[orbit_length_span] = [orbit_length span];
+
 
 end
 
@@ -320,10 +437,11 @@ function matrix2latex(matrix, filename, varargin)
     if(~isempty(rowLabels))
         fprintf(fid, 'l|');
     end
-    fprintf(fid, '%c|', 'l');
-    for i=2:width
+    fprintf(fid, '%s|', 'L{4.5cm}');
+    for i=2:width-1
         fprintf(fid, '%c|', alignment);
     end
+    fprintf(fid, '%s|', 'L{4.5cm}')
     fprintf(fid, '}\r\n');
     
     fprintf(fid, '\\hline\r\n');
