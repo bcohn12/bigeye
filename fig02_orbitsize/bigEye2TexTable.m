@@ -12,7 +12,7 @@ tetrapodomorph_fish_endRow = 22;
 
 % Row addresses for the stem tetrapods 
 stem_tetrapod_startRow = 25;
-stem_tetrapod_endRow = 44;
+stem_tetrapod_endRow = 46;
 
 % Read bigEye
 gdat=GetGoogleSpreadsheet('1xlwAnje_WiQ0Owl6vBdQMF9odDUDE439ydRI3mU9cks');
@@ -27,6 +27,8 @@ refKeyCol = 15;  % bibtex ref key
 lengthCol = 16;  % PPL 
 eyeCol = 20;     % OM
 
+
+circleMax=60;    % max size of normalized eye, points
 
 
 
@@ -68,6 +70,12 @@ ha1 = create_BE_axes(plotnoX,plotnoY,fig_props);
 
 % ratio of OM to PPL
 datTF = (TF_orbit_length_span(:,1)./TF_orbit_length_span(:,2));
+disp('Mean TF OM')
+mean(TF_orbit_length_span(:,1))
+
+disp('Mean ST OM')
+mean(ST_orbit_length_span(:,1))
+
 datST = (ST_orbit_length_span(:,1)./ST_orbit_length_span(:,2));
 padding =zeros(3,3);
 spanTF=[TF_orbit_length_span(:,4) TF_orbit_length_span(:,3)];
@@ -139,7 +147,12 @@ formattedstring = [ ...
 'T-test (assuming unequal variance) rejected the null hypothesis that the ' ...
 'means come from the same distribution ($p = ' sprintf('%.8f',ptt) '$). ' ...
 'A Wilcoxon rank sum test also rejects the null hypothesis ($p = ' sprintf('%.7f',prs) '$), ' ...
-'as did a two-sample Kolmogorov-Smirnov test ($p = ' sprintf('%.6f',pks)  '$). '];
+'as did a two-sample Kolmogorov-Smirnov test ($p = ' sprintf('%.6f',pks)  '$). ' ...
+' The absolute size of orbits were also quite different between the groups. The ' ...
+'tetrapodomorph fish had orbits that were $' num2str(mean(TF_orbit_length_span(:,1)),2) ...
+' \pm ' num2str(std(TF_orbit_length_span(:,1)),2) '$~mm long,' ...
+'while the stem tetrapods had orbits that were $' num2str(mean(ST_orbit_length_span(:,1)),2) ...
+' \pm ' num2str(std(ST_orbit_length_span(:,1)),2) '$~mm long.'];
 
 fid = fopen('stat_string1.tex','w');
 fprintf(fid, '%s', formattedstring);
@@ -175,7 +188,7 @@ yinc=3
 yaxpointsTF = [yinc:yinc:yinc*length(TF_orbit_length_span)]';
 
 linevecTF = [TF_orbit_length_span(:,4) TF_orbit_length_span(:,3) ...
-     yaxpointsTF yaxpointsTF]
+     yaxpointsTF yaxpointsTF];
 
 yoffset = yinc*(length(TF_orbit_length_span)-1)+2*yinc;
 yaxpointsST = [yoffset:yinc:yinc*(length(ST_orbit_length_span)-1)+yoffset]';
@@ -196,7 +209,7 @@ end
 
 % yoffsets for the stem tetrapods
 linevecST = [ST_orbit_length_span(:,4) ST_orbit_length_span(:,3) ...
-     yaxpointsST yaxpointsST]
+     yaxpointsST yaxpointsST];
 
  % plot horizontal lines
 
@@ -207,7 +220,7 @@ for j=1:length(linevecST)
     hold on
 end
 
-circleMax=60;
+
 
 for j=1:length(linevecTF)
     circleSize = round(datTF(idxTF(j))*circleMax);
@@ -233,7 +246,8 @@ end
 
 set(gca,'YTick',[])
 set(gca,'XTick',[260:20:400])
-set(gca,'ylim',[0 112])
+%curr_ylim=get(gca,'ylim');
+%set(gca,'ylim',curr_ylim*.99)
 xlabel('Age of fossil (Myr)')
 print(gcf, '-dpdf','orbit_vs_time')
 
