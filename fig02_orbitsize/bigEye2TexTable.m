@@ -7,12 +7,12 @@ function bigEye2TexTable()
 
 % Row addresses for the tetrapodomorph fish 
 tetrapodomorph_fish_startRow = 3;
-tetrapodomorph_fish_endRow = 22;
+tetrapodomorph_fish_endRow = 23;
 
 
 % Row addresses for the stem tetrapods 
-stem_tetrapod_startRow = 25;
-stem_tetrapod_endRow = 46;
+stem_tetrapod_startRow = 26;
+stem_tetrapod_endRow = 48;
 
 % Read bigEye
 gdat=GetGoogleSpreadsheet('1xlwAnje_WiQ0Owl6vBdQMF9odDUDE439ydRI3mU9cks');
