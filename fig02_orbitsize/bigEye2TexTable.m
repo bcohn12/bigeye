@@ -226,9 +226,9 @@ for j=1:length(linevecTF)
     circleSize = round(datTF(idxTF(j))*circleMax);
     line(405,yaxpointsTF(j),'marker','o','markersize',circleSize,'markeredgecolor','none','markerfacecolor',[.5 .5 .5])
     genus=cell2mat(gsTF(idxTF(j),1));
-    genusclip=[genus(1) '. '];
-    species=cell2mat(gsTF(idxTF(j),2));
-    text(410,yaxpointsTF(j),['\it ' genusclip species]) 
+%     genusclip=[genus(1) '. '];
+%     species=cell2mat(gsTF(idxTF(j),2));
+     text(410,yaxpointsTF(j),['\it ' genus]) 
 end
 set(gca,'xlim',[260 440])
 
@@ -236,12 +236,12 @@ for j=1:length(linevecST)
     circleSize = round(datST(idxST(j))*circleMax);
     line(405,yaxpointsST(j),'marker','o','markersize',circleSize,'markeredgecolor','none','markerfacecolor',[.5 .5 .5])
     genus=cell2mat(gsST(idxST(j),1));
-    genusclip=[genus(1) '. '];
-    species=cell2mat(gsST(idxST(j),2));
-    if isempty(species)
-        genusclip = genus;
-    end
-    text(410,yaxpointsST(j),['\it ' genusclip species]) 
+    %genusclip=[genus(1) '. '];
+    %species=cell2mat(gsST(idxST(j),2));
+    %if isempty(species)
+    %    genusclip = genus;
+    %end
+    text(410,yaxpointsST(j),['\it ' genus]) 
 end
 
 set(gca,'YTick',[])
@@ -451,10 +451,16 @@ function matrix2latex(matrix, filename, varargin)
     if(~isempty(rowLabels))
         fprintf(fid, 'l|');
     end
+    % M. MacIver 3/18/2016
+    % Customized this to be left margin only, fixed width at 4.5 cm
+    % using package array
     fprintf(fid, '%s|', 'L{4.5cm}');
     for i=2:width-1
         fprintf(fid, '%c|', alignment);
     end
+    % M. MacIver 3/18/2016
+    % Customized this to be left margin only, fixed width at 4.5 cm
+    % using package array
     fprintf(fid, '%s|', 'L{4.5cm}')
     fprintf(fid, '}\r\n');
     

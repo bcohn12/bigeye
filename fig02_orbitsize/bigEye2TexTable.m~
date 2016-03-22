@@ -7,12 +7,12 @@ function bigEye2TexTable()
 
 % Row addresses for the tetrapodomorph fish 
 tetrapodomorph_fish_startRow = 3;
-tetrapodomorph_fish_endRow = 22;
+tetrapodomorph_fish_endRow = 23;
 
 
 % Row addresses for the stem tetrapods 
-stem_tetrapod_startRow = 25;
-stem_tetrapod_endRow = 46;
+stem_tetrapod_startRow = 26;
+stem_tetrapod_endRow = 48;
 
 % Read bigEye
 gdat=GetGoogleSpreadsheet('1xlwAnje_WiQ0Owl6vBdQMF9odDUDE439ydRI3mU9cks');
@@ -149,8 +149,10 @@ formattedstring = [ ...
 'A Wilcoxon rank sum test also rejects the null hypothesis ($p = ' sprintf('%.7f',prs) '$), ' ...
 'as did a two-sample Kolmogorov-Smirnov test ($p = ' sprintf('%.6f',pks)  '$). ' ...
 ' The absolute size of orbits were also quite different between the groups. The ' ...
-'tetrapodomorph fish had orbits that were ' num2str(mean(TF_orbit_length_span(:,1)),2) 'mm long,' ...
-'while the stem tetrapods had orbits that were ' num2str(mean(ST_orbit_length_span(:,1)),2) ' ];
+'tetrapodomorph fish had orbits that were $' num2str(mean(TF_orbit_length_span(:,1)),2) ...
+' \pm ' num2str(std(TF_orbit_length_span(:,1)),2) '$~mm long,' ...
+'while the stem tetrapods had orbits that were $' num2str(mean(ST_orbit_length_span(:,1)),2) ...
+' \pm ' num2str(std(ST_orbit_length_span(:,1)),2) '$~mm long.'];
 
 fid = fopen('stat_string1.tex','w');
 fprintf(fid, '%s', formattedstring);
@@ -224,9 +226,9 @@ for j=1:length(linevecTF)
     circleSize = round(datTF(idxTF(j))*circleMax);
     line(405,yaxpointsTF(j),'marker','o','markersize',circleSize,'markeredgecolor','none','markerfacecolor',[.5 .5 .5])
     genus=cell2mat(gsTF(idxTF(j),1));
-    genusclip=[genus(1) '. '];
-    species=cell2mat(gsTF(idxTF(j),2));
-    text(410,yaxpointsTF(j),['\it ' genusclip species]) 
+%     genusclip=[genus(1) '. '];
+%     species=cell2mat(gsTF(idxTF(j),2));
+     text(410,yaxpointsTF(j),['\it ' genus]) 
 end
 set(gca,'xlim',[260 440])
 
@@ -234,12 +236,12 @@ for j=1:length(linevecST)
     circleSize = round(datST(idxST(j))*circleMax);
     line(405,yaxpointsST(j),'marker','o','markersize',circleSize,'markeredgecolor','none','markerfacecolor',[.5 .5 .5])
     genus=cell2mat(gsST(idxST(j),1));
-    genusclip=[genus(1) '. '];
-    species=cell2mat(gsST(idxST(j),2));
-    if isempty(species)
-        genusclip = genus;
-    end
-    text(410,yaxpointsST(j),['\it ' genusclip species]) 
+    %genusclip=[genus(1) '. '];
+    %species=cell2mat(gsST(idxST(j),2));
+    %if isempty(species)
+    %    genusclip = genus;
+    %end
+    text(410,yaxpointsST(j),['\it ' genus]) 
 end
 
 set(gca,'YTick',[])
@@ -453,6 +455,8 @@ function matrix2latex(matrix, filename, varargin)
     for i=2:width-1
         fprintf(fid, '%c|', alignment);
     end
+    % M. MacIver 3/18/2016
+    % Customized this to be left margin only, fixed width at 4.5 cm
     fprintf(fid, '%s|', 'L{4.5cm}')
     fprintf(fid, '}\r\n');
     
