@@ -14,6 +14,9 @@ K_up=0.14; %units: 1/m, attenuation coefficient of background radiance for looki
 K_hor=0;  %units: 1/m, attenuation coefficint of background radiance for horizontal view, pg8 supplementary
 K_down=-0.14; %units: 1/m, attenuation coefficint of background radiance for looking down, pg8 supplementary
 
+K_air=K_up*10E-3;%units: 1/m, attenuation coefficient of background radiance for on land
+a_air=a*10E-3;% units: 1/m, beam attenuation coefficient of background radiance for on land
+
 Ispace_up=0.97*7.94e13; %units: photons/m^2ssr, radiance of space-light 
 %background in the direction of view at the depth of the eye for downw-welling radiance at 200m, pg7
 %supplementary
@@ -23,6 +26,7 @@ Ispace_hor=0.97*6.46e11; %units: photons/m^2ssr, radiance of space-light
 Ispace_down=0.97*3.67e11; %units: photons/m^2ssr, radiance of space-light 
 %background in the direction of view at the depth of the eye for up-welling radiance at 200m, pg7
 %supplementary
+Ispace_air=0.97*2.33546e17;%units: photons/m^2ssr, radiance of space-light background 
 
 att_up=2.29; %units: dB/100m, attenuation with depth for down-welling radiance,
 %pg 8 of supplementary
@@ -37,9 +41,11 @@ azimuthAir=135*pi/180;
 
 elevationMin=pi/2-elevationCoastal;
 elevationMax=pi/2+elevationCoastal;
+elevationMaxAir=pi/2;
 
 azimuthMin=0;
 azimuthMax=azimuthCoastal;
+azimuthMaxAir=azimuthAir;
 
 T=0.1; % units: m, prey width
 
