@@ -47,7 +47,7 @@ azimuthMin=0;
 azimuthMax=azimuthCoastal;
 azimuthMaxAir=azimuthAir;
 
-T=0.1; % units: m, prey width
+T=0.01; % units: m, prey width
 
 f = @(rho,phi,theta) rho.^2.*sin(phi); %volume equation in spherical coordinates
 
