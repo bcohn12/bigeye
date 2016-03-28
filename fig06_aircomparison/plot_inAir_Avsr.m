@@ -6,8 +6,11 @@ load('constantDepth_rvsA')
 
 warning('If any of the bounds or parameters are changed re run the functions that are loaded')
 
-fishpupil=7.9E-3;
-tetrapodpupil=15.9E-3;
+fishpupil=7.9;
+tetrapodpupil=15.9;
+
+pupilValues=pupilValues*10^3;
+pupilValuesAir=pupilValuesAir*10^3;
 
 NORMDERIVATIVE=0;
 
@@ -48,7 +51,7 @@ line2=plot(pupilValues,visualRangeSolutions(1).up,'--');
 line3=plot(pupilValues,visualRangeSolutions(2).up,'--');
 line4=plot(pupilValues,visualRangeSolutions(1).hor,':');
 line5=plot(pupilValues,visualRangeSolutions(2).hor,':');
-xlabel('pupil diameter (m)'); ylabel('visual range (m)');
+xlabel('pupil diameter (mm)'); ylabel('visual range (m)');
 yrange=get(rvsA,'YLim');
 line([fishpupil fishpupil],[yrange(1) yrange(2)],'Color',[0 0 0],...
     'linestyle',':','linewidth',1)
@@ -77,7 +80,7 @@ line([fishpupil fishpupil],[yrange2(1) yrange2(2)],'Color',[0 0 0],...
     'linestyle',':','linewidth',1)
 line([tetrapodpupil,tetrapodpupil],[yrange2(1) yrange2(2)],'Color',[0/255,128/255,128/255],...
     'linestyle',':','linewidth',1)
-xlabel('pupil diameter (m)'); ylabel('dr/dA');
+xlabel('pupil diameter (mm)'); ylabel('dr/dA (m/mm)');
 
 MderivativeVolume=[dVdAAir',...
     derivativeVisualVolume(1).up', derivativeVisualVolume(2).up',...
@@ -93,7 +96,7 @@ plot(pupilValues,visualVolumeSolutions(1).up,'--');
 plot(pupilValues,visualVolumeSolutions(2).up,'--');
 plot(pupilValues,visualVolumeSolutions(1).hor,':');
 plot(pupilValues,visualVolumeSolutions(2).hor,':');
-xlabel('pupil diameter (m)'); ylabel('visual volume (m^3)');
+xlabel('pupil diameter (mm)'); ylabel('visual volume (m^3)');
 yrange3=get(VvsA,'YLim');
 line([fishpupil fishpupil],[yrange3(1) yrange3(2)],'Color',[0 0 0],...
     'linestyle',':','linewidth',1)
@@ -121,7 +124,7 @@ line([fishpupil fishpupil],[yrange4(1) yrange4(2)],'Color',[0 0 0],...
     'linestyle',':','linewidth',1)
 line([tetrapodpupil,tetrapodpupil],[yrange4(1) yrange4(2)],'Color',[0/255,128/255,128/255],...
     'linestyle',':','linewidth',1)
-xlabel('pupil diameter (m)'); ylabel('dV/dA');    
+xlabel('pupil diameter (mm)'); ylabel('dV/dA (m^3/mm)');    
 
 hL = legend([line1,line2,line3,line4,line5],...
     {'in air','100m, looking up','10m, looking up','100m, horizontal viewing','10m, horizontal viewing'});
@@ -134,7 +137,7 @@ set(hL,'Position', newPosition,'Units', newUnits,'Orientation','horizontal');
 
 logplots=figure();
 
-logrvsA=subplot(1,2,1);
+logrvsA=subplot(2,2,1);
 line6=semilogy(pupilValuesAir,visualRangeAir);
 hold on;
 line7=semilogy(pupilValues,visualRangeSolutions(1).up,'--');
@@ -146,9 +149,9 @@ line([fishpupil fishpupil],[yrange5(1) yrange5(2)],'Color',[0 0 0],...
     'linestyle',':','linewidth',1)
 line([tetrapodpupil,tetrapodpupil],[yrange5(1) yrange5(2)],'Color',[0/255,128/255,128/255],...
     'linestyle',':','linewidth',1)
-xlabel('pupil diameter (m)'); ylabel('log(visual range) (m)');
+xlabel('pupil diameter (mm)'); ylabel('log(visual range) (m)');
 
-logVvsA=subplot(1,2,2);
+logVvsA=subplot(2,2,2);
 semilogy(pupilValuesAir,visualVolumeAir);
 hold on;
 semilogy(pupilValues,visualVolumeSolutions(1).up,'--');
@@ -160,25 +163,16 @@ line([fishpupil fishpupil],[yrange6(1) yrange6(2)],'Color',[0 0 0],...
     'linestyle',':','linewidth',1)
 line([tetrapodpupil,tetrapodpupil],[yrange6(1) yrange6(2)],'Color',[0/255,128/255,128/255],...
     'linestyle',':','linewidth',1)
-xlabel('pupil diameter (m)'); ylabel('log(visual volume) (m^3)');
+xlabel('pupil diameter (mm)'); ylabel('log(visual volume) (m^3)');
 
-% hL = legend([line6,line7,line8,line9,line10],...
-%     {'in air','100m, looking up','10m, looking up','100m, horizontal viewing','10m, horizontal viewing'});
-% newPosition=[0.04 0.04 0.05 0.05];
-% newUnits = 'normalized';
-% set(hL,'Position', newPosition,'Units', newUnits,'Orientation','horizontal');
-
-%% DERIVATIVE LOG PLOTS
-
-logderplots=figure();
-logdrdAvsA=subplot(1,2,1);
+logdrdAvsA=subplot(2,2,3);
 if(NORMDERIVATIVE)
-    line11=semilogy(pupilValuesAir,NderivativeRange(:,1));
+    semilogy(pupilValuesAir,NderivativeRange(:,1));
     hold on;
-    line12=semilogy(pupilValues,NderivativeRange(:,2),'--');
-    line13=semilogy(pupilValues,NderivativeRange(:,3),'--');
-    line14=semilogy(pupilValues,NderivativeRange(:,4),':');
-    line15=semilogy(pupilValues,NderivativeRange(:,5),':');
+    semilogy(pupilValues,NderivativeRange(:,2),'--');
+    semilogy(pupilValues,NderivativeRange(:,3),'--');
+    semilogy(pupilValues,NderivativeRange(:,4),':');
+    semilogy(pupilValues,NderivativeRange(:,5),':');
     
 else
     line11=semilogy(pupilValuesAir,drdAAir);
@@ -193,9 +187,9 @@ line([fishpupil fishpupil],[yrange7(1) yrange7(2)],'Color',[0 0 0],...
     'linestyle',':','linewidth',1)
 line([tetrapodpupil,tetrapodpupil],[yrange7(1) yrange7(2)],'Color',[0/255,128/255,128/255],...
     'linestyle',':','linewidth',1)
-xlabel('pupil diameter (m)'); ylabel('dr/dA');
+xlabel('pupil diameter (mm)'); ylabel('log(dr/dA) (m/mm)');
 
-logdVdAvsA=subplot(1,2,2);
+logdVdAvsA=subplot(2,2,4);
 if(NORMDERIVATIVE)
     semilogy(pupilValuesAir,NderivativeVolume(:,1));
     hold on;
@@ -216,6 +210,12 @@ line([fishpupil fishpupil],[yrange8(1) yrange8(2)],'Color',[0 0 0],...
     'linestyle',':','linewidth',1)
 line([tetrapodpupil,tetrapodpupil],[yrange8(1) yrange8(2)],'Color',[0/255,128/255,128/255],...
     'linestyle',':','linewidth',1)
-xlabel('pupil diameter (m)'); ylabel('dV/dA'); 
+xlabel('pupil diameter (mm)'); ylabel('log(dV/dA) (m^3/mm)');
 
 
+hL = legend([line6,line7,line8,line9,line10],...
+    {'in air','100m, looking up','10m, looking up','100m, horizontal viewing','10m, horizontal viewing'});
+
+newPosition = [0.4 0.4 0.2 0.2];
+newUnits = 'normalized';
+set(hL,'Position', newPosition,'Units', newUnits,'Orientation','horizontal');
