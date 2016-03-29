@@ -1,3 +1,5 @@
+clear all; close all;
+
 %% PARAMETERS (*ALL FROM NILS14A*)
 q=0.36; %units: n/a, detection efficiency, used typical value
 Dt=1.16; %units: s, integration time, used typical value
@@ -26,7 +28,7 @@ Ispace_hor=0.97*6.46e11; %units: photons/m^2ssr, radiance of space-light
 Ispace_down=0.97*3.67e11; %units: photons/m^2ssr, radiance of space-light 
 %background in the direction of view at the depth of the eye for up-welling radiance at 200m, pg7
 %supplementary
-Ispace_air=0.97*2.33546e17;%units: photons/m^2ssr, radiance of space-light background 
+Ispace_air=0.97*1.11421e19;%units: photons/m^2ssr, radiance of space-light background 
 
 att_up=2.29; %units: dB/100m, attenuation with depth for down-welling radiance,
 %pg 8 of supplementary
@@ -37,7 +39,7 @@ att_down=2.33; %units: dB/100m, attenuation with depth for up-welling radiance,
 
 elevationCoastal=pi/6; %water elevation, for in air, half
 azimuthCoastal=(2*120-35)*(pi/180); %viewing azimuth
-azimuthAir=135*pi/180;
+azimuthAir=135*(pi/180);
 
 elevationMin=pi/2-elevationCoastal;
 elevationMax=pi/2+elevationCoastal;
@@ -51,4 +53,4 @@ T=0.1; % units: m, prey width
 
 f = @(rho,phi,theta) rho.^2.*sin(phi); %volume equation in spherical coordinates
 
-save('parameters')
+save('Parameters')
