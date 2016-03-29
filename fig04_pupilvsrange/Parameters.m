@@ -4,6 +4,7 @@ clear all; close all;
 q=0.36; %units: n/a, detection efficiency, used typical value
 Dt=1.16; %units: s, integration time, used typical value
 X=2.8e-5; %units: photons/s, dark-noise rate/photoreceptor, used typical value
+X_air=0.08;
 R=1.96; %units: n/a, reliability coefficient for 95% confidence, used typical value
 d=3e-6; %units: m, photoreceptor diameter, used typical value
 M=2.55; %units: n/a, ratio of focal length and pupil radius (2f/A), set to Matthiessen's ratio
