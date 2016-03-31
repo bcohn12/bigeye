@@ -14,6 +14,8 @@ function result = GetGoogleSpreadsheet(DOCID)
 %
 % DM, Jan 2013
 %
+% M.A.M. Mar 2016 Modified to return zero if no connection established (due
+% to being offline for example)
 
 
 loginURL = 'https://www.google.com'; 
@@ -24,10 +26,18 @@ cookieManager = java.net.CookieManager([], java.net.CookiePolicy.ACCEPT_ALL);
 java.net.CookieHandler.setDefault(cookieManager);
 handler = sun.net.www.protocol.https.Handler;
 connection = java.net.URL([],loginURL,handler).openConnection();
-connection.getInputStream();
-
+try connection.getInputStream();
+catch result = 0;
+    return;
+end
 %Step 2: go to the spreadsheet export url and download the csv
 connection2 = java.net.URL([],csvURL,handler).openConnection();
+
+try connection2.getInputStream();
+catch result = 0;
+    return;
+end
+
 result = connection2.getInputStream();
 result = char(readstream(result));
 

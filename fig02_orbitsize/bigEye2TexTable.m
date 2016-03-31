@@ -1,21 +1,18 @@
 function bigEye2TexTable()
 %% bigEye2TexTable()
 
-% Need to make the columns of the tables fixed width 
+% Need to make the columns of the tables fixed width
 % See this post for how to do that:
 % http://goo.gl/au5WbG
 
-% Row addresses for the tetrapodomorph fish 
+% Row addresses for the tetrapodomorph fish
 tetrapodomorph_fish_startRow = 3;
 tetrapodomorph_fish_endRow = 23;
 
 
-% Row addresses for the stem tetrapods 
+% Row addresses for the stem tetrapods
 stem_tetrapod_startRow = 27;
 stem_tetrapod_endRow = 48;
-
-% Read bigEye
-gdat=GetGoogleSpreadsheet('1xlwAnje_WiQ0Owl6vBdQMF9odDUDE439ydRI3mU9cks');
 
 
 % Key column addresses in spreadsheet
@@ -24,17 +21,28 @@ stageEnd=5;      % end of stratigraphic period
 genusCol = 2;    % genus
 speciesCol = 3;  % species
 refKeyCol = 15;  % bibtex ref key
-lengthCol = 16;  % PPL 
+lengthCol = 16;  % PPL
 eyeCol = 20;     % OM
 
 
 circleMax=60;    % max size of normalized eye, points
 
+%%
 
-
-
+% Specify Needed Species Here
 TFind = [tetrapodomorph_fish_startRow:tetrapodomorph_fish_endRow]' ;    % Tetrapodomorph Fish
 STind = [stem_tetrapod_startRow:stem_tetrapod_endRow]' ; % Stem Tetrapods
+
+% Read bigEye
+gdat=GetGoogleSpreadsheet('1xlwAnje_WiQ0Owl6vBdQMF9odDUDE439ydRI3mU9cks');
+
+try gdat==0
+     disp('REVERTING TO LOCAL BIGEYE FILE')
+     load('localBigEye.mat')
+catch
+    save('localBigEye.mat', 'gdat');
+end
+
 
 %% Convert to LaTeX Table
 
@@ -106,7 +114,7 @@ set(icons(4).Children,'FaceAlpha',0.5)
 
 legend('boxoff')
 xlabel('Specimen #')
-ylabel('Eye length as % of skull length')
+ylabel('Orbit length as % of skull length')
 
 
 plotnoX = 2;
@@ -118,7 +126,7 @@ histogram(log10(datTF), 5)
 xlim([-1.4 -0.2])
 legend('ST', 'TF','Location','NorthWest')
 legend('boxoff')
-xlabel('log(eye/skull length)')
+xlabel('log(orbit/skull length)')
 box off
 
 print(gcf, '-dpdf', mfilename('fullpath'));
@@ -140,19 +148,19 @@ disp('KS Test')
 
 % Format stat result text for paper
 formattedstring = [ ...
-'The ratio was $' num2str(mean(datTF),'%2.3f') ' \pm ' num2str(std(datTF),'%2.2f')  ...
-'$  ($N=' num2str(length(datTF)) '$) (all numbers $\pm$ standard deviation) for the' ...
-' Tetrapodomorph Fish, and $' num2str(mean(datST),'%2.3f') ' \pm  ' num2str(std(datST),'%2.2f')  ...
-'$ ($N=' num2str(length(datST)) '$) for the Stem Tetrapods. A two-tailed  ' ...
-'T-test (assuming unequal variance) rejected the null hypothesis that the ' ...
-'means come from the same distribution ($p = ' sprintf('%.8f',ptt) '$). ' ...
-'A Wilcoxon rank sum test also rejects the null hypothesis ($p = ' sprintf('%.7f',prs) '$), ' ...
-'as did a two-sample Kolmogorov-Smirnov test ($p = ' sprintf('%.6f',pks)  '$). ' ...
-' The absolute size of orbits were also quite different between the groups. The ' ...
-'tetrapodomorph fish had orbits that were $' num2str(mean(TF_orbit_length_span(:,1)),2) ...
-' \pm ' num2str(std(TF_orbit_length_span(:,1)),2) '$~mm long,' ...
-'while the stem tetrapods had orbits that were $' num2str(mean(ST_orbit_length_span(:,1)),2) ...
-' \pm ' num2str(std(ST_orbit_length_span(:,1)),2) '$~mm long.'];
+    'The ratio was $' num2str(mean(datTF),'%2.3f') ' \pm ' num2str(std(datTF),'%2.2f')  ...
+    '$  ($N=' num2str(length(datTF)) '$) (all numbers mean $\pm$ standard deviation) for the' ...
+    ' Tetrapodomorph Fish, and $' num2str(mean(datST),'%2.3f') ' \pm  ' num2str(std(datST),'%2.2f')  ...
+    '$ ($N=' num2str(length(datST)) '$) for the Stem Tetrapods. A two-tailed  ' ...
+    'T-test (assuming unequal variance) rejected the null hypothesis that the ' ...
+    'means come from the same distribution ($p = ' sprintf('%.8f',ptt) '$). ' ...
+    'A Wilcoxon rank sum test also rejects the null hypothesis ($p = ' sprintf('%.7f',prs) '$), ' ...
+    'as did a two-sample Kolmogorov-Smirnov test ($p = ' sprintf('%.6f',pks)  '$). ' ...
+    ' The absolute size of orbits were also quite different between the groups. The ' ...
+    'tetrapodomorph fish had orbits that were $' num2str(mean(TF_orbit_length_span(:,1)),2) ...
+    ' \pm ' num2str(std(TF_orbit_length_span(:,1)),2) '$~mm long,' ...
+    'while the stem tetrapods had orbits that were $' num2str(mean(ST_orbit_length_span(:,1)),2) ...
+    ' \pm ' num2str(std(ST_orbit_length_span(:,1)),2) '$~mm long.'];
 
 fid = fopen('stat_string1.tex','w');
 fprintf(fid, '%s', formattedstring);
@@ -188,7 +196,7 @@ yinc=3
 yaxpointsTF = [yinc:yinc:yinc*length(TF_orbit_length_span)]';
 
 linevecTF = [TF_orbit_length_span(:,4) TF_orbit_length_span(:,3) ...
-     yaxpointsTF yaxpointsTF];
+    yaxpointsTF yaxpointsTF];
 
 yoffset = yinc*(length(TF_orbit_length_span)-1)+2*yinc;
 yaxpointsST = [yoffset:yinc:yinc*(length(ST_orbit_length_span)-1)+yoffset]';
@@ -209,12 +217,12 @@ end
 
 % yoffsets for the stem tetrapods
 linevecST = [ST_orbit_length_span(:,4) ST_orbit_length_span(:,3) ...
-     yaxpointsST yaxpointsST];
+    yaxpointsST yaxpointsST];
 
- % plot horizontal lines
+% plot horizontal lines
 
 [b,idxST]=sort(linevecST(:,2),'descend');
- 
+
 for j=1:length(linevecST)
     line(linevecST(idxST(j),1:2),linevecST(j,3:4),'Color',[0 0 1],'LineWidth',3)
     hold on
@@ -226,9 +234,9 @@ for j=1:length(linevecTF)
     circleSize = round(datTF(idxTF(j))*circleMax);
     line(405,yaxpointsTF(j),'marker','o','markersize',circleSize,'markeredgecolor','none','markerfacecolor',[.5 .5 .5])
     genus=cell2mat(gsTF(idxTF(j),1));
-%     genusclip=[genus(1) '. '];
-%     species=cell2mat(gsTF(idxTF(j),2));
-     text(410,yaxpointsTF(j),['\it ' genus]) 
+    %     genusclip=[genus(1) '. '];
+    %     species=cell2mat(gsTF(idxTF(j),2));
+    text(410,yaxpointsTF(j),['\it ' genus])
 end
 set(gca,'xlim',[260 440])
 
@@ -241,7 +249,7 @@ for j=1:length(linevecST)
     %if isempty(species)
     %    genusclip = genus;
     %end
-    text(410,yaxpointsST(j),['\it ' genus]) 
+    text(410,yaxpointsST(j),['\it ' genus])
 end
 
 set(gca,'YTick',[])
@@ -251,6 +259,73 @@ set(gca,'XTick',[260:20:400])
 xlabel('Age of fossil (Myr)')
 print(gcf, '-dpdf','orbit_vs_time')
 
+
+% prepare data for box plot
+orbit_length=[TF_orbit_length_span(:,1);ST_orbit_length_span(:,1)];
+tetgroup=[repmat('TF',length(TF_orbit_length_span(:,1)),1); ...
+    repmat('ST',length(ST_orbit_length_span(:,1)),1)]
+
+fig_props.noYsubplots = 1;
+fig_props.noXsubplots = 2;
+
+fig_props.figW = 18;   % cm
+fig_props.figH = 10;  % cm
+
+fig_props.ml = 0.8;
+fig_props.mt = 0.8;
+
+create_BE_figure
+fig_props.sub_pW = fig_props.sub_pW-.5;
+time_subsamp = 1;
+time_limit = 0.4;
+text_pos = [-5,2*time_limit/10,50];
+text_color = [0 0 0];
+text_size = 12;
+pn = {'Color','FontSize','FontWeight',};
+pv = {text_color,text_size,'bold'};
+
+plotnoX = 1;
+plotnoY = 1;
+ha1 = create_BE_axes(plotnoX,plotnoY,fig_props);
+boxplot(orbit_length,tetgroup,'notch','on','labels',{'TF', 'ST'})
+set(gca,'ylim',[0 70])
+ylabel('orbit length (mm)')
+
+plotnoX = 2;
+plotnoY = 1;
+ha2 = create_BE_axes(plotnoX,plotnoY,fig_props);
+hl1=scatter(1:length(datTF),sort(TF_orbit_length_span(:,1)),35,[1 0 0],'filled');
+alpha(hl1,0.5)
+hold on
+hl2=scatter(length(datTF)+1:length(datTF)+length(datST), ...
+     sort(ST_orbit_length_span(:,1)),35,[0 0 1],'filled');
+alpha(hl2,0.5)
+[h,icons,plots,s]=legend('TF','ST','Location','NorthWest');
+set(icons(3).Children,'FaceAlpha',0.5)
+set(icons(4).Children,'FaceAlpha',0.5)
+box on
+
+set(gca,'ylim',[0 70])
+set(gca,'xtick','')
+
+x=TF_orbit_length_span(:,1);
+disp(['The median orbit length for TF was ' num2str(median(x)) '; the 1st quartile is ' ...
+     num2str(prctile(x,25))])
+disp(['; the 3rd quartile is ' num2str(prctile(x,75))])
+disp(' ')
+
+OM_TF=x;
+
+x=ST_orbit_length_span(:,1);
+disp(['The median orbit length for ST was ' num2str(median(x)) '; the 1st quartile is ' ...
+     num2str(prctile(x,25))])
+disp(['; the 3rd quartile is ' num2str(prctile(x,75))])
+ 
+OM_ST=x;
+
+save('OM_TF_ST.mat','OM_TF','OM_ST')
+
+print(gcf, '-dpdf','orbit_box')
 disp('Done!!');
 
 
@@ -259,8 +334,8 @@ end
 function [orbit_length_span, gs] = loc_ConvData(gdat,speciesIndex,lengthCol, refkeyCol,eyeCol,genusCol,speciesCol,stageBegin,stageEnd,filename)
 %% Crop Incomplete Data
 validInd = [];
-for i = 1:size(speciesIndex)    
-    if length(gdat{speciesIndex(i),1}) >= 2  && ~(isempty(gdat{speciesIndex(i),lengthCol}) || strcmp(gdat{speciesIndex(i),lengthCol},'x')) 
+for i = 1:size(speciesIndex)
+    if length(gdat{speciesIndex(i),1}) >= 2  && ~(isempty(gdat{speciesIndex(i),lengthCol}) || strcmp(gdat{speciesIndex(i),lengthCol},'x'))
         validInd = [validInd;speciesIndex(i)];
         refkey{speciesIndex(i)} = strrep(gdat{speciesIndex(i),refkeyCol},'*','');
     end
@@ -286,11 +361,11 @@ span = [];
 for i = 1: length(startend)
     MYaS = era2MYr_ICS2015_v01(cell2mat(startend(i,1))); % Start and end of start stage
     MYaE = era2MYr_ICS2015_v01(cell2mat(startend(i,2))); % Start and end of end stage
-    % era2MYr returns the 
+    % era2MYr returns the
     span = [span; MYaS(1) MYaE(2)]; % Start of start stage and end of end stage
-
-end
     
+end
+
 for i = 1:size(gs,1)
     gsFormated{i,:} = strcat('\textit{',strjoin(gs(i,:)),'}');
 end
@@ -371,134 +446,134 @@ function matrix2latex(matrix, filename, varargin)
 %
 % Enjoy life!!!
 
-    rowLabels = [];
-    colLabels = [];
-    alignment = 'l';
-    format = [];
-    textsize = [];
-    if (rem(nargin,2) == 1 || nargin < 2)
-        error('matrix2latex: ', 'Incorrect number of arguments to %s.', mfilename);
-    end
+rowLabels = [];
+colLabels = [];
+alignment = 'l';
+format = [];
+textsize = [];
+if (rem(nargin,2) == 1 || nargin < 2)
+    error('matrix2latex: ', 'Incorrect number of arguments to %s.', mfilename);
+end
 
-    okargs = {'rowlabels','columnlabels', 'alignment', 'format', 'size'};
-    for j=1:2:(nargin-2)
-        pname = varargin{j};
-        pval = varargin{j+1};
-        k = strmatch(lower(pname), okargs);
-        if isempty(k)
-            error('matrix2latex: ', 'Unknown parameter name: %s.', pname);
-        elseif length(k)>1
-            error('matrix2latex: ', 'Ambiguous parameter name: %s.', pname);
-        else
-            switch(k)
-                case 1  % rowlabels
-                    rowLabels = pval;
-                    if isnumeric(rowLabels)
-                        rowLabels = cellstr(num2str(rowLabels(:)));
-                    end
-                case 2  % column labels
-                    colLabels = pval;
-                    if isnumeric(colLabels)
-                        colLabels = cellstr(num2str(colLabels(:)));
-                    end
-                case 3  % alignment
-                    alignment = lower(pval);
-                    if alignment == 'right'
-                        alignment = 'r';
-                    end
-                    if alignment == 'left'
-                        alignment = 'l';
-                    end
-                    if alignment == 'center'
-                        alignment = 'c';
-                    end
-                    if alignment ~= 'l' && alignment ~= 'c' && alignment ~= 'r'
-                        alignment = 'l';
-                        warning('matrix2latex: ', 'Unkown alignment. (Set it to \''left\''.)');
-                    end
-                case 4  % format
-                    format = lower(pval);
-                case 5  % format
-                    textsize = pval;
-            end
-        end
-    end
-
-    fid = fopen(filename, 'w');
-    
-    width = size(matrix, 2);
-    height = size(matrix, 1);
-
-    if isnumeric(matrix)
-        matrix = num2cell(matrix);
-        for h=1:height
-            for w=1:width
-                if(~isempty(format))
-                    matrix{h, w} = num2str(matrix{h, w}, format);
-                else
-                    matrix{h, w} = num2str(matrix{h, w});
+okargs = {'rowlabels','columnlabels', 'alignment', 'format', 'size'};
+for j=1:2:(nargin-2)
+    pname = varargin{j};
+    pval = varargin{j+1};
+    k = strmatch(lower(pname), okargs);
+    if isempty(k)
+        error('matrix2latex: ', 'Unknown parameter name: %s.', pname);
+    elseif length(k)>1
+        error('matrix2latex: ', 'Ambiguous parameter name: %s.', pname);
+    else
+        switch(k)
+            case 1  % rowlabels
+                rowLabels = pval;
+                if isnumeric(rowLabels)
+                    rowLabels = cellstr(num2str(rowLabels(:)));
                 end
-            end
+            case 2  % column labels
+                colLabels = pval;
+                if isnumeric(colLabels)
+                    colLabels = cellstr(num2str(colLabels(:)));
+                end
+            case 3  % alignment
+                alignment = lower(pval);
+                if alignment == 'right'
+                    alignment = 'r';
+                end
+                if alignment == 'left'
+                    alignment = 'l';
+                end
+                if alignment == 'center'
+                    alignment = 'c';
+                end
+                if alignment ~= 'l' && alignment ~= 'c' && alignment ~= 'r'
+                    alignment = 'l';
+                    warning('matrix2latex: ', 'Unkown alignment. (Set it to \''left\''.)');
+                end
+            case 4  % format
+                format = lower(pval);
+            case 5  % format
+                textsize = pval;
         end
     end
-    
-    if(~isempty(textsize))
-        fprintf(fid, '\\begin{%s}', textsize);
-    end
+end
 
-    fprintf(fid, '\\begin{tabular}{|');
+fid = fopen(filename, 'w');
 
-    if(~isempty(rowLabels))
-        fprintf(fid, 'l|');
-    end
-    % M. MacIver 3/18/2016
-    % Customized this to be left margin only, fixed width at 4.5 cm
-    % using package array
-    fprintf(fid, '%s|', 'L{4.5cm}');
-    for i=2:width-1
-        fprintf(fid, '%c|', alignment);
-    end
-    % M. MacIver 3/18/2016
-    % Customized this to be left margin only, fixed width at 4.5 cm
-    % using package array
-    fprintf(fid, '%s|', 'L{4.5cm}')
-    fprintf(fid, '}\r\n');
-    
-    fprintf(fid, '\\hline\r\n');
-    
-    if(~isempty(colLabels))
-        if(~isempty(rowLabels))
-            fprintf(fid, '&');
-        end
-        for w=1:width-1
-            fprintf(fid, '\\textbf{%s}&', colLabels{w});
-        end
-        fprintf(fid, '\\textbf{%s}\\\\\\hline\r\n', colLabels{width});
-    end
-    
+width = size(matrix, 2);
+height = size(matrix, 1);
+
+if isnumeric(matrix)
+    matrix = num2cell(matrix);
     for h=1:height
-        if(~isempty(rowLabels))
-            fprintf(fid, '\\textbf{%s}&', rowLabels{h});
-        end
-        for w=1:width-1
-            if ~isnan(str2double(matrix{h, w}))
-                tmpNum = str2double(matrix{h, w});
-                if(~isempty(format))
-                    matrix{h, w} = num2str(tmpNum, format);
-                end
-            elseif length(matrix{h, w}) <= 8
-                matrix{h, w} = '-';
+        for w=1:width
+            if(~isempty(format))
+                matrix{h, w} = num2str(matrix{h, w}, format);
+            else
+                matrix{h, w} = num2str(matrix{h, w});
             end
-            fprintf(fid, '%s&', matrix{h, w});
         end
-        fprintf(fid, '%s\\\\\\hline\r\n', matrix{h, width});
     end
+end
 
-    fprintf(fid, '\\end{tabular}\r\n');
-    
-    if(~isempty(textsize))
-        fprintf(fid, '\\end{%s}', textsize);
+if(~isempty(textsize))
+    fprintf(fid, '\\begin{%s}', textsize);
+end
+
+fprintf(fid, '\\begin{tabular}{|');
+
+if(~isempty(rowLabels))
+    fprintf(fid, 'l|');
+end
+% M. MacIver 3/18/2016
+% Customized this to be left margin only, fixed width at 4.5 cm
+% using package array
+fprintf(fid, '%s|', 'L{4.5cm}');
+for i=2:width-1
+    fprintf(fid, '%c|', alignment);
+end
+% M. MacIver 3/18/2016
+% Customized this to be left margin only, fixed width at 4.5 cm
+% using package array
+fprintf(fid, '%s|', 'L{4.5cm}')
+fprintf(fid, '}\r\n');
+
+fprintf(fid, '\\hline\r\n');
+
+if(~isempty(colLabels))
+    if(~isempty(rowLabels))
+        fprintf(fid, '&');
     end
+    for w=1:width-1
+        fprintf(fid, '\\textbf{%s}&', colLabels{w});
+    end
+    fprintf(fid, '\\textbf{%s}\\\\\\hline\r\n', colLabels{width});
+end
 
-    fclose(fid);
+for h=1:height
+    if(~isempty(rowLabels))
+        fprintf(fid, '\\textbf{%s}&', rowLabels{h});
+    end
+    for w=1:width-1
+        if ~isnan(str2double(matrix{h, w}))
+            tmpNum = str2double(matrix{h, w});
+            if(~isempty(format))
+                matrix{h, w} = num2str(tmpNum, format);
+            end
+        elseif length(matrix{h, w}) <= 8
+            matrix{h, w} = '-';
+        end
+        fprintf(fid, '%s&', matrix{h, w});
+    end
+    fprintf(fid, '%s\\\\\\hline\r\n', matrix{h, width});
+end
+
+fprintf(fid, '\\end{tabular}\r\n');
+
+if(~isempty(textsize))
+    fprintf(fid, '\\end{%s}', textsize);
+end
+
+fclose(fid);
 end
