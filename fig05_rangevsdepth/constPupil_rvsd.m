@@ -2,7 +2,7 @@ clear all;
 
 warning('If a parameter is changed, run Parameters again with the changed parameter to update\n')
 
-load('parameters')
+load ../figXX_compviz/Parameters.mat
 
 pupilValuesFOV=input('Input desired test pupil values in vector form: \n');
 %[0.0074,0.0162];
