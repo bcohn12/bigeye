@@ -1,7 +1,7 @@
 clear all;
 
 warning('If parameters are changed, rerun parameters');
-load('Parameters')
+load ../figXX_compviz/Parameters.mat
 
 minpupil=0.001; maxpupil=0.03;
 minvisualrange=1; maxvisualrange=20000;
