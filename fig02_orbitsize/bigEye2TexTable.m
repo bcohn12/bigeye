@@ -12,7 +12,7 @@ tetrapodomorph_fish_endRow = 23;
 
 % Row addresses for the stem tetrapods
 stem_tetrapod_startRow = 27;
-stem_tetrapod_endRow = 48;
+stem_tetrapod_endRow = 57;
 
 
 % Key column addresses in spreadsheet
