@@ -13,11 +13,11 @@ NORMDERIVATIVE=0;
 
 load ../fig02_orbitsize/OM_TF_ST.mat
 
-pupil_TF = [prctile(OM_TF,25) prctile(OM_TF,75)].*0.53;
-pupil_ST = [prctile(OM_ST,25) prctile(OM_ST,75)].*0.53;
+pupil_TF = [mean(OM_TF)-std(OM_TF) mean(OM_TF)+std(OM_TF)].*0.53;
+pupil_ST = [mean(OM_ST)-std(OM_ST) mean(OM_ST)+std(OM_ST)].*0.53;
 
-fishpupil=prctile(OM_TF,50)*.53;
-tetrapodpupil=prctile(OM_ST,50)*.53;
+fishpupil=mean(OM_TF)*.53;
+tetrapodpupil=mean(OM_ST)*.53;
 
 %% PLOT ONLY AIR
 

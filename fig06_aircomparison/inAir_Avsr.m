@@ -2,7 +2,7 @@ clear all;
 
 run ../figXX_compviz/Parameters.m
 
-minpupil=0.001; maxpupil=0.03;
+minpupil=0.001; maxpupil=0.04;
 minvisualrange=1; maxvisualrange=20000;
 
 pupilValuesAir=linspace(minpupil,maxpupil,50);

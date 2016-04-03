@@ -7,7 +7,7 @@ run ../figXX_compviz/Parameters.m
 coastalWaterDepth=input('In vector form input depth values:\n');
 coastalWaterDepth=sort(coastalWaterDepth,'descend');
 
-minpupil=0.001; maxpupil=0.03;
+minpupil=0.001; maxpupil=0.04;
 minvisualrange=0.1; maxvisualrange=60;
 
 pupilValues=linspace(minpupil,maxpupil,30); rangeValues=linspace(minvisualrange,maxvisualrange,2500);
