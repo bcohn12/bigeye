@@ -8,7 +8,9 @@ minvisualrange=1; maxvisualrange=20000;
 pupilValuesAir=linspace(minpupil,maxpupil,50);
 rangeValuesAir=linspace(minvisualrange,maxvisualrange,250000);
 
-possibleSol=zeros(length(rangeValuesAir),1);
+possibleSolD=zeros(length(rangeValuesAir),1);
+possibleSolM=zeros(length(rangeValuesAir),1);
+possibleSolS=zeros(length(rangeValuesAir),1);
 
 for loop1=1:length(pupilValuesAir)
     A=pupilValuesAir(loop1);
@@ -20,22 +22,56 @@ for loop1=1:length(pupilValuesAir)
             /abs(q*Dt_daylight*0.617*(T/r)^2*...
             ((Iref_daylight-Ispace_daylight)*exp(-a_air*r))));
          
-         possibleSol(loop2)=eq_daylight;
+        eq_moonlight=((R*sqrt((q*Dt*0.617*(T/r)^2*...
+            (2*Ispace_moonlight+((Iref_moonlight-Ispace_moonlight)*exp(-a_air*r))))+...
+            2*((T*M)/(2*r*d))^2)*X_night*Dt)...
+            /abs(q*Dt*0.617*(T/r)^2*...
+            ((Iref_moonlight-Ispace_moonlight)*exp(-a_air*r))));
+        
+        eq_starlight=((R*sqrt((q*Dt*0.617*(T/r)^2*...
+            (2*Ispace_starlight+((Iref_starlight-Ispace_starlight)*exp(-a_air*r))))+...
+            2*((T*M)/(2*r*d))^2)*X_night*Dt)...
+            /abs(q*Dt*0.617*(T/r)^2*...
+            ((Iref_starlight-Ispace_starlight)*exp(-a_air*r))));
+        
+         possibleSolD(loop2)=eq_daylight;
+         possibleSolM(loop2)=eq_moonlight;
+         possibleSolS(loop2)=eq_starlight;
+         
     end
-    IDXAir=knnsearch(possibleSol,A,'NSMethod','exhaustive','distance','seuclidean');
-    visualRangeAir(loop1)=rangeValuesAir(IDXAir);
+    IDXDaylight=knnsearch(possibleSolD,A,'NSMethod','exhaustive','distance','seuclidean');
+    IDXMoonlight=knnsearch(possibleSolM,A,'NSMethod','exhaustive','distance','seuclidean');
+    IDXStarlight=knnsearch(possibleSolS,A,'NSMethod','exhaustive','distance','seuclidean');
+    
+    visualRangeDaylight(loop1)=rangeValuesAir(IDXDaylight);
+    visualRangeMoonlight(loop1)=rangeValuesAir(IDXMoonlight);
+    visualRangeStarlight(loop1)=rangeValuesAir(IDXStarlight);
 end
 
-for loop1=1:length(visualRangeAir)
-    visualVolumeAir(loop1)=integral3(f,0,(visualRangeAir(loop1)),...
+for loop1=1:length(visualRangeDaylight)
+    visualVolumeDaylight(loop1)=integral3(f,0,(visualRangeDaylight(loop1)),...
+            elevationMin,elevationMaxAir,...
+            azimuthMin,azimuthMaxAir);
+        
+    visualVolumeMoonlight(loop1)=integral3(f,0,(visualRangeMoonlight(loop1)),...
+            elevationMin,elevationMaxAir,...
+            azimuthMin,azimuthMaxAir);
+    
+    visualVolumeStarlight(loop1)=integral3(f,0,(visualRangeStarlight(loop1)),...
             elevationMin,elevationMaxAir,...
             azimuthMin,azimuthMaxAir);
 end
 
-drdAAir=derivative(pupilValuesAir,visualRangeAir);
-dVdAAir=derivative(pupilValuesAir,visualVolumeAir);
+drdADaylight=derivative(pupilValuesAir,visualRangeDaylight);
+dVdADaylight=derivative(pupilValuesAir,visualVolumeDaylight);
+drdAMoonlight=derivative(pupilValuesAir,visualRangeMoonlight);
+dVdAMoonlight=derivative(pupilValuesAir,visualRangeMoonlight);
+drdAStarlight=derivative(pupilValuesAir,visualRangeStarlight);
+dVdAStarlight=derivative(pupilValuesAir,visualRangeStarlight);
 
 save('inAir_Avsr.mat', 'pupilValuesAir', 'rangeValuesAir',...
-    'visualRangeAir','visualVolumeAir', 'drdAAir','dVdAAir');
+    'visualRangeDaylight','visualVolumeDaylight', 'drdADaylight','dVdADaylight',...
+    'visualRangeMoonlight','visualVolumeMoonlight','drdAMoonlight','dVdAMoonlight',...
+    'visualRangeStarlight','visualVolumeStarlight','drdAStarlight','dVdAStarlight');
 
            

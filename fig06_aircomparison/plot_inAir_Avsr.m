@@ -24,21 +24,40 @@ tetrapodpupil=prctile(OM_ST,50)*.53;
 air=figure();
 
 subplot(2,2,1)
-plot(pupilValuesAir,visualRangeAir)
+lined=plot(pupilValuesAir,visualRangeDaylight);
+hold on;
+linem=plot(pupilValuesAir,visualRangeMoonlight);
+lines=plot(pupilValuesAir,visualRangeStarlight);
 xlabel('pupil diameter (mm)'); ylabel('visual range (m)')
 
 subplot(2,2,2)
-plot(pupilValuesAir,drdAAir)
+plot(pupilValuesAir,drdADaylight)
+hold on
+plot(pupilValuesAir,drdAMoonlight)
+plot(pupilValuesAir,drdAStarlight)
 xlabel('pupil diameter (mm)'); ylabel('dr/dA');
 box on
 
 subplot(2,2,3)
-plot(pupilValuesAir,visualVolumeAir,'.')
+plot(pupilValuesAir,visualVolumeDaylight)
+hold on
+plot(pupilValuesAir,visualVolumeMoonlight)
+plot(pupilValuesAir,visualVolumeStarlight)
 xlabel('pupil diameter (mm)'); ylabel('visual volume (m^3)');
 
 subplot(2,2,4)
-plot(pupilValuesAir,dVdAAir);
+plot(pupilValuesAir,dVdADaylight);
+hold on
+plot(pupilValuesAir,dVdAMoonlight);
+plot(pupilValuesAir,dVdAStarlight);
 xlabel('pupil diameter (mm)'); ylabel('dV/dA');
+
+hL = legend([lined,linem,lines],...
+    {'daylight','moonlight','starlight'});
+
+newPosition = [0.4 0.4 0.2 0.2];
+newUnits = 'normalized';
+set(hL,'Position', newPosition,'Units', newUnits,'Orientation','horizontal');
 
 %% PLOT AIR VS WATER COMPARISON
 
@@ -51,12 +70,14 @@ xlabel('pupil diameter (mm)'); ylabel('dV/dA');
 
 comparison=figure();
 rvsA=subplot(2,2,1);
-line1=plot(pupilValuesAir,visualRangeAir);
+line1=plot(pupilValuesAir,visualRangeDaylight);
 hold on;
-line2=plot(pupilValues,visualRangeSolutions(1).up,'--');
-line3=plot(pupilValues,visualRangeSolutions(2).up,'--');
-line4=plot(pupilValues,visualRangeSolutions(1).hor,':');
-line5=plot(pupilValues,visualRangeSolutions(2).hor,':');
+line2=plot(pupilValuesAir,visualRangeMoonlight);
+line3=plot(pupilValuesAir,visualRangeStarlight);
+line4=plot(pupilValues,visualRangeSolutions(1).up,'--');
+line5=plot(pupilValues,visualRangeSolutions(2).up,'--');
+line6=plot(pupilValues,visualRangeSolutions(1).hor,':');
+line7=plot(pupilValues,visualRangeSolutions(2).hor,':');
 xlabel('pupil diameter (mm)'); ylabel('visual range (m)');
 yrange=get(rvsA,'YLim');
 line([fishpupil fishpupil],[yrange(1) yrange(2)],'Color',[0 0 0],...
@@ -68,30 +89,27 @@ line([tetrapodpupil,tetrapodpupil],[yrange(1) yrange(2)],'Color',[0/255,128/255,
 yminmax=get(gca,'ylim');
 hold on
 fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-    [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0])
+    [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0]);
 
-set(fillboxTF,'facealpha',0.2,'edgecolor','none')
+set(fillboxTF,'facealpha',0.2,'edgecolor','none');
 
 fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-    [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1])
+    [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1]);
 
-set(fillboxST,'facealpha',0.2,'edgecolor','none')
+set(fillboxST,'facealpha',0.2,'edgecolor','none');
 
 drdAvsA=subplot(2,2,2);
-
-
-
 yminmax=get(gca,'ylim');
 hold on
 fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-    [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0])
+    [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0]);
 
-set(fillboxTF,'facealpha',0.2,'edgecolor','none')
+set(fillboxTF,'facealpha',0.2,'edgecolor','none');
 
 fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-    [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1])
+    [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1]);
 
-set(fillboxST,'facealpha',0.2,'edgecolor','none')
+set(fillboxST,'facealpha',0.2,'edgecolor','none');
 box on
 
 if(NORMDERIVATIVE)
@@ -103,8 +121,10 @@ if(NORMDERIVATIVE)
     plot(pupilValues,NderivativeRange(:,5),':');
     
 else
-    plot(pupilValuesAir,drdAAir);
+    plot(pupilValuesAir,drdADaylight);
     hold on;
+    plot(pupilValuesAir,drdAMoonlight)
+    plot(pupilValuesAir,drdAStarlight)
     plot(pupilValues,derivativeVisualRange(1).up,'--');
     plot(pupilValues,derivativeVisualRange(2).up,'--');
     plot(pupilValues,derivativeVisualRange(1).hor,':');
@@ -114,14 +134,14 @@ else
     yminmax=get(gca,'ylim');
     hold on
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-        [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0])
+        [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0]);
     
-    set(fillboxTF,'facealpha',0.2,'edgecolor','none')
+    set(fillboxTF,'facealpha',0.2,'edgecolor','none');
     
     fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-        [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1])
+        [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1]);
     
-    set(fillboxST,'facealpha',0.2,'edgecolor','none')
+    set(fillboxST,'facealpha',0.2,'edgecolor','none');
     
 end
 yrange2=get(drdAvsA,'YLim');
@@ -139,8 +159,10 @@ xlabel('pupil diameter (mm)'); ylabel('dr/dA (m/mm)');
 %     /(max(max(MderivativeVolume))-min(min(MderivativeVolume)));
 
 VvsA=subplot(2,2,3);
-plot(pupilValuesAir,visualVolumeAir);
+plot(pupilValuesAir,visualVolumeDaylight);
 hold on;
+plot(pupilValuesAir,visualVolumeMoonlight)
+plot(pupilValuesAir,visualVolumeStarlight)
 plot(pupilValues,visualVolumeSolutions(1).up,'--');
 plot(pupilValues,visualVolumeSolutions(2).up,'--');
 plot(pupilValues,visualVolumeSolutions(1).hor,':');
@@ -156,12 +178,12 @@ line([tetrapodpupil,tetrapodpupil],[yrange3(1) yrange3(2)],'Color',[0/255,128/25
 yminmax=get(gca,'ylim');
 hold on
 fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-    [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0])
+    [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0]);
 
 set(fillboxTF,'facealpha',0.2,'edgecolor','none')
 
 fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-    [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1])
+    [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1]);
 
 set(fillboxST,'facealpha',0.2,'edgecolor','none')
 
@@ -174,8 +196,10 @@ if(NORMDERIVATIVE)
     plot(pupilValues,NderivativeVolume(:,4),':');
     plot(pupilValues,NderivativeVolume(:,5),':');
 else
-    plot(pupilValuesAir,dVdAAir);
+    plot(pupilValuesAir,dVdADaylight);
     hold on;
+    plot(pupilValuesAir,dVdAMoonlight);
+    plot(pupilValuesAir,dVdAStarlight);
     plot(pupilValues,derivativeVisualVolume(1).up,'--');
     plot(pupilValues,derivativeVisualVolume(2).up,'--');
     plot(pupilValues,derivativeVisualVolume(1).hor,':');
@@ -185,12 +209,12 @@ else
     yminmax=get(gca,'ylim');
     hold on
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-        [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0])
+        [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0]);
     
     set(fillboxTF,'facealpha',0.2,'edgecolor','none')
     
     fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-        [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1])
+        [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1]);
     
     set(fillboxST,'facealpha',0.2,'edgecolor','none')
 end
@@ -201,8 +225,8 @@ line([tetrapodpupil,tetrapodpupil],[yrange4(1) yrange4(2)],'Color',[0/255,128/25
     'linestyle',':','linewidth',1)
 xlabel('pupil diameter (mm)'); ylabel('dV/dA (m^3/mm)');
 
-hL = legend([line1,line2,line3,line4,line5],...
-    {'in air','100m, looking up','10m, looking up','100m, horizontal viewing','10m, horizontal viewing'});
+hL = legend([line1,line2,line3,line4,line5,line6,line7],...
+    {'daylight','moonlight','starlight','100m, up','10m, up','100m, hor','10m, hor'});
 
 newPosition = [0.4 0.4 0.2 0.2];
 newUnits = 'normalized';
@@ -213,12 +237,14 @@ set(hL,'Position', newPosition,'Units', newUnits,'Orientation','horizontal');
 logplots=figure();
 
 logrvsA=subplot(2,2,1);
-line6=semilogy(pupilValuesAir,visualRangeAir);
+line8=semilogy(pupilValuesAir,visualRangeDaylight);
 hold on;
-line7=semilogy(pupilValues,visualRangeSolutions(1).up,'--');
-line8=semilogy(pupilValues,visualRangeSolutions(2).up,'--');
-line9=semilogy(pupilValues,visualRangeSolutions(1).hor,':');
-line10=semilogy(pupilValues,visualRangeSolutions(2).hor,':');
+line9=semilogy(pupilValuesAir,visualRangeMoonlight);
+line10=semilogy(pupilValuesAir,visualRangeStarlight);
+line11=semilogy(pupilValues,visualRangeSolutions(1).up,'--');
+line12=semilogy(pupilValues,visualRangeSolutions(2).up,'--');
+line13=semilogy(pupilValues,visualRangeSolutions(1).hor,':');
+line14=semilogy(pupilValues,visualRangeSolutions(2).hor,':');
 yrange5=get(logrvsA,'YLim');
 line([fishpupil fishpupil],[yrange5(1) yrange5(2)],'Color',[0 0 0],...
     'linestyle',':','linewidth',1)
@@ -230,18 +256,20 @@ xlabel('pupil diameter (mm)'); ylabel('log(visual range) (m)');
 yminmax=get(gca,'ylim');
 hold on
 fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-    [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0])
+    [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0]);
 
 set(fillboxTF,'facealpha',0.2,'edgecolor','none')
 
 fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-    [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1])
+    [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1]);
 
 set(fillboxST,'facealpha',0.2,'edgecolor','none')
 
 logVvsA=subplot(2,2,2);
-semilogy(pupilValuesAir,visualVolumeAir);
+semilogy(pupilValuesAir,visualVolumeDaylight);
 hold on;
+semilogy(pupilValuesAir,visualVolumeMoonlight);
+semilogy(pupilValuesAir,visualVolumeStarlight);
 semilogy(pupilValues,visualVolumeSolutions(1).up,'--');
 semilogy(pupilValues,visualVolumeSolutions(2).up,'--');
 semilogy(pupilValues,visualVolumeSolutions(1).hor,':');
@@ -276,23 +304,25 @@ if(NORMDERIVATIVE)
     semilogy(pupilValues,NderivativeRange(:,5),':');
     
 else
-    line11=semilogy(pupilValuesAir,drdAAir);
+    semilogy(pupilValuesAir,drdADaylight);
     hold on;
-    line12=semilogy(pupilValues,derivativeVisualRange(1).up,'--');
-    line13=semilogy(pupilValues,derivativeVisualRange(2).up,'--');
-    line14=semilogy(pupilValues,derivativeVisualRange(1).hor,':');
-    line15=semilogy(pupilValues,derivativeVisualRange(2).hor,':');
+    semilogy(pupilValuesAir,drdAMoonlight);
+    semilogy(pupilValuesAir,drdAStarlight);
+    semilogy(pupilValues,derivativeVisualRange(1).up,'--');
+    semilogy(pupilValues,derivativeVisualRange(2).up,'--');
+    semilogy(pupilValues,derivativeVisualRange(1).hor,':');
+    semilogy(pupilValues,derivativeVisualRange(2).hor,':');
     
     
     yminmax=get(gca,'ylim');
     hold on
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-        [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0])
+        [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0]);
     
     set(fillboxTF,'facealpha',0.2,'edgecolor','none')
     
     fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-        [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1])
+        [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1]);
     
     set(fillboxST,'facealpha',0.2,'edgecolor','none')
     
@@ -313,8 +343,10 @@ if(NORMDERIVATIVE)
     semilogy(pupilValues,NderivativeVolume(:,4),':');
     semilogy(pupilValues,NderivativeVolume(:,5),':');
 else
-    semilogy(pupilValuesAir,dVdAAir);
+    semilogy(pupilValuesAir,dVdADaylight);
     hold on;
+    semilogy(pupilValuesAir,dVdAMoonlight);
+    semilogy(pupilValuesAir,dVdAStarlight);
     semilogy(pupilValues,derivativeVisualVolume(1).up,'--');
     semilogy(pupilValues,derivativeVisualVolume(2).up,'--');
     semilogy(pupilValues,derivativeVisualVolume(1).hor,':');
@@ -325,12 +357,12 @@ else
     yminmax=get(gca,'ylim');
     hold on
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-        [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0])
+        [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0]);
     
     set(fillboxTF,'facealpha',0.2,'edgecolor','none')
     
     fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-        [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1])
+        [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1]);
     
     set(fillboxST,'facealpha',0.2,'edgecolor','none')
     
@@ -343,8 +375,8 @@ line([tetrapodpupil,tetrapodpupil],[yrange8(1) yrange8(2)],'Color',[0/255,128/25
 xlabel('pupil diameter (mm)'); ylabel('log(dV/dA) (m^3/mm)');
 
 
-hL = legend([line6,line7,line8,line9,line10],...
-    {'in air','100m, looking up','10m, looking up','100m, horizontal viewing','10m, horizontal viewing'});
+hL = legend([line8,line9,line10,line11,line12,line13,line14],...
+    {'daylight','moonlight','starlight','100m, up','10m, up','100m, hor','10m, hor'});
 
 newPosition = [0.4 0.4 0.2 0.2];
 newUnits = 'normalized';
