@@ -92,11 +92,11 @@ for loop1=1:2:size(R,2)
     visualVolumeUp=V(:,loop1);
     visualVolumeHor=V(:,loop1+1);
     
-    derivativeVisualRange(indx).up=derivative(AA,visualRangeUp);
-    derivativeVisualRange(indx).hor=derivative(AA,visualRangeHor);
+    derivativeVisualRange(indx).up=derivative(AA*10^3,visualRangeUp);
+    derivativeVisualRange(indx).hor=derivative(AA*10^3,visualRangeHor);
     
-    derivativeVisualVolume(indx).up=derivative(AA,visualVolumeUp);
-    derivativeVisualVolume(indx).hor=derivative(AA,visualVolumeHor);
+    derivativeVisualVolume(indx).up=derivative(AA*10^3,visualVolumeUp);
+    derivativeVisualVolume(indx).hor=derivative(AA*10^3,visualVolumeHor);
     
     MDerRange(:,loop1)=derivativeVisualRange(indx).up;
     MDerRange(:,loop1+1)=derivativeVisualRange(indx).hor;

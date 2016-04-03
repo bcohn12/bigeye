@@ -62,12 +62,12 @@ for loop1=1:length(visualRangeDaylight)
             azimuthMin,azimuthMaxAir);
 end
 
-drdADaylight=derivative(pupilValuesAir,visualRangeDaylight);
-dVdADaylight=derivative(pupilValuesAir,visualVolumeDaylight);
-drdAMoonlight=derivative(pupilValuesAir,visualRangeMoonlight);
-dVdAMoonlight=derivative(pupilValuesAir,visualRangeMoonlight);
-drdAStarlight=derivative(pupilValuesAir,visualRangeStarlight);
-dVdAStarlight=derivative(pupilValuesAir,visualRangeStarlight);
+drdADaylight=derivative(pupilValuesAir*10^3,visualRangeDaylight);
+dVdADaylight=derivative(pupilValuesAir*10^3,visualVolumeDaylight);
+drdAMoonlight=derivative(pupilValuesAir*10^3,visualRangeMoonlight);
+dVdAMoonlight=derivative(pupilValuesAir*10^3,visualRangeMoonlight);
+drdAStarlight=derivative(pupilValuesAir*10^3,visualRangeStarlight);
+dVdAStarlight=derivative(pupilValuesAir*10^3,visualRangeStarlight);
 
 save('inAir_Avsr.mat', 'pupilValuesAir', 'rangeValuesAir',...
     'visualRangeDaylight','visualVolumeDaylight', 'drdADaylight','dVdADaylight',...
