@@ -1,8 +1,6 @@
 clear all;
 
-warning('If a parameter is changed, run Parameters again with the changed parameter to update\n')
-
-load ../figXX_compviz/Parameters.mat
+run ../figXX_compviz/Parameters.m
 
 %% CONSTANT DEPTH VALUE RANGE OF VISION VS PUPIL SIZE
 
