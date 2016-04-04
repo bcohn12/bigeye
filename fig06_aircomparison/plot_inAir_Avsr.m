@@ -9,6 +9,8 @@ warning('If any of the bounds or parameters are changed re run the functions tha
 pupilValues=pupilValues*10^3;
 pupilValuesAir=pupilValuesAir*10^3;
 
+fillboxalpha=0.07; % transparency of fillbox to show +/- std of pupil size
+
 NORMDERIVATIVE=0;
 
 load ../fig02_orbitsize/OM_TF_ST.mat
@@ -91,12 +93,12 @@ hold on
 fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0]);
 
-set(fillboxTF,'facealpha',0.2,'edgecolor','none');
+set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
 
 fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
     [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1]);
 
-set(fillboxST,'facealpha',0.2,'edgecolor','none');
+set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
 
 drdAvsA=subplot(2,2,2);
 yminmax=get(gca,'ylim');
@@ -104,12 +106,12 @@ hold on
 fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0]);
 
-set(fillboxTF,'facealpha',0.2,'edgecolor','none');
+set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
 
 fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
     [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1]);
 
-set(fillboxST,'facealpha',0.2,'edgecolor','none');
+set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
 box on
 
 if(NORMDERIVATIVE)
@@ -136,12 +138,12 @@ else
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
         [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0]);
     
-    set(fillboxTF,'facealpha',0.2,'edgecolor','none');
+    set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
     
     fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
         [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1]);
     
-    set(fillboxST,'facealpha',0.2,'edgecolor','none');
+    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
     
 end
 yrange2=get(drdAvsA,'YLim');
@@ -180,12 +182,12 @@ hold on
 fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0]);
 
-set(fillboxTF,'facealpha',0.2,'edgecolor','none')
+set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none')
 
 fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
     [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1]);
 
-set(fillboxST,'facealpha',0.2,'edgecolor','none')
+set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none')
 
 dVdAvsA=subplot(2,2,4);
 if(NORMDERIVATIVE)
@@ -211,12 +213,12 @@ else
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
         [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0]);
     
-    set(fillboxTF,'facealpha',0.2,'edgecolor','none')
+    set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none')
     
     fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
         [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1]);
     
-    set(fillboxST,'facealpha',0.2,'edgecolor','none')
+    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none')
 end
 yrange4=get(dVdAvsA,'YLim');
 line([fishpupil fishpupil],[yrange4(1) yrange4(2)],'Color',[0 0 0],...
@@ -250,7 +252,7 @@ line([fishpupil fishpupil],[yrange5(1) yrange5(2)],'Color',[0 0 0],...
     'linestyle',':','linewidth',1)
 line([tetrapodpupil,tetrapodpupil],[yrange5(1) yrange5(2)],'Color',[0/255,128/255,128/255],...
     'linestyle',':','linewidth',1)
-xlabel('pupil diameter (mm)'); ylabel('log(visual range) (m)');
+xlabel('pupil diameter (mm)'); ylabel('visual range (m)');
 
 
 yminmax=get(gca,'ylim');
@@ -258,12 +260,12 @@ hold on
 fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0]);
 
-set(fillboxTF,'facealpha',0.2,'edgecolor','none')
+set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none')
 
 fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
     [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1]);
 
-set(fillboxST,'facealpha',0.2,'edgecolor','none')
+set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none')
 
 logVvsA=subplot(2,2,2);
 semilogy(pupilValuesAir,visualVolumeDaylight);
@@ -279,7 +281,7 @@ line([fishpupil fishpupil],[yrange6(1) yrange6(2)],'Color',[0 0 0],...
     'linestyle',':','linewidth',1)
 line([tetrapodpupil,tetrapodpupil],[yrange6(1) yrange6(2)],'Color',[0/255,128/255,128/255],...
     'linestyle',':','linewidth',1)
-xlabel('pupil diameter (mm)'); ylabel('log(visual volume) (m^3)');
+xlabel('pupil diameter (mm)'); ylabel('visual volume (m^3)');
 
 
 yminmax=get(gca,'ylim');
@@ -287,12 +289,12 @@ hold on
 fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0])
 
-set(fillboxTF,'facealpha',0.2,'edgecolor','none')
+set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none')
 
 fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
     [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1])
 
-set(fillboxST,'facealpha',0.2,'edgecolor','none')
+set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none')
 
 logdrdAvsA=subplot(2,2,3);
 if(NORMDERIVATIVE)
@@ -319,12 +321,12 @@ else
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
         [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0]);
     
-    set(fillboxTF,'facealpha',0.2,'edgecolor','none')
+    set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none')
     
     fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
         [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1]);
     
-    set(fillboxST,'facealpha',0.2,'edgecolor','none')
+    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none')
     
 end
 yrange7=get(logdrdAvsA,'YLim');
@@ -332,7 +334,7 @@ line([fishpupil fishpupil],[yrange7(1) yrange7(2)],'Color',[0 0 0],...
     'linestyle',':','linewidth',1)
 line([tetrapodpupil,tetrapodpupil],[yrange7(1) yrange7(2)],'Color',[0/255,128/255,128/255],...
     'linestyle',':','linewidth',1)
-xlabel('pupil diameter (mm)'); ylabel('log(dr/dA) (m/mm)');
+xlabel('pupil diameter (mm)'); ylabel('dr/dA (m/mm)');
 
 logdVdAvsA=subplot(2,2,4);
 if(NORMDERIVATIVE)
@@ -359,12 +361,12 @@ else
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
         [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0]);
     
-    set(fillboxTF,'facealpha',0.2,'edgecolor','none')
+    set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none')
     
     fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
         [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1]);
     
-    set(fillboxST,'facealpha',0.2,'edgecolor','none')
+    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none')
     
 end
 yrange8=get(logdVdAvsA,'YLim');
@@ -372,7 +374,7 @@ line([fishpupil fishpupil],[yrange8(1) yrange8(2)],'Color',[0 0 0],...
     'linestyle',':','linewidth',1)
 line([tetrapodpupil,tetrapodpupil],[yrange8(1) yrange8(2)],'Color',[0/255,128/255,128/255],...
     'linestyle',':','linewidth',1)
-xlabel('pupil diameter (mm)'); ylabel('log(dV/dA) (m^3/mm)');
+xlabel('pupil diameter (mm)'); ylabel('dV/dA (m^3/mm)');
 
 
 hL = legend([line8,line9,line10,line11,line12,line13,line14],...
