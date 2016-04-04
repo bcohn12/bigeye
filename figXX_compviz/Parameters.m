@@ -6,12 +6,14 @@ Dt=1.16; %units: s, integration time, used typical value
 Dt_daylight=0.16; %Donner etal 1994
 
 X=0.011; %units: photons/s, dark-noise rate/photoreceptor @16.5degrees Celsius
-X_daylight=0; 
-X_night=0.08; %units:photons/s, dark-noise rate/photoreceptor @23.5 degrees Celsius
+%X_daylight=0.011; %units: photons/s, dark-noise rate/photoreceptor @16.5degrees Celsius
+X_land=0.08; %units:photons/s, dark-noise rate/photoreceptor @23.5 degrees Celsius
 
 R=1.96; %units: n/a, reliability coefficient for 95% confidence, used typical value
 d=3e-6; %units: m, photoreceptor diameter, used typical value
 M=2.55; %units: n/a, ratio of focal length and pupil radius (2f/A), set to Matthiessen's ratio
+f_daylight=8.3; %focal_length/A for bright light
+f_night=2.1; %focal_length/A for night
 
 a=.3; %units: 1/m, beam attenuation coefficient, pg8 supplementary
 K_up=0.14; %units: 1/m, attenuation coefficient of background radiance for looking up, pg8 supplementary
@@ -34,9 +36,9 @@ Ispace_daylight=0.97*2.74e21;%units: photons/m^2ssr, radiance of space-light bac
 Ispace_starlight=1.35e16;%units: photons/m^2ssr, radiance of space-light background 
 Ispace_moonlight=6.42e16;%units: photons/m^2ssr, radiance of space-light background
 
-Iref_daylight=0.97*4.11e20;%units: photons/m^2ssr, radiance of reflection
-Iref_starlight=2.14e15;%units: photons/m^2ssr, radiance of reflection
-Iref_moonlight=9.65e15;%units: photons/m^2ssr, radiance of reflection
+Iref_daylight= 0.97*4.11e20;%units: photons/m^2ssr, radiance of reflection
+Iref_starlight=0;%2.14e15;%units: photons/m^2ssr, radiance of reflection
+Iref_moonlight=0;%9.65e15;%units: photons/m^2ssr, radiance of reflection
 
 att_up=2.29; %units: dB/100m, attenuation with depth for down-welling radiance,
 %pg 8 of supplementary
