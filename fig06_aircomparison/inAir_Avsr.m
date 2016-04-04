@@ -17,31 +17,39 @@ for loop1=1:length(pupilValuesAir)
     for loop2=1:length(rangeValuesAir)
         r=rangeValuesAir(loop2);
         
-        eq_daylight=((R*sqrt((q*Dt_daylight*0.617*(T/r)^2*...
-            (2*Ispace_daylight+((Iref_daylight-Ispace_daylight)*exp(-a_air*r))))))...
-            /abs(q*Dt_daylight*0.617*(T/r)^2*...
-            ((Iref_daylight-Ispace_daylight)*exp(-a_air*r))));
-         
-        eq_moonlight=((R*sqrt((q*Dt*0.617*(T/r)^2*...
-            (2*Ispace_moonlight+((Iref_moonlight-Ispace_moonlight)*exp(-a_air*r))))+...
-            2*((T*M)/(2*r*d))^2)*X_night*Dt)...
-            /abs(q*Dt*0.617*(T/r)^2*...
-            ((Iref_moonlight-Ispace_moonlight)*exp(-a_air*r))));
+        NspaceDaylight=0.617*A^2*(T/r)^2*q*Dt_daylight*Ispace_daylight;
+        NspaceMoonlight=0.617*A^2*(T/r)^2*q*Dt*Ispace_moonlight;
+        NspaceStarlight=0.617*A^2*(T/r)^2*q*Dt*Ispace_starlight;
         
-        eq_starlight=((R*sqrt((q*Dt*0.617*(T/r)^2*...
-            (2*Ispace_starlight+((Iref_starlight-Ispace_starlight)*exp(-a_air*r))))+...
-            2*((T*M)/(2*r*d))^2)*X_night*Dt)...
-            /abs(q*Dt*0.617*(T/r)^2*...
-            ((Iref_starlight-Ispace_starlight)*exp(-a_air*r))));
+        NrefDaylight=0.617*A^2*(T/r)^2*q*Dt_daylight*Iref_daylight*exp(-a_air*r);
+        NrefMoonlight=0.617*A^2*(T/r)^2*q*Dt*Iref_moonlight*exp(-a_air*r);
+        NrefStarlight=0.617*A^2*(T/r)^2*q*Dt*Iref_starlight*exp(-a_air*r);
+        
+        NblackDaylight=0.617*A^2*(T/r)^2*q*Dt_daylight*Ispace_daylight*(1-exp(-a_air*r));
+        NblackMoonlight=0.617*A^2*(T/r)^2*q*Dt*Ispace_moonlight*(1-exp(-a_air*r));
+        NblackStarlight=0.617*A^2*(T/r)^2*q*Dt*Ispace_starlight*(1-exp(-a_air*r));
+        
+        Xch_diurnal=((T*f_daylight*A)/(r*d))^2*X_land*Dt_daylight;
+        Xch_nocturnal=((T*f_night*A)/(r*d))^2+X_land*Dt;
+        
+        eq_daylight=(R*sqrt(NspaceDaylight+NblackDaylight+NrefDaylight+2*Xch_diurnal))...
+            /(abs(NblackDaylight+NrefDaylight-NspaceDaylight));
+        
+        eq_moonlight= (R*sqrt(NspaceMoonlight+NblackMoonlight+NrefMoonlight+2*Xch_nocturnal))...
+            /(abs(NblackMoonlight+NrefMoonlight-NspaceMoonlight));
+        
+        eq_starlight=(R*sqrt(NspaceStarlight+NblackStarlight+NrefStarlight+2*Xch_nocturnal))...
+            /(abs(NblackStarlight+NrefStarlight-NspaceStarlight));
+
         
          possibleSolD(loop2)=eq_daylight;
          possibleSolM(loop2)=eq_moonlight;
          possibleSolS(loop2)=eq_starlight;
          
     end
-    IDXDaylight=knnsearch(possibleSolD,A,'NSMethod','exhaustive','distance','seuclidean');
-    IDXMoonlight=knnsearch(possibleSolM,A,'NSMethod','exhaustive','distance','seuclidean');
-    IDXStarlight=knnsearch(possibleSolS,A,'NSMethod','exhaustive','distance','seuclidean');
+    IDXDaylight=knnsearch(possibleSolD,1.,'NSMethod','exhaustive','distance','euclidean');
+    IDXMoonlight=knnsearch(possibleSolM,1.,'NSMethod','exhaustive','distance','euclidean');
+    IDXStarlight=knnsearch(possibleSolS,1.,'NSMethod','exhaustive','distance','euclidean');
     
     visualRangeDaylight(loop1)=rangeValuesAir(IDXDaylight);
     visualRangeMoonlight(loop1)=rangeValuesAir(IDXMoonlight);
