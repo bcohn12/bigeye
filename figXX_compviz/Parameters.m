@@ -32,13 +32,13 @@ Ispace_down=0.97*3.67e11; %units: photons/m^2ssr, radiance of space-light
 %background in the direction of view at the depth of the eye for up-welling radiance at 200m, pg7
 %supplementary
 
-Ispace_daylight=0.97*4.17e20;%units: photons/m^2ssr, radiance of space-light background 
-Ispace_starlight=3.67e15;%units: photons/m^2ssr, radiance of space-light background 
-Ispace_moonlight=1.61e16;%units: photons/m^2ssr, radiance of space-light background
-
-Iref_daylight= 0.97*2.5e19;%units: photons/m^2ssr, radiance of reflection
-Iref_starlight=7.78e14;%2.14e15;%units: photons/m^2ssr, radiance of reflection
-Iref_moonlight=3.52e15;%9.65e15;%units: photons/m^2ssr, radiance of reflection
+% Ispace_daylight=0.97*4.17e20;%units: photons/m^2ssr, radiance of space-light background 
+% Ispace_starlight=3.67e15;%units: photons/m^2ssr, radiance of space-light background 
+% Ispace_moonlight=1.61e16;%units: photons/m^2ssr, radiance of space-light background
+% 
+% Iref_daylight= 0.97*2.5e19;%units: photons/m^2ssr, radiance of reflection
+% Iref_starlight=7.78e14;%2.14e15;%units: photons/m^2ssr, radiance of reflection
+% Iref_moonlight=3.52e15;%9.65e15;%units: photons/m^2ssr, radiance of reflection
 
 att_up=2.29; %units: dB/100m, attenuation with depth for down-welling radiance,
 %pg 8 of supplementary
