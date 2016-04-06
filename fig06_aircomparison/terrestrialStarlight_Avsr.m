@@ -25,11 +25,7 @@ SSH=@(l) alpha(l)+beta(l);
 
 %% SET EXTINCTION COEFFICIENT 
 %Recheck values from Middleton vision book
-c=200; %Atmospheric Attenuation 
-n=1.3; %Atmospheric Attenuation
-
-sigma=@(l) (8.8e-3*l.^(-4)+0.1*l.^-1);;
-
+sigma=@(l) (1.1e-3*l.^(-4)+8e-2*l.^(-1)); %Moller Optics of Lower Atmosphere
 
 %% CALCULATE THE SPECTRAL RADIANCE OF SPACE
 lambda1=400;

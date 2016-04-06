@@ -1,5 +1,6 @@
 clear all;
 
+run ../figXX_compviz/Parameters.m
 load daylight.mat
 load moonlight.mat
 load starlight.mat
@@ -29,7 +30,7 @@ dVdAMoonlight=derivative(pupilValuesAir*10^3,visualRangeMoonlight);
 drdAStarlight=derivative(pupilValuesAir*10^3,visualRangeStarlight);
 dVdAStarlight=derivative(pupilValuesAir*10^3,visualRangeStarlight);
 
-save('terrestrial_Avsr','pupilValuesAir', 'rangeValuesAir',...
+save('terrestrial_Avsr','pupilValuesAir',...
     'visualRangeDaylight','visualVolumeDaylight', 'drdADaylight','dVdADaylight',...
     'visualRangeMoonlight','visualVolumeMoonlight','drdAMoonlight','dVdAMoonlight',...
     'visualRangeStarlight','visualVolumeStarlight','drdAStarlight','dVdAStarlight');

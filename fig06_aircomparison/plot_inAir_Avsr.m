@@ -4,6 +4,7 @@ clear all;
 load daylight.mat
 load moonlight.mat
 load starlight.mat
+load terrestrial_Avsr.mat
 load('constantDepth_rvsA')
 
 pupilValues=pupilValues*10^3;

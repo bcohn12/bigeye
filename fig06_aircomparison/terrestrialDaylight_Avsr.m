@@ -25,10 +25,8 @@ SSH=@(l) alpha(l)+beta(l);
 
 %% SET EXTINCTION COEFFICIENT 
 %Recheck values from Middleton vision book
-c=5; %Atmospheric Attenuation 
-n=0.5; %Atmospheric Attenuation
 
-sigma=@(l) (1.1e-3*l.^(-4)+8e-2*l.^(-1));
+sigma=@(l) (1.1e-3*l.^(-4)+8e-2*l.^(-1)); %Moller Optics of Lower Atmosphere
 
 %% CALCULATE THE SPECTRAL RADIANCE OF SPACE
 lambda1=400;
@@ -43,10 +41,10 @@ Ispace_daylight=integral(IspaceFunc,lambda1,lambda2);
 
 %% RELATE PUPIL SIZE TO RANGE
 minpupil=0.001; maxpupil=0.04;
-minvisualrange=1; maxvisualrange=20000;
+minvisualrange=1; maxvisualrange=200;
 
 pupilValuesAir=linspace(minpupil,maxpupil,25);
-rangeValuesAir=linspace(minvisualrange,maxvisualrange,10000);
+rangeValuesAir=linspace(minvisualrange,maxvisualrange,5000);
 
 parfor loop1=1:length(pupilValuesAir)
     A=pupilValuesAir(loop1);
