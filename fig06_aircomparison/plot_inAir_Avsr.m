@@ -1,10 +1,10 @@
 close all;
 clear all;
 
-load('inAir_Avsr')
+load daylight.mat
+load moonlight.mat
+load starlight.mat
 load('constantDepth_rvsA')
-
-warning('If any of the bounds or parameters are changed re run the functions that are loaded')
 
 pupilValues=pupilValues*10^3;
 pupilValuesAir=pupilValuesAir*10^3;

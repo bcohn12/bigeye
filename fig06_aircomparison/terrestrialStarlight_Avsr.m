@@ -28,7 +28,7 @@ SSH=@(l) alpha(l)+beta(l);
 c=200; %Atmospheric Attenuation 
 n=1.3; %Atmospheric Attenuation
 
-sigma=@(l) (1.1e-3*l.^(-4)+8e-2*l.^-1);
+sigma=@(l) (8.8e-3*l.^(-4)+0.1*l.^-1);;
 
 
 %% CALCULATE THE SPECTRAL RADIANCE OF SPACE
@@ -55,7 +55,7 @@ parfor loop1=1:length(pupilValuesAir)
     for loop2=1:length(rangeValuesAir)
         r=rangeValuesAir(loop2);
         
-        Nspace=(pi/4)^2*A^2*(T/r)^2*Ispace_starlight*q*Dt;
+        Nspace=(pi/4)^2*A^2*(T/r)^2*Ispace_starlight*eta*Dt;
         Xch=((T*f_night*A)/(r*d))^2*X_land*Dt;
         
          % CALCULATE SPECTRAL RADIANCE OF TARGET        
@@ -70,7 +70,7 @@ parfor loop1=1:length(pupilValuesAir)
         ItargetFunc=@(l) IblackFunc(l)+IrefFunc(l);      
         Itarget=integral(ItargetFunc,lambda1,lambda2); 
         
-        Ntarget=(pi/4)^2*A^2*(T/r)^2*Itarget*q*Dt+2*Xch;
+        Ntarget=(pi/4)^2*A^2*(T/r)^2*Itarget*eta*Dt+2*Xch;
         
         eq=(R*sqrt(Ntarget+Nspace))/(abs(Ntarget-Nspace));
         
