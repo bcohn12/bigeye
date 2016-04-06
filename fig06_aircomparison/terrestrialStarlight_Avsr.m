@@ -25,10 +25,11 @@ SSH=@(l) alpha(l)+beta(l);
 
 %% SET EXTINCTION COEFFICIENT 
 %Recheck values from Middleton vision book
-c=5; %Atmospheric Attenuation 
-n=0.5; %Atmospheric Attenuation
+c=200; %Atmospheric Attenuation 
+n=1.3; %Atmospheric Attenuation
 
 sigma=@(l) (1.1e-3*l.^(-4)+8e-2*l.^-1);
+
 
 %% CALCULATE THE SPECTRAL RADIANCE OF SPACE
 lambda1=400;
@@ -37,9 +38,9 @@ k=0.035;
 len=57;
 const=1e-9/(6.63e-34*2.998e8);
 
-IspaceFunc=@(l) ((IlambdaDaylight(l*1e-3).*(l*1e-3).*10).*l.*const)...
+IspaceFunc=@(l) ((IlambdaStarlight(l*1e-3).*(l*1e-3)).*l.*const)...
     .*(1-exp(-k.*SSH(l).*len));
-Ispace_daylight=integral(IspaceFunc,lambda1,lambda2);
+Ispace_starlight=integral(IspaceFunc,lambda1,lambda2);
 
 %% RELATE PUPIL SIZE TO RANGE
 minpupil=0.001; maxpupil=0.04;
@@ -50,37 +51,36 @@ rangeValuesAir=linspace(minvisualrange,maxvisualrange,5000);
 
 parfor loop1=1:length(pupilValuesAir)
     A=pupilValuesAir(loop1);
-    possibleSolD=zeros(length(rangeValuesAir),1);
+    possibleSolS=zeros(length(rangeValuesAir),1);
     for loop2=1:length(rangeValuesAir)
         r=rangeValuesAir(loop2);
         
-        Nspace=(pi/4)^2*A^2*(T/r)^2*Ispace_daylight*q*Dt_daylight;
-        Xch=((T*f_daylight*A)/(r*d))^2*X_land*Dt_daylight;
+        Nspace=(pi/4)^2*A^2*(T/r)^2*Ispace_starlight*q*Dt;
+        Xch=((T*f_night*A)/(r*d))^2*X_land*Dt;
         
-        % CALCULATE SPECTRAL RADIANCE OF TARGET
-        IblackFunc=@(l)((IlambdaDaylight(l*1e-3).*(l*1e-3).*10).*l.*const)...
-            .*(1-exp(-k.*SSH(l).*len)).*(1-(exp(-sigma(l*1e-3).*r))); 
+         % CALCULATE SPECTRAL RADIANCE OF TARGET        
+        IblackFunc=@(l)((IlambdaStarlight(l*1e-3).*(l*1e-3)).*l.*const)...
+           .*(1-exp(-k.*SSH(l).*len)).*(1-(exp(-sigma(l*1e-3).*r))); 
         %units: photons/m^2srs
 
-        IrefFunc=@(l)((RRGBlackFunc(l).*IlambdaDaylight(l*1e-3).*(l*1e-3).*10).*l.*const)...
+        IrefFunc=@(l)((RRGBlackFunc(l).*IlambdaStarlight(l*1e-3).*(l*1e-3)).*l.*const)...
             .*(1-exp(-k.*SSH(l).*len)).*(exp(-sigma(l*1e-3).*r));
         %units: photons/m^2srs
 
-        Iblack=integral(IblackFunc,lambda1,lambda2);
-        Iref=integral(IrefFunc,lambda1,lambda2);
-        Itarget=Iblack+Iref;
+        ItargetFunc=@(l) IblackFunc(l)+IrefFunc(l);      
+        Itarget=integral(ItargetFunc,lambda1,lambda2); 
         
-        Ntarget=(pi/4)^2*A^2*(T/r)^2*Itarget*q*Dt_daylight+2*Xch;
+        Ntarget=(pi/4)^2*A^2*(T/r)^2*Itarget*q*Dt+2*Xch;
         
         eq=(R*sqrt(Ntarget+Nspace))/(abs(Ntarget-Nspace));
         
-        possibleSolD(loop2)=eq;
+        possibleSolS(loop2)=eq;
     end
-    IDXDaylight=knnsearch(possibleSolD,1,'NSMethod','exhaustive','distance','euclidean');
-    visualRangeDaylight(:,loop1)=rangeValuesAir(IDXDaylight);
+    IDXDaylight=knnsearch(possibleSolS,1,'NSMethod','exhaustive','distance','euclidean');
+    visualRangeStarlight(:,loop1)=rangeValuesAir(IDXDaylight);
     
     s=sprintf('iteration: %d', loop1);
     disp(s)
 end
 
-save('daylight','Ispace_daylight','visualRangeDaylight');
+save('starlight','pupilValuesAir','Ispace_starlight','visualRangeStarlight');
