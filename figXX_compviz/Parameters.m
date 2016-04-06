@@ -2,6 +2,7 @@ clear all; close all;
 
 %% PARAMETERS (*ALL FROM NILS14A*)
 q=0.36; %units: n/a, detection efficiency, used typical value
+eta=0.8;
 Dt=1.16; %units: s, integration time, used typical value
 Dt_daylight=0.16; %Donner etal 1994
 
