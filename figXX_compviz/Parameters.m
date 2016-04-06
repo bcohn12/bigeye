@@ -4,7 +4,7 @@ clear all; close all;
 q=0.36; %units: n/a, detection efficiency, used typical value
 eta=0.8;
 Dt=1.16; %units: s, integration time, used typical value
-Dt_daylight=0.16; %Donner etal 1994
+Dt_daylight=19676^-0.28; %Donner etal 1994
 
 X=0.011; %units: photons/s, dark-noise rate/photoreceptor @16.5degrees Celsius
 %X_daylight=0.011; %units: photons/s, dark-noise rate/photoreceptor @16.5degrees Celsius
