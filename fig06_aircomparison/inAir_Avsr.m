@@ -1,6 +1,9 @@
 clear all;
 
 run ../figXX_compviz/Parameters.m
+load daylight.mat
+load moonlight.mat
+load starlight.mat
 
 minpupil=0.001; maxpupil=0.04;
 minvisualrange=1; maxvisualrange=20000;
