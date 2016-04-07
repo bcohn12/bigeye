@@ -64,7 +64,7 @@ const=1e-9/(6.63e-34*2.998e8);
 %   it is the spectral radiance of daylight, at 600 meters up from
 %   sea levels, looking up at 20 degrees
 %  l is in micrometers so multiplied by 1e-3
-IspaceFunc=@(l) ((IlambdaDaylight(l*1e-3).*(l*1e-3)).*l.*const)...
+IspaceFunc=@(l) (RRGGreenFunc(l).*(IlambdaDaylight(l*1e-3).*(l*1e-3)).*l.*const)...
     .*(1-exp(-k.*SSH(l).*len));
 
 % Ispace_daylight the spectral radiance absorbed based on
@@ -92,7 +92,7 @@ parfor loop1=1:length(pupilValuesAir)
         % photoreceptor, in this case around a shiny black wall, vertical
         % position
         IblackFunc=@(l)((IlambdaDaylight(l*1e-3).*(l*1e-3)).*l.*const)...
-            .*(1-exp(-k.*SSH(l).*len)).*(1-(exp(-sigma(l*1e-3).*r))); 
+            .*(1-exp(-k.*SSH(l).*len)).*(1-(exp((-sigma(l*1e-3)).*r))); 
         %units: photons/m^2srs
  
         % spectral radiance, reflected light, absorbed by photoreceptor
@@ -123,7 +123,7 @@ parfor loop1=1:length(pupilValuesAir)
         
         possibleSolD(loop2)=eq;
     end
-    IDXDaylight=knnsearch(possibleSolD,1,'NSMethod','exhaustive','distance','euclidean');
+    IDXDaylight=knnsearch(possibleSolD,1,'distance','euclidean');
     visualRangeDaylight(:,loop1)=rangeValuesAir(IDXDaylight);
     
     s=sprintf('iteration: %d', loop1);
