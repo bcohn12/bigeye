@@ -1,10 +1,16 @@
 clear all;
+PROMPT = 0;
 
 run ../figXX_compviz/Parameters.m
 
 %% CONSTANT DEPTH VALUE RANGE OF VISION VS PUPIL SIZE
 
+if PROMPT then
 coastalWaterDepth=input('In vector form input depth values:\n');
+else 
+    coastalWaterDepth=[10 100];
+end
+
 coastalWaterDepth=sort(coastalWaterDepth,'descend');
 
 minpupil=0.001; maxpupil=0.04;
@@ -13,6 +19,9 @@ minvisualrange=0.1; maxvisualrange=60;
 pupilValues=linspace(minpupil,maxpupil,30); rangeValues=linspace(minvisualrange,maxvisualrange,2500);
 
 for loop1=1:length(coastalWaterDepth)
+    % att_up - background light, downwelling attenuation, spectral radiance
+    % att_hor - background light, horizontal attenuation, spectral radiance
+    % measured at 200 m
     newIspaceUp= 10^((att_up/100)*(200-coastalWaterDepth(loop1)))*Ispace_up;
     newIspaceHor= 10^(att_hor/100*(200-coastalWaterDepth(loop1)))*Ispace_hor;
     newIspaceDown= 10^(att_down/100*(200-coastalWaterDepth(loop1)))*Ispace_down;
