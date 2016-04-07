@@ -48,7 +48,6 @@ att_hor=2.34; %units: dB/100m, attenuation with depth for horizontal radiance,
 att_down=2.33; %units: dB/100m, attenuation with depth for up-welling radiance,
 %pg 8 of supplementary
 
-
 % SENSORY VOLUME PARAMS
 % aerial and water half elevation angle of sensory volume
 elevationCoastal=pi/3; %60 deg 
