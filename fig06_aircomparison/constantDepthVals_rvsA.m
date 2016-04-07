@@ -59,6 +59,9 @@ R=[visualRangeSolutions(1).up', visualRangeSolutions(1).hor', ...
 AA=pupilValues;
 indx=1;
 
+
+% NUMERICAL INTEGRALS TO COMPUTE SENSORY VOLUME
+% VALIDATED USING COMPARISON TO SNYDER
 for loop1=1:2:size(R,2)
     visualRangeUp=R(:,loop1);
     visualRangeHor=R(:,loop1+1);

@@ -48,10 +48,23 @@ att_hor=2.34; %units: dB/100m, attenuation with depth for horizontal radiance,
 att_down=2.33; %units: dB/100m, attenuation with depth for up-welling radiance,
 %pg 8 of supplementary
 
-elevationCoastal=pi/6; %water elevation, for in air, half
-azimuthCoastal=(2*120-35)*(pi/180); %viewing azimuth
-azimuthAir=135*(pi/180);
 
+% SENSORY VOLUME PARAMS
+% aerial and water half elevation angle of sensory volume
+elevationCoastal=pi/3; %60 deg 
+
+% azimuth is here assuming 35 degree overlap typical of fish;
+% definitely underestimate for terrestrial case
+azimuthCoastal=(2*120-35)*(pi/180); %viewing azimuth
+azimuthAir = azimuthCoastal;
+
+%For possible experimentation uncomment these lines
+%HUMAN: 135 approx 70 deg overlap
+%azimuthAir=135*(pi/180);  
+%for binocular field
+
+% for water case, we go from elevationMin to elevationMax; for
+% aerial case we go elevationMin to elevationMaxAir
 elevationMin=pi/2-elevationCoastal;
 elevationMax=pi/2+elevationCoastal;
 elevationMaxAir=pi/2;
