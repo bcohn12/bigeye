@@ -74,7 +74,7 @@ Ispace_daylight=integral(IspaceFunc,lambda1,lambda2);
 
 %% RELATE PUPIL SIZE TO RANGE
 minpupil=0.001; maxpupil=0.04;
-minvisualrange=1; maxvisualrange=20000;
+minvisualrange=1; maxvisualrange=50000;
 
 pupilValuesAir=linspace(minpupil,maxpupil,25);
 rangeValuesAir=linspace(minvisualrange,maxvisualrange,5000);
