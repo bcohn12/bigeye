@@ -1,51 +1,58 @@
 clear all;
 
-lambdaQueryMicro=linspace(0.4,0.7,3000)'; lambdaQueryNano=linspace(400,700,3000)';
+%EVERYTHING CONVERTED TO nm
+lambdaQueryNano=linspace(400,700,3000)';
 
 lambdaDaylight=csvread('daylightRadiance.csv');
-lambdaD=lambdaDaylight(:,1); daylightRadiance=lambdaDaylight(:,2);
+lambdaD=lambdaDaylight(:,1)*10^3;%nm
+daylightRadiance=lambdaDaylight(:,2)*10*1e-3; %W/(m^2 sr s nm)
 IlambdaDaylight=@(l)(interp1(lambdaD,daylightRadiance,l,'pchip'));
-daylightRadianceInterp=interp1(lambdaD,daylightRadiance,lambdaQueryMicro,'pchip')*10;
+daylightRadianceInterp=interp1(lambdaD,daylightRadiance,lambdaQueryNano,'pchip');
 
 lambdaVegetative=csvread('vegetativeRadiance.csv');
-lambdaV=lambdaVegetative(:,1); vegetativeRadiance=lambdaVegetative(:,2);
+lambdaV=lambdaVegetative(:,1); %nm
+vegetativeRadiance=lambdaVegetative(:,2); %W/(m^2 sr s nm)
 IlambdaVegetative=@(l) interp1(lambdaV,vegetativeRadiance,l,'pchip');
 vegetativeRadianceInterp=interp1(lambdaV,vegetativeRadiance,lambdaQueryNano,'pchip');
 
 lambdaStarlight=csvread('starlightRadiance.csv');
-lambdaS=lambdaStarlight(:,1); starlightRadiance=lambdaStarlight(:,2);
+lambdaS=lambdaStarlight(:,1)*10^3;  %nm
+starlightRadiance=lambdaStarlight(:,2)*1e-3; %W/(m^2 sr s nm)
 IlambdaStarlight=@(l) interp1(lambdaS,starlightRadiance,l,'pchip');
-starlightRadianceInterp=interp1(lambdaS,starlightRadiance,lambdaQueryMicro,'pchip');
+starlightRadianceInterp=interp1(lambdaS,starlightRadiance,lambdaQueryNano,'pchip');
 
 lambdaMoonlight=csvread('moonlightRadiance.csv');
-lambdaM=lambdaMoonlight(:,1); moonlightRadiance=lambdaMoonlight(:,2);
+lambdaM=lambdaMoonlight(:,1)*10^3; %nm 
+moonlightRadiance=lambdaMoonlight(:,2)*1e-3; %W/(m^2 sr s nm)
 IlambdaMoonlight=@(l) (interp1(lambdaM,moonlightRadiance,l,'pchip'));
-moonlightRadianceInterp=interp1(lambdaM,moonlightRadiance,lambdaQueryMicro,'pchip');
+moonlightRadianceInterp=interp1(lambdaM,moonlightRadiance,lambdaQueryNano,'pchip');
 
 figure()
 subplot(2,1,1)
-plot(lambdaQueryMicro,daylightRadianceInterp);
+plot(lambdaQueryNano,daylightRadianceInterp);
 hold on;
-plot(lambdaQueryNano*10^-3,vegetativeRadianceInterp*10^3)
-xlabel('\lambda (\mu m)'); ylabel('W/m^2srs\mu m')
+plot(lambdaQueryNano,vegetativeRadianceInterp)
+xlabel('\lambda (nm)'); ylabel('W/m^2srsnm')
 legend('daylight radiance','vegetative radiance','location','northoutside','orientation','horizontal');
 hold off;
 
 subplot(2,1,2)
-plot(lambdaQueryMicro,moonlightRadianceInterp);
+plot(lambdaQueryNano,moonlightRadianceInterp);
 hold on;
-plot(lambdaQueryMicro,starlightRadianceInterp);
-xlabel('\lambda (\mu m)'); ylabel('W/m^2srs\mu m')
+plot(lambdaQueryNano,starlightRadianceInterp);
+xlabel('\lambda (nm)'); ylabel('W/m^2srsnm')
 legend('moonlight radiance','starlight radiance','location','northoutside','orientation','horizontal')
 hold off;
 
 RRGGreen=csvread('RRGGreen.csv');
-lambdaRRGGreen=RRGGreen(:,1); RRGGreen=RRGGreen(:,2);
+lambdaRRGGreen=RRGGreen(:,1); %nm
+RRGGreen=RRGGreen(:,2); %unitless ratio
 RRGGreenFunc=@(l) interp1(lambdaRRGGreen,RRGGreen,l,'pchip');
 RRGGreenInterp=interp1(lambdaRRGGreen,RRGGreen,lambdaQueryNano,'pchip');
 
 RRGBlack=csvread('RRGBlack.csv');
-lambdaRRGBlack=RRGBlack(:,1); RRGBlack=RRGBlack(:,2);
+lambdaRRGBlack=RRGBlack(:,1);  %nm
+RRGBlack=RRGBlack(:,2); %unitless ratio
 RRGBlackFunc=@(l) interp1(lambdaRRGBlack,RRGBlack,l,'pchip');
 RRGBlackInterp=interp1(lambdaRRGBlack,RRGBlack,lambdaQueryNano,'pchip');
 
@@ -56,10 +63,9 @@ plot(lambdaQueryNano,RRGBlackInterp);
 xlabel('\lambda (nm)'); ylabel('RRG');
 legend('green horizontal','black','location','southoutside','orientation','horizontal');
 
-save('RadianceRRG','daylightRadianceInterp','vegetativeRadianceInterp',...
-    'moonlightRadianceInterp','starlightRadianceInterp',...
-    'RRGGreenInterp','RRGBlackInterp',...
-    'IlambdaDaylight','IlambdaVegetative','IlambdaMoonlight','IlambdaStarlight',...
-    'RRGGreenFunc','RRGBlackFunc','lambdaQueryMicro','lambdaQueryNano')
+save('RadianceRRG',...
+    'lambdaD', 'lambdaV','lambdaM','lambdaS','lambdaRRGGreen','lambdaRRGBlack',...
+    'daylightRadiance','vegetativeRadiance','moonlightRadiance','starlightRadiance',...
+    'RRGGreen','RRGBlack')
 
 

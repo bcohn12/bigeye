@@ -2,7 +2,7 @@ clear all; close all;
 
 %% PARAMETERS (*ALL FROM NILS14A*)
 q=0.36; %units: n/a, detection efficiency, used typical value
-eta=0.8;
+eta=0.1; %Snyder 1977 via Barlow 1964
 Dt=1.16; %units: s, integration time, used typical value
 Dt_daylight=19676^-0.28; %Donner etal 1994
 
@@ -72,8 +72,11 @@ azimuthMin=0;
 azimuthMax=azimuthCoastal;
 azimuthMaxAir=azimuthAir;
 
-T=.1; % units: m, prey width
+T=.01; % units: m, prey width
 
 f = @(rho,phi,theta) rho.^2.*sin(phi); %volume equation in spherical coordinates
+
+minpupil=0.001;
+maxpupil=0.04;
 
 save('Parameters')
