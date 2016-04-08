@@ -3,6 +3,9 @@ clear all;
 run ../figXX_compviz/Parameters.m
 load ../figXX_compviz/RadianceRRG.mat
 
+IlambdaMoonlight=@(l) (interp1(lambdaM,moonlightRadiance,l,'pchip'));
+RRGBlackFunc=@(l) interp1(lambdaRRGBlack,RRGBlack,l,'pchip');
+
 %% SET SSH (ABSORBANCE BAND OF PHOTORECEPTORS)
 a0alpha=380;
 a1alpha=6.09;
@@ -25,7 +28,7 @@ SSH=@(l) alpha(l)+beta(l);
 
 %% SET EXTINCTION COEFFICIENT 
 %Recheck values from Middleton vision book
-sigma=@(l) (1.1e-3*l.^(-4)+8e-2*l.^(-1)); %Moller Optics of Lower Atmosphere
+sigma=@(lambda) ((1.1e-3*(lambda*1e-3).^(-4)+8e-2*(lambda*1e-3).^(-1))./1e3); %Moller Optics of Lower Atmosphere
 
 %% CALCULATE THE SPECTRAL RADIANCE OF SPACE
 lambda1=400;
@@ -34,13 +37,12 @@ k=0.035;
 len=57;
 const=1e-9/(6.63e-34*2.998e8);
 
-IspaceFunc=@(l) ((IlambdaMoonlight(l*1e-3).*(l*1e-3)).*l.*const)...
+IspaceFunc=@(l) ((IlambdaMoonlight(l).*(l)).*l.*const)...
     .*(1-exp(-k.*SSH(l).*len));
 Ispace_moonlight=integral(IspaceFunc,lambda1,lambda2);
 
 %% RELATE PUPIL SIZE TO RANGE
-minpupil=0.001; maxpupil=0.04;
-minvisualrange=1; maxvisualrange=200;
+minvisualrange=1; maxvisualrange=10000;
 
 pupilValuesAir=linspace(minpupil,maxpupil,25);
 rangeValuesAir=linspace(minvisualrange,maxvisualrange,5000);
@@ -55,12 +57,12 @@ parfor loop1=1:length(pupilValuesAir)
         Xch=((T*f_night*A)/(r*d))^2*X_land*Dt;
         
          % CALCULATE SPECTRAL RADIANCE OF TARGET        
-        IblackFunc=@(l)((IlambdaMoonlight(l*1e-3).*(l*1e-3)).*l.*const)...
-           .*(1-exp(-k.*SSH(l).*len)).*(1-(exp(-sigma(l*1e-3).*r))); 
+        IblackFunc=@(l)((IlambdaMoonlight(l).*(l)).*l.*const)...
+           .*(1-exp(-k.*SSH(l).*len)).*(1-(exp(-sigma(l).*r))); 
         %units: photons/m^2srs
 
-        IrefFunc=@(l)((RRGBlackFunc(l).*IlambdaMoonlight(l*1e-3).*(l*1e-3)).*l.*const)...
-            .*(1-exp(-k.*SSH(l).*len)).*(exp(-sigma(l*1e-3).*r));
+        IrefFunc=@(l)((RRGBlackFunc(l).*IlambdaMoonlight(l).*(l)).*l.*const)...
+            .*(1-exp(-k.*SSH(l).*len)).*(exp(-sigma(l).*r));
         %units: photons/m^2srs
 
         ItargetFunc=@(l) IblackFunc(l)+IrefFunc(l);      
