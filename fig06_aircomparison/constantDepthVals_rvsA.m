@@ -1,11 +1,12 @@
 clear all;
-PROMPT = 0;
 
 run ../figXX_compviz/Parameters.m
 
 %% CONSTANT DEPTH VALUE RANGE OF VISION VS PUPIL SIZE
 
-if PROMPT then
+PROMPT = 0;
+
+if PROMPT
 coastalWaterDepth=input('In vector form input depth values:\n');
 else 
     coastalWaterDepth=[10 100];
