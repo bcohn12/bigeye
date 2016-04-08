@@ -1,8 +1,8 @@
 clear all; close all;
 
-%% PARAMETERS (*ALL FROM NILS14A*)
+%% PARAMETERS (*ALL FROM NILS14A
 q=0.36; %units: n/a, detection efficiency, used typical value
-eta=0.1; %Snyder 1977 via Barlow 1964
+eta=q; %Snyder 1977 via Barlow 1964
 Dt=1.16; %units: s, integration time, used typical value
 Dt_daylight=19676^-0.28; %Donner etal 1994
 
