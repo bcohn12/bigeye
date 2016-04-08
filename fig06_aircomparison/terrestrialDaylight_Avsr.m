@@ -10,7 +10,7 @@ run ../figXX_compviz/Parameters.m
 % figXX_compviz
 load ../figXX_compviz/RadianceRRG.mat
 
-VEGETATIVE=1;
+VEGETATIVE=0;
 if(VEGETATIVE) 
     IlambdaDaylight=@(l)interp1(lambdaV,vegetativeRadiance,l,'pchip');
 else
@@ -36,8 +36,8 @@ Abeta=0.29;
 
 % maximum absorbtion wavelengths in nm for the alpha
 % and beta bands
-lmaxalpha=500;
-lmaxbeta=350;
+lmaxalpha=500e-9;
+lmaxbeta=350e-9;
 
 xalpha=@(l) log(l./lmaxalpha);
 xbeta=@(l) log(l./lmaxbeta);
@@ -55,18 +55,18 @@ SSH=@(l) alpha(l)+beta(l);
 % is why it is divided by 1e3 to get value per meter
 % wavelength lambda is in micrometers 
 % Conversion to micrometers for wavelength is done here
-sigma=@(lambda) ((1.1e-3*(lambda*1e-3).^(-4)+8e-2*(lambda*1e-3).^(-1))./1e3); %Moller Optics of Lower Atmosphere
+sigma=@(lambda) ((1.1e-3*(lambda*1e6).^(-4)+8e-2*(lambda*1e6).^(-1))./(1e3)); %Moller Optics of Lower Atmosphere
 
 %% CALCULATE THE SPECTRAL RADIANCE OF SPACE
-lambda1=400;  % min wavelength for integration, nm
-lambda2=700;  % max wavelength for integration, nm
+lambda1=400e-9;  % min wavelength for integration, nm
+lambda2=700e-9;  % max wavelength for integration, nm
 k=0.035;          % photoreceptor absorbtion, units 1/micrometers
 len=57;            % length of photoreceptor, in micrometers
 
 % conversion factor for going from spectral radiance in W/(m^2*sr*s)   into
 % photons/(m^2*sr*s) (Planck's constant * speed of light) 1e-9 to convert 
 % nm
-const=1e-9/(6.63e-34*2.998e8); 
+const=1/(6.63e-34*2.998e8); 
 
 % IspaceFunc: Background spectral radiance
 % IlambdaDaylight loaded from RadianceRRG
