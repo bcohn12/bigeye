@@ -28,7 +28,7 @@ SSH=@(l) alpha(l)+beta(l);
 
 %% SET EXTINCTION COEFFICIENT 
 %Recheck values from Middleton vision book
-sigma=@(lambda) ((1.1e-3*(lambda*1e-3).^(-4)+8e-2*(lambda*1e-3).^(-1))./1e3); %Moller Optics of Lower Atmosphere
+sigma=@(lambda) ((1.1e-3*(lambda*1e6).^(-4)+8e-2*(lambda*1e6).^(-1))./1e3); %Moller Optics of Lower Atmosphere
 
 %% CALCULATE THE SPECTRAL RADIANCE OF SPACE
 lambda1=400;

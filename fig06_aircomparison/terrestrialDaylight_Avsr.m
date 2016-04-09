@@ -10,7 +10,7 @@ run ../figXX_compviz/Parameters.m
 % figXX_compviz
 load ../figXX_compviz/RadianceRRG.mat
 
-VEGETATIVE=0;
+VEGETATIVE=1;
 if(VEGETATIVE) 
     IlambdaDaylight=@(l)interp1(lambdaV,vegetativeRadiance,l,'pchip');
 else
@@ -39,8 +39,8 @@ Abeta=0.29;
 lmaxalpha=500e-9;
 lmaxbeta=350e-9;
 
-xalpha=@(l) log(l./lmaxalpha);
-xbeta=@(l) log(l./lmaxbeta);
+xalpha=@(l) log10(l./lmaxalpha);
+xbeta=@(l) log10(l./lmaxbeta);
 
 alpha=@(l) Aalpha.*exp(-a0alpha.*xalpha(l).^2.*...
     (1+a1alpha.*xalpha(l)+(3/8).*a1alpha.^2.*xalpha(l).^2));
@@ -58,22 +58,21 @@ SSH=@(l) alpha(l)+beta(l);
 sigma=@(lambda) ((1.1e-3*(lambda*1e6).^(-4)+8e-2*(lambda*1e6).^(-1))./(1e3)); %Moller Optics of Lower Atmosphere
 
 %% CALCULATE THE SPECTRAL RADIANCE OF SPACE
-lambda1=400e-9;  % min wavelength for integration, nm
-lambda2=700e-9;  % max wavelength for integration, nm
+lambda1=400e-9;  % min wavelength for integration, m
+lambda2=700e-9;  % max wavelength for integration, m
 k=0.035;          % photoreceptor absorbtion, units 1/micrometers
 len=57;            % length of photoreceptor, in micrometers
 
 % conversion factor for going from spectral radiance in W/(m^2*sr*s)   into
-% photons/(m^2*sr*s) (Planck's constant * speed of light) 1e-9 to convert 
-% nm
-const=1/(6.63e-34*2.998e8); 
+% photons/(m^2*sr*s) (Planck's constant * speed of light) 
+const=2.77e27; 
 
 % IspaceFunc: Background spectral radiance
 % IlambdaDaylight loaded from RadianceRRG
 %   it is the spectral radiance of daylight, at 600 meters up from
 %   sea levels, looking up at 20 degrees
 %  l is in micrometers so multiplied by 1e-3
-IspaceFunc=@(l) ((IlambdaDaylight(l).*(l)).*l.*const)...
+IspaceFunc=@(l) ((IlambdaDaylight(l).*(l)).*const)...
     .*(1-exp(-k.*SSH(l).*len));
 
 % Ispace_daylight the spectral radiance absorbed based on
@@ -85,9 +84,9 @@ Ispace_daylight=integral(IspaceFunc,lambda1,lambda2);
 minvisualrange=1; maxvisualrange=50000;
 
 pupilValuesAir=linspace(minpupil,maxpupil,25);
-rangeValuesAir=linspace(minvisualrange,maxvisualrange,10000);
+rangeValuesAir=linspace(minvisualrange,maxvisualrange,5000);
 
-for loop1=1:length(pupilValuesAir)
+parfor loop1=1:length(pupilValuesAir)
     A=pupilValuesAir(loop1);
     possibleSolD=zeros(length(rangeValuesAir),1);
     for loop2=1:length(rangeValuesAir)
@@ -99,13 +98,13 @@ for loop1=1:length(pupilValuesAir)
         % CALCULATE SPECTRAL RADIANCE OF volume around TARGET, absorbed by
         % photoreceptor, in this case around a shiny black wall, vertical
         % position
-        IblackFunc=@(l)((IlambdaDaylight(l).*(l)).*l.*const)...
-            .*(1-exp(-k.*SSH(l).*len)).*(1-(exp((-sigma(l)).*r))); 
+        IblackFunc=@(l)((IlambdaDaylight(l).*(l)).*const)...
+            .*(1-exp(-k.*SSH(l).*len)).*(1-(exp((-sigma(l).*r)))); 
         %units: photons/m^2srs
  
         % spectral radiance, reflected light, absorbed by photoreceptor
         % again from shiny black wall
-        IrefFunc=@(l)((RRGBlackFunc(l).*IlambdaDaylight(l).*(l)).*l.*const)...
+        IrefFunc=@(l)((RRGBlackFunc(l).*(IlambdaDaylight(l)).*(l)).*const)...
             .*(1-exp(-k.*SSH(l).*len)).*(exp(-sigma(l).*r));
         %units: photons/m^2srs
 
