@@ -87,7 +87,7 @@ minvisualrange=1; maxvisualrange=50000;
 pupilValuesAir=linspace(minpupil,maxpupil,25);
 rangeValuesAir=linspace(minvisualrange,maxvisualrange,10000);
 
-parfor loop1=1:length(pupilValuesAir)
+for loop1=1:length(pupilValuesAir)
     A=pupilValuesAir(loop1);
     possibleSolD=zeros(length(rangeValuesAir),1);
     for loop2=1:length(rangeValuesAir)

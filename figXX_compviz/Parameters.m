@@ -72,11 +72,11 @@ azimuthMin=0;
 azimuthMax=azimuthCoastal;
 azimuthMaxAir=azimuthAir;
 
-T=.01; % units: m, prey width
+T=.1; % units: m, prey width
 
 f = @(rho,phi,theta) rho.^2.*sin(phi); %volume equation in spherical coordinates
 
-minpupil=0.001;
-maxpupil=0.04;
+minpupil=0.001; % largest diameter of pupil, meters
+maxpupil=0.04; % smallest diameter of pupil, meters
 
 save('Parameters')
