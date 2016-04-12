@@ -5,7 +5,11 @@ q=0.36; %units: n/a, detection efficiency, used typical value
 eta=0.36; %Snyder 1977 via Barlow 1964
 Dt=1.16; %units: s, integration time, used typical value
 Dt_daylight=19676^-0.28; %Donner etal 1994
-LDaylight=1e3; % daylight luminosity in cd/m^2
+
+%All values from Middleton
+LDaylight=1e3; % daylight luminosity in cd/m^2 
+LMoonlight=1e-2; %Fairly brigh moonlight in cd/m^2
+LStarlight=1e-3; %moonless clear night sky in cd/m^2
 
 X=0.011; %units: photons/s, dark-noise rate/photoreceptor @16.5degrees Celsius
 %X_daylight=0.011; %units: photons/s, dark-noise rate/photoreceptor @16.5degrees Celsius
@@ -78,6 +82,6 @@ T=.1; % units: m, prey width
 f = @(rho,phi,theta) rho.^2.*sin(phi); %volume equation in spherical coordinates
 
 minpupil=0.001; % largest diameter of pupil, meters
-maxpupil=0.04; % smallest diameter of pupil, meters
+maxpupil=0.03; % smallest diameter of pupil, meters
 
 save('Parameters')
