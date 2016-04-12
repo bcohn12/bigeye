@@ -17,10 +17,10 @@ Ispace=((1.31e3)/0.89)*Bh*(1e6)^2; %value checked with mathematica
 
 
 %% RELATE PUPIL SIZE TO RANGE
-minvisualrange=1; maxvisualrange=5000;
+minvisualrange=1; maxvisualrange=1000;
 
 pupilValuesAir=linspace(minpupil,maxpupil,25);
-rangeValuesAir=linspace(minvisualrange,maxvisualrange,1000);
+rangeValuesAir=linspace(minvisualrange,maxvisualrange,5000);
 parfor loop1=1:length(pupilValuesAir)
     A=pupilValuesAir(loop1);
     possibleSolD=zeros(length(rangeValuesAir),1);
