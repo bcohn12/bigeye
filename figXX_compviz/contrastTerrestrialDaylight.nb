@@ -10,14 +10,106 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[     66307,       1635]
-NotebookOptionsPosition[     62883,       1532]
-NotebookOutlinePosition[     63488,       1558]
-CellTagsIndexPosition[     63417,       1553]
+NotebookDataLength[     45083,       1115]
+NotebookOptionsPosition[     43770,       1065]
+NotebookOutlinePosition[     44370,       1091]
+CellTagsIndexPosition[     44299,       1086]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{
+   "cache", " ", "values", " ", "or", " ", "interpolate", "  ", "the", " ", 
+    "Iobject"}], "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<iteration range: \>\"", ",", " ", 
+      RowBox[{"Dynamic", "[", "n", "]"}]}], "]"}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"minrange", "=", "1"}], ";", " ", 
+    RowBox[{"maxrange", "=", "100000"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"queryValues", "=", 
+     RowBox[{"Array", "[", 
+      RowBox[{
+       RowBox[{"#", "&"}], ",", "2500", ",", 
+       RowBox[{"{", 
+        RowBox[{"minrange", ",", "maxrange"}], "}"}]}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"Iobjectvals", "=", 
+    RowBox[{"{", "}"}]}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"For", "[", 
+     RowBox[{
+      RowBox[{"n", "=", "1"}], ",", 
+      RowBox[{"n", "\[LessEqual]", " ", 
+       RowBox[{"Length", "[", "queryValues", "]"}]}], ",", 
+      RowBox[{"n", "++"}], ",", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"queryRange", "=", 
+        RowBox[{"queryValues", "[", 
+         RowBox[{"[", "n", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Iobjectsol", "=", 
+        RowBox[{"Iobject", "[", "queryRange", "]"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"temp", "=", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"N", "[", "queryRange", "]"}], ",", 
+          RowBox[{"N", "[", "Iobjectsol", "]"}]}], "}"}]}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"AppendTo", "[", 
+        RowBox[{"Iobjectvals", ",", "temp"}], "]"}]}]}], 
+     "\[IndentingNewLine]", 
+     RowBox[{"(*", 
+      RowBox[{"Print", "[", "Iobjectvals", "]"}], "*)"}], 
+     "\[IndentingNewLine]", "]"}], ";"}], "\n", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Export", "[", 
+     RowBox[{
+      RowBox[{"FileNameJoin", "[", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"NotebookDirectory", "[", "]"}], ",", 
+         "\"\<Iobjectvalues.csv\>\""}], "}"}], "]"}], ",", "Iobjectvals"}], 
+     "]"}], ";"}]}]}]], "Input",
+ CellChangeTimes->{
+  3.6694673194389677`*^9, {3.6694697665563498`*^9, 3.669469771258086*^9}, {
+   3.669470099880507*^9, 3.669470112263153*^9}, {3.669470167571288*^9, 
+   3.6694701732252083`*^9}, {3.669470206988399*^9, 3.6694702072828407`*^9}, {
+   3.669470300129135*^9, 3.669470307494486*^9}},
+ CellTags->"only if"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"iteration range: \"\>", "\[InvisibleSpace]", 
+   DynamicBox[ToBoxes[$CellContext`n, StandardForm],
+    ImageSizeCache->{14., {0., 8.}}]}],
+  SequenceForm["iteration range: ", 
+   Dynamic[$CellContext`n]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.6694673623464327`*^9, 3.6694697814148407`*^9, 3.669470001735797*^9, {
+   3.6694701005953283`*^9, 3.669470113563367*^9}, 3.669470173740841*^9, 
+   3.669470207822015*^9},
+ CellTags->"only if"],
+
+Cell[BoxData[
+ RowBox[{"{", "}"}]], "Output",
+ CellChangeTimes->{
+  3.669467362364504*^9, 3.669469781421431*^9, 3.669470001743598*^9, {
+   3.669470100603818*^9, 3.669470113620685*^9}, 3.6694701737482767`*^9, 
+   3.669470207831542*^9},
+ CellTags->"only if"]
+}, Open  ]],
+
 Cell[BoxData[
  RowBox[{
   RowBox[{"Quit", "[", "]"}], ";"}]], "Input",
@@ -411,7 +503,9 @@ pTLaOBk3P9s3deiBbug/UrdYwKH0Lj/68bAG16PoP5tztcacvfk9vCfRBQ==
    3.669422207439556*^9, 3.6694230200388517`*^9, 3.669423205229052*^9, 
    3.6694237186292686`*^9, 3.6694238168078823`*^9, 3.669423904855665*^9, 
    3.669424228919664*^9, 3.6694625074052153`*^9, 3.669462584622386*^9, 
-   3.669466111593687*^9}]
+   3.669466111593687*^9, 3.6694663307044*^9, 3.669467281000391*^9, 
+   3.669467346677058*^9, 3.66946976191973*^9, 3.6694699936388187`*^9, 
+   3.669470119880628*^9, 3.669470217880237*^9}]
 }, Open  ]],
 
 Cell[BoxData[{
@@ -460,9 +554,11 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{
    RowBox[{"C0", "=", 
-    RowBox[{"-", "0.5"}]}], ";", " ", 
-   RowBox[{"(*", 
-    RowBox[{"Contrast", " ", "factor"}], "*)"}], "\[IndentingNewLine]", 
+    RowBox[{"-", "0.5"}]}], ";"}], " ", 
+  RowBox[{"(*", 
+   RowBox[{"Contrast", " ", "factor"}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
    RowBox[{"Bh", "=", 
     RowBox[{
      SuperscriptBox["10", "4"], 
@@ -515,7 +611,9 @@ Cell[BoxData[{
    3.66941375361789*^9, 3.669413778634523*^9}, {3.669415430646084*^9, 
    3.669415431761766*^9}, 3.669417730729301*^9, {3.669423006851009*^9, 
    3.669423043400292*^9}, {3.669423086309185*^9, 3.66942309514279*^9}, {
-   3.669423159897654*^9, 3.669423185887869*^9}, 3.6694235217640543`*^9}],
+   3.669423159897654*^9, 3.669423185887869*^9}, 3.6694235217640543`*^9, {
+   3.669469751116763*^9, 3.66946977544489*^9}, {3.66946996633003*^9, 
+   3.66946997085007*^9}, {3.669470238677537*^9, 3.669470248971757*^9}}],
 
 Cell[BoxData[{
  RowBox[{
@@ -548,42 +646,40 @@ Cell[BoxData[{
   ";"}], "\[IndentingNewLine]", 
  RowBox[{
   RowBox[{
-   RowBox[{
-    RowBox[{"Iobject", "[", "r_", "]"}], ":=", 
-    RowBox[{"Module", "[", "\[IndentingNewLine]", 
+   RowBox[{"Iobject", "[", "r_", "]"}], ":=", 
+   RowBox[{"Module", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"V", "=", "r"}], "}"}], ",", "\[IndentingNewLine]", 
      RowBox[{
-      RowBox[{"{", 
-       RowBox[{"V", "=", "r"}], "}"}], ",", "\[IndentingNewLine]", 
-      RowBox[{
-       RowBox[{"Iobject\[Mu]", "=", 
-        RowBox[{"Quantity", "[", 
-         RowBox[{
+      RowBox[{"Iobject\[Mu]", "=", 
+       RowBox[{"Quantity", "[", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"1.31", "*", 
+             RowBox[{
+              SuperscriptBox["10", "3"], "/", "0.89"}]}], ")"}], "*", 
+           RowBox[{"Bg", "[", "V", "]"}]}], ")"}], ",", 
+         RowBox[{"1", "/", 
           RowBox[{"(", 
            RowBox[{
-            RowBox[{"(", 
-             RowBox[{"1.31", "*", 
-              RowBox[{
-               SuperscriptBox["10", "3"], "/", "0.89"}]}], ")"}], "*", 
-            RowBox[{"Bg", "[", "V", "]"}]}], ")"}], ",", 
+            SuperscriptBox["\"\<Micrometers\>\"", "2"], "\"\<Steradians\>\"", 
+            "\"\<Seconds\>\""}], ")"}]}]}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Iobjectm", "=", 
+       RowBox[{"QuantityMagnitude", "@", 
+        RowBox[{"UnitConvert", "[", 
+         RowBox[{"Iobject\[Mu]", ",", 
           RowBox[{"1", "/", 
            RowBox[{"(", 
             RowBox[{
-             SuperscriptBox["\"\<Micrometers\>\"", "2"], 
-             "\"\<Steradians\>\"", "\"\<Seconds\>\""}], ")"}]}]}], "]"}]}], 
-       ";", "\[IndentingNewLine]", 
-       RowBox[{"Iobjectm", "=", 
-        RowBox[{"QuantityMagnitude", "@", 
-         RowBox[{"UnitConvert", "[", 
-          RowBox[{"Iobject\[Mu]", ",", 
-           RowBox[{"1", "/", 
-            RowBox[{"(", 
-             RowBox[{
-              SuperscriptBox["\"\<Meters\>\"", "2"], "\"\<Steradians\>\"", 
-              "\"\<Seconds\>\""}], ")"}]}]}], "]"}]}]}], ";", 
-       "\[IndentingNewLine]", 
-       RowBox[{"Return", "[", "Iobjectm", "]"}], ";"}]}], 
-     "\[IndentingNewLine]", "]"}]}], ";"}], 
-  "\[IndentingNewLine]"}], "\[IndentingNewLine]"}], "Input",
+             SuperscriptBox["\"\<Meters\>\"", "2"], "\"\<Steradians\>\"", 
+             "\"\<Seconds\>\""}], ")"}]}]}], "]"}]}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Return", "[", "Iobjectm", "]"}], ";"}]}], 
+    "\[IndentingNewLine]", "]"}]}], ";"}], "\[IndentingNewLine]"}], "Input",
  CellChangeTimes->{{3.669395031953772*^9, 3.669395033888735*^9}, {
    3.669395099852054*^9, 3.66939510805147*^9}, {3.669395152878134*^9, 
    3.6693951821342173`*^9}, {3.66941017847996*^9, 3.669410229477049*^9}, {
@@ -592,94 +688,7 @@ Cell[BoxData[{
    3.669412459682273*^9, 3.669412491224431*^9}, {3.6694125343360243`*^9, 
    3.669412630442762*^9}, {3.669413551308305*^9, 3.669413707160212*^9}, 
    3.669423013075919*^9, 3.66942310231748*^9, 3.6694248943445597`*^9, {
-   3.6694640540558167`*^9, 3.669464071129109*^9}}],
-
-Cell[CellGroupData[{
-
-Cell[BoxData[
- RowBox[{
-  RowBox[{"(*", 
-   RowBox[{
-   "cache", " ", "values", " ", "or", " ", "interpolate", "  ", "the", " ", 
-    "Iobject"}], "*)"}], "\[IndentingNewLine]", 
-  RowBox[{
-   RowBox[{
-    RowBox[{"Print", "[", 
-     RowBox[{"\"\<iteration range: \>\"", ",", " ", 
-      RowBox[{"Dynamic", "[", "n", "]"}]}], "]"}], ";"}], 
-   "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{"minrange", "=", "1"}], ";", " ", 
-    RowBox[{"maxrange", "=", "100000"}], ";"}], "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{"queryValues", "=", 
-     RowBox[{"Array", "[", 
-      RowBox[{
-       RowBox[{"#", "&"}], ",", "1000", ",", 
-       RowBox[{"{", 
-        RowBox[{"minrange", ",", "maxrange"}], "}"}]}], "]"}]}], ";"}], 
-   "\[IndentingNewLine]", 
-   RowBox[{"Iobjectvals", "=", 
-    RowBox[{"{", "}"}]}], "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{"For", "[", 
-     RowBox[{
-      RowBox[{"n", "=", "1"}], ",", 
-      RowBox[{"n", "\[LessEqual]", " ", 
-       RowBox[{"Length", "[", "queryValues", "]"}]}], ",", 
-      RowBox[{"n", "++"}], ",", "\[IndentingNewLine]", 
-      RowBox[{
-       RowBox[{"queryRange", "=", 
-        RowBox[{"queryValues", "[", 
-         RowBox[{"[", "n", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
-       RowBox[{"Iobjectsol", "=", 
-        RowBox[{"Iobject", "[", "queryRange", "]"}]}], ";", 
-       "\[IndentingNewLine]", 
-       RowBox[{"temp", "=", 
-        RowBox[{"{", 
-         RowBox[{
-          RowBox[{"N", "[", "queryRange", "]"}], ",", 
-          RowBox[{"N", "[", "Iobjectsol", "]"}]}], "}"}]}], ";", 
-       "\[IndentingNewLine]", 
-       RowBox[{"AppendTo", "[", 
-        RowBox[{"Iobjectvals", ",", "temp"}], "]"}]}]}], 
-     "\[IndentingNewLine]", 
-     RowBox[{"(*", 
-      RowBox[{"Print", "[", "Iobjectvals", "]"}], "*)"}], 
-     "\[IndentingNewLine]", "]"}], ";"}], "\n", "\[IndentingNewLine]", 
-   RowBox[{
-    RowBox[{"Export", "[", 
-     RowBox[{
-      RowBox[{"FileNameJoin", "[", 
-       RowBox[{"{", 
-        RowBox[{
-         RowBox[{"NotebookDirectory", "[", "]"}], ",", 
-         "\"\<Iobjectvalues.csv\>\""}], "}"}], "]"}], ",", "Iobjectvals"}], 
-     "]"}], ";"}]}]}]], "Input",
- CellChangeTimes->{{3.669424901184039*^9, 3.6694249014075403`*^9}, {
-  3.6694251830340157`*^9, 3.669425193081562*^9}, {3.66946168064579*^9, 
-  3.669461728409562*^9}, {3.6694619749305553`*^9, 3.6694620778529453`*^9}, {
-  3.669462375296341*^9, 3.669462497427348*^9}, {3.669462590957808*^9, 
-  3.6694626667859507`*^9}, {3.669463508081428*^9, 3.6694635124218407`*^9}, {
-  3.669464249186102*^9, 3.6694642579795017`*^9}},
- CellTags->"only if"],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration range: \"\>", "\[InvisibleSpace]", 
-   DynamicBox[ToBoxes[$CellContext`n, StandardForm],
-    ImageSizeCache->{7., {0., 6.}}]}],
-  SequenceForm["iteration range: ", 
-   Dynamic[$CellContext`n]],
-  Editable->False]], "Print",
- CellChangeTimes->{3.6694642881316023`*^9},
- CellTags->"only if"],
-
-Cell[BoxData[
- RowBox[{"{", "}"}]], "Output",
- CellChangeTimes->{3.669464288136128*^9},
- CellTags->"only if"]
-}, Open  ]],
+   3.6694640540558167`*^9, 3.669464071129109*^9}, 3.66946735366284*^9}],
 
 Cell[BoxData[{
  RowBox[{
@@ -782,7 +791,7 @@ Cell[BoxData[
     RowBox[{"pupilValues", "=", 
      RowBox[{"Array", "[", 
       RowBox[{
-       RowBox[{"#", " ", "&"}], ",", "30", ",", 
+       RowBox[{"#", " ", "&"}], ",", "50", ",", 
        RowBox[{"{", 
         RowBox[{"minpupil", ",", "maxpupil"}], "}"}]}], "]"}]}], ";"}], 
    "\[IndentingNewLine]", 
@@ -805,6 +814,8 @@ Cell[BoxData[
    RowBox[{
     RowBox[{"visualRange", "=", 
      RowBox[{"{", "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"pupilvsRange", "=", 
+    RowBox[{"{", "}"}]}], "\[IndentingNewLine]", 
    RowBox[{"(*", 
     RowBox[{"NSolve", "[", 
      RowBox[{
@@ -878,9 +889,11 @@ Cell[BoxData[
           RowBox[{"AppendTo", "[", 
            RowBox[{"possibleSolD", ",", "eq"}], "]"}], ";"}]}], 
         "\[IndentingNewLine]", "]"}], ";", "\[IndentingNewLine]", 
-       RowBox[{"Print", "[", 
-        RowBox[{"\"\<iteration pupil:\>\"", ",", "i"}], "]"}], ";", 
-       "\[IndentingNewLine]", 
+       RowBox[{"(*", 
+        RowBox[{
+         RowBox[{"Print", "[", 
+          RowBox[{"\"\<iteration pupil:\>\"", ",", "i"}], "]"}], ";"}], 
+        "*)"}], "\[IndentingNewLine]", 
        RowBox[{"val", "=", 
         RowBox[{"First", "[", 
          RowBox[{"Nearest", "[", 
@@ -892,10 +905,22 @@ Cell[BoxData[
           RowBox[{"possibleSolD", ",", "val"}], "]"}], "[", 
          RowBox[{"[", 
           RowBox[{"1", ",", "1"}], "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"dum", "=", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"N", "[", "P", "]"}], ",", 
+          RowBox[{"N", "[", 
+           RowBox[{"rangeValuesDaylight", "[", 
+            RowBox[{"[", "idx", "]"}], "]"}], "]"}]}], "}"}]}], ";", 
+       "\[IndentingNewLine]", 
        RowBox[{"AppendTo", "[", 
         RowBox[{"visualRange", ",", 
-         RowBox[{"rangeValuesDaylight", "[", 
-          RowBox[{"[", "idx", "]"}], "]"}]}], "]"}]}]}], 
+         RowBox[{"N", "[", 
+          RowBox[{"rangeValuesDaylight", "[", 
+           RowBox[{"[", "idx", "]"}], "]"}], "]"}]}], "]"}], ";", 
+       "\[IndentingNewLine]", 
+       RowBox[{"AppendTo", "[", 
+        RowBox[{"pupilvsRange", ",", "dum"}], "]"}]}]}], 
      "\[IndentingNewLine]", 
      RowBox[{"(*", 
       RowBox[{
@@ -960,575 +985,83 @@ Cell[BoxData[
    3.669463886754344*^9, 3.6694639655902843`*^9, {3.6694640385498*^9, 
    3.669464049073155*^9}, {3.669466013257264*^9, 3.669466015000904*^9}, {
    3.669466099221787*^9, 3.669466106002489*^9}, {3.669466223538666*^9, 
-   3.66946632106376*^9}}],
+   3.66946632106376*^9}, {3.669466385459231*^9, 3.6694664049991007`*^9}, {
+   3.669466441464179*^9, 3.669466441792313*^9}, {3.669466733224038*^9, 
+   3.669466792504025*^9}}],
 
-Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{"{", "}"}]], "Output",
+ CellChangeTimes->{
+  3.669466796294112*^9, {3.6694699284522953`*^9, 3.6694699362308702`*^9}, 
+   3.669470070377309*^9, 3.669470127772025*^9, 3.669470190051477*^9, 
+   3.669470227586219*^9}],
 
 Cell[BoxData[
  InterpretationBox[
   RowBox[{"\<\"Output: \"\>", "\[InvisibleSpace]", 
    DynamicBox[ToBoxes[$CellContext`i, StandardForm],
-    ImageSizeCache->{7., {0., 8.}}]}],
+    ImageSizeCache->{14., {1., 8.}}]}],
   SequenceForm["Output: ", 
    Dynamic[$CellContext`i]],
   Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.6694662994397984`*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "1"}],
-  SequenceForm["iteration pupil:", 1],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.66946629947764*^9}]
+ CellChangeTimes->{
+  3.669466015656691*^9, 3.6694661676719627`*^9, 3.669466240156893*^9, 
+   3.6694662994397984`*^9, {3.669466365256077*^9, 3.6694664068833447`*^9}, 
+   3.669466442300962*^9, 3.6694667962996473`*^9, {3.6694699284608173`*^9, 
+   3.669469936236199*^9}, 3.669470070385824*^9, 3.6694701277807417`*^9, 
+   3.669470190061328*^9, 3.669470227596744*^9}]
 }, Open  ]],
-
-Cell[BoxData[
- RowBox[{
-  StyleBox[
-   RowBox[{"Nearest", "::", "dmtch"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"The dimension of \[NoBreak]\\!\\({\\(R\\\\ \
-\\@\\(\\(\\(Nbackground[\\(\\(5000, minpupil\\)\\)]\\)\\) + \\(\\(Nobject[\\(\
-\\(5000, minpupil\\)\\)]\\)\\) + \\(\\(2\\\\ \\(\\(Xch[\\(\\(5000, \
-minpupil\\)\\)]\\)\\)\\)\\)\\)\\)\\/\\(Abs[\\(\\(\\(\\(Nbackground[\\(\\(5000,\
- minpupil\\)\\)]\\)\\) - \\(\\(Nobject[\\(\\(5000, \
-minpupil\\)\\)]\\)\\)\\)\\)]\\), \\(R\\\\ \
-\\@\\(\\(\\(Nbackground[\\(\\(560000\\/111, minpupil\\)\\)]\\)\\) + \
-\\(\\(Nobject[\\(\\(560000\\/111, minpupil\\)\\)]\\)\\) + \\(\\(2\\\\ \
-\\(\\(Xch[\\(\\(560000\\/111, \
-minpupil\\)\\)]\\)\\)\\)\\)\\)\\)\\/\\(Abs[\\(\\(\\(\\(Nbackground[\\(\\(\
-560000\\/111, minpupil\\)\\)]\\)\\) - \\(\\(Nobject[\\(\\(560000\\/111, \
-minpupil\\)\\)]\\)\\)\\)\\)]\\), \\(\\(\[LeftSkeleton] 48 \[RightSkeleton]\\)\
-\\), \\(\\(\[LeftSkeleton] 950 \[RightSkeleton]\\)\\)}\\)\[NoBreak] and \
-\[NoBreak]\\!\\(1\\)\[NoBreak] does not match. \\!\\(\\*ButtonBox[\\\"\
-\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
-ButtonData:>\\\"paclet:ref/Nearest\\\", ButtonNote -> \\\"Nearest::dmtch\\\"]\
-\\)\"\>"}]], "Message", "MSG",
- CellChangeTimes->{3.6694662996192904`*^9}],
-
-Cell[BoxData[
- RowBox[{
-  StyleBox[
-   RowBox[{"Part", "::", "partw"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Part \[NoBreak]\\!\\(1\\)\[NoBreak] of \
-\[NoBreak]\\!\\({}\\)\[NoBreak] does not exist. \\!\\(\\*ButtonBox[\\\"\
-\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
-ButtonData:>\\\"paclet:ref/message/General/partw\\\", ButtonNote -> \
-\\\"Part::partw\\\"]\\)\"\>"}]], "Message", "MSG",
- CellChangeTimes->{3.6694662996544447`*^9}],
-
-Cell[BoxData[
- RowBox[{
-  StyleBox[
-   RowBox[{"Part", "::", "pkspec1"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"The expression \[NoBreak]\\!\\(\\(\\({\\({}\\)}\\)\\) \
-\[LeftDoubleBracket] \\(\\(1, 1\\)\\) \[RightDoubleBracket]\\)\[NoBreak] \
-cannot be used as a part specification. \\!\\(\\*ButtonBox[\\\"\
-\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
-ButtonData:>\\\"paclet:ref/Part\\\", ButtonNote -> \
-\\\"Part::pkspec1\\\"]\\)\"\>"}]], "Message", "MSG",
- CellChangeTimes->{3.6694662997033367`*^9}],
-
-Cell[BoxData[
- RowBox[{
-  StyleBox[
-   RowBox[{"Part", "::", "partw"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Part \[NoBreak]\\!\\(1\\)\[NoBreak] of \
-\[NoBreak]\\!\\({}\\)\[NoBreak] does not exist. \\!\\(\\*ButtonBox[\\\"\
-\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
-ButtonData:>\\\"paclet:ref/message/General/partw\\\", ButtonNote -> \
-\\\"Part::partw\\\"]\\)\"\>"}]], "Message", "MSG",
- CellChangeTimes->{3.66946629973358*^9}],
-
-Cell[BoxData[
- RowBox[{
-  StyleBox[
-   RowBox[{"Part", "::", "pkspec1"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"The expression \[NoBreak]\\!\\(\\(\\({\\({}\\)}\\)\\) \
-\[LeftDoubleBracket] \\(\\(1, 1\\)\\) \[RightDoubleBracket]\\)\[NoBreak] \
-cannot be used as a part specification. \\!\\(\\*ButtonBox[\\\"\
-\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
-ButtonData:>\\\"paclet:ref/Part\\\", ButtonNote -> \
-\\\"Part::pkspec1\\\"]\\)\"\>"}]], "Message", "MSG",
- CellChangeTimes->{3.669466299777862*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "2"}],
-  SequenceForm["iteration pupil:", 2],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466299816543*^9}],
-
-Cell[BoxData[
- RowBox[{
-  StyleBox[
-   RowBox[{"Nearest", "::", "dmtch"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"The dimension of \[NoBreak]\\!\\({\\(R\\\\ \
-\\@\\(\\(\\(Nbackground[\\(\\(5000, \\(\\(\\(\\(1\\/29\\\\ \\(\\(Plus[\\(\\(\
-\[LeftSkeleton] 2 \[RightSkeleton]\\)\\)]\\)\\)\\)\\) + minpupil\\)\\)\\)\\)]\
-\\)\\) + \\(\\(Nobject[\\(\\(5000, \\(\\(\\(\\(1\\/29\\\\ \\(\\(Plus[\\(\\(\
-\[LeftSkeleton] 2 \[RightSkeleton]\\)\\)]\\)\\)\\)\\) + minpupil\\)\\)\\)\\)]\
-\\)\\) + \\(\\(2\\\\ \\(\\(Xch[\\(\\(5000, \\(\\(\\(\\(Times[\\(\\(\
-\[LeftSkeleton] 2 \[RightSkeleton]\\)\\)]\\)\\) + minpupil\\)\\)\\)\\)]\\)\\)\
-\\)\\)\\)\\)\\/\\(Abs[\\(\\(\\(\\(Nbackground[\\(\\(5000, \
-\\(\\(\\(\\(Times[\\(\\(\[LeftSkeleton] 2 \[RightSkeleton]\\)\\)]\\)\\) + \
-minpupil\\)\\)\\)\\)]\\)\\) - \\(\\(Nobject[\\(\\(5000, \\(\\(Plus[\\(\\(\
-\[LeftSkeleton] 2 \[RightSkeleton]\\)\\)]\\)\\)\\)\\)]\\)\\)\\)\\)]\\), \
-\\(R\\\\ \\@\\(\\(\\(Nbackground[\\(\\(560000\\/111, \\(\\(\\(\\(1\\/29\\\\ \
-\\(\\(Plus[\\(\\(\[LeftSkeleton] 2 \[RightSkeleton]\\)\\)]\\)\\)\\)\\) + \
-minpupil\\)\\)\\)\\)]\\)\\) + \\(\\(Nobject[\\(\\(560000\\/111, \\(\\(\\(\\(1\
-\\/29\\\\ \\(\\(Plus[\\(\\(\[LeftSkeleton] 2 \[RightSkeleton]\\)\\)]\\)\\)\\)\
-\\) + minpupil\\)\\)\\)\\)]\\)\\) + \\(\\(2\\\\ \\(\\(Xch[\\(\\(560000\\/111, \
-\\(\\(\\(\\(Times[\\(\\(\[LeftSkeleton] 2 \[RightSkeleton]\\)\\)]\\)\\) + \
-minpupil\\)\\)\\)\\)]\\)\\)\\)\\)\\)\\)\\/\\(Abs[\\(\\(\\(\\(Nbackground[\\(\\\
-(560000\\/111, \\(\\(\\(\\(Times[\\(\\(\[LeftSkeleton] 2 \
-\[RightSkeleton]\\)\\)]\\)\\) + minpupil\\)\\)\\)\\)]\\)\\) - \
-\\(\\(Nobject[\\(\\(560000\\/111, \\(\\(Plus[\\(\\(\[LeftSkeleton] 2 \
-\[RightSkeleton]\\)\\)]\\)\\)\\)\\)]\\)\\)\\)\\)]\\), \\(\\(\[LeftSkeleton] \
-48 \[RightSkeleton]\\)\\), \\(\\(\[LeftSkeleton] 950 \
-\[RightSkeleton]\\)\\)}\\)\[NoBreak] and \[NoBreak]\\!\\(1\\)\[NoBreak] does \
-not match. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\
-\\\", ButtonFrame->None, ButtonData:>\\\"paclet:ref/Nearest\\\", ButtonNote \
--> \\\"Nearest::dmtch\\\"]\\)\"\>"}]], "Message", "MSG",
- CellChangeTimes->{3.669466299964097*^9}],
-
-Cell[BoxData[
- RowBox[{
-  StyleBox[
-   RowBox[{"Part", "::", "partw"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Part \[NoBreak]\\!\\(1\\)\[NoBreak] of \
-\[NoBreak]\\!\\({}\\)\[NoBreak] does not exist. \\!\\(\\*ButtonBox[\\\"\
-\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
-ButtonData:>\\\"paclet:ref/message/General/partw\\\", ButtonNote -> \
-\\\"Part::partw\\\"]\\)\"\>"}]], "Message", "MSG",
- CellChangeTimes->{3.669466300003738*^9}],
-
-Cell[BoxData[
- RowBox[{
-  StyleBox[
-   RowBox[{"General", "::", "stop"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Further output of \[NoBreak]\\!\\(\\*StyleBox[\\(Part :: \
-partw\\), \\\"MessageName\\\"]\\)\[NoBreak] will be suppressed during this \
-calculation. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
-ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
-ButtonData:>\\\"paclet:ref/message/General/stop\\\", ButtonNote -> \
-\\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
- CellChangeTimes->{3.669466300025012*^9}],
-
-Cell[BoxData[
- RowBox[{
-  StyleBox[
-   RowBox[{"Part", "::", "pkspec1"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"The expression \[NoBreak]\\!\\(\\(\\({\\({}\\)}\\)\\) \
-\[LeftDoubleBracket] \\(\\(1, 1\\)\\) \[RightDoubleBracket]\\)\[NoBreak] \
-cannot be used as a part specification. \\!\\(\\*ButtonBox[\\\"\
-\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
-ButtonData:>\\\"paclet:ref/Part\\\", ButtonNote -> \
-\\\"Part::pkspec1\\\"]\\)\"\>"}]], "Message", "MSG",
- CellChangeTimes->{3.6694663000698357`*^9}],
-
-Cell[BoxData[
- RowBox[{
-  StyleBox[
-   RowBox[{"General", "::", "stop"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Further output of \[NoBreak]\\!\\(\\*StyleBox[\\(Part :: \
-pkspec1\\), \\\"MessageName\\\"]\\)\[NoBreak] will be suppressed during this \
-calculation. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
-ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
-ButtonData:>\\\"paclet:ref/message/General/stop\\\", ButtonNote -> \
-\\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
- CellChangeTimes->{3.669466300088304*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "3"}],
-  SequenceForm["iteration pupil:", 3],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466300124847*^9}],
-
-Cell[BoxData[
- RowBox[{
-  StyleBox[
-   RowBox[{"Nearest", "::", "dmtch"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"The dimension of \[NoBreak]\\!\\({\\(R\\\\ \
-\\@\\(\\(\\(Nbackground[\\(\\(5000, \\(\\(\\(\\(2\\/29\\\\ \\(\\(Plus[\\(\\(\
-\[LeftSkeleton] 2 \[RightSkeleton]\\)\\)]\\)\\)\\)\\) + minpupil\\)\\)\\)\\)]\
-\\)\\) + \\(\\(Nobject[\\(\\(5000, \\(\\(\\(\\(2\\/29\\\\ \\(\\(Plus[\\(\\(\
-\[LeftSkeleton] 2 \[RightSkeleton]\\)\\)]\\)\\)\\)\\) + minpupil\\)\\)\\)\\)]\
-\\)\\) + \\(\\(2\\\\ \\(\\(Xch[\\(\\(5000, \\(\\(\\(\\(Times[\\(\\(\
-\[LeftSkeleton] 2 \[RightSkeleton]\\)\\)]\\)\\) + minpupil\\)\\)\\)\\)]\\)\\)\
-\\)\\)\\)\\)\\/\\(Abs[\\(\\(\\(\\(Nbackground[\\(\\(5000, \
-\\(\\(\\(\\(Times[\\(\\(\[LeftSkeleton] 2 \[RightSkeleton]\\)\\)]\\)\\) + \
-minpupil\\)\\)\\)\\)]\\)\\) - \\(\\(Nobject[\\(\\(5000, \\(\\(Plus[\\(\\(\
-\[LeftSkeleton] 2 \[RightSkeleton]\\)\\)]\\)\\)\\)\\)]\\)\\)\\)\\)]\\), \
-\\(R\\\\ \\@\\(\\(\\(Nbackground[\\(\\(560000\\/111, \\(\\(\\(\\(2\\/29\\\\ \
-\\(\\(Plus[\\(\\(\[LeftSkeleton] 2 \[RightSkeleton]\\)\\)]\\)\\)\\)\\) + \
-minpupil\\)\\)\\)\\)]\\)\\) + \\(\\(Nobject[\\(\\(560000\\/111, \\(\\(\\(\\(2\
-\\/29\\\\ \\(\\(Plus[\\(\\(\[LeftSkeleton] 2 \[RightSkeleton]\\)\\)]\\)\\)\\)\
-\\) + minpupil\\)\\)\\)\\)]\\)\\) + \\(\\(2\\\\ \\(\\(Xch[\\(\\(560000\\/111, \
-\\(\\(\\(\\(Times[\\(\\(\[LeftSkeleton] 2 \[RightSkeleton]\\)\\)]\\)\\) + \
-minpupil\\)\\)\\)\\)]\\)\\)\\)\\)\\)\\)\\/\\(Abs[\\(\\(\\(\\(Nbackground[\\(\\\
-(560000\\/111, \\(\\(\\(\\(Times[\\(\\(\[LeftSkeleton] 2 \
-\[RightSkeleton]\\)\\)]\\)\\) + minpupil\\)\\)\\)\\)]\\)\\) - \
-\\(\\(Nobject[\\(\\(560000\\/111, \\(\\(Plus[\\(\\(\[LeftSkeleton] 2 \
-\[RightSkeleton]\\)\\)]\\)\\)\\)\\)]\\)\\)\\)\\)]\\), \\(\\(\[LeftSkeleton] \
-48 \[RightSkeleton]\\)\\), \\(\\(\[LeftSkeleton] 950 \
-\[RightSkeleton]\\)\\)}\\)\[NoBreak] and \[NoBreak]\\!\\(1\\)\[NoBreak] does \
-not match. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\
-\\\", ButtonFrame->None, ButtonData:>\\\"paclet:ref/Nearest\\\", ButtonNote \
--> \\\"Nearest::dmtch\\\"]\\)\"\>"}]], "Message", "MSG",
- CellChangeTimes->{3.669466300270783*^9}],
-
-Cell[BoxData[
- RowBox[{
-  StyleBox[
-   RowBox[{"General", "::", "stop"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Further output of \[NoBreak]\\!\\(\\*StyleBox[\\(Nearest \
-:: dmtch\\), \\\"MessageName\\\"]\\)\[NoBreak] will be suppressed during this \
-calculation. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
-ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
-ButtonData:>\\\"paclet:ref/message/General/stop\\\", ButtonNote -> \
-\\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
- CellChangeTimes->{3.669466300285891*^9}],
 
 Cell[CellGroupData[{
 
 Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "4"}],
-  SequenceForm["iteration pupil:", 4],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466300333415*^9}],
+ RowBox[{"ListPlot", "[", "visualRange", "]"}]], "Input",
+ CellChangeTimes->{{3.669469940925153*^9, 3.669469944273225*^9}}],
 
 Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "5"}],
-  SequenceForm["iteration pupil:", 5],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466300432942*^9}],
+ GraphicsBox[{{}, {{}, 
+    {RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.016666666666666666`],
+      AbsoluteThickness[1.6], PointBox[CompressedData["
+1:eJxdyTtqQgEQQNEhlaVFCgsLIyIiIvr8f99L1KitSxCs3ULK7MeNuQS/CJ6B
+YThzv/bH3eEjIpLr3u5jzun9/J+y5yN7dw7n8Scu4CIu4TKu4Cqu4Tpu4CZu
+4TZOcAd3cQ/38QAP8QiP8QRP8QzPcYqzd//h+Kbj+KHjWNBxLOk4VnQcv3Qc
+azqODR3H9uUL+QBn9g==
+      "]]}, {}}, {}},
+  AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
+  Axes->{True, True},
+  AxesLabel->{None, None},
+  AxesOrigin->{0, 0},
+  DisplayFunction->Identity,
+  Frame->{{False, False}, {False, False}},
+  FrameLabel->{{None, None}, {None, None}},
+  FrameTicks->{{Automatic, Automatic}, {Automatic, Automatic}},
+  GridLines->{None, None},
+  GridLinesStyle->Directive[
+    GrayLevel[0.5, 0.4]],
+  Method->{},
+  PlotRange->{{0., 50.}, {0, 10000.}},
+  PlotRangeClipping->True,
+  PlotRangePadding->{{
+     Scaled[0.02], 
+     Scaled[0.02]}, {
+     Scaled[0.02], 
+     Scaled[0.05]}},
+  Ticks->{Automatic, Automatic}]], "Output",
+ CellChangeTimes->{3.669469944777124*^9, 3.6694700757747183`*^9, 
+  3.669470146340788*^9, 3.6694701975042143`*^9, 3.669470232542057*^9}]
+}, Open  ]],
 
 Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "6"}],
-  SequenceForm["iteration pupil:", 6],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466300537161*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "7"}],
-  SequenceForm["iteration pupil:", 7],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.6694663006331663`*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "8"}],
-  SequenceForm["iteration pupil:", 8],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466300725271*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "9"}],
-  SequenceForm["iteration pupil:", 9],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466300816967*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "10"}],
-  SequenceForm["iteration pupil:", 10],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466300909791*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "11"}],
-  SequenceForm["iteration pupil:", 11],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.66946630100607*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "12"}],
-  SequenceForm["iteration pupil:", 12],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466301103179*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "13"}],
-  SequenceForm["iteration pupil:", 13],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.66946630119726*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "14"}],
-  SequenceForm["iteration pupil:", 14],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466301288562*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "15"}],
-  SequenceForm["iteration pupil:", 15],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.6694663013792067`*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "16"}],
-  SequenceForm["iteration pupil:", 16],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466301475528*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "17"}],
-  SequenceForm["iteration pupil:", 17],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466301573135*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "18"}],
-  SequenceForm["iteration pupil:", 18],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.6694663016708517`*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "19"}],
-  SequenceForm["iteration pupil:", 19],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466301769771*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "20"}],
-  SequenceForm["iteration pupil:", 20],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466301865468*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "21"}],
-  SequenceForm["iteration pupil:", 21],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466301957983*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "22"}],
-  SequenceForm["iteration pupil:", 22],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466302053638*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "23"}],
-  SequenceForm["iteration pupil:", 23],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.6694663021483507`*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "24"}],
-  SequenceForm["iteration pupil:", 24],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.66946630224067*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "25"}],
-  SequenceForm["iteration pupil:", 25],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.6694663023345833`*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "26"}],
-  SequenceForm["iteration pupil:", 26],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466302428254*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "27"}],
-  SequenceForm["iteration pupil:", 27],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.6694663025231256`*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "28"}],
-  SequenceForm["iteration pupil:", 28],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.6694663026297007`*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "29"}],
-  SequenceForm["iteration pupil:", 29],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466302724205*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "30"}],
-  SequenceForm["iteration pupil:", 30],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466302823078*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "31"}],
-  SequenceForm["iteration pupil:", 31],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466302901874*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "32"}],
-  SequenceForm["iteration pupil:", 32],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466304004738*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "33"}],
-  SequenceForm["iteration pupil:", 33],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466305065545*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "34"}],
-  SequenceForm["iteration pupil:", 34],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466306127707*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "35"}],
-  SequenceForm["iteration pupil:", 35],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466307192266*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "36"}],
-  SequenceForm["iteration pupil:", 36],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466308240552*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "37"}],
-  SequenceForm["iteration pupil:", 37],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466309309411*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "38"}],
-  SequenceForm["iteration pupil:", 38],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466310371242*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "39"}],
-  SequenceForm["iteration pupil:", 39],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466311457316*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "40"}],
-  SequenceForm["iteration pupil:", 40],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466315175743*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "41"}],
-  SequenceForm["iteration pupil:", 41],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466315185133*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "42"}],
-  SequenceForm["iteration pupil:", 42],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466315187924*^9}],
-
-Cell[BoxData[
- InterpretationBox[
-  RowBox[{"\<\"iteration pupil:\"\>", "\[InvisibleSpace]", "43"}],
-  SequenceForm["iteration pupil:", 43],
-  Editable->False]], "Print",
- CellChangeTimes->{3.669466015656691*^9, 3.6694661676719627`*^9, 
-  3.669466240156893*^9, 3.669466315879437*^9}]
-}, Open  ]]
-}, Open  ]]
+ RowBox[{
+  RowBox[{"Exort", "[", 
+   RowBox[{
+    RowBox[{"FileNameJoin", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"NotebookDirectory", "[", "]"}], ",", 
+       "\"\<daylightVisualRange.csv\>\""}], "}"}], "]"}], ",", 
+    "pupilvsRange"}], "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.6694674095687723`*^9, 3.669467479436305*^9}}]
 },
 WindowSize->{1087, 1035},
 WindowMargins->{{-1471, Automatic}, {Automatic, 0}},
@@ -1542,101 +1075,48 @@ StyleDefinitions->"Default.nb"
 (*CellTagsOutline
 CellTagsIndex->{
  "only if"->{
-  Cell[25683, 598, 2590, 66, 250, "Input",
+  Cell[580, 22, 2469, 65, 250, "Input",
    CellTags->"only if"],
-  Cell[28276, 666, 348, 9, 22, "Print",
+  Cell[3052, 89, 498, 12, 22, "Print",
    CellTags->"only if"],
-  Cell[28627, 677, 109, 3, 28, "Output",
+  Cell[3553, 103, 256, 6, 28, "Output",
    CellTags->"only if"]}
  }
 *)
 (*CellTagsIndex
 CellTagsIndex->{
- {"only if", 63194, 1543}
+ {"only if", 44081, 1076}
  }
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 137, 3, 28, "Input"],
-Cell[698, 25, 1555, 38, 235, "Input"],
 Cell[CellGroupData[{
-Cell[2278, 67, 4709, 122, 165, "Input"],
-Cell[6990, 191, 11431, 222, 65, "Output"]
-}, Open  ]],
-Cell[18436, 416, 4276, 101, 202, "Input"],
-Cell[22715, 519, 2943, 75, 212, "Input"],
-Cell[CellGroupData[{
-Cell[25683, 598, 2590, 66, 250, "Input",
+Cell[580, 22, 2469, 65, 250, "Input",
  CellTags->"only if"],
-Cell[28276, 666, 348, 9, 22, "Print",
+Cell[3052, 89, 498, 12, 22, "Print",
  CellTags->"only if"],
-Cell[28627, 677, 109, 3, 28, "Output",
+Cell[3553, 103, 256, 6, 28, "Output",
  CellTags->"only if"]
 }, Open  ]],
-Cell[28751, 683, 2999, 90, 188, "Input"],
+Cell[3824, 112, 137, 3, 28, "Input"],
+Cell[3964, 117, 1555, 38, 235, "Input"],
 Cell[CellGroupData[{
-Cell[31775, 777, 8220, 185, 488, "Input"],
-Cell[CellGroupData[{
-Cell[40020, 966, 379, 9, 22, "Print"],
-Cell[40402, 977, 280, 6, 22, "Print"]
+Cell[5544, 159, 4709, 122, 165, "Input"],
+Cell[10256, 283, 11592, 224, 65, "Output"]
 }, Open  ]],
-Cell[40697, 986, 1263, 22, 126, "Message"],
-Cell[41963, 1010, 467, 10, 24, "Message"],
-Cell[42433, 1022, 536, 11, 24, "Message"],
-Cell[42972, 1035, 464, 10, 24, "Message"],
-Cell[43439, 1047, 534, 11, 24, "Message"],
-Cell[43976, 1060, 281, 6, 22, "Print"],
-Cell[44260, 1068, 2121, 32, 161, "Message"],
-Cell[46384, 1102, 465, 10, 24, "Message"],
-Cell[46852, 1114, 528, 11, 24, "Message"],
-Cell[47383, 1127, 536, 11, 24, "Message"],
-Cell[47922, 1140, 530, 11, 24, "Message"],
-Cell[48455, 1153, 281, 6, 22, "Print"],
-Cell[48739, 1161, 2121, 32, 161, "Message"],
-Cell[50863, 1195, 531, 11, 24, "Message"],
+Cell[21863, 510, 4442, 105, 202, "Input"],
+Cell[26308, 617, 2890, 73, 195, "Input"],
+Cell[29201, 692, 2999, 90, 188, "Input"],
 Cell[CellGroupData[{
-Cell[51419, 1210, 281, 6, 22, "Print"],
-Cell[51703, 1218, 281, 6, 22, "Print"],
-Cell[51987, 1226, 281, 6, 22, "Print"],
-Cell[52271, 1234, 283, 6, 22, "Print"],
-Cell[52557, 1242, 281, 6, 22, "Print"],
-Cell[52841, 1250, 281, 6, 22, "Print"],
-Cell[53125, 1258, 283, 6, 22, "Print"],
-Cell[53411, 1266, 282, 6, 22, "Print"],
-Cell[53696, 1274, 283, 6, 22, "Print"],
-Cell[53982, 1282, 282, 6, 22, "Print"],
-Cell[54267, 1290, 283, 6, 22, "Print"],
-Cell[54553, 1298, 285, 6, 22, "Print"],
-Cell[54841, 1306, 283, 6, 22, "Print"],
-Cell[55127, 1314, 283, 6, 22, "Print"],
-Cell[55413, 1322, 285, 6, 22, "Print"],
-Cell[55701, 1330, 283, 6, 22, "Print"],
-Cell[55987, 1338, 283, 6, 22, "Print"],
-Cell[56273, 1346, 283, 6, 22, "Print"],
-Cell[56559, 1354, 283, 6, 22, "Print"],
-Cell[56845, 1362, 285, 6, 22, "Print"],
-Cell[57133, 1370, 282, 6, 22, "Print"],
-Cell[57418, 1378, 285, 6, 22, "Print"],
-Cell[57706, 1386, 283, 6, 22, "Print"],
-Cell[57992, 1394, 285, 6, 22, "Print"],
-Cell[58280, 1402, 285, 6, 22, "Print"],
-Cell[58568, 1410, 283, 6, 22, "Print"],
-Cell[58854, 1418, 283, 6, 22, "Print"],
-Cell[59140, 1426, 283, 6, 22, "Print"],
-Cell[59426, 1434, 283, 6, 22, "Print"],
-Cell[59712, 1442, 283, 6, 22, "Print"],
-Cell[59998, 1450, 283, 6, 22, "Print"],
-Cell[60284, 1458, 283, 6, 22, "Print"],
-Cell[60570, 1466, 283, 6, 22, "Print"],
-Cell[60856, 1474, 283, 6, 22, "Print"],
-Cell[61142, 1482, 283, 6, 22, "Print"],
-Cell[61428, 1490, 283, 6, 22, "Print"],
-Cell[61714, 1498, 283, 6, 22, "Print"],
-Cell[62000, 1506, 283, 6, 22, "Print"],
-Cell[62286, 1514, 283, 6, 22, "Print"],
-Cell[62572, 1522, 283, 6, 22, "Print"]
-}, Open  ]]
-}, Open  ]]
+Cell[32225, 786, 8957, 203, 539, "Input"],
+Cell[41185, 991, 236, 5, 28, "Output"],
+Cell[41424, 998, 628, 13, 22, "Print"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[42089, 1016, 137, 2, 28, "Input"],
+Cell[42229, 1020, 1162, 30, 234, "Output"]
+}, Open  ]],
+Cell[43406, 1053, 360, 10, 28, "Input"]
 }
 ]
 *)
