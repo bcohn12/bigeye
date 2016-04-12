@@ -1,8 +1,8 @@
 %% UPDATED IN AIR
 
-terrestrialDaylight_Avsr
-terrestrialMoonlight_Avsr
-terrestrialStarlight_Avsr
+terrestrialDaylightLuminance
+terrestrialMoonlightLuminance
+terrestrialStarlightLuminance
 terrestrial_derVolume
 
 constantDepthVals_rvsA

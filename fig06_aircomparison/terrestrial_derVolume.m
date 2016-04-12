@@ -5,6 +5,8 @@ load daylight.mat
 load moonlight.mat
 load starlight.mat
 
+pupilValuesAir=linspace(minpupil,maxpupil,25);
+
 %% CALCULATE VOLUME
 
 for loop1=1:length(visualRangeDaylight)

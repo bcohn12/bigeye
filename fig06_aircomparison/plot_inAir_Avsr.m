@@ -268,7 +268,7 @@ fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
 
 set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none')
 
-logVvsA=subplot(2,2,2);
+logVvsA=subplot(2,2,3);
 semilogy(pupilValuesAir,visualVolumeDaylight);
 hold on;
 semilogy(pupilValuesAir,visualVolumeMoonlight);
@@ -288,16 +288,16 @@ xlabel('pupil diameter (mm)'); ylabel('visual volume (m^3)');
 yminmax=get(gca,'ylim');
 hold on
 fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-    [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0])
+    [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0]);
 
 set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none')
 
 fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-    [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1])
+    [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[0 0 1]);
 
 set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none')
 
-logdrdAvsA=subplot(2,2,3);
+logdrdAvsA=subplot(2,2,2);
 if(NORMDERIVATIVE)
     semilogy(pupilValuesAir,NderivativeRange(:,1));
     hold on;
