@@ -2,9 +2,10 @@ clear all; close all;
 
 %% PARAMETERS (*ALL FROM NILS14A
 q=0.36; %units: n/a, detection efficiency, used typical value
-eta=0.1; %Snyder 1977 via Barlow 1964
+eta=0.36; %Snyder 1977 via Barlow 1964
 Dt=1.16; %units: s, integration time, used typical value
 Dt_daylight=19676^-0.28; %Donner etal 1994
+LDaylight=1e3; % daylight luminosity in cd/m^2
 
 X=0.011; %units: photons/s, dark-noise rate/photoreceptor @16.5degrees Celsius
 %X_daylight=0.011; %units: photons/s, dark-noise rate/photoreceptor @16.5degrees Celsius
