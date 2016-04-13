@@ -79,7 +79,7 @@ rvsA=subplot(2,2,1);
 line1=plot(pupilValuesAir,visualRangeDaylight,'linewidth',linewidthDef);
 hold on;
 line2=plot(pupilValuesAir,visualRangeMoonlight,'linewidth',linewidthDef);
-line3=plot(pupilValuesAir,visualRangeStarlight);
+line3=plot(pupilValuesAir,visualRangeStarlight,'linewidth',linewidthDef);
 line4=plot(pupilValues,visualRangeSolutions(1).up,'--','linewidth',linewidthDef);
 line5=plot(pupilValues,visualRangeSolutions(2).up,'--','linewidth',linewidthDef);
 line6=plot(pupilValues,visualRangeSolutions(1).hor,':','linewidth',linewidthDef);
