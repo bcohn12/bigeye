@@ -13,6 +13,7 @@ pupilValuesAir=pupilValuesAir*10^3;
 fillboxalpha=0.07; % transparency of fillbox to show +/- std of pupil size
 
 NORMDERIVATIVE=0;
+DAYAERIAL=1;
 
 load ../fig02_orbitsize/OM_TF_ST.mat
 
@@ -90,9 +91,15 @@ line([fishpupil fishpupil],[yrange(1) yrange(2)],'Color',[0 0 0],...
     'linestyle',':','linewidth',linewidthDef)
 line([tetrapodpupil,tetrapodpupil],[yrange(1) yrange(2)],'Color',[0/255,128/255,128/255],...
     'linestyle',':','linewidth',linewidthDef)
-
-
 yminmax=get(gca,'ylim');
+if( DAYAERIAL)
+    dumAerial=[visualRangeMoonlight' visualRangeStarlight'];
+    dumCoastal=[visualRangeSolutions(1).up' visualRangeSolutions(2).up'...
+        visualRangeSolutions(1).hor' visualRangeSolutions(2).hor'];
+    ymin=yminmax(1);
+    ymax=max([max(max(dumAerial)) max(max(dumCoastal))]);
+    ylim([ymin ymax]); yminmax=[ymin ymax];    
+end
 hold on
 fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0]);
@@ -136,6 +143,14 @@ else
     plot(pupilValues,derivativeVisualRange(1).hor,':','linewidth',linewidthDef);
     plot(pupilValues,derivativeVisualRange(2).hor,':','linewidth',linewidthDef);
     
+    if( DAYAERIAL)
+        dumAerial=[drdAMoonlight' drdAStarlight'];
+        dumCoastal=[derivativeVisualRange(1).up' derivativeVisualRange(2).up'...
+            derivativeVisualRange(1).hor' derivativeVisualRange(2).hor'];
+        ymin=yminmax(1);
+        ymax=max([max(max(dumAerial)) max(max(dumCoastal))]);
+        ylim([ymin ymax]); yminmax=[ymin ymax];    
+    end
     
     yminmax=get(gca,'ylim');
     hold on
@@ -182,6 +197,15 @@ line([tetrapodpupil,tetrapodpupil],[yrange3(1) yrange3(2)],'Color',[0/255,128/25
 
 
 yminmax=get(gca,'ylim');
+
+if( DAYAERIAL)
+    dumAerial=[visualVolumeMoonlight' visualVolumeStarlight'];
+    dumCoastal=[visualVolumeSolutions(1).up' visualVolumeSolutions(2).up'...
+        visualVolumeSolutions(1).hor' visualVolumeSolutions(2).hor'];
+    ymin=yminmax(1);
+    ymax=max([max(max(dumAerial)) max(max(dumCoastal))]);
+    ylim([ymin ymax]); yminmax=[ymin ymax];    
+end
 hold on
 fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [yminmax(1) yminmax(2) yminmax(2) yminmax(1)],[1 0 0]);
@@ -211,7 +235,14 @@ else
     plot(pupilValues,derivativeVisualVolume(1).hor,':','linewidth',linewidthDef);
     plot(pupilValues,derivativeVisualVolume(2).hor,':','linewidth',linewidthDef);
     
-    
+    if( DAYAERIAL)
+        dumAerial=[dVdAMoonlight' dVdAStarlight'];
+        dumCoastal=[derivativeVisualVolume(1).up' derivativeVisualVolume(2).up'...
+            derivativeVisualVolume(1).hor' derivativeVisualVolume(2).hor'];
+        ymin=yminmax(1);
+        ymax=max([max(max(dumAerial)) max(max(dumCoastal))]);
+        ylim([ymin ymax]); yminmax=[ymin ymax];    
+    end
     yminmax=get(gca,'ylim');
     hold on
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
