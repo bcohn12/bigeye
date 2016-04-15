@@ -1,15 +1,22 @@
-clear all; close all;
+clear all;
 
-%% PARAMETERS (*ALL FROM NILS14A
-q=0.36; %units: n/a, detection efficiency, used typical value
-eta=0.36; %Snyder 1977 via Barlow 1964
+q=0.36; %units: n/a, detection efficien
+eta=0.5; %Walzl et al 2007
 Dt=1.16; %units: s, integration time, used typical value
-Dt_daylight=19676^-0.28; %Donner etal 1994
 
 %All values from Middleton
 LDaylight=1e3; % daylight luminosity in cd/m^2 
 LMoonlight=1e-2; %Fairly brigh moonlight in cd/m^2
 LStarlight=1e-3; %moonless clear night sky in cd/m^2
+
+Dt_daylight=(LDaylight)^-0.19; %Donner etal 1994
+Dt_moonlight=(LMoonlight)^-0.19;
+Dt_starlight=(LStarlight)^-0.19;
+
+C0_daylight=-0.05; %daylight contrast value
+C0_night=-0.05; %night contrast value
+k=0.035; % photoreceptor absorbtion, units 1/micrometers
+len=57;  % length of photoreceptor, in micrometers
 
 X=0.011; %units: photons/s, dark-noise rate/photoreceptor @16.5degrees Celsius
 %X_daylight=0.011; %units: photons/s, dark-noise rate/photoreceptor @16.5degrees Celsius
