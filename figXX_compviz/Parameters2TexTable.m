@@ -45,9 +45,9 @@ commonTerrestrialDef={'dark noise rate @$23.5^{\circ} C$ ($\text{photons } s^{-1
 commonTerrestrialRefKey={'\cite{Aho93a}';'\cite{Midd52a}'};
 
 coastalParameters={'q';'$\Delta t$';'$C_{0}$';'$f$';'downwelling $I_{space}$'; 'horizontal $I_{space}$';
-    '$\alpha$';'$\kappa$ looking upwards'; '$\kappa$ looking horizontal'};
+    '$\alpha$';'$\kappa$ looking upwards'; '$\kappa$ looking horizontal';'$\mathtt{X}$'};
 coastalValues={num2str(q);num2str(Dt);num2str(-1);strcat('$\frac{',num2str(M),'A}{2}$');num2str(Ispace_up,'%10.4e');num2str(Ispace_hor,'%10.4e');
-    num2str(a);num2str(K_up);num2str(K_hor)};
+    num2str(a);num2str(K_up);num2str(K_hor);num2str(X)};
 coastalDef={'detection efficiency';
     'integration time ($s$)';
     'intrinsic contrast';
@@ -56,10 +56,11 @@ coastalDef={'detection efficiency';
     'horizontal spectral background radiance ($\text{photons } m^{-1} s^{-1} sr^{-1}$)';
     'beam attenuation coefficient of sea water ($m^{-1}$)';
     'background radiance attenuation coefficient for upward viewing ($m^{-1}$)';
-    'background radiance attenuation coefficient for horizontal viewing ($m^{-1}$)'};
-coastalRefKey={'\cite{Nils14a}';'\cite{Donn95a}';'\cite{Nils14a}';...
-    '\cite{Nils14a}';'\cite{Nils14a}';'\cite{Nils14a}';'\cite{Nils14a},\cite{John02a}';
-    '\cite{Nils14a},\cite{John02a}';'\cite{Nils14a},\cite{John02a}'};
+    'background radiance attenuation coefficient for horizontal viewing ($m^{-1}$)';
+    'dark noise rate @$16.5^{\circ} C$ ($\text{photons } s^{-1}$'};
+coastalRefKey={'\cite{Nils14a}';'\cite{Nils14a} via \cite{Donn95a}';'\cite{Nils14a}';...
+    '\cite{Nils14a}';'\cite{Nils14a}';'\cite{Nils14a}';'\cite{Nils14a} via \cite{John02a}';
+    '\cite{Nils14a} via \cite{John02a}';'\cite{Nils14a} via \cite{John02a}';'\cite{Aho93a}'};
 
 commonParameters={'$k$';'$l$';'$d$';'R';'T'};
 commonValues={num2str(k);num2str(len);num2str(d*10^6);num2str(R);num2str(T)};
@@ -68,8 +69,8 @@ commonDef={'photoreceptor absorption coefficient ($\mu m^{-1}$)';
     'photoreceptor diameter ($\mu m$)';
     '95\% confidence level for firing threshold';
     'target width (diameter for spherical objects) ($m$)'};
-commonRefKey={'\cite{Warr98a}, \cite{Part90a}';'\cite{Nils14a}';...
-    '\cite{Nils14a} via \cite{Land12a}';'\cite{Nils14a},\cite{Land81a}';' '};
+commonRefKey={'\cite{Warr98a} via \cite{Part90a}';'\cite{Nils14a}';...
+    '\cite{Nils14a} via \cite{Land12a}';'\cite{Nils14a} via \cite{Land81a}';' '};
 
 rowLabels=cell(length(daylightParameters)+...
     length(moonlightParameters)+...
