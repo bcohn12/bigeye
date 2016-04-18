@@ -25,7 +25,7 @@ X_land=0.08; %units:photons/s, dark-noise rate/photoreceptor @23.5 degrees Celsi
 R=1.96; %units: n/a, reliability coefficient for 95% confidence, used typical value
 d=3e-6; %units: m, photoreceptor diameter, used typical value
 M=2.55; %units: n/a, ratio of focal length and pupil radius (2f/A), set to Matthiessen's ratio
-f_daylight=8.3; %focal_length/A for bright light
+f_daylight=8.8; %focal_length/A for bright light
 f_night=2.1; %focal_length/A for night
 
 a=.3; %units: 1/m, beam attenuation coefficient, pg8 supplementary
