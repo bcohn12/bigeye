@@ -252,7 +252,7 @@ for i=1:width-1   % go 2:width for original
         case 1
             alignment='L{3.5cm}';
         case {2,3}
-            alignment='L{2.5cm}';
+            alignment='L{2cm}';
          case 4
             alignment='L{4.5cm}';
     end   
