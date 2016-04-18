@@ -6,10 +6,6 @@ Wlambdaylambda=csvread('../figXX_compviz/Wlambda.csv');
 sigma=@(lambda) ((1.1e-3*lambda.^(-4))+(0.008*lambda.^(-2.09)))/(1e3); %value checked with mathmematica
 WlambdaylambdaInterp= @(lambda) interp1(Wlambdaylambda(:,1),Wlambdaylambda(:,2),lambda,'pchip'); %value checked with mathematica
 
-C0=-0.05; %contrast value
-k=0.035; % photoreceptor absorbtion, units 1/micrometers
-len=57;  % length of photoreceptor, in micrometers
-
 %following Middleton:
 lambda1=0.4; lambda2=0.7;
 Bh=LDaylight*integral(WlambdaylambdaInterp,lambda1,lambda2); %value checked with mathematica
@@ -17,9 +13,9 @@ Ispace=((1.31e3)/0.89)*Bh*(1e6)^2; %value checked with mathematica
 
 
 %% RELATE PUPIL SIZE TO RANGE
-if T==0.01
-    minvisualrange=1; maxvisualrange=1000;
-elseif T==0.1
+if T<0.05;
+    minvisualrange=1; maxvisualrange=3000;
+else
     minvisualrange=1; maxvisualrange=5000;
 end
 
@@ -32,21 +28,20 @@ parfor loop1=1:length(pupilValuesAir)
         r=rangeValuesAir(loop2);
         
         Nspace=(pi/4)^2*(T/r)^2*A^2*Ispace*Dt_daylight*eta*((k*len)/(2.3+(k*len)));
-        Xch=((T*f_daylight*A)/(r*d))*X_land*Dt_daylight;
+        Xch=((T*f_daylight*A)/(r*d))^2*X_land*Dt_daylight;
         
         %APPARENT RADIANCE OF THE GREY OBJECT
-        Bgfunc=@(lambda) WlambdaylambdaInterp(lambda).*(1+(C0.*exp(-sigma(lambda).*r)))...
-            .*(exp(-sigma(lambda).*r));
+        Bgfunc=@(lambda) WlambdaylambdaInterp(lambda).*(1+(C0_daylight.*exp(-sigma(lambda).*r)));
         Bg= LDaylight*integral(Bgfunc,lambda1,lambda2);
         Iobject=((1.31e3)/0.89)*Bg*(1e6)^2;
         
         
         %BACKGROUND SPACE-LIGHT RADIANCE
-        Bbfunc=@(lambda) WlambdaylambdaInterp(lambda).*(1-exp(-sigma(lambda).*r));
-        Bb=LDaylight*integral(Bbfunc,lambda1,lambda2);
-        Iblack=((1.31e3)/0.89)*Bb*(1e6)^2;
+%         Bbfunc=@(lambda) WlambdaylambdaInterp(lambda).*(1-exp(-sigma(lambda).*r));
+%         Bb=LDaylight*integral(Bbfunc,lambda1,lambda2);
+%         Iblack=((1.31e3)/0.89)*Bb*(1e6)^2;
         
-        Itarget=Iobject+Iblack;
+        Itarget=Iobject;
         
         Ntarget=(pi/4)^2*(T/r)^2*A^2*Itarget*Dt_daylight*eta*((k*len)/(2.3+(k*len)));
         
