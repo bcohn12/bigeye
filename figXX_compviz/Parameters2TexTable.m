@@ -14,7 +14,7 @@ daylightDef={'detection efficiency';
     'integration time ($s$)';
     'intrinsic contrast';
     'f-number, ratio of focal length and pupil diameter';
-    'daylight luminosity ($cd/m^{2}$);'};
+    'daylight luminosity ($cd m^{-2}$);'};
 daylightRefKey={'\cite{Pirh07a}';'\cite{Donn95a}';'\cite{Blac46a}';...
     '\cite{Mill79a}';'\cite{Midd52a}'};
 
@@ -24,7 +24,7 @@ moonlightDef={'detection efficiency';
     'integration time ($s$)';
     'intrinsic contrast';
     'f-number, ratio of focal length and pupil diameter';
-    'daylight luminosity ($cd/m^{2}$);'};
+    'daylight luminosity ($cd m^{-2}$);'};
 moonlightRefKey={'\cite{Nils14a}';'\cite{Donn95a}';'\cite{Blac46a}';...
     '\cite{Mill79a}';'\cite{Midd52a}'};
 
@@ -34,7 +34,7 @@ starlightDef={'detection efficiency';
     'integration time ($s$)';
     'intrinsic contrast';
     'f-number, ratio of focal length and pupil diameter';
-    'daylight luminosity ($cd/m^{2}$);'};
+    'daylight luminosity ($cd m^{-2}$);'};
 starlightRefKey={'\cite{Nils14a}';'\cite{Donn95a}';'\cite{Blac46a}';...
     '\cite{Mill79a}';'\cite{Midd52a}'};
 
