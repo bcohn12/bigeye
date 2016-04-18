@@ -8,13 +8,13 @@ columnLabels={' ';
     'Definition';
     'Reference'};
 
-daylightParameters={'$\eta$';'$\Delta t$';'$C_{0}$';'$f$';'$\mathtt{L}$'};
+daylightParameters={'q';'$\Delta t$';'$C_{0}$';'$f$';'$\mathtt{L}$'};
 daylightValues={num2str(eta);num2str(Dt_daylight,'%.2f');num2str(C0_daylight);num2str(f_daylight);num2str(LDaylight,'%10.1e')};
 daylightDef={'detection efficiency';
     'integration time ($s$)';
     'intrinsic contrast';
     'f-number, ratio of focal length and pupil diameter';
-    'daylight luminosity ($cd m^{-2}$);'};
+    'daylight luminosity ($\text{cd} \text{m}^{-2}$);'};
 daylightRefKey={'\cite{Pirh07a}';'\cite{Donn95a}';'\cite{Blac46a}';...
     '\cite{Mill79a}';'\cite{Midd52a}'};
 
@@ -24,7 +24,7 @@ moonlightDef={'detection efficiency';
     'integration time ($s$)';
     'intrinsic contrast';
     'f-number, ratio of focal length and pupil diameter';
-    'daylight luminosity ($cd m^{-2}$);'};
+    'daylight luminosity ($\text{cd} \text{m}^{-2}$);'};
 moonlightRefKey={'\cite{Nils14a}';'\cite{Donn95a}';'\cite{Blac46a}';...
     '\cite{Mill79a}';'\cite{Midd52a}'};
 
@@ -34,14 +34,14 @@ starlightDef={'detection efficiency';
     'integration time ($s$)';
     'intrinsic contrast';
     'f-number, ratio of focal length and pupil diameter';
-    'daylight luminosity ($cd m^{-2}$);'};
+    'daylight luminosity ($\text{cd} \text{m}^{-2}$);'};
 starlightRefKey={'\cite{Nils14a}';'\cite{Donn95a}';'\cite{Blac46a}';...
     '\cite{Mill79a}';'\cite{Midd52a}'};
 
-commonTerrestrialParameters={'$\mathtt{X}$';'$\sigma_{km} (\lambda_{\mu m})$'};
-commonTerrestrialValues={num2str(X_land);'$0.0011 \lambda_{\mu m}^{-4} + 0.008 \lambda_{\mu m}^{-2.09}$'};
-commonTerrestrialDef={'dark noise rate @$23.5^{\circ} C$ ($\text{photons } s^{-1}$)';
-    'extinction factor ($km^{-1}$)'};
+commonTerrestrialParameters={'$\mathtt{X}$';'$\sigma_{\text{km}} (\lambda_{\mu \text{m}})$'};
+commonTerrestrialValues={num2str(X_land);'$0.0011 \lambda_{\mu \text{m}}^{-4} + 0.008 \lambda_{\mu \text{m}}^{-2.09}$'};
+commonTerrestrialDef={'dark noise rate @$23.5^{\circ} \text{C}$ ($\text{photons } s^{-1}$)';
+    'extinction factor ($\text{km}^{-1}$)'};
 commonTerrestrialRefKey={'\cite{Aho93a}';'\cite{Midd52a}'};
 
 coastalParameters={'q';'$\Delta t$';'$C_{0}$';'$f$';'downwelling $I_{space}$'; 'horizontal $I_{space}$';
@@ -52,11 +52,11 @@ coastalDef={'detection efficiency';
     'integration time ($s$)';
     'intrinsic contrast';
     'f-number, ratio of focal length and pupil diameter';
-    'downwelling spectral background radiance ($\text{photons } m^{-1} s^{-1} sr^{-1}$)';
-    'horizontal spectral background radiance ($\text{photons } m^{-1} s^{-1} sr^{-1}$)';
-    'beam attenuation coefficient of sea water ($m^{-1}$)';
-    'background radiance attenuation coefficient for upward viewing ($m^{-1}$)';
-    'background radiance attenuation coefficient for horizontal viewing ($m^{-1}$)';
+    'downwelling spectral background radiance ($\text{photons } \text{m }^{-1} s^{-1} \text{ sr}^{-1}$)';
+    'horizontal spectral background radiance ($\text{photons } \text{m }^{-1} s^{-1} \text{ sr}^{-1}$)';
+    'beam attenuation coefficient of sea water ($\text{m}^{-1}$)';
+    'background radiance attenuation coefficient for upward viewing ($\text{m}^{-1}$)';
+    'background radiance attenuation coefficient for horizontal viewing ($\text{m}^{-1}$)';
     'dark noise rate @$16.5^{\circ} C$ ($\text{photons } s^{-1}$'};
 coastalRefKey={'\cite{Nils14a}';'\cite{Donn95a} via \cite{Nils14a}';'\cite{Nils14a}';...
     '\cite{Nils14a}';'\cite{Nils14a}';'\cite{Nils14a}';'\cite{John02a} via \cite{Nils14a}';
@@ -65,10 +65,10 @@ coastalRefKey={'\cite{Nils14a}';'\cite{Donn95a} via \cite{Nils14a}';'\cite{Nils1
 commonParameters={'$k$';'$l$';'$d$';'R';'T'};
 commonValues={num2str(k);num2str(len);num2str(d*10^6);num2str(R);num2str(T)};
 commonDef={'photoreceptor absorption coefficient ($\mu m^{-1}$)';
-    'photoreceptor length ($\mu m$)';
-    'photoreceptor diameter ($\mu m$)';
+    'photoreceptor length ($\mu \text{m}$)';
+    'photoreceptor diameter ($\mu \text{m}$)';
     '95\% confidence level for firing threshold';
-    'target width (diameter for spherical objects) ($m$)'};
+    'target width (diameter for spherical objects) (m)'};
 commonRefKey={'\cite{Part90a} via \cite{Warr98a}';'\cite{Nils14a}';...
     '\cite{Land12a} via \cite{Nils14a}';'\cite{Land81a} via \cite{Nils14a}';' '};
 
