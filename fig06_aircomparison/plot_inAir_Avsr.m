@@ -1,5 +1,7 @@
 close all;
 clear all;
+%% COMMENTS
+
 
 load daylight.mat
 load moonlight.mat

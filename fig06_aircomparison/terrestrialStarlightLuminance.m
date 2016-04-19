@@ -16,8 +16,8 @@ Ispace=((1.31e3)/0.89)*Bh*(1e6)^2; %value checked with mathematica
 minvisualrange=0.01; maxvisualrange=10;
 
 pupilValuesAir=linspace(minpupil,maxpupil,25);
-rangeValuesAir=linspace(minvisualrange,maxvisualrange,1000);
-for loop1=1:length(pupilValuesAir)
+rangeValuesAir=linspace(minvisualrange,maxvisualrange,7500);
+parfor loop1=1:length(pupilValuesAir)
     A=pupilValuesAir(loop1);
     possibleSolS=zeros(length(rangeValuesAir),1);
     for loop2=1:length(rangeValuesAir)
