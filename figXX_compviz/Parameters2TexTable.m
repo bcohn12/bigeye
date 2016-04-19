@@ -25,7 +25,7 @@ moonlightDef={'detection efficiency';
     'intrinsic contrast';
     'f-number, ratio of focal length and pupil diameter';
     'daylight luminosity ($\text{cd} \text{m}^{-2}$);'};
-moonlightRefKey={'\cite{Nils14a}';'\cite{Donn95a}';'\cite{Blac46a}';...
+moonlightRefKey={'\cite{Nils14a}';'\cite{Donn95a}';'\cite{Hest68a} and \cite{Blac46a}';...
     '\cite{Mill79a}';'\cite{Midd52a}'};
 
 starlightParameters={'q';'$\Delta t$';'$C_{0}$';'$f$';'$\mathtt{L}$'};
@@ -35,7 +35,7 @@ starlightDef={'detection efficiency';
     'intrinsic contrast';
     'f-number, ratio of focal length and pupil diameter';
     'daylight luminosity ($\text{cd} \text{m}^{-2}$);'};
-starlightRefKey={'\cite{Nils14a}';'\cite{Donn95a}';'\cite{Blac46a}';...
+starlightRefKey={'\cite{Nils14a}';'\cite{Donn95a}';'\cite{Hest68a} and \cite{Blac46a}';...
     '\cite{Mill79a}';'\cite{Midd52a}'};
 
 commonTerrestrialParameters={'$\mathtt{X}$';'$\sigma_{\text{km}} (\lambda_{\mu \text{m}})$'};
