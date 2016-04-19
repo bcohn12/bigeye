@@ -40,13 +40,13 @@ starlightRefKey={'\cite{Nils14a}';'\cite{Donn95a}';'\cite{Hest68a} and \cite{Bla
 
 commonTerrestrialParameters={'$\mathtt{X}$';'$\sigma_{\text{km}} (\lambda_{\mu \text{m}})$'};
 commonTerrestrialValues={num2str(X_land);'$0.0011 \lambda_{\mu \text{m}}^{-4} + 0.008 \lambda_{\mu \text{m}}^{-2.09}$'};
-commonTerrestrialDef={'dark noise rate @$23.5^{\circ} \text{C}$ ($\text{photons } \text{s}^{-1}$)';
+commonTerrestrialDef={'dark noise rate @$23.5^{\circ} \text{C}$ ($\text{photons} \text{s}^{-1}$)';
     'extinction factor ($\text{km}^{-1}$)'};
 commonTerrestrialRefKey={'\cite{Aho93a}';'\cite{Midd52a}'};
 
 coastalParameters={'q';'$\Delta t$';'$C_{0}$';'$f$';'downwelling $\text{I}_{\text{space}}$'; 'horizontal $\text{I}_{\text{space}}$';
     '$\alpha$';'$\kappa$ looking upwards'; '$\kappa$ looking horizontal';'$\mathtt{X}$'};
-coastalValues={num2str(q);num2str(Dt);num2str(-1);strcat('$\frac{',num2str(M),'A}{2}$');num2str(Ispace_up,'%10.4e');num2str(Ispace_hor,'%10.4e');
+coastalValues={num2str(q);num2str(Dt);num2str(-1);strcat('$\frac{',num2str(M),'\text{A}}{2}$');num2str(Ispace_up,'%10.4e');num2str(Ispace_hor,'%10.4e');
     num2str(a);num2str(K_up);num2str(K_hor);num2str(X)};
 coastalDef={'detection efficiency';
     'integration time (s)';
@@ -57,7 +57,7 @@ coastalDef={'detection efficiency';
     'beam attenuation coefficient of sea water ($\text{m}^{-1}$)';
     'background radiance attenuation coefficient for upward viewing ($\text{m}^{-1}$)';
     'background radiance attenuation coefficient for horizontal viewing ($\text{m}^{-1}$)';
-    'dark noise rate @$16.5^{\circ} C$ ($\text{photons } \text{s}^{-1}$'};
+    'dark noise rate @$16.5^{\circ} \, \text{C}$ ($\text{photons } \text{s}^{-1}$)'};
 coastalRefKey={'\cite{Nils14a}';'\cite{Donn95a} via \cite{Nils14a}';'\cite{Nils14a}';...
     '\cite{Nils14a}';'\cite{Nils14a}';'\cite{Nils14a}';'\cite{John02a} via \cite{Nils14a}';
     '\cite{John02a} via \cite{Nils14a}';'\cite{John02a} via \cite{Nils14a}';'\cite{Aho93a}'};
