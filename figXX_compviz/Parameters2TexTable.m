@@ -69,7 +69,7 @@ commonDef={'photoreceptor absorption coefficient ($\mu m^{-1}$)';
     'photoreceptor diameter ($\mu \text{m}$)';
     '95\% confidence level for firing threshold';
     'target width (diameter for spherical objects) (m)';
-    'daylight luminance correction factor dependent on time' };
+    'Sun brightness in Late Devonian, relative to current' };
 commonRefKey={'\cite{Part90a} via \cite{Warr98a}';'\cite{Nils14a}';...
     '\cite{Land12a} via \cite{Nils14a}';'\cite{Land81a} via \cite{Nils14a}';' ';'\cite{Bahc01a}'};
 
