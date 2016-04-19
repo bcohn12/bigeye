@@ -44,7 +44,7 @@ commonTerrestrialDef={'dark noise rate @$23.5^{\circ} \text{C}$ ($\text{photons 
     'extinction factor ($\text{km}^{-1}$)'};
 commonTerrestrialRefKey={'\cite{Aho93a}';'\cite{Midd52a}'};
 
-coastalParameters={'q';'$\Delta t$';'$C_{0}$';'$f$';'downwelling $I_{space}$'; 'horizontal $I_{space}$';
+coastalParameters={'q';'$\Delta t$';'$C_{0}$';'$f$';'downwelling $\text{I}_{\text{space}}$'; 'horizontal $\text{I}_{\text{space}}$';
     '$\alpha$';'$\kappa$ looking upwards'; '$\kappa$ looking horizontal';'$\mathtt{X}$'};
 coastalValues={num2str(q);num2str(Dt);num2str(-1);strcat('$\frac{',num2str(M),'A}{2}$');num2str(Ispace_up,'%10.4e');num2str(Ispace_hor,'%10.4e');
     num2str(a);num2str(K_up);num2str(K_hor);num2str(X)};
