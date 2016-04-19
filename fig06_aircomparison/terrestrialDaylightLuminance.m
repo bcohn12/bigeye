@@ -28,7 +28,7 @@ parfor loop1=1:length(pupilValuesAir)
         r=rangeValuesAir(loop2);
         
         Nspace=(pi/4)^2*(T/r)^2*A^2*Ispace*Dt_daylight*eta*((k*len)/(2.3+(k*len)));
-        Xch=((T*f_daylight*A)/(r*d))^2*X_land*Dt_daylight;
+        Xch=((T*f_daylight)/(r*d))^2*X_land*Dt_daylight;
         
         %APPARENT RADIANCE OF THE GREY OBJECT
         Bgfunc=@(lambda) WlambdaylambdaInterp(lambda).*(1+(C0_daylight.*exp(-sigma(lambda).*r)));
