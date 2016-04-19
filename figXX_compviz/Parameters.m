@@ -14,7 +14,7 @@ Dt_moonlight=(LMoonlight)^-0.19;
 Dt_starlight=(LStarlight)^-0.19;
 
 C0_daylight=-0.05; %daylight contrast value
-C0_night=-0.05; %night contrast value
+C0_night=0.2; %night contrast value
 k=0.035; % photoreceptor absorbtion, units 1/micrometers
 len=57;  % length of photoreceptor, in micrometers
 
