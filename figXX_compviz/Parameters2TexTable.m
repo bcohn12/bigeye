@@ -283,9 +283,9 @@ for h=1:height
     if(~isempty(rowLabels))
         fprintf(fid, '\\textbf{%s}&', rowLabels{h});
     end
-    if mod(h,2)
-        fprintf(fid,'\\rowcolor{Gray}\r\n');
-    end
+%     if mod(h,2)
+%         fprintf(fid,'\\rowcolor{Gray}\r\n');
+%     end
     for w=1:width-1
         if isnumeric(matrix{h, w})
             if isnan(matrix{h, w})
@@ -300,11 +300,11 @@ for h=1:height
         end
         fprintf(fid, '%s&', matrix{h, w});
     end
-    if h==height
+    %if h==height
         fprintf(fid, '%s\\\\\\hline\r\n', matrix{h, width});
-    else
-            fprintf(fid, '%s\\\\\r\n', matrix{h, width});
-    end
+    %else
+    %        fprintf(fid, '%s\\\\\r\n', matrix{h, width});
+    %end
 end
 
 fprintf(fid, '\\end{tabular}\r\n');
