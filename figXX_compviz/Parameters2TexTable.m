@@ -64,7 +64,7 @@ coastalRefKey={'\cite{Nils14a}';'\cite{Donn95a} via \cite{Nils14a}';'\cite{Nils1
 
 commonParameters={'$k$';'$l$';'$d$';'R';'T';'$\text{L}_{\text{correction}}$'};
 commonValues={num2str(k);num2str(len);num2str(d*10^6);num2str(R);num2str(T);num2str(0.97)};
-commonDef={'photoreceptor absorption coefficient ($\mu m^{-1}$)';
+commonDef={'photoreceptor absorption coefficient ($\mu \text{m}^{-1}$)';
     'photoreceptor length ($\mu \text{m}$)';
     'photoreceptor diameter ($\mu \text{m}$)';
     '95\% confidence level for firing threshold';
