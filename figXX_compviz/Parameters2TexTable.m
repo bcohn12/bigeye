@@ -8,7 +8,7 @@ columnLabels={' ';
     'Definition';
     'Reference'};
 
-daylightParameters={'q';'$\Delta t$';'$C_{0}$';'$f$';'$\mathtt{L}$'};
+daylightParameters={'q';'$\Delta t$';'$C_{0}$';'$F$';'$\mathtt{L}$'};
 daylightValues={num2str(eta);num2str(Dt_daylight,'%.2f');num2str(C0_daylight);num2str(f_daylight);num2str(LDaylight,'%10.1e')};
 daylightDef={'detection efficiency';
     'integration time (s)';
@@ -18,7 +18,7 @@ daylightDef={'detection efficiency';
 daylightRefKey={'\cite{Pirh07a}';'\cite{Donn95a}';'\cite{Blac46a}';...
     '\cite{Mill79a}';'\cite{Midd52a}'};
 
-moonlightParameters={'q';'$\Delta t$';'$C_{0}$';'$f$';'$\mathtt{L}$'};
+moonlightParameters={'q';'$\Delta t$';'$C_{0}$';'$F$';'$\mathtt{L}$'};
 moonlightValues={num2str(q);num2str(Dt_moonlight,'%.2f');num2str(C0_night);num2str(f_night);num2str(LMoonlight,'%10.1e')};
 moonlightDef={'detection efficiency';
     'integration time (s)';
@@ -28,7 +28,7 @@ moonlightDef={'detection efficiency';
 moonlightRefKey={'\cite{Nils14a}';'\cite{Donn95a}';'\cite{Hest68a} and \cite{Blac46a}';...
     '\cite{Mill79a}';'\cite{Midd52a}'};
 
-starlightParameters={'q';'$\Delta t$';'$C_{0}$';'$f$';'$\mathtt{L}$'};
+starlightParameters={'q';'$\Delta t$';'$C_{0}$';'$F$';'$\mathtt{L}$'};
 starlightValues={num2str(q);num2str(Dt_starlight,'%.2f');num2str(C0_night);num2str(f_night);num2str(LStarlight,'%10.1e')};
 starlightDef={'detection efficiency';
     'integration time (s)';
@@ -44,13 +44,14 @@ commonTerrestrialDef={'dark noise rate @$23.5^{\circ} \text{C}$ ($\text{photons}
     'extinction factor ($\text{km}^{-1}$)'};
 commonTerrestrialRefKey={'\cite{Aho93a}';'\cite{Midd52a}'};
 
-coastalParameters={'q';'$\Delta t$';'$C_{0}$';'$f$';'downwelling $\text{I}_{\text{space}}$'; 'horizontal $\text{I}_{\text{space}}$';
+coastalParameters={'q';'$\Delta t$';'$C_{0}$';'$M$';'$F$';'downwelling $\text{I}_{\text{space}}$'; 'horizontal $\text{I}_{\text{space}}$';
     '$\alpha$';'$\kappa$ looking upwards'; '$\kappa$ looking horizontal';'$\mathtt{X}$'};
-coastalValues={num2str(q);num2str(Dt);num2str(-1);strcat('$\frac{',num2str(M),'\text{A}}{2}$');num2str(Ispace_up,'%10.4e');num2str(Ispace_hor,'%10.4e');
+coastalValues={num2str(q);num2str(Dt);num2str(-1);num2str(M);strcat('$\frac{',num2str(M),'\text{A}}{2}$');num2str(Ispace_up,'%10.4e');num2str(Ispace_hor,'%10.4e');
     num2str(a);num2str(K_up);num2str(K_hor);num2str(X)};
 coastalDef={'detection efficiency';
     'integration time (s)';
     'intrinsic contrast';
+    'Matthiessen''s ratio';
     'f-number, ratio of focal length and pupil diameter';
     'downwelling spectral background radiance ($\text{photons } \text{m }^{-1} \text{s}^{-1} \text{ sr}^{-1}$)';
     'horizontal spectral background radiance ($\text{photons } \text{m }^{-1} \text{s}^{-1} \text{ sr}^{-1}$)';
@@ -58,7 +59,7 @@ coastalDef={'detection efficiency';
     'background radiance attenuation coefficient for upward viewing ($\text{m}^{-1}$)';
     'background radiance attenuation coefficient for horizontal viewing ($\text{m}^{-1}$)';
     'dark noise rate @$16.5^{\circ} \, \text{C}$ ($\text{photons } \text{s}^{-1}$)'};
-coastalRefKey={'\cite{Nils14a}';'\cite{Donn95a} via \cite{Nils14a}';'\cite{Nils14a}';...
+coastalRefKey={'\cite{Nils14a}';'\cite{Donn95a} via \cite{Nils14a}';'\cite{Nils14a}';'\cite{Nils14a}';...
     '\cite{Nils14a}';'\cite{Nils14a}';'\cite{Nils14a}';'\cite{John02a} via \cite{Nils14a}';
     '\cite{John02a} via \cite{Nils14a}';'\cite{John02a} via \cite{Nils14a}';'\cite{Aho93a}'};
 

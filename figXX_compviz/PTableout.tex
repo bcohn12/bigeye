@@ -1,7 +1,7 @@
 \begin{tabular}{|L{3.5cm}|L{2cm}|L{2cm}|L{4.5cm}|L{4.5cm}|}
 \hline
 \textbf{ }&\textbf{Parameter}&\textbf{Value}&\textbf{Definition}&\textbf{Reference}\\\hline
-\textbf{All Models}&$k$&0.035&photoreceptor absorption coefficient ($\mu m^{-1}$)&\cite{Part90a} via \cite{Warr98a}\\\hline
+\textbf{All Models}&$k$&0.035&photoreceptor absorption coefficient ($\mu \text{m}^{-1}$)&\cite{Part90a} via \cite{Warr98a}\\\hline
  &$l$&57&photoreceptor length ($\mu \text{m}$)&\cite{Nils14a}\\\hline
  &$d$&3&photoreceptor diameter ($\mu \text{m}$)&\cite{Land12a} via \cite{Nils14a}\\\hline
  &R&1.96&95\% confidence level for firing threshold&\cite{Land81a} via \cite{Nils14a}\\\hline
@@ -12,22 +12,23 @@
 \textbf{Daylight Model}&q&0.5&detection efficiency&\cite{Pirh07a}\\\hline
  &$\Delta t$&0.27&integration time (s)&\cite{Donn95a}\\\hline
  &$C_{0}$&-0.05&intrinsic contrast&\cite{Blac46a}\\\hline
- &$f$&8.8&f-number, ratio of focal length and pupil diameter&\cite{Mill79a}\\\hline
+ &$F$&8.8&f-number, ratio of focal length and pupil diameter&\cite{Mill79a}\\\hline
  &$\mathtt{L}$&9.7e+02&daylight luminosity ($\text{cd} \text{m}^{-2}$);&\cite{Midd52a}\\\hline
 \textbf{Moonlight Model}&q&0.36&detection efficiency&\cite{Nils14a}\\\hline
  &$\Delta t$&2.40&integration time (s)&\cite{Donn95a}\\\hline
  &$C_{0}$&0.2&intrinsic contrast&\cite{Hest68a} and \cite{Blac46a}\\\hline
- &$f$&2.1&f-number, ratio of focal length and pupil diameter&\cite{Mill79a}\\\hline
+ &$F$&2.1&f-number, ratio of focal length and pupil diameter&\cite{Mill79a}\\\hline
  &$\mathtt{L}$&1.0e-02&daylight luminosity ($\text{cd} \text{m}^{-2}$);&\cite{Midd52a}\\\hline
 \textbf{Starlight Model}&q&0.36&detection efficiency&\cite{Nils14a}\\\hline
  &$\Delta t$&3.72&integration time (s)&\cite{Donn95a}\\\hline
  &$C_{0}$&0.2&intrinsic contrast&\cite{Hest68a} and \cite{Blac46a}\\\hline
- &$f$&2.1&f-number, ratio of focal length and pupil diameter&\cite{Mill79a}\\\hline
+ &$F$&2.1&f-number, ratio of focal length and pupil diameter&\cite{Mill79a}\\\hline
  &$\mathtt{L}$&1.0e-03&daylight luminosity ($\text{cd} \text{m}^{-2}$);&\cite{Midd52a}\\\hline
 \textbf{Coastal Water Model}&q&0.36&detection efficiency&\cite{Nils14a}\\\hline
  &$\Delta t$&1.16&integration time (s)&\cite{Donn95a} via \cite{Nils14a}\\\hline
  &$C_{0}$&-1&intrinsic contrast&\cite{Nils14a}\\\hline
- &$f$&$\frac{2.55\text{A}}{2}$&f-number, ratio of focal length and pupil diameter&\cite{Nils14a}\\\hline
+ &$M$&2.55&Matthiessen's ratio&\cite{Nils14a}\\\hline
+ &$F$&$\frac{2.55\text{A}}{2}$&f-number, ratio of focal length and pupil diameter&\cite{Nils14a}\\\hline
  &downwelling $\text{I}_{\text{space}}$&7.7018e+13&downwelling spectral background radiance ($\text{photons } \text{m }^{-1} \text{s}^{-1} \text{ sr}^{-1}$)&\cite{Nils14a}\\\hline
  &horizontal $\text{I}_{\text{space}}$&6.2662e+11&horizontal spectral background radiance ($\text{photons } \text{m }^{-1} \text{s}^{-1} \text{ sr}^{-1}$)&\cite{Nils14a}\\\hline
  &$\alpha$&0.3&beam attenuation coefficient of sea water ($\text{m}^{-1}$)&\cite{John02a} via \cite{Nils14a}\\\hline
