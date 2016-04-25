@@ -15,7 +15,7 @@ pupilValuesAir=pupilValuesAir*10^3;
 fillboxalpha=0.07; % transparency of fillbox to show +/- std of pupil size
 
 NORMDERIVATIVE=0;
-DAYAERIAL=1;
+DAYAERIAL=0;
 
 load ../fig02_orbitsize/OM_TF_ST.mat
 
