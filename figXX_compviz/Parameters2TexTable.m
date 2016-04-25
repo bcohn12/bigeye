@@ -15,7 +15,7 @@ daylightDef={'detection efficiency';
     'intrinsic contrast';
     'f-number, ratio of focal length and pupil diameter';
     'daylight luminosity ($\text{cd} \text{m}^{-2}$);'};
-daylightRefKey={'\cite{Pirh07a}';'\cite{Donn95a}';'\cite{Blac46a}';...
+daylightRefKey={'\cite{Pirh07a}';'\cite{Donn95a}';'\cite{Hest68a}';...
     '\cite{Mill79a}';'\cite{Midd52a}'};
 
 moonlightParameters={'q';'$\Delta t$';'$C_{0}$';'$F$';'$\mathtt{L}$'};
