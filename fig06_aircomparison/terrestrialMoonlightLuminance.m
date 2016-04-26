@@ -16,7 +16,7 @@ Ispace=((1.31e3)/0.89)*Bh*(1e6)^2; %value checked with mathematica
 if T<0.05
     minvisualrange=1; maxvisualrange=500;
 else
-    minvisualrange=50; maxvisualrange=2500;
+    minvisualrange=50; maxvisualrange=1500;
 end
 
 pupilValuesAir=linspace(minpupil,maxpupil,25);

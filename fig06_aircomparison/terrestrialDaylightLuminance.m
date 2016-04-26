@@ -14,9 +14,9 @@ Ispace=((1.31e3)/0.89)*Bh*(1e6)^2; %value checked with mathematica
 
 %% RELATE PUPIL SIZE TO RANGE
 if T<0.05;
-    minvisualrange=1000; maxvisualrange=20000;
+    minvisualrange=10; maxvisualrange=2000;
 else
-    minvisualrange=5000; maxvisualrange=50000;
+    minvisualrange=100; maxvisualrange=10000;
 end
 
 pupilValuesAir=linspace(minpupil,maxpupil,25);
