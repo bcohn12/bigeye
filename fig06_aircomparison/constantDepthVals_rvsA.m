@@ -63,7 +63,7 @@ for loop1=1:length(coastalWaterDepth)
     
 end
 
-R=[visualRangeSolutions(1).up', visualRangeSolutions(1).hor', ...
+Ran=[visualRangeSolutions(1).up', visualRangeSolutions(1).hor', ...
     visualRangeSolutions(2).up', visualRangeSolutions(2).hor'];
 AA=pupilValues;
 indx=1;
@@ -71,9 +71,9 @@ indx=1;
 
 % NUMERICAL INTEGRALS TO COMPUTE SENSORY VOLUME
 % VALIDATED USING COMPARISON TO SNYDER
-for loop1=1:2:size(R,2)
-    visualRangeUp=R(:,loop1);
-    visualRangeHor=R(:,loop1+1);
+for loop1=1:2:size(Ran,2)
+    visualRangeUp=Ran(:,loop1);
+    visualRangeHor=Ran(:,loop1+1);
     
     visualVolumeUp=zeros(length(visualRangeUp),1);
     visualVolumeHor=zeros(length(visualRangeUp),1);
@@ -97,9 +97,9 @@ end
 V=[visualVolumeSolutions(1).up, visualVolumeSolutions(1).hor,...
     visualVolumeSolutions(2).up, visualVolumeSolutions(2).hor];
 indx=1;   
-for loop1=1:2:size(R,2)
-    visualRangeUp=R(:,loop1);
-    visualRangeHor=R(:,loop1+1);
+for loop1=1:2:size(Ran,2)
+    visualRangeUp=Ran(:,loop1);
+    visualRangeHor=Ran(:,loop1+1);
     
     visualVolumeUp=V(:,loop1);
     visualVolumeHor=V(:,loop1+1);

@@ -28,9 +28,9 @@ end
 drdADaylight=derivative(pupilValuesAir*10^3,visualRangeDaylight);
 dVdADaylight=derivative(pupilValuesAir*10^3,visualVolumeDaylight);
 drdAMoonlight=derivative(pupilValuesAir*10^3,visualRangeMoonlight);
-dVdAMoonlight=derivative(pupilValuesAir*10^3,visualRangeMoonlight);
+dVdAMoonlight=derivative(pupilValuesAir*10^3,visualVolumeMoonlight);
 drdAStarlight=derivative(pupilValuesAir*10^3,visualRangeStarlight);
-dVdAStarlight=derivative(pupilValuesAir*10^3,visualRangeStarlight);
+dVdAStarlight=derivative(pupilValuesAir*10^3,visualVolumeStarlight);
 
 save('terrestrial_Avsr','pupilValuesAir',...
     'visualRangeDaylight','visualVolumeDaylight', 'drdADaylight','dVdADaylight',...
