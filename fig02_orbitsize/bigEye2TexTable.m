@@ -92,7 +92,7 @@ spanST=[ST_orbit_length_span(:,4) ST_orbit_length_span(:,3)];
 durationTF=spanTF(:,2)-spanTF(:,1);
 durationST=spanST(:,2)-spanST(:,1);
 
-xlswrite('temp.xlsx',[spanTF durationTF; padding; spanST durationST])
+% xlswrite('temp.xlsx',[spanTF durationTF; padding; spanST durationST])
 
 
 %hl=line(1:length(datTF),sort(100.*datTF),'linestyle','none','marker','o','markerEdgeColor','none', ...
@@ -130,6 +130,8 @@ xlabel('log(orbit/skull length)')
 box off
 
 print(gcf, '-dpdf', mfilename('fullpath'));
+
+
 
 
 %% T test
@@ -322,6 +324,161 @@ OM_ST=x;
 save('OM_TF_ST.mat','OM_TF','OM_ST')
 
 print(gcf, '-dpdf','orbit_box')
+
+
+
+%
+%
+%
+%
+circleSize=3
+create_BE_figure
+fig_props.sub_pW = fig_props.sub_pW-.5;
+time_subsamp = 1;
+time_limit = 0.4;
+text_pos = [-5,2*time_limit/10,50];
+text_color = [0 0 0];
+text_size = 12;
+pn = {'Color','FontSize','FontWeight',};
+pv = {text_color,text_size,'bold'};
+
+plotnoX = 1;
+plotnoY = 1;
+horiz_line_len=0.07;
+ha3= create_BE_axes(plotnoX,plotnoY,fig_props);
+line(repmat(1/3,length(TF_orbit_length_span),1),TF_orbit_length_span(:,1), ...
+    'linestyle','none', ...
+    'marker','o','markersize',circleSize,'markeredgecolor','none','markerfacecolor',[1 0 0])
+
+meanOrb = mean(TF_orbit_length_span(:,1));
+line([(1/3)-horiz_line_len (1/3)+horiz_line_len],[meanOrb meanOrb],'color',[1 0 0],'linewidth',1.5)
+text((1/3)+horiz_line_len+0.01, meanOrb, [num2str(meanOrb,2) ' mm'])
+
+hold on
+
+secAqColor=[252 130 0]./255;
+% Derive sets without seconarily aquatic animals:
+
+
+secAquatic = {'Adelospondylus','Acherontiscus','Colosteus','Greererpeton','Deltaherpeton'}
+noSecAqOrb=ST_orbit_length_span(:,1);
+noSecAqSkl=ST_orbit_length_span(:,2);
+secAqIdx=zeros(length(ST_orbit_length_span),1);
+
+for i=1:length(secAquatic)
+    idx=find(strcmp(gsST(:,1), secAquatic(i)) );
+    secAqIdx(idx)=1;
+end
+
+% break ST into non secondarily aquatic and aquatic for plotting and means
+% all ST but no sec aquatic
+noSecAqSkl(find(secAqIdx))=[];
+noSecAqOrb(find(secAqIdx))=[];
+
+% sec aquatic only
+SecAqOrb=ST_orbit_length_span(:,1);
+SecAqSkl=ST_orbit_length_span(:,2);
+SecAqOrb(find(~secAqIdx))=[];
+SecAqSkl(find(~secAqIdx))=[];
+
+% all ST
+Orb=ST_orbit_length_span(:,1);
+Skl=ST_orbit_length_span(:,2);
+
+%plot all ST without sec aq
+line(repmat(2/3,length(noSecAqOrb),1),noSecAqOrb, ...
+        'linestyle','none', ...
+    'marker','o','markersize',circleSize,'markeredgecolor','none','markerfacecolor',[0 0 1])
+
+% plot all ST without sec aq mean
+meanOrb = mean(noSecAqOrb);
+line([(2/3)-horiz_line_len (2/3)+horiz_line_len],[meanOrb meanOrb],'color',[0 0 1],'linewidth',1.5)
+text((2/3)+horiz_line_len+0.01, meanOrb+.4, [num2str(meanOrb,2) ' mm'])
+
+% plot all ST including sec aq mean
+meanOrb = mean(Orb);
+line([(2/3)-horiz_line_len (2/3)+horiz_line_len],[meanOrb meanOrb],'color',[0 0 0],'linewidth',1.5)
+text((2/3)+horiz_line_len+0.01, meanOrb, [num2str(meanOrb,2) ' mm'])
+
+
+%plot only sec aq
+line(repmat(2/3,length(SecAqOrb),1),SecAqOrb, ...
+        'linestyle','none', ...
+    'marker','o','markersize',circleSize,'markeredgecolor','none','markerfacecolor', ...
+    secAqColor,'linewidth',1.5)
+
+% plot only sec aq mean
+meanOrb = mean(SecAqOrb);
+line([(2/3)-horiz_line_len (2/3)+horiz_line_len],[meanOrb meanOrb],'color',secAqColor,'linewidth',1.5)
+text((2/3)+horiz_line_len+0.01, meanOrb, [num2str(meanOrb,2) ' mm'])  
+
+set(gca,'ylim',[0 70])
+set(gca,'xlim',[0 1])
+set(gca,'xtick', [1/3 2/3],'xticklabel',{'finned tetrapod','digited tetrapod'})
+ylabel('orbit length (mm)')
+
+
+plotnoX = 2;
+plotnoY = 1;
+ha4 = create_BE_axes(plotnoX,plotnoY,fig_props);
+line(repmat(1/3,length(TF_orbit_length_span),1), ...
+    100.*(TF_orbit_length_span(:,1)./TF_orbit_length_span(:,2)), ...
+        'linestyle','none', ...
+    'marker','o','markersize',circleSize,'markeredgecolor','none','markerfacecolor',[1 0 0])
+meanOrbpct = 100*mean(TF_orbit_length_span(:,1)./TF_orbit_length_span(:,2));
+line([(1/3)-horiz_line_len (1/3)+horiz_line_len],[meanOrbpct meanOrbpct],'color',[1 0 0], 'linewidth',1.5)
+
+text((1/3)+horiz_line_len+0.01, meanOrbpct, [num2str(meanOrbpct,2) '%'])
+
+hold on
+
+% digited tetrapods
+%################
+
+%plot all ST without sec aq
+line(repmat(2/3,length(noSecAqOrb),1),100.*(noSecAqOrb./noSecAqSkl), ...
+        'linestyle','none', ...
+    'marker','o','markersize',circleSize,'markeredgecolor','none','markerfacecolor',[0 0 1])
+
+% plot all ST without sec aq mean
+meanOrbSkl = mean(100.*(noSecAqOrb./noSecAqSkl));
+line([(2/3)-horiz_line_len (2/3)+horiz_line_len],[meanOrbSkl meanOrbSkl],'color',[0 0 1],'linewidth',1.5)
+text((2/3)+horiz_line_len+0.01, meanOrbSkl, [num2str(meanOrbSkl,2) '%'])
+
+%plot only sec aq
+line(repmat(2/3,length(SecAqOrb),1),100.*(SecAqOrb./SecAqSkl), ...
+        'linestyle','none', ...
+    'marker','o','markersize',circleSize,'markeredgecolor','none','markerfacecolor', ...
+    secAqColor,'linewidth',1.5)
+
+% plot only sec aq mean
+meanOrbSkl = mean(100.*(SecAqOrb./SecAqSkl));
+line([(2/3)-horiz_line_len (2/3)+horiz_line_len],[meanOrbSkl meanOrbSkl],'color',secAqColor,'linewidth',1.5)
+text((2/3)+horiz_line_len+0.01, meanOrbSkl, [num2str(meanOrbSkl,2)  '%'])  
+
+% plot all ST including sec aq mean
+meanOrbSkl = mean(100.*(Orb./Skl));
+line([(2/3)-horiz_line_len (2/3)+horiz_line_len],[meanOrbSkl meanOrbSkl],'color',[0 0 0],'linewidth',1.5)
+text((2/3)+horiz_line_len+0.01, meanOrbSkl-.4, [num2str(meanOrbSkl,2) '%'])
+
+%#################
+% line(repmat(2/3,length(ST_orbit_length_span),1), ...
+%     100.*(ST_orbit_length_span(:,1)./ST_orbit_length_span(:,2)), ...
+%         'linestyle','none', ...
+%     'marker','o','markersize',circleSize,'markeredgecolor','none','markerfacecolor',[0 0 1])
+% meanOrbpct = 100*mean(ST_orbit_length_span(:,1)./ST_orbit_length_span(:,2));
+% line([(2/3)-horiz_line_len (2/3)+horiz_line_len],[meanOrbpct meanOrbpct],'color',[0 0 1])
+% 
+% text((2/3)+horiz_line_len+0.01, meanOrbpct, num2str(meanOrbpct,2))
+% 
+% 
+
+set(gca,'ylim',[0 40])
+set(gca,'xlim',[0 1])
+ylabel('100 x (orbit length/skull length)')
+set(gca,'xtick', [1/3 2/3],'xticklabel',{'finned tetrapod','digited tetrapod'})
+
+print(gcf, '-dpdf','orbitData')
 disp('Done!!');
 
 

@@ -20,9 +20,28 @@ y_bd=[...
 0.20;
 0.47];
 
+% disp('mean')
+% mean(y_bd)
+% disp('std')
+% std(y_bd)
+% 
+% disp('25 percentile')
+% prctile(y_bd,25)
+% disp('50 percentile')
+% prctile(y_bd,50)
+% disp('75 percentile')
+% prctile(y_bd,75)
+
+c=4.8./y_bd  % attenuation coefficient
+
+disp('mean')
 mean(y_bd)
+disp('std')
 std(y_bd)
 
-prctile(y_bd,25)
-prctile(y_bd,50)
-prctile(y_bd,75)
+disp('25 percentile')
+prctile(c,25)
+disp('50 percentile')
+prctile(c,50)
+disp('75 percentile')
+prctile(c,75)
