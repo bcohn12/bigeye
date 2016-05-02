@@ -14,7 +14,7 @@ Dt_moonlight=(LMoonlight)^-0.19;
 Dt_starlight=(LStarlight)^-0.19;
 
 % Contrast parameters. Miller uses +/- 0.5, +/-1, and +/-2 as span 
-C0_daylight=-0.05; %daylight contrast value
+C0_daylight=-1; %daylight contrast value
 C0_night=0.5; %night contrast value, a guess (4 is snow). 
 k=0.035; % photoreceptor absorbtion, units 1/micrometers
 len=57;  % length of photoreceptor, in micrometers
