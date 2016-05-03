@@ -19,7 +19,7 @@ daylightRefKey={'\cite{Pirh07a}';'\cite{Donn95a}';'\cite{Hest68a}';...
     '\cite{Mill79a}';'\cite{Midd52a}'};
 
 moonlightParameters={'q';'$\Delta t$';'$C_{0}$';'$F$';'$\mathtt{L}$'};
-moonlightValues={num2str(q);num2str(Dt_moonlight,'%.2f');num2str(C0_night);num2str(f_night);num2str(LMoonlight,'%10.1e')};
+moonlightValues={num2str(q);num2str(Dt_moonlight,'%.2f');num2str(C0_moonlight);num2str(f_night);num2str(LMoonlight,'%10.1e')};
 moonlightDef={'detection efficiency';
     'integration time (s)';
     'intrinsic contrast';
@@ -29,7 +29,7 @@ moonlightRefKey={'\cite{Nils14a}';'\cite{Donn95a}';'\cite{Hest68a} and \cite{Bla
     '\cite{Mill79a}';'\cite{Midd52a}'};
 
 starlightParameters={'q';'$\Delta t$';'$C_{0}$';'$F$';'$\mathtt{L}$'};
-starlightValues={num2str(q);num2str(Dt_starlight,'%.2f');num2str(C0_night);num2str(f_night);num2str(LStarlight,'%10.1e')};
+starlightValues={num2str(q);num2str(Dt_starlight,'%.2f');num2str(C0_starlight);num2str(f_night);num2str(LStarlight,'%10.1e')};
 starlightDef={'detection efficiency';
     'integration time (s)';
     'intrinsic contrast';
