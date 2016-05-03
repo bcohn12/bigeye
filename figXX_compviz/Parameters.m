@@ -5,7 +5,7 @@ eta=0.5; %Walzl et al 2007
 Dt=1.16; %units: s, integration time, used typical value
 
 %All values from Middleton
-LDaylight=0.97*1e4; % daylight luminosity in cd/m^2 
+LDaylight=0.97*1e3; % daylight luminosity in cd/m^2 
 LMoonlight=1e-2; %Fairly brigh moonlight in cd/m^2
 LStarlight=1e-4; %moonless clear night sky in cd/m^2
 
