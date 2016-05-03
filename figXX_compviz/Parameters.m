@@ -5,17 +5,18 @@ eta=0.5; %Walzl et al 2007
 Dt=1.16; %units: s, integration time, used typical value
 
 %All values from Middleton
-LDaylight=0.97*1e3; % daylight luminosity in cd/m^2 
+LDaylight=0.97*1e4; % daylight luminosity in cd/m^2 
 LMoonlight=1e-2; %Fairly brigh moonlight in cd/m^2
-LStarlight=1e-3; %moonless clear night sky in cd/m^2
+LStarlight=1e-4; %moonless clear night sky in cd/m^2
 
 Dt_daylight=(LDaylight)^-0.19; %Donner etal 1994
 Dt_moonlight=(LMoonlight)^-0.19;
 Dt_starlight=(LStarlight)^-0.19;
 
 % Contrast parameters. Miller uses +/- 0.5, +/-1, and +/-2 as span 
-C0_daylight=-1; %daylight contrast value
-C0_night=0.5; %night contrast value, a guess (4 is snow). 
+C0_daylight=-.05; %daylight contrast value
+C0_moonlight=0.1; %night contrast value, a guess (4 is snow). 
+C0_starlight=0.3; %starlight contrast value, a guess
 k=0.035; % photoreceptor absorbtion, units 1/micrometers
 len=57;  % length of photoreceptor, in micrometers
 
