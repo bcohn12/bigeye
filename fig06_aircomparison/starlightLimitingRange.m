@@ -8,12 +8,12 @@
     % while(liminal contrast <= apparent contrast)
         % calculate apparent contrast and liminal contrast
 
-function [actRangeDaylight, Cr_daylight, angularSize, Kt_daylight] =daylightLimitingRange
+function [actRangeStarlight, Cr_starlight, angularSize, Kt_starlight] =starlightLimitingRange
 
 %% INITIALIZE/LOAD DATA
 
 run ../figXX_compviz/Parameters.m
-load('daylight');
+load('starlight');
 pupilValuesTerr=linspace(minpupil,maxpupil,25);
 
 sigma=@(lambda) ((1.1e-3*lambda.^(-4))+(0.008*lambda.^(-2.09)))/(1e3); %value checked with mathmematica
@@ -22,33 +22,33 @@ lambda1=0.4; lambda2=0.7;
 
 %global actRangeDaylight Cr_daylight angularSize Kt_daylight
 
-%% CALCULATE RANGE DAYLIGHT
+%% CALCULATE RANGE STARLIGHT
 
-actRangeDaylight=zeros(length(visualRangeDaylight),1);
-Cr_daylight=actRangeDaylight; angularSize=actRangeDaylight; Kt_daylight=Cr_daylight;
+actRangeStarlight=zeros(length(visualRangeStarlight),1);
+Cr_starlight=actRangeStarlight; angularSize=actRangeStarlight; Kt_starlight=Cr_starlight;
 
 for i=1:length(pupilValuesTerr);
     A=pupilValuesTerr(i);
-    mr=visualRangeDaylight(i);
+    mr=visualRangeStarlight(i);
     
     CrFunc=@(lambda) exp(-sigma(lambda).*mr);
-    Cr_daylight(i)= C0_daylight*integral(CrFunc,lambda1,lambda2);
+    Cr_starlight(i)= C0_starlight*integral(CrFunc,lambda1,lambda2);
     
     angularSize(i)=(T/mr)*10^3;
-    Kt_daylight(i)=liminalContrast(A,LDaylight,angularSize(i));
+    Kt_starlight(i)=liminalContrast(A,LStarlight,angularSize(i));
     
-    if 10^(Kt_daylight(i)) <= abs(Cr_daylight(i))
-        actRangeDaylight(i)=mr;
+    if 10^(Kt_starlight(i)) <= abs(Cr_starlight(i))
+        actRangeStarlight(i)=mr;
     else
-        tempVisualRange=linspace(mr,0.01,max(visualRangeDaylight)*3);
+        tempVisualRange=linspace(mr,0.01,max(visualRangeStarlight)*3);
         j=1;
-        while(10^(Kt_daylight(i)) > abs(Cr_daylight(i)))
+        while(10^(Kt_starlight(i)) > abs(Cr_starlight(i)))
             mr=tempVisualRange(j);
             angularSize(i)=(T/mr)*10^3;
-            Cr_daylight(i)=C0_daylight*integral(CrFunc,lambda1,lambda2);
-            Kt_daylight(i)=liminalContrast(A,LDaylight,angularSize(i));
+            Cr_starlight(i)=C0_starlight*integral(CrFunc,lambda1,lambda2);
+            Kt_starlight(i)=liminalContrast(A,LStarlight,angularSize(i));
             
-            actRangeDaylight(i)=mr;
+            actRangeStarlight(i)=mr;
             j=j+1;
         end
         
@@ -57,9 +57,9 @@ for i=1:length(pupilValuesTerr);
     disp(it)
 end
 
-visualRangeDaylight=actRangeDaylight;
+visualRangeStarlight=actRangeStarlight;
 
-save('actualDaylight', 'visualRangeDaylight');
+save('actualStarlight', 'visualRangeStarlight');
    
 
 function Kt = liminalContrast(A,L,angularSize)

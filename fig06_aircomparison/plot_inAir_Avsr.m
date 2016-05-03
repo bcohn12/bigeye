@@ -1,14 +1,23 @@
 close all;
 clear all;
 %% COMMENTS
+run ../figXX_compviz/Parameters.m
+CONTRASTTHRESH=1;
 
-
-load daylight.mat
-load moonlight.mat
-load starlight.mat
+if CONTRASTTHRESH
+    load actualDaylight.mat;
+    load actualMoonlight.mat;
+    load actualStarlight.mat;
+else
+    load daylight.mat
+    load moonlight.mat
+    load starlight.mat
+    
+end
 load terrestrial_Avsr.mat
 load('constantDepth_rvsA')
 
+pupilValuesAir=linspace(minpupil,maxpupil,25);
 pupilValues=pupilValues*10^3;
 pupilValuesAir=pupilValuesAir*10^3;
 

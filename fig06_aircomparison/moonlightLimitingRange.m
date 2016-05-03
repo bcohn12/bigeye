@@ -8,12 +8,12 @@
     % while(liminal contrast <= apparent contrast)
         % calculate apparent contrast and liminal contrast
 
-function [actRangeDaylight, Cr_daylight, angularSize, Kt_daylight] =daylightLimitingRange
+function [actRangeMoonlight, Cr_moonlight, angularSize, Kt_moonlight] =moonlightLimitingRange
 
 %% INITIALIZE/LOAD DATA
 
 run ../figXX_compviz/Parameters.m
-load('daylight');
+load('moonlight');
 pupilValuesTerr=linspace(minpupil,maxpupil,25);
 
 sigma=@(lambda) ((1.1e-3*lambda.^(-4))+(0.008*lambda.^(-2.09)))/(1e3); %value checked with mathmematica
@@ -22,33 +22,33 @@ lambda1=0.4; lambda2=0.7;
 
 %global actRangeDaylight Cr_daylight angularSize Kt_daylight
 
-%% CALCULATE RANGE DAYLIGHT
+%% CALCULATE RANGE MOONLIGHT
 
-actRangeDaylight=zeros(length(visualRangeDaylight),1);
-Cr_daylight=actRangeDaylight; angularSize=actRangeDaylight; Kt_daylight=Cr_daylight;
+actRangeMoonlight=zeros(length(visualRangeMoonlight),1);
+Cr_moonlight=actRangeMoonlight; angularSize=actRangeMoonlight; Kt_moonlight=Cr_moonlight;
 
 for i=1:length(pupilValuesTerr);
     A=pupilValuesTerr(i);
-    mr=visualRangeDaylight(i);
+    mr=visualRangeMoonlight(i);
     
     CrFunc=@(lambda) exp(-sigma(lambda).*mr);
-    Cr_daylight(i)= C0_daylight*integral(CrFunc,lambda1,lambda2);
+    Cr_moonlight(i)= C0_moonlight*integral(CrFunc,lambda1,lambda2);
     
     angularSize(i)=(T/mr)*10^3;
-    Kt_daylight(i)=liminalContrast(A,LDaylight,angularSize(i));
+    Kt_moonlight(i)=liminalContrast(A,LMoonlight,angularSize(i));
     
-    if 10^(Kt_daylight(i)) <= abs(Cr_daylight(i))
-        actRangeDaylight(i)=mr;
+    if 10^(Kt_moonlight(i)) <= abs(Cr_moonlight(i))
+        actRangeMoonlight(i)=mr;
     else
-        tempVisualRange=linspace(mr,0.01,max(visualRangeDaylight)*3);
+        tempVisualRange=linspace(mr,0.01,max(visualRangeMoonlight)*3);
         j=1;
-        while(10^(Kt_daylight(i)) > abs(Cr_daylight(i)))
+        while(10^(Kt_moonlight(i)) > abs(Cr_moonlight(i)))
             mr=tempVisualRange(j);
             angularSize(i)=(T/mr)*10^3;
-            Cr_daylight(i)=C0_daylight*integral(CrFunc,lambda1,lambda2);
-            Kt_daylight(i)=liminalContrast(A,LDaylight,angularSize(i));
+            Cr_moonlight(i)=C0_moonlight*integral(CrFunc,lambda1,lambda2);
+            Kt_moonlight(i)=liminalContrast(A,LMoonlight,angularSize(i));
             
-            actRangeDaylight(i)=mr;
+            actRangeMoonlight(i)=mr;
             j=j+1;
         end
         
@@ -57,9 +57,9 @@ for i=1:length(pupilValuesTerr);
     disp(it)
 end
 
-visualRangeDaylight=actRangeDaylight;
+visualRangeMoonlight=actRangeMoonlight;
 
-save('actualDaylight', 'visualRangeDaylight');
+save('actualMoonlight', 'visualRangeMoonlight');
    
 
 function Kt = liminalContrast(A,L,angularSize)
@@ -76,7 +76,7 @@ Psi=@(L) (logLa(L)+3.5)/2.75;
 logdeltarStar= @(L) iif(logLa(L)>1.535, @() 0.928,...
     -0.75<=logLa(L) && logLa(L)<=1.535, @() 1-(0.5*(Psi(L)^(-3.2))),...
     -2.089<=logLa(L) && logLa(L)<-0.75, @() 0.5*Psi(L)^(1.8),...
-    logLa(L)<-2.089, @() 0.14*logLa(L)+0.442);
+    logLa(L)<2.089, @() 0.14*logLa(L)+0.442);
 
 X=@(deltar,L) -(-log10(deltar)+logdeltarStar(L));
 Xm=@(L) iif(logLa(L)>1.5, @() 1.48-0.48*logLa(10^1.5),...

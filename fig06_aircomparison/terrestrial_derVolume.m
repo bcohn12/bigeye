@@ -1,9 +1,18 @@
 clear all;
 
+
 run ../figXX_compviz/Parameters.m
-load daylight.mat
-load moonlight.mat
-load starlight.mat
+
+CONTRASTTHRESH=1;
+if CONTRASTTHRESH
+    load actualDaylight.mat
+    load actualMoonlight.mat
+    load actualStarlight.mat
+else
+    load daylight.mat
+    load moonlight.mat
+    load starlight.mat
+end
 
 pupilValuesAir=linspace(minpupil,maxpupil,25);
 

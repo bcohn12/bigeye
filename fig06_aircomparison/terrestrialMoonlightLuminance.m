@@ -31,7 +31,7 @@ parfor loop1=1:length(pupilValuesAir)
         Xch=((T*f_night*A)/(2*r*d))^2*X_land*Dt;
 
         %APPARENT RADIANCE OF THE GREY OBJECT
-        Bgfunc=@(lambda) WlambdaylambdaInterp(lambda).*(1+(C0_night.*exp(-sigma(lambda).*r)));
+        Bgfunc=@(lambda) WlambdaylambdaInterp(lambda).*(1+(C0_moonlight.*exp(-sigma(lambda).*r)));
         Bg= LMoonlight*integral(Bgfunc,lambda1,lambda2);
         Iobject=((1.31e3)/0.89)*Bg*(1e6)^2;
 
