@@ -43,23 +43,27 @@ function contrastRangeRelation
         q=qVals(l);
         Ispace=IspaceAll(l);
         %contrastRangeSolution=zeros(length(C0Range),length(pupilValues));
+        delta=0.01;
+        r=delta;
         for i=1:length(pupilValues);
             A=pupilValues(i);
+            rInit=r;
             for c=1:length(C0Range)
+                %rInit=r;
                 C0=C0Range(c);
                 %possibleSolution=zeros(length(rangeValues),1);
                 possibleSolution(1)=0;
-                delta=0.01;
                 index=1;
-                r=delta; %tempRange(1)=r;
-                while abs(possibleSolution(index)-A)>=tol
+ 
+                while abs(possibleSolution-A)>=tol
                     index=index+1;
-                    possibleSolution(index)=firingThreshRange(...
+                    possibleSolution=firingThreshRange(...
                          WlambdaylambdaInterp,A,r,C0,L,...
                          T,F,Ispace,Dt,q,k,len,X,d,R);
-                     r=r+delta; %tempRange(index)=r;           
+                     r=r+delta; 
+                                
                 end
-
+                tempRange(c)=r;
 %                 for j=1:length(rangeValues)
 %                     r=rangeValues(j);
 %                     
@@ -73,6 +77,7 @@ function contrastRangeRelation
 %                 end
                 %IDX_soln=knnsearch(possibleSolution,A);
                 %possibleSolution=possibleSolution(possibleSolution>0);
+
                 visualRangeSolns(c,i,l)=r;
                 mr=visualRangeSolns(c,i,l);
                 possibleSolution=[];
@@ -93,13 +98,15 @@ function contrastRangeRelation
                         mr=tempVisualRange(count);
                         angularSize=(T/mr)*10^3;
                         Cr=C0*integral(CrFunc,lambda1,lambda2);
-                        Kt=liminalContrast(A,LDaylight,angularSize(i));
+                        Kt=liminalContrast(A,LDaylight,angularSize);
                         
                         visualRangeSolns(c,i,l)=mr;
                         count=count+1;
                     end
                 end
+                r=rInit;
             end
+            r=min(tempRange);
         end
     end
                     
