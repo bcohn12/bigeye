@@ -4,19 +4,26 @@ q=0.36; %units: n/a, detection efficien
 eta=0.5; %Walzl et al 2007
 Dt=1.16; %units: s, integration time, used typical value
 
+qVals=[eta,q,q];
+
 %All values from Middleton
 LDaylight=0.97*1e3; % daylight luminosity in cd/m^2 
 LMoonlight=1e-2; %Fairly brigh moonlight in cd/m^2
 LStarlight=1e-4; %moonless clear night sky in cd/m^2
 
+LVals=[LDaylight,LMoonlight,LStarlight];
+
 Dt_daylight=(LDaylight)^-0.19; %Donner etal 1994
 Dt_moonlight=(LMoonlight)^-0.19;
 Dt_starlight=(LStarlight)^-0.19;
+
+DtVals=[Dt_daylight, Dt_moonlight, Dt_starlight];
 
 % Contrast parameters. Miller uses +/- 0.5, +/-1, and +/-2 as span 
 C0_daylight=-.05; %daylight contrast value
 C0_moonlight=0.1; %night contrast value, a guess (4 is snow). 
 C0_starlight=0.3; %starlight contrast value, a guess
+
 k=0.035; % photoreceptor absorbtion, units 1/micrometers
 len=57;  % length of photoreceptor, in micrometers
 
@@ -24,11 +31,15 @@ X=0.011; %units: photons/s, dark-noise rate/photoreceptor @16.5degrees Celsius
 %X_daylight=0.011; %units: photons/s, dark-noise rate/photoreceptor @16.5degrees Celsius
 X_land=0.08; %units:photons/s, dark-noise rate/photoreceptor @23.5 degrees Celsius
 
+XVals=[X_land,X,X];
+
 R=1.96; %units: n/a, reliability coefficient for 95% confidence, used typical value
 d=3e-6; %units: m, photoreceptor diameter, used typical value
 M=2.55; %units: n/a, ratio of focal length and pupil radius (2f/A), set to Matthiessen's ratio
 f_daylight=8.8; %focal_length/A for bright light
 f_night=2.1; %focal_length/A for night
+
+FVals=[f_daylight,f_night,f_night];
 
 a=.3; %units: 1/m, beam attenuation coefficient, pg8 supplementary
 K_up=0.14; %units: 1/m, attenuation coefficient of background radiance for looking up, pg8 supplementary
