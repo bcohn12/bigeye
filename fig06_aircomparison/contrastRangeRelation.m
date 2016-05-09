@@ -7,9 +7,8 @@ function visualRangeSolns = contrastRangeRelation
 %% INITIALIZATION
 
     run ../figXX_compviz/Parameters.m
-    pctRunOnAll load('Parameters')
     
-    pupilValues=linspace(minpupil,maxpupil,5);
+    pupilValues=linspace(minpupil,maxpupil,4);
     %rangeValues=linspace(0.001,100000,1000000);
     
     tol=1e-5;
@@ -31,7 +30,7 @@ function visualRangeSolns = contrastRangeRelation
     
     IspaceAll=[IspaceD,IspaceM,IspaceS];
     
-    C0Range=linspace(-1,4,25);
+    C0Range=linspace(-1,4,20);
 
 %% CALCULATE RANGE FROM FIRING THRESHOLD
     visualRangeSolns=zeros(length(C0Range),length(pupilValues),3);
@@ -61,6 +60,9 @@ function visualRangeSolns = contrastRangeRelation
                 possibleSolution=10;
                 index=1;
                 
+                if C0>=0.5
+                    r=tempRange(c-1);
+                end
                 while abs(possibleSolution-A)>=tol
                     index=index+1;
                     possibleSolution=firingThreshRange(...
