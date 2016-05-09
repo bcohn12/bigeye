@@ -2,15 +2,15 @@
 % calculate firing thereshold range
 % calculate contrast threshold range by limiting process
 
-function contrastRangeRelation
+function visualRangeSolns = contrastRangeRelation
 
 %% INITIALIZATION
 
     run ../figXX_compviz/Parameters.m
+    pctRunOnAll load('Parameters')
     
-    Wlambdaylambda=csvread('../figXX_compviz/Wlambda.csv');
-    pupilValues=linspace(minpupil,maxpupil,25);
-    rangeValues=linspace(0.001,100000,1000000);
+    pupilValues=linspace(minpupil,maxpupil,5);
+    %rangeValues=linspace(0.001,100000,1000000);
     
     tol=1e-5;
     
@@ -31,10 +31,11 @@ function contrastRangeRelation
     
     IspaceAll=[IspaceD,IspaceM,IspaceS];
     
-    C0Range=linspace(-1,4,10);
+    C0Range=linspace(-1,4,25);
 
 %% CALCULATE RANGE FROM FIRING THRESHOLD
     visualRangeSolns=zeros(length(C0Range),length(pupilValues),3);
+    tempRange=zeros(length(C0Range),1);
     for l=1:3
         L=LVals(l);
         Dt=DtVals(l);
@@ -45,16 +46,21 @@ function contrastRangeRelation
         %contrastRangeSolution=zeros(length(C0Range),length(pupilValues));
         delta=0.01;
         r=delta;
+        visualRangeSolnsTemp=zeros(length(C0Range),length(pupilValues));
+        strL=sprintf('iteration luminance: %d',l);
+        disp(strL);
         for i=1:length(pupilValues);
             A=pupilValues(i);
-            rInit=r;
+            strA=sprintf('iteration pupil: %d',i);
+            disp(strA);
             for c=1:length(C0Range)
-                %rInit=r;
+                rInit=r;
                 C0=C0Range(c);
-                %possibleSolution=zeros(length(rangeValues),1);
-                possibleSolution(1)=0;
+                strC0=sprintf('iteration contrast: %d',c);
+                disp(strC0);                
+                possibleSolution=10;
                 index=1;
- 
+                
                 while abs(possibleSolution-A)>=tol
                     index=index+1;
                     possibleSolution=firingThreshRange(...
@@ -63,24 +69,9 @@ function contrastRangeRelation
                      r=r+delta; 
                                 
                 end
-                tempRange(c)=r;
-%                 for j=1:length(rangeValues)
-%                     r=rangeValues(j);
-%                     
-%                     possibleSolution(j)=firingThreshRange(...
-%                         WlambdaylambdaInterp,A,r,C0,L,...
-%                         T,F,Ispace,Dt,q,k,len,X,d,R);
-%                     
-%                     if abs(possibleSolution(j)-A)<=tol
-%                         break;
-%                     end
-%                 end
-                %IDX_soln=knnsearch(possibleSolution,A);
-                %possibleSolution=possibleSolution(possibleSolution>0);
-
-                visualRangeSolns(c,i,l)=r;
-                mr=visualRangeSolns(c,i,l);
-                possibleSolution=[];
+                visualRangeSolnsTemp(c,i)=r;
+                mr=visualRangeSolnsTemp(c,i);
+                tempRange(c)=mr;
                 
 %% LIMIT RANGE WITH CONTRAST THRESHOLD
                 CrFunc=@(lambda) exp(-sigma(lambda).*mr);
@@ -90,7 +81,7 @@ function contrastRangeRelation
                 Kt=liminalContrast(A,L,angularSize);
 
                 if 10^(Kt) <= abs(Cr)
-                    visualRangeSolns(c,i,l)=mr;
+                     visualRangeSolnsTemp(c,i)=mr;
                 else
                     tempVisualRange=linspace(mr,0.001,mr*5);
                     count=1;
@@ -100,7 +91,7 @@ function contrastRangeRelation
                         Cr=C0*integral(CrFunc,lambda1,lambda2);
                         Kt=liminalContrast(A,LDaylight,angularSize);
                         
-                        visualRangeSolns(c,i,l)=mr;
+                        visualRangeSolnsTemp(c,i)=mr;
                         count=count+1;
                     end
                 end
@@ -108,8 +99,9 @@ function contrastRangeRelation
             end
             r=min(tempRange);
         end
+        visualRangeSolns(:,:,l)=visualRangeSolnsTemp;
     end
-                    
+    save('contrastRangeAll','visualRangeSolns');                
 
     
 function  solution=firingThreshRange(WHandle,A,r,C0,L,T,F,Ispace,Dt,q,k,len,X,d,R)
