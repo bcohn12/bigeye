@@ -111,8 +111,10 @@ function visualRangeSolns = contrastRangeRelation
                         count=count+1;
                     end
                 end
-                if tempRange(c)>5
+                if tempRange(c)>10
                     delta=1e-2;
+                else
+                    delta=deltaVals(l);
                 end
                 r=rInit;
             end
