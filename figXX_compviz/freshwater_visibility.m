@@ -20,20 +20,21 @@ y_bd=[...
 0.20;
 0.47];
 
-% disp('mean')
-% mean(y_bd)
-% disp('std')
-% std(y_bd)
-% 
-% disp('25 percentile')
-% prctile(y_bd,25)
-% disp('50 percentile')
-% prctile(y_bd,50)
-% disp('75 percentile')
-% prctile(y_bd,75)
+disp('mean')
+mean(y_bd)
+disp('std')
+std(y_bd)
 
-c=4.8./y_bd;   % attenuation coefficient
-attlen=1./c; % attenuation length
+disp('25 percentile')
+prctile(y_bd,25)
+disp('50 percentile')
+prctile(y_bd,50)
+disp('75 percentile')
+prctile(y_bd,75)
+
+c=4.8./y_bd;   % attenuation coefficientc
+%attlen=1./c; % attenuation length
+attlen = c
 
 disp('mean')
 mean(attlen)
@@ -46,3 +47,34 @@ disp('50 percentile')
 prctile(attlen,50)
 disp('75 percentile')
 prctile(attlen,75)
+
+kd= [ ...
+    0.27
+0.41
+0.45
+0.56
+0.56
+0.65
+0.81
+1.2
+1.23
+2.2
+2.8
+5.28
+0.73
+0.96
+1.36
+2.26
+3.13];
+
+disp('mean kd')
+mean(kd)
+disp('std')
+std(kd)
+
+disp('25 percentile')
+prctile(kd,25)
+disp('50 percentile')
+prctile(kd,50)
+disp('75 percentile')
+prctile(kd,75)
