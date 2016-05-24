@@ -534,7 +534,7 @@ end
 
 %% Assemble Format Genus and Species
 gs = gdat(validInd,genusCol:speciesCol);
-gsFormated = cell(size(gs,1),1);
+gsFormatted = cell(size(gs,1),1);
 
 startend = gdat(validInd,stageBegin:stageEnd); % N x 2, with start stage and end stage
 
@@ -548,7 +548,7 @@ for i = 1: length(startend)
 end
 
 for i = 1:size(gs,1)
-    gsFormated{i,:} = strcat('\textit{',strjoin(gs(i,:)),'}');
+    gsFormatted{i,:} = strcat('\textit{',strjoin(gs(i,:)),'}');
 end
 
 osf = cell(size(gs,1),1);
@@ -560,12 +560,16 @@ for i= 1:size(gs,1)
     osf{i,:}=strOrbSkull(i,:);
 end
 
+[B,sortedIDX]=sort(gsFormatted);
+orbits=gdat(validInd,eyeCol);
+skulls=gdat(validInd,lengthCol);
+cites=citeRef';
 
-AveAP = [gsFormated,... % Genus, species
-    gdat(validInd,eyeCol),...    % Average AP (mm)
-    gdat(validInd,lengthCol),... % Skull Length (mm)
-    osf,... % Skull Length (mm)
-    citeRef']; % AP-src BibTeX Reference Key
+AveAP = [B,... % Genus, species
+    orbits(sortedIDX),...    % Average AP (mm)
+    skulls(sortedIDX),... % Skull Length (mm)
+    osf(sortedIDX),... % Skull Length (mm)
+    cites(sortedIDX)]; % AP-src BibTeX Reference Key
 
 %% Convert to LaTeX Table Format
 columnLabels = {'Taxon'; 'Orbit Length (mm)'; 'Skull Length (mm)'; 'Orbit/Skull, \%'; 'Reference'};
