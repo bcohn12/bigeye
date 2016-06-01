@@ -35,9 +35,9 @@ function visualRangeSolns = contrastRangeRelation
 %% CALCULATE RANGE FROM FIRING THRESHOLD
     visualRangeSolns=zeros(length(C0Range),length(pupilValues),3);
     tempRange=zeros(length(C0Range),1);
-    deltaVals=[1e-2,1e-5,1e-4];
-    rVals=[1e-3,1e-4,1e-5];
-    for l=2:3
+    deltaVals=[1e-2,1e-5,1e-6];
+    rVals=[1e-3,1e-4,1e-6];
+    for l=3:3
         L=LVals(l);
         Dt=DtVals(l);
         F=FVals(l);
@@ -111,14 +111,17 @@ function visualRangeSolns = contrastRangeRelation
                         count=count+1;
                     end
                 end
-                if tempRange(c)>10
-                    delta=1e-2;
-                else
-                    delta=deltaVals(l);
-                end
+%                 if tempRange(c)>10
+%                     delta=1e-2;
+%                 else
+                    %delta=deltaVals(l);
+                %end
                 r=rInit;
             end
             r=min(tempRange);
+            if r>1 && l>1
+                delta=1e-3;
+            end
         end
         visualRangeSolns(:,:,l)=visualRangeSolnsTemp;
     end
