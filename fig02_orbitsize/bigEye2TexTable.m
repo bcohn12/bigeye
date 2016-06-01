@@ -6,13 +6,15 @@ function bigEye2TexTable()
 % http://goo.gl/au5WbG
 
 % Row addresses for the tetrapodomorph fish
+% MUST GO +1 after end 
 tetrapodomorph_fish_startRow = 3;
-tetrapodomorph_fish_endRow = 23;
+tetrapodomorph_fish_endRow = 25;
 
 
 % Row addresses for the stem tetrapods
+% MUST GO +1 after end 
 stem_tetrapod_startRow = 27;
-stem_tetrapod_endRow = 67;
+stem_tetrapod_endRow = 68;
 
 
 % Key column addresses in spreadsheet
