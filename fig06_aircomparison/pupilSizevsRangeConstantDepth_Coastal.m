@@ -14,8 +14,8 @@ function pupilSizevsRangeConstantDepth_Coastal
     coastalWaterDepth=sort(coastalWaterDepth,'descend');
    
     pupilValues=linspace(minpupil,maxpupil,30); %rangeValues=linspace(minvisualrange,maxvisualrange,2500);
-    minvisualrange=0.01; maxvisualrange=20;
-    rangeValues=linspace(minvisualrange,maxvisualrange,5000);
+    minvisualrange=0.01; maxvisualrange=30;
+    rangeValues=linspace(minvisualrange,maxvisualrange,5500);
     
     rDownwelling=0.01;
     rHorizontal=0.01;
