@@ -1,4 +1,4 @@
-function pupilSizevsRangeConstantDepth_River
+function pupilSizevsRangeConstantDepth_Coastal
     run ../figXX_compviz/Parameters.m
 
     %% CONSTANT DEPTH VALUE RANGE OF VISION VS PUPIL SIZE
@@ -14,8 +14,8 @@ function pupilSizevsRangeConstantDepth_River
     coastalWaterDepth=sort(coastalWaterDepth,'descend');
    
     pupilValues=linspace(minpupil,maxpupil,30); %rangeValues=linspace(minvisualrange,maxvisualrange,2500);
-    minvisualrange=0.01; maxvisualrange=10;
-    rangeValues=linspace(minvisualrange,maxvisualrange,2500);
+    minvisualrange=0.01; maxvisualrange=20;
+    rangeValues=linspace(minvisualrange,maxvisualrange,5000);
     
     rDownwelling=0.01;
     rHorizontal=0.01;
@@ -23,7 +23,7 @@ function pupilSizevsRangeConstantDepth_River
     deltaH=1e-4;
     tol=4e-6;
     
-    visualRange_River=zeros(length(pupilValues),length(coastalWaterDepth),2);
+    visualRange_Coastal=zeros(length(pupilValues),length(coastalWaterDepth),2);
     
     for i=1:length(coastalWaterDepth);
         depth=coastalWaterDepth(i);
@@ -34,16 +34,16 @@ function pupilSizevsRangeConstantDepth_River
             for k=1:length(rangeValues)
                 r=rangeValues(k);
                 possibleSolnDownwelling(k)=firingThresh(depth,lambda,...
-                    photoreceptorAbsorption_River,a_River,b_River,Kd_River,Ld_River,...
+                    photoreceptorAbsorption_Coastal,a_Coastal,b_Coastal,Kd_Coastal,Ld_Coastal,...
                     r,A,X,Dt,q,d,k,len,T,M,R);
                 possibleSolnHorizontal(k)=firingThresh(depth,lambda,...
-                    photoreceptorAbsorption_River,a_River,b_River,Kh_River,Lh_River,...
+                    photoreceptorAbsorption_Coastal,a_Coastal,b_Coastal,Kh_Coastal,Lh_Coastal,...
                     r,A,X,Dt,q,d,k,len,T,M,R);
             end
-            IDXUp = knnsearch(possibleSolnDownwelling,A,'distance','seuclidean');
-            IDXHor=knnsearch(possibleSolnHorizontal,A,'distance','seuclidean');
-            visualRange_River(j,i,1) = rangeValues(IDXUp);
-            visualRange_River(j,i,2)=rangeValues(IDXHor);
+            IDXUp = knnsearch(possibleSolnDownwelling,A);
+            IDXHor=knnsearch(possibleSolnHorizontal,A);
+            visualRange_Coastal(j,i,1) = rangeValues(IDXUp);
+            visualRange_Coastal(j,i,2)=rangeValues(IDXHor);
             fprintf('iteration pupil: %d\n',j);
         end
         fprintf('iteration: %d\n',i);
@@ -84,30 +84,30 @@ function pupilSizevsRangeConstantDepth_River
 %         rHorizontal=rHorizontal-deltaH;
 %     end
 
-    save('pupilSizevsRangeConstantDepth_River','visualRange_River','pupilValues');
+    save('pupilSizevsRangeConstantDepth_Coastal','visualRange_Coastal','pupilValues');
 
-    drdA_River=visualRange_River;
-    dVdA_River=visualRange_River;
-    visualVolume_River=visualRange_River;
+    drdA_Coastal=visualRange_Coastal;
+    dVdA_Coastal=visualRange_Coastal;
+    visualVolume_Coastal=visualRange_Coastal;
 
-    for i=1:size(visualRange_River,3);
-        for j=1:size(visualRange_River,2);
-            for k=1:size(visualRange_River,1);
-                visualVolume_River(k,j,i)=integral3(f,0,visualRange_River(k,j,i),...
+    for i=1:size(visualRange_Coastal,3);
+        for j=1:size(visualRange_Coastal,2);
+            for k=1:size(visualRange_Coastal,1);
+                visualVolume_Coastal(k,j,i)=integral3(f,0,visualRange_Coastal(k,j,i),...
                 elevationMin,elevationMax,...
                 azimuthMin,azimuthMax);
             end
         end
     end
     
-    for i=1:size(visualRange_River,3);
-        for j=1:size(visualRange_River,2);
-            drdA_River(:,j,i)=derivative(pupilValues*10^3,visualRange_River(:,j,i));
-            dVdA_River(:,j,i)=derivative(pupilValues*10^3,visualVolume_River(:,j,i));
+    for i=1:size(visualRange_Coastal,3);
+        for j=1:size(visualRange_Coastal,2);
+            drdA_Coastal(:,j,i)=derivative(pupilValues*10^3,visualRange_Coastal(:,j,i));
+            dVdA_Coastal(:,j,i)=derivative(pupilValues*10^3,visualVolume_Coastal(:,j,i));
         end
     end
 
-    save('pupilSizevsRangeConstantDepth_River','visualRange_River','pupilValues','drdA_River','dVdA_River','visualVolume_River');
+    save('pupilSizevsRangeConstantDepth_Coastal','visualRange_Coastal','pupilValues','drdA_Coastal','dVdA_Coastal','visualVolume_Coastal');
 
 
 function  solution=firingThresh(depth,lambda,photoreceptorAbsorption,aAll,bAll,KAll,LAll,r,A,X,Dt,q,d,k,len,T,M,R)
