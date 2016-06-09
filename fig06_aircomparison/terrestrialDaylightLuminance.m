@@ -16,11 +16,11 @@ Ispace=((1.31e3)/0.89)*Bh*(1e6)^2; %value checked with mathematica
 if T<0.05;
     minvisualrange=10; maxvisualrange=2000;
 else
-    minvisualrange=100; maxvisualrange=10000;
+    minvisualrange=100; maxvisualrange=50000;
 end
 
 pupilValuesAir=linspace(minpupil,maxpupil,25);
-rangeValuesAir=linspace(minvisualrange,maxvisualrange,7500);
+rangeValuesAir=linspace(minvisualrange,maxvisualrange,1000);
 parfor loop1=1:length(pupilValuesAir)
     A=pupilValuesAir(loop1);
     possibleSolD=zeros(length(rangeValuesAir),1);
