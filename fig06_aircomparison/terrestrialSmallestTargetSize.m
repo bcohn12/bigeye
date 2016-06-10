@@ -31,8 +31,9 @@ function terrestrialSmallestTargetSize
     
     tol=4e-4;
     
-   targetSizeSolns=zeros(length(rangeValues),length(pupilValues),length(LVals));  
-    for l=1:length(LVals)
+   targetSizeSolns=zeros(length(rangeValues),length(pupilValues),length(LVals)); 
+   TVals=[1e-3,1,5];
+    for l=3:length(LVals)
         L=LVals(l);
         Dt=DtVals(l);
         F=FVals(l);
@@ -41,7 +42,7 @@ function terrestrialSmallestTargetSize
         Ispace=IspaceAll(l);
         C0=C0All(l);
         
-        T=1e-3;
+        T=TVals(l);
         targetSizeSolnsTemp=zeros(length(rangeValues),length(pupilValues));
         for i=1:length(pupilValues)
             A=pupilValues(i);
@@ -89,6 +90,8 @@ function terrestrialSmallestTargetSize
         end
         targetSizeSolns(:,:,l)=targetSizeSolnsTemp;
     end
+    
+    save('terrestrialSmallestTarget','targetSizeSolns','pupilValues','rangeValues');
 
 function Kt = liminalContrast(A,L,angularSize)
 

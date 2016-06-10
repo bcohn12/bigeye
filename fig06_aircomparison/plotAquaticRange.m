@@ -39,12 +39,9 @@ close all
     hold on
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
-
     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
-
     fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
         [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
-
     set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
     
     ax12=subplot(2,1,2);
