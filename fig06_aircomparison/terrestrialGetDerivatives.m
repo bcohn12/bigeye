@@ -1,6 +1,4 @@
 clear all;
-
-
 run ../figXX_compviz/Parameters.m
 
 CONTRASTTHRESH=1;

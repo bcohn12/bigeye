@@ -8,7 +8,7 @@ function pupilSizevsRangeConstantDepth_River
     if PROMPT
     coastalWaterDepth=input('Input depth value in vector form between 1-15:\n');
     else 
-        coastalWaterDepth=[5 10];
+        coastalWaterDepth=[5 7 10];
     end
 
     coastalWaterDepth=sort(coastalWaterDepth,'descend');

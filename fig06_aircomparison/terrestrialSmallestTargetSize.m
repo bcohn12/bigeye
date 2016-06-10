@@ -1,4 +1,4 @@
-function smallestTargetSize
+function terrestrialSmallestTargetSize
 
     run ../figXX_compviz/Parameters.m
     %load('actualDaylight');
@@ -24,12 +24,12 @@ function smallestTargetSize
     
     IspaceAll=[IspaceD,IspaceM,IspaceS];
     
-    rmin=1e-1;
+    rmin=5;
     rmax=100;
     pupilValues=linspace(minpupil,maxpupil,30);
-    rangeValues=linspace(rmin,rmax,30);
+    rangeValues=[5,20,80];
     
-    tol=1e-4;
+    tol=4e-4;
     
    targetSizeSolns=zeros(length(rangeValues),length(pupilValues),length(LVals));  
     for l=1:length(LVals)
@@ -41,18 +41,13 @@ function smallestTargetSize
         Ispace=IspaceAll(l);
         C0=C0All(l);
         
-        T=1e-6;
+        T=1e-3;
         targetSizeSolnsTemp=zeros(length(rangeValues),length(pupilValues));
         for i=1:length(pupilValues)
             A=pupilValues(i);
-            delta=10^(floor(log10(T))-3);
-            deltaInit=delta;
+            delta=10^(floor(log10(T))-2);
             for j=1:length(rangeValues)
                 mr=rangeValues(j); 
-          
-                if mr>3
-                    delta=deltaInit*1e3;
-                end 
                 possibleSolution=10;             
                 while abs(possibleSolution-A)>tol
                     possibleSolution=firingThresh(WlambdaylambdaInterp,A,mr,...
@@ -87,10 +82,12 @@ function smallestTargetSize
                         fprintf('Target size: %f\n',T);
                         fprintf('error: %f\n',abs(10^Kt-abs(Cr)))
                     end
+                    targetSizeSolnsTemp(j,i)=T;
                 end
             end
             T=min(targetSizeSolnsTemp(:,i));
         end
+        targetSizeSolns(:,:,l)=targetSizeSolnsTemp;
     end
 
 function Kt = liminalContrast(A,L,angularSize)
