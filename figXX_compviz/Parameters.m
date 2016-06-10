@@ -23,6 +23,7 @@ DtVals=[Dt_daylight, Dt_moonlight, Dt_starlight];
 C0_daylight=-1; %daylight contrast value
 C0_moonlight=1; %night contrast value, a guess (4 is snow). 
 C0_starlight=1; %starlight contrast value, a guess
+C0All=[C0_daylight, C0_moonlight, C0_starlight];
 
 k=0.035; % photoreceptor absorbtion, units 1/micrometers
 len=57;  % length of photoreceptor, in micrometers
