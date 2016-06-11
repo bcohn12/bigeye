@@ -35,7 +35,7 @@ function plotTerrestrialRange
     h1=figure(); clf;
     plot(pupilValues*10^3, visualRange,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm'); ylabel('visual range (m)');
-    ylim1=get(gca,'ylim');
+    ylim1=get(gca,'ylim'); xlim([0.0025*10^3 maxpupil*10^3]);
     hold on
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
@@ -51,7 +51,7 @@ function plotTerrestrialRange
     h2=figure(); clf;
     plot(pupilValues*10^3,drdA,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('dr/dA (m/mm)');
-    ylim2=get(gca,'ylim');
+    ylim2=get(gca,'ylim'); xlim([0.0025*10^3 maxpupil*10^3]);
     hold on
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim2(1) ylim2(2) ylim2(2) ylim2(1)],[1 0 0]);
@@ -67,7 +67,7 @@ function plotTerrestrialRange
     h3=figure(); clf;
     plot(pupilValues*10^3,visualVolume,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('visual volume (m^3)');
-    ylim3=get(gca,'ylim');
+    ylim3=get(gca,'ylim'); xlim([0.0025*10^3 maxpupil*10^3]);
     hold on
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim3(1) ylim3(2) ylim3(2) ylim3(1)],[1 0 0]);
@@ -83,7 +83,7 @@ function plotTerrestrialRange
     h2=figure(); clf;
     plot(pupilValues*10^3,dVdA,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('dV/dA (m^3/mm)');
-    ylim4=get(gca,'ylim');
+    ylim4=get(gca,'ylim');xlim([0.0025*10^3 maxpupil*10^3]);
     hold on
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim4(1) ylim4(2) ylim4(2) ylim4(1)],[1 0 0]);

@@ -1,5 +1,6 @@
 function plotAquaticRange
-close all
+    close all
+    run ../figXX_compviz/Parameters.m
     load('pupilSizevsRangeConstantDepth_Coastal.mat');
     load('pupilSizevsRangeConstantDepth_River.mat');
     
@@ -34,7 +35,7 @@ close all
     plot(pupilValues*1e3,visualRange_Coastal,'linewidth',linewidthDef);   
     xlabel('pupil diameter (mm)'); ylabel('visual range coastal water(m)');    
     %columnlegend(2,key_Coastal,'location','Northoutside','fontsize',8);
-    ylim1=get(gca,'ylim'); ylim1(1)=0;
+    ylim1=get(gca,'ylim'); ylim1(1)=0; xlim([0.0025*10^3 maxpupil*10^3]);
     
     hold on
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
@@ -50,7 +51,7 @@ close all
     xlabel('pupil diameter (mm)'); ylabel('visual range river water (m)');
     columnlegend(2,key_River,'location','south','fontsize',8,'Box','off');
     
-    hold on
+    hold on; xlim([0.0025*10^3 maxpupil*10^3]);
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -62,7 +63,7 @@ close all
     ax21=subplot(2,1,1);
     plot(pupilValues*1e3,drdA_Coastal,'linewidth',linewidthDef);   
     xlabel('pupil diameter (mm)'); ylabel('dr/dA coastal water(m/mm)');    
-    ylim2=get(gca,'ylim'); ylim2(1)=0;
+    ylim2=get(gca,'ylim'); ylim2(1)=0; xlim([0.0025*10^3 maxpupil*10^3]);
     
     hold on
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
@@ -78,7 +79,7 @@ close all
     xlabel('pupil diameter (mm)'); ylabel('dr/dA river water (m/mm)');
     columnlegend(2,key_River,'location','south','fontsize',8,'Box','off');
     
-    hold on
+    hold on; xlim([0.0025*10^3 maxpupil*10^3]);
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim2(1) ylim2(2) ylim2(2) ylim2(1)],[1 0 0]);
     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -90,7 +91,7 @@ close all
     ax13=subplot(2,1,1);
     plot(pupilValues*1e3,visualVolume_Coastal,'linewidth',linewidthDef);   
     xlabel('pupil diameter (mm)'); ylabel('visual volume coastal water(m^3)');    
-    ylim3=get(gca,'ylim'); ylim3(1)=0;
+    ylim3=get(gca,'ylim'); ylim3(1)=0; xlim([0.001*10^3 maxpupil*10^3]);
     
     hold on
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
@@ -106,7 +107,7 @@ close all
     xlabel('pupil diameter (mm)'); ylabel('visual volume river water (m^3)');
     columnlegend(2,key_River,'location','south','fontsize',8,'Box','off');
     
-    hold on
+    hold on; xlim([0.001*10^3 maxpupil*10^3]);
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim3(1) ylim3(2) ylim3(2) ylim3(1)],[1 0 0]);
     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -118,7 +119,7 @@ close all
     ax14=subplot(2,1,1);
     plot(pupilValues*1e3,dVdA_Coastal,'linewidth',linewidthDef);   
     xlabel('pupil diameter (mm)'); ylabel('dV/dA coastal water(m^3/mm)');    
-    ylim4=get(gca,'ylim'); ylim4(1)=0;
+    ylim4=get(gca,'ylim'); ylim4(1)=0; xlim([0.0025*10^3 maxpupil*10^3]);
     
     hold on
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
@@ -134,7 +135,7 @@ close all
     xlabel('pupil diameter (mm)'); ylabel('dV/dA river water (m^3/mm)');
     columnlegend(2,key_River,'location','south','fontsize',8,'Box','off');
     
-    hold on
+    hold on; xlim([0.0025*10^3 maxpupil*10^3]);
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim4(1) ylim4(2) ylim4(2) ylim4(1)],[1 0 0]);
     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
