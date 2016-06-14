@@ -372,7 +372,22 @@ set(gca,'xtick', [1/3 2/3],'xticklabel',{'finned tetrapod','digited tetrapod'})
 
 print(gcf, '-dpdf','orbitData')
 
+x=TF_orbit_length_span(:,1);
+disp(['The median orbit length for TF was ' num2str(median(x)) '; the 1st quartile is ' ...
+     num2str(prctile(x,25))])
+disp(['; the 3rd quartile is ' num2str(prctile(x,75))])
+disp(' ')
 
+OM_TF=x;
+
+x=ST_orbit_length_span(:,1);
+disp(['The median orbit length for ST was ' num2str(median(x)) '; the 1st quartile is ' ...
+     num2str(prctile(x,25))])
+disp(['; the 3rd quartile is ' num2str(prctile(x,75))])
+ 
+OM_ST=x;
+
+save('OM_TF_ST.mat','OM_TF','OM_ST')
 
 
 % Format stat result text for paper
