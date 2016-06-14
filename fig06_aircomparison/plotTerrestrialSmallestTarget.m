@@ -20,7 +20,8 @@ function plotTerrestrialSmallestTarget
     plot(pupilValues*10^3,starlightTargetSize,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('starlight target size (m)');
     hold on;
-    ylim1=get(gca,'ylim'); ylim1(1)=0; xlim([0.0025*10^3 maxpupil*10^3]);
+    xlim([0.0025*10^3 maxpupil*10^3]); ylim1=get(gca,'ylim'); ylim1(1)=0; 
+    ylim([ylim1(1) max(starlightTargetSize(:,2))]); ylim1=get(gca,'ylim');
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -32,7 +33,8 @@ function plotTerrestrialSmallestTarget
     plot(pupilValues*10^3,moonlightTargetSize,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('moonlight target size (m)');
     hold on;
-    ylim1=get(gca,'ylim'); ylim1(1)=0;xlim([0.0025*10^3 maxpupil*10^3]);
+    xlim([0.0025*10^3 maxpupil*10^3]); ylim1=get(gca,'ylim'); ylim1(1)=0;
+    ylim([ylim1(1) max(moonlightTargetSize(:,2))]); ylim1=get(gca,'ylim');
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -44,8 +46,9 @@ function plotTerrestrialSmallestTarget
     %linkaxes([ax1,ax2,ax3],'xy');
     plot(pupilValues*10^3,daylightTargetSize,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('daylight target size (m)');
-    hold on; xlim([0.0025*10^3 maxpupil*10^3]);
-    ylim1=get(gca,'ylim'); ylim([ylim1(1) ylim1(2)]);
+    hold on; 
+   xlim([0.0025*10^3 maxpupil*10^3]);  ylim1=get(gca,'ylim'); 
+   ylim([ylim1(1) max(daylightTargetSize(:,2))]); ylim1=get(gca,'ylim');
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
