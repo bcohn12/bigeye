@@ -35,7 +35,8 @@ function plotTerrestrialSmallestTarget
     plot(pupilValues*10^3,targetSizeSolns(:,:,2),'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('moonlight target size (m)');
     hold on;
-    xlim([0.0025*10^3 maxpupil*10^3]); ylim1=get(gca,'ylim'); ylim1(1)=0;
+    xlim([0.0025*10^3 maxpupil*10^3]); 
+    ylim1=get(gca,'ylim'); ylim1(1)=0;
     %ylim([ylim1(1) max(moonlightTargetSize(:,2))]); ylim1=get(gca,'ylim');
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
@@ -60,7 +61,7 @@ function plotTerrestrialSmallestTarget
         [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
     set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
     key={'50m','250m','750m'};
-    columnlegend(3,key,'location','south','fontsize',8,'Box','off');
+    columnlegend(3,key,'location','north','fontsize',8,'Box','off');
     
     
 
