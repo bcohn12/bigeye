@@ -10,8 +10,8 @@ function aquaticSmallestTarget_Coastal
     end
     
     pupilValues=linspace(minpupil,maxpupil,25);
-    T_down=1e-1; delta_down=1e-4;
-    T_hor=1e-1; delta_hor=1e-3;
+    T_down=[1e-3 1e-2 1e-1]; delta_down=[1e-5 1e-4 1e-3];
+    T_hor=[1e-2 1e-1 1]; delta_hor=[1e-4 1e-3 1e-2];
     depth=7;
     targetSizeSolns_Coastal=zeros(length(rangeValues),length(pupilValues),2);
     tol=4e-4;
@@ -23,17 +23,17 @@ function aquaticSmallestTarget_Coastal
                 while abs(possibleSolutionDownwelling-A)>tol
                     possibleSolutionDownwelling=firingThresh(depth,lambda,...
                     photoreceptorAbsorption_Coastal,a_Coastal,b_Coastal,Kd_Coastal,Ld_Coastal,...
-                    r,A,X,Dt,q,d,k,len,T_down,M,R);
+                    r,A,X,Dt,q,d,k,len,T_down(j),M,R);
                     
                     if possibleSolutionDownwelling>A
-                        T_down=T_down+delta_down;
+                        T_down(j)=T_down(j)+delta_down(j);
                     else
-                        T_down=T_down-delta_down;
+                        T_down(j)=T_down(j)-delta_down(j);
                     end
                     clc;
                     fprintf('pupil iteration: %d %d\n',j,i);
                     fprintf('solution downwelling: %f\n',possibleSolutionDownwelling);
-                    fprintf('target size: %f\n',T_down);
+                    fprintf('target size: %f\n',T_down(j));
                     fprintf('error downwellling: %f\n', abs(possibleSolutionDownwelling-A));
                     
                 end
@@ -42,12 +42,12 @@ function aquaticSmallestTarget_Coastal
                 while abs(possibleSolutionHorizontal-A)>tol
                     possibleSolutionHorizontal=firingThresh(depth,lambda,...
                     photoreceptorAbsorption_Coastal,a_Coastal,b_Coastal,Kh_Coastal,Lh_Coastal,...
-                    r,A,X,Dt,q,d,k,len,T_hor,M,R);
+                    r,A,X,Dt,q,d,k,len,T_hor(j),M,R);
                     
                     if possibleSolutionHorizontal>A
-                        T_hor=T_hor+delta_hor;
+                        T_hor(j)=T_hor(j)+delta_hor(j);
                     else
-                        T_hor=T_hor-delta_hor;
+                        T_hor(j)=T_hor(j)-delta_hor(j);
                     end
                     clc;
                     fprintf('pupil iteration: %d %d\n',j,i);
@@ -57,13 +57,13 @@ function aquaticSmallestTarget_Coastal
                     
                 end
                 
-                targetSizeSolns_Coastal(j,i,1)=T_down;
-                targetSizeSolns_Coastal(j,i,2)=T_hor;
+                targetSizeSolns_Coastal(j,i,1)=T_down(j);
+                targetSizeSolns_Coastal(j,i,2)=T_hor(j);
         end
-        T_down=min(targetSizeSolns_Coastal(:,i,1));
-        T_hor=min(targetSizeSolns_Coastal(:,i,2));
-        delta_down=10^(floor(log10(T_down)-2));
-        delta_hor=10^(floor(log10(T_down)-2));
+        %T_down=min(targetSizeSolns_Coastal(:,i,1));
+        %T_hor=min(targetSizeSolns_Coastal(:,i,2));
+        delta_down=10.^(floor(log10(T_down)-2));
+        delta_hor=10.^(floor(log10(T_down)-2));
     end
     
     save('aqaticSmallestTarget_Coastal','targetSizeSolns_Coastal','pupilValues','depth','rangeValues');

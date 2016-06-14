@@ -47,8 +47,8 @@ function plotTerrestrialSmallestTarget
     plot(pupilValues*10^3,daylightTargetSize,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('daylight target size (m)');
     hold on; 
-   xlim([0.0025*10^3 maxpupil*10^3]);  ylim1=get(gca,'ylim'); 
-   ylim([ylim1(1) max(daylightTargetSize(:,2))]); ylim1=get(gca,'ylim');
+    xlim([0.0025*10^3 maxpupil*10^3]);  ylim1=get(gca,'ylim'); 
+    ylim([ylim1(1) max(daylightTargetSize(:,2))]); ylim1=get(gca,'ylim');
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
