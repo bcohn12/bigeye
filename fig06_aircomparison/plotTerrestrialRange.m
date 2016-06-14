@@ -12,7 +12,6 @@ function plotTerrestrialRange
         load daylight.mat
         load moonlight.mat
         load starlight.mat
-
     end
     load terrestrial_Avsr.mat
     pupilValues=linspace(minpupil,maxpupil,25);

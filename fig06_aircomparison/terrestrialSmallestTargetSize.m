@@ -26,14 +26,16 @@ function terrestrialSmallestTargetSize
     
     rmin=5;
     rmax=100;
-    pupilValues=linspace(minpupil,maxpupil,30);
-    rangeValues=[5,20,80];
+    pupilValues=linspace(minpupil,maxpupil,25);
+    rangeValuesAll=[50,250,750;
+        5 20 80;
+        2,10,20];
     
     tol=4e-4;
     
-   targetSizeSolns=zeros(length(rangeValues),length(pupilValues),length(LVals)); 
-   TVals=[1e-3,1,5];
-    for l=3:length(LVals)
+   targetSizeSolns=zeros(size(rangeValuesAll,1),length(pupilValues),length(LVals)); 
+   TVals=[1,10,500];
+    for l=1:length(LVals)
         L=LVals(l);
         Dt=DtVals(l);
         F=FVals(l);
@@ -42,6 +44,7 @@ function terrestrialSmallestTargetSize
         Ispace=IspaceAll(l);
         C0=C0All(l);
         
+        rangeValues=rangeValuesAll(l,:);
         T=TVals(l);
         targetSizeSolnsTemp=zeros(length(rangeValues),length(pupilValues));
         for i=1:length(pupilValues)
