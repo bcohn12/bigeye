@@ -49,7 +49,7 @@ function plotTerrestrialSmallestTarget
     
     ax1=subplot(3,1,3);
     %linkaxes([ax1,ax2,ax3],'xy');
-    plot(pupilValues*10^3, log10(1e3.*targetSizeSolns(:,:,1)),'linewidth',linewidthDef);
+    plot(pupilValues*10^3, trlog10(1e3.*targetSizeSolns(:,:,1)),'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('log daylight target size (mm)');
     hold on; 
     xlim([0.0025*10^3 maxpupil*10^3]);  ylim1=get(gca,'ylim'); 
