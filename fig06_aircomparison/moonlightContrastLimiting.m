@@ -8,7 +8,7 @@
     % while(liminal contrast <= apparent contrast)
         % calculate apparent contrast and liminal contrast
 
-function [actRangeMoonlight, Cr_moonlight, angularSize, Kt_moonlight] =moonlightLimitingRange
+function [actRangeMoonlight, Cr_moonlight, angularSize, Kt_moonlight] =moonlightContrastLimiting
 
 %% INITIALIZE/LOAD DATA
 
@@ -40,30 +40,30 @@ for i=1:length(pupilValuesTerr);
     if 10^(Kt_moonlight(i)) <= abs(Cr_moonlight(i))
         actRangeMoonlight(i)=mr;
     else
-        delta=1e-2;
-        while 10^(Kt_moonlight(i))>abs(Cr_moonlight(i));
-            angularSize(i)=(T/mr)*10^3;
-            Cr_moonlight(i)=C0_daylight*integral(CrFunc,lambda1,lambda2);
-            Kt_moonlight(i)=liminalContrast(A,LMoonlight,angularSize(i));
-            
-            actRangeMoonlight(i)=mr;
-            mr=mr-delta;
-            
-            clc;
-            fprintf('range: %f\n', mr);
-            fprintf('error: %f\n', abs(10^(Kt_moonlight(i))-abs(Cr_moonlight(i)))); 
-        end
-%         tempVisualRange=linspace(mr,0.01,max(visualRangeMoonlight)*3);
-%         j=1;
-%         while(10^(Kt_moonlight(i)) > abs(Cr_moonlight(i)))
-%             mr=tempVisualRange(j);
+%         delta=1e-2;
+%         while 10^(Kt_moonlight(i))>abs(Cr_moonlight(i));
 %             angularSize(i)=(T/mr)*10^3;
-%             Cr_moonlight(i)=C0_moonlight*integral(CrFunc,lambda1,lambda2);
+%             Cr_moonlight(i)=C0_daylight*integral(CrFunc,lambda1,lambda2);
 %             Kt_moonlight(i)=liminalContrast(A,LMoonlight,angularSize(i));
 %             
 %             actRangeMoonlight(i)=mr;
-%             j=j+1;
+%             mr=mr-delta;
+%             
+%             clc;
+%             fprintf('range: %f\n', mr);
+%             fprintf('error: %f\n', abs(10^(Kt_moonlight(i))-abs(Cr_moonlight(i)))); 
 %         end
+        tempVisualRange=linspace(mr,0.01,max(visualRangeMoonlight)*3);
+        j=1;
+        while(10^(Kt_moonlight(i)) > abs(Cr_moonlight(i)))
+            mr=tempVisualRange(j);
+            angularSize(i)=(T/mr)*10^3;
+            Cr_moonlight(i)=C0_moonlight*integral(CrFunc,lambda1,lambda2);
+            Kt_moonlight(i)=liminalContrast(A,LMoonlight,angularSize(i));
+            
+            actRangeMoonlight(i)=mr;
+            j=j+1;
+        end
         
     end
     it=sprintf('iteration number: %d',i);
