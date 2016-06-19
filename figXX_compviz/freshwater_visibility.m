@@ -36,9 +36,9 @@ c=4.8./y_bd;   % attenuation coefficientc
 %attlen=1./c; % attenuation length
 attlen = c
 
-disp('mean')
+disp('mean c')
 mean(attlen)
-disp('std')
+disp('std c')
 std(attlen)
 
 disp('25 percentile')

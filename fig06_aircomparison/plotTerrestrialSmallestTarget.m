@@ -17,7 +17,7 @@ function plotTerrestrialSmallestTarget
     figure(); clf()
     
     ax3=subplot(3,1,1);
-    plot(pupilValues*10^3,log10(1e3.*targetSizeSolns(:,:,3)),'linewidth',linewidthDef);
+    plot(pupilValues*10^3,(1e3.*targetSizeSolns(:,:,3)),'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('log starlight target size (mm)');
     hold on;
     xlim([0.0025*10^3 maxpupil*10^3]); ylim1=get(gca,'ylim'); ylim1(1)=0; 
@@ -32,7 +32,7 @@ function plotTerrestrialSmallestTarget
     columnlegend(3,key,'location','south','fontsize',8,'Box','off');
     
     ax2=subplot(3,1,2);
-    plot(pupilValues*10^3,log10(1e3.*targetSizeSolns(:,:,2)),'linewidth',linewidthDef);
+    plot(pupilValues*10^3,(1e3.*targetSizeSolns(:,:,2)),'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('log moonlight target size (mm)');
     hold on;
     xlim([0.0025*10^3 maxpupil*10^3]); 
