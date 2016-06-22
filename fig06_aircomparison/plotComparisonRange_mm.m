@@ -39,12 +39,16 @@ function plotComparisonRange
     %visualVolume_Coastal=[visualVolume_Coastal(:,1:2,1) visualVolume_Coastal(:,1:2,2)];
     %dVdA_Coastal=[dVdA_Coastal(:,1:2,1), dVdA_Coastal(:,1:2,2)];
     
-    %visualRange_River=[visualRange_River(:,1:2,1), visualRange_River(:,1:2,2)];
-    % Remove 10 m case, which seems to be ,2
-    visualRange_River=[visualRange_River(:,1:2,1)];
-    drdA_River=[drdA_River(:,1:2,1)];
-    visualVolume_River=[visualVolume_River(:,1:2,1) ];
-    dVdA_River=[dVdA_River(:,1:2,1)];
+%  visualRange_River=[visualRange_River(:,1:2,1), visualRange_River(:,1:2,2)];
+%     drdA_River=[drdA_River(:,1:2,1), drdA_River(:,1:2,2)];
+%     visualVolume_River=[visualVolume_River(:,1:2,1) visualVolume_River(:,1:2,2)];
+%     dVdA_River=[dVdA_River(:,1:2,1), dVdA_River(:,1:2,2)];
+%     
+     % removing 10 m case
+     visualRange_River=[visualRange_River(:,2,1), visualRange_River(:,2,2)];
+    drdA_River=[drdA_River(:,2,1), drdA_River(:,2,2)];
+    visualVolume_River=[visualVolume_River(:,2,1) visualVolume_River(:,2,2)];
+    dVdA_River=[dVdA_River(:,2,1), dVdA_River(:,2,2)];
 %%    
     figure(); clf;
     subplot(2,2,1);
@@ -161,7 +165,7 @@ function plotComparisonRange
         key={'River looking upwards depth 7m',...
         'River horizontal depth 7m'};
     
-    columnlegend(4,key,'location','north',...
+    columnlegend(2,key,'location','north',...
         'fontsize',8)
 %%    
     figure(); clf();
