@@ -211,27 +211,71 @@ plotnoY = 1;
 horiz_line_len=0.07;
 ha3= create_BE_axes(plotnoX,plotnoY,fig_props);
 
-% finned tetrapod absolute size points
-line(repmat(1/3,length(TF_orbit_length_span),1),TF_orbit_length_span(:,1), ...
+% separate elpistostegalians
+
+elpisto = {'Panderichthys','Tiktaalik','Elpistostege'}
+noElpistoOrb=TF_orbit_length_span(:,1);
+noElpistoSkl=TF_orbit_length_span(:,2);
+elpistoIdx=zeros(length(TF_orbit_length_span),1);
+
+for i=1:length(elpisto)
+    idx=find(strcmp(gsTF(:,1), elpisto(i)) );
+    elpistoIdx(idx)=1;
+end
+
+% break TF into elpistostegalians and non-epistos
+noElpistoOrb(find(elpistoIdx))=[];
+noElpistoSkl(find(elpistoIdx))=[];
+
+
+onlyElpistoOrb=TF_orbit_length_span(:,1);
+onlyElpistoSkl=TF_orbit_length_span(:,2);
+onlyElpistoOrb(find(~elpistoIdx))=[];
+onlyElpistoSkl(find(~elpistoIdx))=[];
+
+
+% finned tetrapod minus Elpisto absolute size points
+line(repmat(1/4,length(noElpistoOrb)),noElpistoOrb, ...
     'linestyle','none', ...
     'marker','o','markersize',circleSize,'markeredgecolor','black','markerfacecolor',[1 0 0])
 
+% plot special color for the specimen used in legend
 screb=find(strcmp('Screbinodus',gsTF(:,1)));
-line(1/3,TF_orbit_length_span(screb,1), ...
+line(1/4,TF_orbit_length_span(screb,1), ...
     'linestyle','none', ...
     'marker','o','markersize',circleSize,'markeredgecolor','blue','markerfacecolor',[1 0 0])
 
-meanOrb = mean(TF_orbit_length_span(:,1));
-line([(1/3)-horiz_line_len (1/3)+horiz_line_len],[meanOrb meanOrb],'color',[1 0 0],'linewidth',1.5)
-text((1/3)+horiz_line_len+0.01, meanOrb, [num2str(meanOrb,2) ' mm'])
+meanOrb = mean(noElpistoOrb);
+line([(1/4)-horiz_line_len (1/4)+horiz_line_len],[meanOrb meanOrb],'color',[1 0 0],'linewidth',1.5)
+text((1/4)+horiz_line_len+0.01, meanOrb, [num2str(meanOrb,2) ' mm'])
 
 hold on
+
+% now plot only the Epistos
+
+line(repmat(1/2,length(onlyElpistoOrb)),onlyElpistoOrb, ...
+    'linestyle','none', ...
+    'marker','o','markersize',circleSize,'markeredgecolor','black','markerfacecolor',[1 0 0])
+
+% plot special color for the specimen used in legend
+pander=find(strcmp('Panderichthys',gsTF(:,1)));
+line(1/2,TF_orbit_length_span(pander,1), ...
+    'linestyle','none', ...
+    'marker','o','markersize',circleSize,'markeredgecolor','blue','markerfacecolor',[1 0 0])
+
+meanOrb = mean(onlyElpistoOrb);
+line([(1/2)-horiz_line_len (1/2)+horiz_line_len],[meanOrb meanOrb],'color',[1 0 0],'linewidth',1.5)
+text((1/2)+horiz_line_len+0.01, meanOrb, [num2str(meanOrb,2) ' mm'])
+
+% now only digited 
+
+% first separate the adelospondyl-colosteid clade
 
 secAqColor=[252 130 0]./255;
 % Derive sets without seconarily aquatic animals:
 
 
-secAquatic = {'Adelospondylus','Acherontiscus','Colosteus','Greererpeton','Deltaherpeton'}
+secAquatic = {'Adelogyrinus','Adelospondylus','Acherontiscus','Colosteus','Greererpeton','Deltaherpeton'}
 noSecAqOrb=ST_orbit_length_span(:,1);
 noSecAqSkl=ST_orbit_length_span(:,2);
 secAqIdx=zeros(length(ST_orbit_length_span),1);
@@ -257,40 +301,44 @@ Orb=ST_orbit_length_span(:,1);
 Skl=ST_orbit_length_span(:,2);
 
 %plot all ST without sec aq
-line(repmat(2/3,length(noSecAqOrb),1),noSecAqOrb, ...
+line(repmat(3/4,length(noSecAqOrb),1),noSecAqOrb, ...
     'linestyle','none', ...
     'marker','o','markersize',circleSize,'markeredgecolor','black','markerfacecolor',[0 0 1])
 
 acan=find(strcmp('Acanthostega',gsST(:,1)));
-line(2/3,ST_orbit_length_span(acan,1), ...
+line(3/4,ST_orbit_length_span(acan,1), ...
     'linestyle','none', ...
     'marker','o','markersize',circleSize,'markeredgecolor','blue','markerfacecolor',[1 0 0])
 
 % plot all ST without sec aq mean
 meanOrb = mean(noSecAqOrb);
-line([(2/3)-horiz_line_len (2/3)+horiz_line_len],[meanOrb meanOrb],'color',[0 0 1],'linewidth',1.5)
-text((2/3)+horiz_line_len+0.01, meanOrb+.4, [num2str(meanOrb,2) ' mm'])
+line([(3/4)-horiz_line_len (3/4)+horiz_line_len],[meanOrb meanOrb],'color',[0 0 1],'linewidth',1.5)
+text((3/4)+horiz_line_len+0.01, meanOrb+.4, [num2str(meanOrb,2) ' mm'])
 
 % plot all ST including sec aq mean
-meanOrb = mean(Orb);
-line([(2/3)-horiz_line_len (2/3)+horiz_line_len],[meanOrb meanOrb],'color',[0 0 0],'linewidth',1.5)
-text((2/3)+horiz_line_len+0.01, meanOrb, [num2str(meanOrb,2) ' mm'])
+%meanOrb = mean(Orb);
+%line([(2/3)-horiz_line_len (2/3)+horiz_line_len],[meanOrb meanOrb],'color',[0 0 0],'linewidth',1.5)
+%text((2/3)+horiz_line_len+0.01, meanOrb, [num2str(meanOrb,2) ' mm'])
 
-
-%plot only sec aq
-line(2/3,SecAqOrb, ...
+%plot all sec aq only
+line(repmat(1,length(SecAqOrb),1),SecAqOrb, ...
     'linestyle','none', ...
-    'marker','o','markersize',circleSize,'markeredgecolor','black','markerfacecolor', ...
-    secAqColor,'linewidth',1.5)
+    'marker','o','markersize',circleSize,'markeredgecolor','black','markerfacecolor',[0 0 1])
+
+colo=find(strcmp('Colosteus',gsST(:,1)));
+line(1,ST_orbit_length_span(colo,1), ...
+    'linestyle','none', ...
+    'marker','o','markersize',circleSize,'markeredgecolor','blue','markerfacecolor',[1 0 0])
+
 
 % plot only sec aq mean
 meanOrb = mean(SecAqOrb);
-line([(2/3)-horiz_line_len (2/3)+horiz_line_len],[meanOrb meanOrb],'color',secAqColor,'linewidth',1.5)
-text((2/3)+horiz_line_len+0.01, meanOrb, [num2str(meanOrb,2) ' mm'])
+line([(1)-horiz_line_len (1)+horiz_line_len],[meanOrb meanOrb],'color',[0 0 1],'linewidth',1.5)
+text((1)+horiz_line_len+0.01, meanOrb, [num2str(meanOrb,2) ' mm'])
 
 set(gca,'ylim',[0 70])
-set(gca,'xlim',[0 1])
-set(gca,'xtick', [1/3 2/3],'xticklabel',{'finned tetrapod','digited tetrapod'})
+set(gca,'xlim',[0 1.25])
+set(gca,'xtick', [1/4 1/2 3/4 1],'xticklabel',{'finned','elpisto','digited','secaq'})
 ylabel('orbit length (mm)')
 
 
@@ -298,77 +346,81 @@ plotnoX = 2;
 plotnoY = 1;
 ha4 = create_BE_axes(plotnoX,plotnoY,fig_props);
 
-% relative size now
-relsizeTF= 100.*(TF_orbit_length_span(:,1)./TF_orbit_length_span(:,2));
+% RELATIVE SIZES NOW
+% finned tetrapod minus Elpisto absolute size points
+    
+relsizeTF= 100.*(noElpistoOrb./noElpistoSkl);
 
-line(repmat(1/3,length(TF_orbit_length_span),1), ...
+line(repmat(1/4,length(relsizeTF),1), ...
     relsizeTF, ...
     'linestyle','none', ...
     'marker','o','markersize',circleSize,'markeredgecolor','black','markerfacecolor',[1 0 0])
 
-line(1/3,relsizeTF(screb,1), ...
+% special marker for screbinodus
+line(1/4,100.*(TF_orbit_length_span(screb,1)./TF_orbit_length_span(screb,2)), ...
     'linestyle','none', ...
     'marker','o','markersize',circleSize,'markeredgecolor','blue','markerfacecolor',[1 0 0])
 
+meanOrbpct = mean(relsizeTF);
+line([(1/4)-horiz_line_len (1/4)+horiz_line_len],[meanOrbpct meanOrbpct],'color',[1 0 0], 'linewidth',1.5)
 
-meanOrbpct = 100*mean(TF_orbit_length_span(:,1)./TF_orbit_length_span(:,2));
-line([(1/3)-horiz_line_len (1/3)+horiz_line_len],[meanOrbpct meanOrbpct],'color',[1 0 0], 'linewidth',1.5)
-
-text((1/3)+horiz_line_len+0.01, meanOrbpct, [num2str(meanOrbpct,2) '%'])
+text((1/4)+horiz_line_len+0.01, meanOrbpct, [num2str(meanOrbpct,2) '%'])
 
 hold on
 
-% digited tetrapods
-%################
+% only elpistos
+line(repmat(1/2,length(onlyElpistoOrb)),100.*(onlyElpistoOrb./onlyElpistoSkl), ...
+    'linestyle','none', ...
+    'marker','o','markersize',circleSize,'markeredgecolor','black','markerfacecolor',[1 0 0])
 
-%plot all ST without sec aq
+% plot special color for the specimen used in legend
+tikta=find(strcmp('Tiktaalik',gsTF(:,1)));
+line(1/2,100.*(TF_orbit_length_span(tikta,1)./TF_orbit_length_span(tikta,2)), ...
+    'linestyle','none', ...
+    'marker','o','markersize',circleSize,'markeredgecolor','blue','markerfacecolor',[1 0 0])
+
+meanOrb = mean(100.*(onlyElpistoOrb./onlyElpistoSkl));
+line([(1/2)-horiz_line_len (1/2)+horiz_line_len],[meanOrb meanOrb],'color',[1 0 0],'linewidth',1.5)
+text((1/2)+horiz_line_len+0.01, meanOrb, [num2str(meanOrb,2) ' %'])
+
+% digited tetrapods minus adelospondyl-colosteid clade
 
 relsizeSTminusSecAq = 100.*(noSecAqOrb./noSecAqSkl);
-line(repmat(2/3,length(noSecAqOrb),1),relsizeSTminusSecAq, ...
+line(repmat(3/4,length(noSecAqOrb),1),relsizeSTminusSecAq, ...
     'linestyle','none', ...
     'marker','o','markersize',circleSize,'markeredgecolor','black','markerfacecolor',[0 0 1])
 
-line(2/3,relsizeSTminusSecAq(acan), ...
+line(3/4,relsizeSTminusSecAq(acan), ...
     'linestyle','none', ...
     'marker','o','markersize',circleSize,'markeredgecolor','blue','markerfacecolor',[1 0 0])
 
 % plot all ST without sec aq mean
 meanOrbSkl = mean(100.*(noSecAqOrb./noSecAqSkl));
-line([(2/3)-horiz_line_len (2/3)+horiz_line_len],[meanOrbSkl meanOrbSkl],'color',[0 0 1],'linewidth',1.5)
-text((2/3)+horiz_line_len+0.01, meanOrbSkl+.5, [num2str(meanOrbSkl,2) '%'])
+line([(3/4)-horiz_line_len (3/4)+horiz_line_len],[meanOrbSkl meanOrbSkl],'color',[0 0 1],'linewidth',1.5)
+text((3/4)+horiz_line_len+0.01, meanOrbSkl+.5, [num2str(meanOrbSkl,2) '%'])
 
 %plot only sec aq
-line(repmat(2/3,length(SecAqOrb),1),100.*(SecAqOrb./SecAqSkl), ...
+line(repmat(1,length(SecAqOrb),1),100.*(SecAqOrb./SecAqSkl), ...
     'linestyle','none', ...
     'marker','o','markersize',circleSize,'markeredgecolor','black','markerfacecolor', ...
-    secAqColor,'linewidth',1.5)
+    [0 0 1],'linewidth',1.5)
+
+%special marker for sample
+line(1,100.*(ST_orbit_length_span(colo,1)./ST_orbit_length_span(colo,2)), ...
+    'linestyle','none', ...
+    'marker','o','markersize',circleSize,'markeredgecolor','blue','markerfacecolor',[1 0 0])
 
 % plot only sec aq mean
 meanOrbSkl = mean(100.*(SecAqOrb./SecAqSkl));
-line([(2/3)-horiz_line_len (2/3)+horiz_line_len],[meanOrbSkl meanOrbSkl],'color',secAqColor,'linewidth',1.5)
-text((2/3)+horiz_line_len+0.01, meanOrbSkl, [num2str(meanOrbSkl,2)  '%'])
+line([(1)-horiz_line_len (1)+horiz_line_len],[meanOrbSkl meanOrbSkl],'color',[0 0 1],'linewidth',1.5)
+text((1)+horiz_line_len+0.01, meanOrbSkl, [num2str(meanOrbSkl,2)  '%'])
 
-% plot all ST including sec aq mean
-meanOrbSkl = mean(100.*(Orb./Skl));
-line([(2/3)-horiz_line_len (2/3)+horiz_line_len],[meanOrbSkl meanOrbSkl],'color',[0 0 0],'linewidth',1.5)
-text((2/3)+horiz_line_len+0.01, meanOrbSkl-.5, [num2str(meanOrbSkl,2) '%'])
-
-%#################
-% line(repmat(2/3,length(ST_orbit_length_span),1), ...
-%     100.*(ST_orbit_length_span(:,1)./ST_orbit_length_span(:,2)), ...
-%         'linestyle','none', ...
-%     'marker','o','markersize',circleSize,'markeredgecolor','none','markerfacecolor',[0 0 1])
-% meanOrbpct = 100*mean(ST_orbit_length_span(:,1)./ST_orbit_length_span(:,2));
-% line([(2/3)-horiz_line_len (2/3)+horiz_line_len],[meanOrbpct meanOrbpct],'color',[0 0 1])
-%
-% text((2/3)+horiz_line_len+0.01, meanOrbpct, num2str(meanOrbpct,2))
-%
-%
 
 set(gca,'ylim',[0 40])
-set(gca,'xlim',[0 1])
+set(gca,'xlim',[0 1.25])
 ylabel('100 x (orbit length/skull length)')
-set(gca,'xtick', [1/3 2/3],'xticklabel',{'finned tetrapod','digited tetrapod'})
+set(gca,'xtick', [1/4 1/2 3/4 1],'xticklabel',{'finned','elpisto','digited','secaq'})
+
 
 print(gcf, '-dpdf','orbitData')
 
@@ -391,7 +443,7 @@ save('OM_TF_ST.mat','OM_TF','OM_ST')
 
 
 % Format stat result text for paper
-formattedstring = [ ...
+formattedstringA = [ ...
     ' The ' ...
     'finned tetrapods had eye sockets that were $' num2str(mean(TF_orbit_length_span(:,1)),2) ...
     ' \pm ' num2str(std(TF_orbit_length_span(:,1)),2) '$~mm long (all numbers mean $\pm$ standard deviation), ' ...
@@ -401,27 +453,30 @@ formattedstring = [ ...
     'was ' num2str([100.*mean(datTF)],2) ' $\pm$ ' num2str(std(100.*datTF),2)  ...
     '\% ($N=' num2str(length(datTF)) '$) for the' ...
     ' finned tetrapods, and ' num2str([100.*mean(datST)],2) ' $\pm$  ' num2str(std(100.*datST),2)  ...
-    '\% ($N=' num2str(length(datST)) '$) for the digited tetrapods. We further subdivided' ...
-    ' the digited tetrapods into two groups: one consisting exclusively of the secondarily-aquatic ' ...
-    'colosteid-adelospondyl clade ($N=' num2str(length(SecAqOrb)) '$), and the digited tetrapods with these taxa removed ($N=' ...
-    num2str(length(noSecAqOrb)) '$). The mean eye socket ' ...
-    'length for the secondarily-aquatic digited tetrapods was ' ...
-    num2str(mean(SecAqOrb),2) ...
-    ' $\pm$ ' num2str(std(SecAqOrb),2) '~mm, ' ...
-    'while the length for the digited tetrapods without the colosteid-adelospondyls was ' ...
-    num2str(mean(noSecAqOrb),2) ...
-    ' $\pm$ ' num2str(std(noSecAqOrb),2) '~mm. Similarly ' ...
-    'the relative eye socket length for the colosteid-adelospondyls and ' ...
-    'the digited tetrapods minus this group was ' ...
-    num2str(mean([100.*(SecAqOrb./SecAqSkl)]),2) ...
-    ' $\pm$ ' num2str(std([100.*(SecAqOrb./SecAqSkl)]),2) '\%, and ' ...
-    num2str(mean([100.*(noSecAqOrb./noSecAqSkl)]),2) ...
-    ' $\pm$ ' num2str(std([100.*(noSecAqOrb./noSecAqSkl)]),2) '\%, respectively.'];
+    '\% ($N=' num2str(length(datST)) '$) for the digited tetrapods.'];
 
+formattedstringB = [ ...
+    'The finned tetrapods ' ... 
+    'exclusive of the transitional elpistostegalians had eye sockets that were $' num2str(mean(noElpistoOrb),2) ' \pm ' ...
+    num2str(std(noElpistoOrb),2) '$~mm, and  $' ...
+    num2str(mean([100.*(noElpistoOrb./noElpistoSkl)]),2) ' \pm ' num2str(std([100.*(noElpistoOrb./noElpistoSkl)]),2) '$~\%. ' ... 
+    'Elpistostegalians ($N=' num2str(length(onlyElpistoOrb)) '$) alone were $' num2str(mean(onlyElpistoOrb),2) ...
+    ' \pm ' num2str(std(onlyElpistoOrb),2) '$~mm, and $' ...
+    num2str(mean([100.*(onlyElpistoOrb./onlyElpistoSkl)]),2) ' \pm ' num2str(std([100.*(onlyElpistoOrb./onlyElpistoSkl)]),2) '$~\%. ' ... 
+    'The digited tetrapods without the secondarily aquatic colosteid-adelospondyls had socket lengths of $' num2str(mean(noSecAqOrb),2) ...
+    ' \pm ' num2str(std(noSecAqOrb),2) '$~mm, while the colosteid-adelospondyls ' ...
+    '($N=' num2str(length(SecAqOrb)) '$) alone had sockets that were $' ...
+  num2str(mean(SecAqOrb),2) ...
+  ' \pm ' num2str(std(SecAqOrb),2) '$~mm. ' ...
+  'The corresponding relative socket lengths were $' ... 
+    num2str(mean([100.*(noSecAqOrb./noSecAqSkl)]),2) ' \pm ' num2str(std([100.*(noSecAqOrb./noSecAqSkl)]),2) '$~\% and $' ...
+    num2str(mean([100.*(SecAqOrb./SecAqSkl)]),2) ...
+    ' \pm ' num2str(std([100.*(SecAqOrb./SecAqSkl)]),2) '$~\%, respectively.']
 % CONTINUE WRITING
 
 fid = fopen('stat_string1.tex','w');
-fprintf(fid, '%s', formattedstring);
+fprintf(fid, '%s\n\n', formattedstringA);
+fprintf(fid, '%s\n\n', formattedstringB);
 fclose(fid);
 
 
