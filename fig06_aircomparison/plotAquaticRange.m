@@ -35,7 +35,7 @@ function plotAquaticRange
     plot(pupilValues*1e3,visualRange_Coastal,'linewidth',linewidthDef);   
     xlabel('pupil diameter (mm)'); ylabel('visual range coastal water(m)');    
     %columnlegend(2,key_Coastal,'location','Northoutside','fontsize',8);
-    ylim1=get(gca,'ylim'); ylim1(1)=0; xlim([0.0025*10^3 maxpupil*10^3]);
+    ylim1=get(gca,'ylim'); ylim1(1)=0; xlim([0.001*10^3 maxpupil*10^3]);
     
     hold on
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
@@ -44,6 +44,7 @@ function plotAquaticRange
     fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
         [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
     set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
+    
     
     ax12=subplot(2,1,2);
     linkaxes([ax11 ax12],'xy')

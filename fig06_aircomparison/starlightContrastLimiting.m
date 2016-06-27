@@ -8,7 +8,7 @@
     % while(liminal contrast <= apparent contrast)
         % calculate apparent contrast and liminal contrast
 
-function [actRangeStarlight, Cr_starlight, angularSize, Kt_starlight] =starlightLimitingRange
+function [actRangeStarlight, Cr_starlight, angularSize, Kt_starlight] =starlightContrastLimiting
 
 %% INITIALIZE/LOAD DATA
 
