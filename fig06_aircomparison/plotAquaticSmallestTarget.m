@@ -54,10 +54,10 @@ function plotAquaticSmallestTarget
     
     figure(); clf();
     ax3=subplot(2,1,1);
-    plot(pupilValues*10^3,upwardSubtendedAngle,'linewidth',linewidthDef)
+    plot(pupilValues*10^3,upwardSubtendedAngle*180/pi,'linewidth',linewidthDef)
     hold on;
     
-    xlabel('pupil diameter (mm)'); ylabel('angular looking upwards (rad)');
+    xlabel('pupil diameter (mm)'); ylabel('angular looking upwards (deg)');
     xlim([0.0025*10^3 maxpupil*10^3]); ylim1=get(gca,'ylim'); 
     %ylim([ylim1(1) max(targetSizeSolns_Coastal(:,2,1))]); ylim1=get(gca,'ylim');
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
@@ -71,9 +71,9 @@ function plotAquaticSmallestTarget
     
     ax4=subplot(2,1,2);
     %linkaxes([ax3 ax4],'xy')
-    plot(pupilValues*10^3,horizontalSubtendedAngle,'linewidth',linewidthDef)
+    plot(pupilValues*10^3,horizontalSubtendedAngle*180/pi,'linewidth',linewidthDef)
     hold on;  
-    xlabel('pupil diameter (mm)'); ylabel('angular horizontal viewing (rad)');
+    xlabel('pupil diameter (mm)'); ylabel('angular horizontal viewing (deg)');
     xlim([0.0025*10^3 maxpupil*10^3]); ylim1=get(gca,'ylim'); 
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);

@@ -27,8 +27,8 @@ function plotTerrestrialSmallestTarget
     
     ax3=subplot(3,1,1);
 
-    plot(pupilValues*10^3,starlightSubtendedAngle,'linewidth',linewidthDef);
-    xlabel('pupil diameter (mm)'); ylabel('starlight angular size (rad)','fontsize',8);
+    plot(pupilValues*10^3,starlightSubtendedAngle*180/pi,'linewidth',linewidthDef);
+    xlabel('pupil diameter (mm)'); ylabel('starlight angular size (deg)','fontsize',8);
     hold on;
     xlim([0.0025*10^3 maxpupil*10^3]); ylim1=get(gca,'ylim'); ylim1(1)=0; 
     %ylim([ylim1(1) max(starlightTargetSize(:,2))]); ylim1=get(gca,'ylim');
@@ -44,8 +44,8 @@ function plotTerrestrialSmallestTarget
     columnlegend(3,key,'location','northeast','fontsize',8,'Box','off');
     
     ax2=subplot(3,1,2);
-    plot(pupilValues*10^3,moonlightSubtendedAngle,'linewidth',linewidthDef);
-    xlabel('pupil diameter (mm)'); ylabel('moonlight angular size (rad)','fontsize',8);
+    plot(pupilValues*10^3,moonlightSubtendedAngle*180/pi,'linewidth',linewidthDef);
+    xlabel('pupil diameter (mm)'); ylabel('moonlight angular size (deg)','fontsize',8);
     hold on;
     xlim([0.0025*10^3 maxpupil*10^3]); 
     ylim1=get(gca,'ylim'); ylim1(1)=0;
@@ -63,8 +63,8 @@ function plotTerrestrialSmallestTarget
     
     ax1=subplot(3,1,3);
     %linkaxes([ax1,ax2,ax3],'xy');
-    plot(pupilValues*10^3, daylightSubtendedAngle,'linewidth',linewidthDef);
-    xlabel('pupil diameter (mm)'); ylabel('daylight angular size (rad)','fontsize',8);
+    plot(pupilValues*10^3, daylightSubtendedAngle*180/pi*60,'linewidth',linewidthDef);
+    xlabel('pupil diameter (mm)'); ylabel('daylight angular size (arcmin)','fontsize',8);
     hold on; 
     xlim([0.0025*10^3 maxpupil*10^3]);  ylim1=get(gca,'ylim'); 
     %ylim([ylim1(1) max(daylightTargetSize(:,2))]); ylim1=get(gca,'ylim');
