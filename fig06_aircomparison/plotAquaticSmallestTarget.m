@@ -14,11 +14,13 @@ function plotAquaticSmallestTarget
 
     linewidthDef=2;
     
-    upwardSubtendedAngle=bsxfun(@rdivide,targetSizeSolns_River(:,:,1)',rangeValues);
+    upwardSubtendedAngle=bsxfun(@rdivide,targetSizeSolns_River(:,:,1)',2*rangeValues);
     upwardSubtendedAngle(isnan(upwardSubtendedAngle))=0;
+    upwardSubtendedAngle=atand(upwardSubtendedAngle)*2;
     
-    horizontalSubtendedAngle=bsxfun(@rdivide,targetSizeSolns_River(:,:,2)',rangeValues);
+    horizontalSubtendedAngle=bsxfun(@rdivide,targetSizeSolns_River(:,:,2)',2*rangeValues);
     horizontalSubtendedAngle(isnan(horizontalSubtendedAngle))=0;
+    horizontalSubtendedAngle=atand(horizontalSubtendedAngle)*2;
     
 %     figure(); clf();
 %     ax1=subplot(2,1,1);
@@ -54,38 +56,39 @@ function plotAquaticSmallestTarget
     
     figure(); clf();
     ax3=subplot(2,1,1);
-    plot(pupilValues*10^3,upwardSubtendedAngle*180/pi,'linewidth',linewidthDef)
+    plot(pupilValues*10^3,upwardSubtendedAngle,'linewidth',linewidthDef)
     hold on;
     
     xlabel('pupil diameter (mm)'); ylabel('angular looking upwards (deg)');
-    xlim([0.0025*10^3 maxpupil*10^3]); ylim1=get(gca,'ylim'); 
-    %ylim([ylim1(1) max(targetSizeSolns_Coastal(:,2,1))]); ylim1=get(gca,'ylim');
-    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-    [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
-    set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
-    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-        [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
-    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
+    xlim([0.005*10^3 0.02*10^3]); ylim1=get(gca,'ylim'); %ylim1(2)=max(targetSizeSolns_River(:,3,1));
+    ylim([ylim1(1) upwardSubtendedAngle(4,3)]); ylim1=get(gca,'ylim');
+%     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
+%     [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
+%     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
+%     fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
+%         [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
+%     set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
     line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color',[216/256,191/256,216/256],'linestyle',':')
     line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color',[0/256,128/256,128/256],'linestyle',':')
     
     ax4=subplot(2,1,2);
     %linkaxes([ax3 ax4],'xy')
-    plot(pupilValues*10^3,horizontalSubtendedAngle*180/pi,'linewidth',linewidthDef)
+    plot(pupilValues*10^3,horizontalSubtendedAngle,'linewidth',linewidthDef)
     hold on;  
     xlabel('pupil diameter (mm)'); ylabel('angular horizontal viewing (deg)');
-    xlim([0.0025*10^3 maxpupil*10^3]); ylim1=get(gca,'ylim'); 
-    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-    [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
-    set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
-    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-        [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
-    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
+    xlim([0.005*10^3 0.02*10^3]); ylim1=get(gca,'ylim'); 
+    ylim([ylim1(1) horizontalSubtendedAngle(4,3)]); ylim1=get(gca,'ylim');
+%     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
+%     [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
+%     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
+%     fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
+%         [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
+%     set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
     line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color',[216/256,191/256,216/256],'linestyle',':')
     line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color',[0/256,128/256,128/256],'linestyle',':')
     
-    key={'1m','2m','4m'};
-    columnlegend(3,key,'location','south','fontsize',8,'Box','off');
+    key={'1m','2m','3m','4m'};
+    columnlegend(4,key,'location','south','fontsize',8,'Box','off');
     
     
     
