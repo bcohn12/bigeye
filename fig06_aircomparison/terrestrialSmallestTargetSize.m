@@ -94,7 +94,7 @@ function terrestrialSmallestTargetSize
         targetSizeSolns(:,:,l)=targetSizeSolnsTemp;
     end
     
-    save('terrestrialSmallestTarget','targetSizeSolns','pupilValues','rangeValues');
+    save('terrestrialSmallestTarget','targetSizeSolns','pupilValues','rangeValuesAll');
 
 function Kt = liminalContrast(A,L,angularSize)
 
