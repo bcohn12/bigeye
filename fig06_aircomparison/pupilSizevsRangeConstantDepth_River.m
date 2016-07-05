@@ -3,7 +3,7 @@ function pupilSizevsRangeConstantDepth_River
 
     %% CONSTANT DEPTH VALUE RANGE OF VISION VS PUPIL SIZE
 
-    PROMPT = 1;
+    PROMPT = 0;
 
     if PROMPT
     coastalWaterDepth=input('Input depth value in vector form between 1-15:\n');

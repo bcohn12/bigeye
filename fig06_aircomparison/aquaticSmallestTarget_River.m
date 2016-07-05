@@ -6,12 +6,12 @@ function aquaticSmallestTarget_River
     if PROMPT
         rangeValues=input('Input range value in vector form between 1-15:\n');
     else 
-        rangeValues=[1 2 3 4];
+        rangeValues=[2 3 4 7];
     end
     
     pupilValues=linspace(minpupil,maxpupil,25);
-    T_down=[1e-2 1e-1 1e-1 1]; delta_down=[1e-3 1e-3 1e-2 1e-2];
-    T_hor=[1e-1 1 10 100]; delta_hor=[1e-4 1e-2 1e-2 1e-1];
+    T_down=[1e-1 1e-1 1 5000]; delta_down=[1e-3 1e-2 1e-2 1];
+    T_hor=[1 10 100 1000000]; delta_hor=[1e-2 1e-2 1e-1 1000];
     depth=7;
     targetSizeSolns_River=zeros(length(rangeValues),length(pupilValues),2);
     tol=4e-4;
@@ -62,8 +62,8 @@ function aquaticSmallestTarget_River
         end
         %T_down=min(targetSizeSolns_Coastal(:,i,1));
         %T_hor=min(targetSizeSolns_Coastal(:,i,2));
-        delta_down=10.^(floor(log10(T_down)-2));
-        delta_hor=10.^(floor(log10(T_down)-2));
+        delta_down=10.^(floor(log10(T_down)-3));
+        delta_hor=10.^(floor(log10(T_hor)-3));
     end
     
     save('aqaticSmallestTarget_River','targetSizeSolns_River','pupilValues','depth','rangeValues');

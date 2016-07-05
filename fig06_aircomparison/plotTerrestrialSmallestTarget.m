@@ -16,15 +16,15 @@ function plotTerrestrialSmallestTarget
 
     figure(); clf()
     
-    starlightSubtendedAngle=bsxfun(@rdivide,targetSizeSolns(:,:,3)',rangeValuesAll(3,:));
+    starlightSubtendedAngle=bsxfun(@rdivide,targetSizeSolns(:,:,3)',2*rangeValuesAll(3,:));
     starlightSubtendedAngle(isnan(starlightSubtendedAngle))=0;
     starlightSubtendedAngle=atand(starlightSubtendedAngle)*2;
     
-    moonlightSubtendedAngle=bsxfun(@rdivide,targetSizeSolns(:,:,2)',rangeValuesAll(2,:));
+    moonlightSubtendedAngle=bsxfun(@rdivide,targetSizeSolns(:,:,2)',2*rangeValuesAll(2,:));
     moonlightSubtendedAngle(isnan(moonlightSubtendedAngle))=0;
     moonlightSubtendedAngle=atand(moonlightSubtendedAngle)*2;
     
-    daylightSubtendedAngle=bsxfun(@rdivide,targetSizeSolns(:,:,1)',rangeValuesAll(1,:));
+    daylightSubtendedAngle=bsxfun(@rdivide,targetSizeSolns(:,:,1)',2*rangeValuesAll(1,:));
     daylightSubtendedAngle(isnan(moonlightSubtendedAngle))=0;
     daylightSubtendedAngle=atand(daylightSubtendedAngle)*2;
     
@@ -34,15 +34,15 @@ function plotTerrestrialSmallestTarget
     xlabel('pupil diameter (mm)'); ylabel('starlight angular size (deg)','fontsize',8);
     hold on;
     xlim([0.005*10^3 0.02*10^3]); ylim1=get(gca,'ylim'); ylim1(1)=0; 
-    %ylim([ylim1(1) max(starlightSubtendedAngle(4:end,3))]); ylim1=get(gca,'ylim');
+    ylim([ylim1(1) max(starlightSubtendedAngle(3,3))]); ylim1=get(gca,'ylim');
 %     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
 %     [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
 %     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
 %     fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
 %         [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
 %     set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
-    line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color',[216/256,191/256,216/256],'linestyle',':')
-    line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color',[0/256,128/256,128/256],'linestyle',':')
+    line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
+    line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
     key={'2m','10m','20m'};
     columnlegend(3,key,'location','northeast','fontsize',8,'Box','off');
     
@@ -59,8 +59,8 @@ function plotTerrestrialSmallestTarget
 %     fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
 %         [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
 %     set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
-    line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color',[216/256,191/256,216/256],'linestyle',':')
-    line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color',[0/256,128/256,128/256],'linestyle',':')
+    line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
+    line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
     key={'5m','20m','80m'};
     columnlegend(3,key,'location','northeast','fontsize',8,'Box','off');
     
@@ -77,8 +77,8 @@ function plotTerrestrialSmallestTarget
 %     fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
 %         [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
 %     set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
-    line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color',[216/256,191/256,216/256],'linestyle',':')
-    line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color',[0/256,128/256,128/256],'linestyle',':')
+    line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
+    line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
     key={'50m','250m','750m'};
     columnlegend(3,key,'location','northeast','fontsize',8,'Box','off');
     
