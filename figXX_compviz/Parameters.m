@@ -7,7 +7,7 @@ Dt=1.16; %units: s, integration time, used typical value
 qVals=[eta,q,q];
 
 %All values from Middleton
-LDaylight=0.97*1e3; % daylight luminosity in cd/m^2 
+LDaylight=1e3; % daylight luminosity in cd/m^2 
 LMoonlight=1e-2; %Fairly brigh moonlight in cd/m^2
 LStarlight=1e-4; %moonless clear night sky in cd/m^2
 
@@ -21,8 +21,8 @@ DtVals=[Dt_daylight, Dt_moonlight, Dt_starlight];
 
 % Contrast parameters. Miller uses +/- 0.5, +/-1, and +/-2 as span 
 C0_daylight=-1; %daylight contrast value
-C0_moonlight=1; %night contrast value, a guess (4 is snow). 
-C0_starlight=1; %starlight contrast value, a guess
+C0_moonlight=-1; %night contrast value, a guess (4 is snow). 
+C0_starlight=-1; %starlight contrast value, a guess
 C0All=[C0_daylight, C0_moonlight, C0_starlight];
 
 k=0.035; % photoreceptor absorbtion, units 1/micrometers
@@ -81,7 +81,7 @@ Lu_River=Lu_River(4:end,4:end);
 Lu_Coastal=xlsread('hydrolight/Hydrolight_CoastalWater.xlsx','Lu');
 Lu_Coastal=Lu_Coastal(2:end,4:end);
 
-Lh_River=xlsread('hydrolight/Hydrolight_BrownWater.xlsx','Lh');
+Lh_River=xlsread('hydrolight/Hydrolight_BrownWater.xlsx','Lh_2');
 Lh_River=Lh_River(4:end,4:end);
 
 Lh_Coastal=xlsread('hydrolight/Hydrolight_CoastalWater.xlsx','Lh');
@@ -171,7 +171,8 @@ azimuthAir = azimuthCoastal;
 % aerial case we go elevationMin to elevationMaxAir
 elevationMin=pi/2-elevationCoastal;
 elevationMax=pi/2+elevationCoastal;
-elevationMaxAir=pi/2;
+elevationMinAir=pi/2;
+elevationMaxAir=pi/2+elevationCoastal;
 
 azimuthMin=0;
 azimuthMax=azimuthCoastal;
