@@ -27,14 +27,14 @@ function terrestrialSmallestTargetSize
     rmin=5;
     rmax=100;
     pupilValues=linspace(minpupil,maxpupil,25);
-    rangeValuesAll=[50,250,750;
-        5 20 80;
-        2,10,20];
+    rangeValuesAll=[50,200,800;
+        10, 20, 80;
+        2, 8, 32];
     
     tol=4e-4;
     
    targetSizeSolns=zeros(size(rangeValuesAll,1),length(pupilValues),length(LVals)); 
-   TVals=[1,10,500];
+   TVals=[1,1,1]; %1,10,500
     for l=1:length(LVals)
         L=LVals(l);
         Dt=DtVals(l);
@@ -52,20 +52,22 @@ function terrestrialSmallestTargetSize
             delta=10^(floor(log10(T))-2);
             for j=1:length(rangeValues)
                 mr=rangeValues(j); 
-                possibleSolution=10;             
-                while abs(possibleSolution-A)>tol
-                    possibleSolution=firingThresh(WlambdaylambdaInterp,A,mr,...
-                        C0,L,T,F,Ispace,Dt,q,k,len,X,d,R);
-                    if possibleSolution<A
-                        T=T-delta;
-                    else
-                        T=T+delta;
-                    end
-                    clc;
-                    fprintf('Target size: %f\n',T);
-                    fprintf('solution: %f\n', possibleSolution);
-                    fprintf('error: %f\n',abs(possibleSolution-A));
-                end
+%                 possibleSolution=10;             
+%                 while abs(possibleSolution-A)>tol
+%                     possibleSolution=firingThresh(WlambdaylambdaInterp,A,mr,...
+%                         C0,L,T,F,Ispace,Dt,q,k,len,X,d,R);
+%                     if possibleSolution<A
+%                         T=T-delta;
+%                     else
+%                         T=T+delta;
+%                     end
+%                     clc;
+%                     fprintf('iteration: %d %d\n',j,i);
+%                     fprintf('Target size: %f\n',T);
+%                     fprintf('solution: %f\n', possibleSolution);
+%                     fprintf('error: %f\n',abs(possibleSolution-A));
+%                 end
+%                 targetSizeSolnsTemp(j,i)=T;
                 
                 CrFunc=@(lambda) exp(-sigma(lambda).*mr);
                 Cr= C0*integral(CrFunc,lambda1,lambda2);
@@ -74,7 +76,18 @@ function terrestrialSmallestTargetSize
                 Kt=liminalContrast(A,L,angularSize);
 
                 if 10^(Kt) <= abs(Cr)   
-                     targetSizeSolnsTemp(j,i)=T;
+                    while 10^(Kt)<abs(Cr)
+                        T=T-delta;
+                        
+                        clc;
+                        fprintf('iteration: %d %d\n',j,i);
+                        fprintf('Target size: %f\n',T);
+                        fprintf('error: %f\n',abs(10^Kt-abs(Cr)))
+                        
+                        angularSize=(T/mr)*10^3;
+                        Kt=liminalContrast(A,L,angularSize);
+                    end
+                    targetSizeSolnsTemp(j,i)=T;
                 else
                     while 10^(Kt)>abs(Cr)
                         T=T+delta;
@@ -83,6 +96,7 @@ function terrestrialSmallestTargetSize
                         Kt=liminalContrast(A,L,angularSize);
                         
                         clc;
+                        fprintf('iteration: %d %d\n',j,i);
                         fprintf('Target size: %f\n',T);
                         fprintf('error: %f\n',abs(10^Kt-abs(Cr)))
                     end
