@@ -4,13 +4,13 @@ function plotAquaticSmallestTarget
     load aqaticSmallestTarget_Coastal
     load aqaticSmallestTarget_River
     
-    fillboxalpha=0.07; % transparency of fillbox to show +/- std of pupil size;
+    fillboxalpha=0.18; % transparency of fillbox to show +/- std of pupil size;
     load ../fig02_orbitsize/OM_TF_ST.mat
-    pupil_TF = [mean(OM_TF)-std(OM_TF) mean(OM_TF)+std(OM_TF)].*0.53;
-    pupil_ST = [mean(OM_ST)-std(OM_ST) mean(OM_ST)+std(OM_ST)].*0.53;
+    pupil_TF = [mean(OM_TF)-std(OM_TF) mean(OM_TF)+std(OM_TF)].*0.449;
+    pupil_ST = [mean(OM_ST)-std(OM_ST) mean(OM_ST)+std(OM_ST)].*0.449;
 
-    fishpupil=mean(OM_TF)*.53;
-    tetrapodpupil=mean(OM_ST)*.53;
+    fishpupil=mean(OM_TF)*.449;
+    tetrapodpupil=mean(OM_ST)*.449;
 
     linewidthDef=2;
     
@@ -61,8 +61,8 @@ function plotAquaticSmallestTarget
     
     xlabel('pupil diameter (mm)'); ylabel('angular looking upwards (deg)');
     xlim([0.005*10^3 0.02*10^3]); 
-    ylim1=get(gca,'ylim'); %ylim1(2)=max(targetSizeSolns_River(:,3,1));
-    %ylim([ylim1(1) 0.003]); ylim1=get(gca,'ylim');
+    ylim1=get(gca,'ylim'); %ylim1(2)=max(max((upwardSubtendedAngle)));
+    ylim([ylim1(1) 0.3]); ylim1=get(gca,'ylim');
 %     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
 %     [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
 %     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -89,7 +89,7 @@ function plotAquaticSmallestTarget
     line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
     line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
     
-    key={'2m','3m','4m','7m'};
+    key={'2m','3m','4m','5m','6m','7m'};
     columnlegend(4,key,'location','south','fontsize',8,'Box','off');
     
     

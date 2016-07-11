@@ -19,13 +19,13 @@ function plotComparisonRange
     
     pupilValuesAir=linspace(minpupil,maxpupil,25);
     
-    fillboxalpha=0.07; % transparency of fillbox to show +/- std of pupil size;
+    fillboxalpha=0.18; % transparency of fillbox to show +/- std of pupil size;
     load ../fig02_orbitsize/OM_TF_ST.mat
-    pupil_TF = [mean(OM_TF)-std(OM_TF) mean(OM_TF)+std(OM_TF)].*0.53;
-    pupil_ST = [mean(OM_ST)-std(OM_ST) mean(OM_ST)+std(OM_ST)].*0.53;
+    pupil_TF = [mean(OM_TF)-std(OM_TF) mean(OM_TF)+std(OM_TF)].*0.449;
+    pupil_ST = [mean(OM_ST)-std(OM_ST) mean(OM_ST)+std(OM_ST)].*0.449;
 
-    fishpupil=mean(OM_TF)*.53;
-    tetrapodpupil=mean(OM_ST)*.53;
+    fishpupil=mean(OM_TF)*.449;
+    tetrapodpupil=mean(OM_ST)*.449;
 
     linewidthDef=2;
     
