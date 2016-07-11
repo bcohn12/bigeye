@@ -6,7 +6,7 @@ function aquaticSmallestTarget_River
     if PROMPT
         rangeValues=input('Input range value in vector form between 1-15:\n');
     else 
-        rangeValues=[2 3 4 7];
+        rangeValues=[2 3 4 5 6 7];
     end
     
     pupilValues=linspace(minpupil,maxpupil,25);

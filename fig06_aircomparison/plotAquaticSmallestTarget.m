@@ -16,11 +16,11 @@ function plotAquaticSmallestTarget
     
     upwardSubtendedAngle=bsxfun(@rdivide,targetSizeSolns_River(:,:,1)',2*rangeValues);
     upwardSubtendedAngle(isnan(upwardSubtendedAngle))=0;
-    upwardSubtendedAngle=atand(upwardSubtendedAngle)*2;
+    upwardSubtendedAngle=atan(upwardSubtendedAngle)*2*180/pi;
     
     horizontalSubtendedAngle=bsxfun(@rdivide,targetSizeSolns_River(:,:,2)',2*rangeValues);
     horizontalSubtendedAngle(isnan(horizontalSubtendedAngle))=0;
-    horizontalSubtendedAngle=atand(horizontalSubtendedAngle)*2;
+    horizontalSubtendedAngle=atan(horizontalSubtendedAngle)*2*180/pi;
     
 %     figure(); clf();
 %     ax1=subplot(2,1,1);
@@ -62,7 +62,7 @@ function plotAquaticSmallestTarget
     xlabel('pupil diameter (mm)'); ylabel('angular looking upwards (deg)');
     xlim([0.005*10^3 0.02*10^3]); 
     ylim1=get(gca,'ylim'); %ylim1(2)=max(targetSizeSolns_River(:,3,1));
-    ylim([ylim1(1) 0.003]); ylim1=get(gca,'ylim');
+    %ylim([ylim1(1) 0.003]); ylim1=get(gca,'ylim');
 %     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
 %     [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
 %     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -79,7 +79,7 @@ function plotAquaticSmallestTarget
     xlabel('pupil diameter (mm)'); ylabel('angular horizontal viewing (deg)');
     xlim([0.005*10^3 0.02*10^3]); 
     ylim1=get(gca,'ylim'); 
-    ylim([ylim1(1) .1]); ylim1=get(gca,'ylim');
+   % ylim([ylim1(1) .1]); ylim1=get(gca,'ylim');
 %     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
 %     [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
 %     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
