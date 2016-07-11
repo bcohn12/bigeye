@@ -54,7 +54,7 @@ function plotComparisonRange
     subplot(2,2,1);
     plot(pupilValuesAir*10^3, visualRange,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('visual range (m)');
-    xlim([0.001*10^3 maxpupil*10^3]); ylim1=get(gca,'ylim'); 
+    xlim([0.001*10^3 0.025*10^3]); ylim1=get(gca,'ylim'); 
     hold on
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
@@ -68,7 +68,7 @@ function plotComparisonRange
     subplot(2,2,2)
     plot(pupilValuesAir*10^3,drdA,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('dr/dA (m/mm)');
-    xlim([0.001*10^3 maxpupil*10^3]); ylim2=get(gca,'ylim'); 
+    xlim([0.001*10^3 0.025*10^3]); ylim2=get(gca,'ylim'); 
     hold on
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim2(1) ylim2(2) ylim2(2) ylim2(1)],[1 0 0]);
@@ -82,7 +82,7 @@ function plotComparisonRange
     subplot(2,2,3)
     plot(pupilValuesAir*10^3,visualVolume,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('visual volume (m^3)');
-    xlim([0.001*10^3 maxpupil*10^3]); ylim3=get(gca,'ylim'); 
+    xlim([0.001*10^3 0.025*10^3]); ylim3=get(gca,'ylim'); 
     hold on
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim3(1) ylim3(2) ylim3(2) ylim3(1)],[1 0 0]);
@@ -96,7 +96,7 @@ function plotComparisonRange
     subplot(2,2,4)
     plot(pupilValuesAir*10^3,dVdA,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('dV/dA (m^3/mm)');
-    xlim([0.001*10^3 maxpupil*10^3]); ylim4=get(gca,'ylim');
+    xlim([0.001*10^3 0.025*10^3]); ylim4=get(gca,'ylim');
     hold on
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim4(1) ylim4(2) ylim4(2) ylim4(1)],[1 0 0]);
@@ -118,7 +118,7 @@ function plotComparisonRange
     %hold on;
     plot(pupilValues*1e3,visualRange_River,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('visual range (m)');
-    xlim([0.001*10^3 maxpupil*10^3]); ylim1=get(gca,'ylim'); 
+    xlim([0.001*10^3 0.025*10^3]); ylim1=get(gca,'ylim'); 
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -133,7 +133,7 @@ function plotComparisonRange
     %hold on;
     plot(pupilValues*1e3,drdA_River,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('dr/dA (m/mm)');
-    xlim([0.001*10^3 maxpupil*10^3]); ylim2=get(gca,'ylim'); 
+    xlim([0.001*10^3 0.025*10^3]); ylim2=get(gca,'ylim'); 
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim2(1) ylim2(2) ylim2(2) ylim2(1)],[1 0 0]);
     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -148,7 +148,7 @@ function plotComparisonRange
     %hold on;
     plot(pupilValues*1e3,visualVolume_River,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('visual volume (m^3)');
-    xlim([0.001*10^3 maxpupil*10^3]); ylim3=get(gca,'ylim'); 
+    xlim([0.001*10^3 0.025*10^3]); ylim3=get(gca,'ylim'); 
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim3(1) ylim3(2) ylim3(2) ylim3(1)],[1 0 0]);
     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -163,7 +163,7 @@ function plotComparisonRange
     %hold on;
     plot(pupilValues*1e3,dVdA_River,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('dV/dA (m^3/mm)');
-    xlim([0.001*10^3 maxpupil*10^3]); ylim4=get(gca,'ylim');
+    xlim([0.001*10^3 0.025*10^3]); ylim4=get(gca,'ylim');
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim4(1) ylim4(2) ylim4(2) ylim4(1)],[1 0 0]);
     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -191,7 +191,7 @@ function plotComparisonRange
     %plot(pupilValues*1e3,visualRange_Coastal,'linewidth',linewidthDef);
     plot(pupilValues*1e3,visualRange_River,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('visual range (m)');
-    xlim([0.001*10^3 maxpupil*10^3]); ylim1=get(gca,'ylim'); 
+    xlim([0.001*10^3 0.025*10^3]); ylim1=get(gca,'ylim'); 
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -207,7 +207,7 @@ function plotComparisonRange
     %plot(pupilValues*1e3,drdA_Coastal,'linewidth',linewidthDef);
     plot(pupilValues*1e3,drdA_River,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('dr/dA (m/mm)');
-    xlim([0.001*10^3 maxpupil*10^3]); ylim2=get(gca,'ylim'); 
+    xlim([0.001*10^3 0.025*10^3]); ylim2=get(gca,'ylim'); 
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim2(1) ylim2(2) ylim2(2) ylim2(1)],[1 0 0]);
     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -223,7 +223,7 @@ function plotComparisonRange
     %plot(pupilValues*1e3,visualVolume_Coastal,'linewidth',linewidthDef);
     plot(pupilValues*1e3,visualVolume_River,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('visual volume (m^3)');
-    xlim([0.001*10^3 maxpupil*10^3]); ylim3=get(gca,'ylim'); 
+    xlim([0.001*10^3 0.025*10^3]); ylim3=get(gca,'ylim'); 
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim3(1) ylim3(2) ylim3(2) ylim3(1)],[1 0 0]);
     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -239,7 +239,7 @@ function plotComparisonRange
     %plot(pupilValues*1e3,dVdA_Coastal,'linewidth',linewidthDef);
     plot(pupilValues*1e3,dVdA_River,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('dV/dA (m^3/mm)');
-    xlim([0.001*10^3 maxpupil*10^3]); ylim4=get(gca,'ylim');
+    xlim([0.001*10^3 0.025*10^3]); ylim4=get(gca,'ylim');
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim4(1) ylim4(2) ylim4(2) ylim4(1)],[1 0 0]);
     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -270,7 +270,7 @@ function plotComparisonRange
     %semilogy(pupilValues*1e3,visualRange_Coastal,'linewidth',linewidthDef);
     semilogy(pupilValues*1e3,visualRange_River,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('visual range (m)');
-    xlim([0.001*10^3 maxpupil*10^3]); ylim1=get(gca,'ylim'); 
+    xlim([0.001*10^3 0.025*10^3]); ylim1=get(gca,'ylim'); 
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -286,7 +286,7 @@ function plotComparisonRange
     %semilogy(pupilValues*1e3,drdA_Coastal,'linewidth',linewidthDef);
     semilogy(pupilValues*1e3,drdA_River,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('dr/dA (m/mm)');
-    xlim([0.001*10^3 maxpupil*10^3]); ylim2=get(gca,'ylim'); 
+    xlim([0.001*10^3 0.025*10^3]); ylim2=get(gca,'ylim'); 
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim2(1) ylim2(2) ylim2(2) ylim2(1)],[1 0 0]);
     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -302,7 +302,7 @@ function plotComparisonRange
     %semilogy(pupilValues*1e3,visualVolume_Coastal,'linewidth',linewidthDef);
     semilogy(pupilValues*1e3,visualVolume_River,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('visual volume (m^3)');
-    xlim([0.001*10^3 maxpupil*10^3]); ylim3=get(gca,'ylim'); 
+    xlim([0.001*10^3 0.025*10^3]); ylim3=get(gca,'ylim'); 
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim3(1) ylim3(2) ylim3(2) ylim3(1)],[1 0 0]);
     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -318,7 +318,7 @@ function plotComparisonRange
     %semilogy(pupilValues*1e3,dVdA_Coastal,'linewidth',linewidthDef);
     semilogy(pupilValues*1e3,dVdA_River,'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('dV/dA (m^3/mm)');
-    xlim([0.001*10^3 maxpupil*10^3]); ylim4=get(gca,'ylim');
+    xlim([0.001*10^3 0.025*10^3]); ylim4=get(gca,'ylim');
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
     [ylim4(1) ylim4(2) ylim4(2) ylim4(1)],[1 0 0]);
     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -341,6 +341,36 @@ function plotComparisonRange
     columnlegend(2,key,'location','north',...
         'fontsize',8);
     
+
+    fprintf('fish pupil and daylight intersection %f \n',interp1q(pupilValuesAir,visualRangeDaylight,fishpupil*10^-3));
+    fprintf('fish pupil and moonlight intersection %f \n',interp1q(pupilValuesAir,visualRangeMoonlight,fishpupil*10^-3));
+    fprintf('fish pupil and starlight intersection %f \n',interp1q(pupilValuesAir,visualRangeStarlight,fishpupil*10^-3));
+    fprintf('fish pupil and river intersection %f \n',interp1q(pupilValuesAir,visualRange_River(:,2),fishpupil*10^-3));
+    
+    fprintf('tetrapod pupil and daylight intersection %f \n',interp1q(pupilValuesAir,visualRangeDaylight,tetrapodpupil*10^-3));
+    fprintf('tetrapod pupil and moonlight intersection %f \n',interp1q(pupilValuesAir,visualRangeMoonlight,tetrapodpupil*10^-3));
+    fprintf('tetrapod pupil and starlight intersection %f \n',interp1q(pupilValuesAir,visualRangeStarlight,tetrapodpupil*10^-3));
+    fprintf('tetrapod pupil and river intersection %f \n',interp1q(pupilValuesAir,visualRange_River,tetrapodpupil*10^-3));
+    
+    fprintf('TF Minus and daylight intersection %f\n',interp1q(pupilValuesAir,visualRangeDaylight,pupil_TF(1)*10^-3));
+    fprintf('TF Minus and moonlight intersection %f\n',interp1q(pupilValuesAir,visualRangeMoonlight,pupil_TF(1)*10^-3));
+    fprintf('TF Minus and starlight intersection %f\n',interp1q(pupilValuesAir,visualRangeStarlight,pupil_TF(1)*10^-3));
+    fprintf('TF Minus and river intersection %f\n',interp1q(pupilValuesAir,visualRange_River,pupil_TF(1)*10^-3));
+    
+    fprintf('TF Plus and daylight intersection %f\n',interp1q(pupilValuesAir,visualRangeDaylight,pupil_TF(2)*10^-3));
+    fprintf('TF Plus and moonlight intersection %f\n',interp1q(pupilValuesAir,visualRangeMoonlight,pupil_TF(2)*10^-3));
+    fprintf('TF Plus and starlight intersection %f\n',interp1q(pupilValuesAir,visualRangeStarlight,pupil_TF(2)*10^-3));
+    fprintf('TF Plus and river intersection %f\n',interp1q(pupilValuesAir,visualRange_River,pupil_TF(2)*10^-3));
+    
+     fprintf('ST Minus and daylight intersection %f\n',interp1q(pupilValuesAir,visualRangeDaylight,pupil_ST(1)*10^-3));
+    fprintf('ST Minus and moonlight intersection %f\n',interp1q(pupilValuesAir,visualRangeMoonlight,pupil_ST(1)*10^-3));
+    fprintf('ST Minus and starlight intersection %f\n',interp1q(pupilValuesAir,visualRangeStarlight,pupil_ST(1)*10^-3));
+    fprintf('ST Minus and river intersection %f\n',interp1q(pupilValuesAir,visualRange_River,pupil_ST(1)*10^-3));
+    
+    fprintf('ST Plus and daylight intersection %f\n',interp1q(pupilValuesAir,visualRangeDaylight,pupil_ST(2)*10^-3));
+    fprintf('ST Plus and moonlight intersection %f\n',interp1q(pupilValuesAir,visualRangeMoonlight,pupil_ST(2)*10^-3));
+    fprintf('ST Plus and starlight intersection %f\n',interp1q(pupilValuesAir,visualRangeStarlight,pupil_ST(2)*10^-3));
+    fprintf('ST Plus and river intersection %f\n',interp1q(pupilValuesAir,visualRange_River,pupil_ST(2)*10^-3));
     
     
     
