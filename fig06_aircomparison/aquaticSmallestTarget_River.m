@@ -10,60 +10,62 @@ function aquaticSmallestTarget_River
     end
     
     pupilValues=linspace(minpupil,maxpupil,25);
-    T_down=[1e-1 1e-1 1 5000]; delta_down=[1e-3 1e-2 1e-2 1];
-    T_hor=[1 10 100 1000000]; delta_hor=[1e-2 1e-2 1e-1 1000];
+    T_down=[1e-4 1e-3 1e-3 1e-1]; delta_down=[1e-3 1e-2 1e-2 1];
+    T_hor=[1e-3 1e-2 1e-1 100]; delta_hor=[1e-2 1e-2 1e-1 1000];
     depth=7;
     targetSizeSolns_River=zeros(length(rangeValues),length(pupilValues),2);
-    tol=4e-4;
+    tol=6e-4;
     for i=1:length(pupilValues)
         A=pupilValues(i);
         for j=1:length(rangeValues)
             r=rangeValues(j);
             possibleSolutionDownwelling=10;
-                while abs(possibleSolutionDownwelling-A)>tol
+            delta_down=10^(floor(log10(T_down(j)))-3);
+            delta_hor=10^(floor(log10(T_hor(j)))-3);
+                while abs(possibleSolutionDownwelling-1)>tol
                     possibleSolutionDownwelling=firingThresh(depth,lambda,...
                     photoreceptorAbsorption_River,a_River,b_River,Kd_River,Ld_River,...
                     r,A,X,Dt,q,d,k,len,T_down(j),M,R);
                     
-                    if possibleSolutionDownwelling>A
-                        T_down(j)=T_down(j)+delta_down(j);
+                    if possibleSolutionDownwelling>1
+                        T_down(j)=T_down(j)+delta_down;
                     else
-                        T_down(j)=T_down(j)-delta_down(j);
+                        T_down(j)=T_down(j)-delta_down;
                     end
                     clc;
                     fprintf('pupil iteration: %d %d\n',j,i);
                     fprintf('solution downwelling: %f\n',possibleSolutionDownwelling);
                     fprintf('target size: %f\n',T_down);
-                    fprintf('error downwellling: %f\n', abs(possibleSolutionDownwelling-A));
+                    fprintf('error downwellling: %f\n', abs(possibleSolutionDownwelling-1));
                     
                 end
                 
                 possibleSolutionHorizontal=10;
-                while abs(possibleSolutionHorizontal-A)>tol
+                while abs(possibleSolutionHorizontal-1)>tol
                     possibleSolutionHorizontal=firingThresh(depth,lambda,...
                     photoreceptorAbsorption_River,a_River,b_River,Kh_River,Lh_River,...
                     r,A,X,Dt,q,d,k,len,T_hor(j),M,R);
                     
-                    if possibleSolutionHorizontal>A
-                        T_hor(j)=T_hor(j)+delta_hor(j);
+                    if possibleSolutionHorizontal>1
+                        T_hor(j)=T_hor(j)+delta_hor;
                     else
-                        T_hor(j)=T_hor(j)-delta_hor(j);
+                        T_hor(j)=T_hor(j)-delta_hor;
                     end
                     clc;
                     fprintf('pupil iteration: %d %d\n',j,i);
                     fprintf('solution horizontal: %f\n',possibleSolutionHorizontal);
                     fprintf('target size: %f\n',T_hor);
-                    fprintf('error horizontal: %f\n', abs(possibleSolutionHorizontal-A));
+                    fprintf('error horizontal: %f\n', abs(possibleSolutionHorizontal-1));
                     
                 end
                 
-                targetSizeSolns_River(j,i,1)=T_down(j);
-                targetSizeSolns_River(j,i,2)=T_hor(j);
+                targetSizeSolns_River(j,i,1)=T_down(j)/10;
+                targetSizeSolns_River(j,i,2)=T_hor(j)/10;
         end
         %T_down=min(targetSizeSolns_Coastal(:,i,1));
         %T_hor=min(targetSizeSolns_Coastal(:,i,2));
-        delta_down=10.^(floor(log10(T_down)-3));
-        delta_hor=10.^(floor(log10(T_hor)-3));
+        %delta_down=10.^(floor(log10(T_down)-3));
+        %delta_hor=10.^(floor(log10(T_hor)-3));
     end
     
     save('aqaticSmallestTarget_River','targetSizeSolns_River','pupilValues','depth','rangeValues');

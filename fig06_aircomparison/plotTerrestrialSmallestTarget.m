@@ -16,17 +16,17 @@ function plotTerrestrialSmallestTarget
 
     figure(); clf()
     
-    starlightSubtendedAngle=bsxfun(@rdivide,targetSizeSolns(:,:,3)',2*rangeValuesAll(3,:));
+    starlightSubtendedAngle=bsxfun(@rdivide,targetSizeSolns(:,:,3)'*100,2*rangeValuesAll(3,:));
     starlightSubtendedAngle(isnan(starlightSubtendedAngle))=0;
-    starlightSubtendedAngle=atand(starlightSubtendedAngle)*2;
+    starlightSubtendedAngle=atan(starlightSubtendedAngle)*2;
     
-    moonlightSubtendedAngle=bsxfun(@rdivide,targetSizeSolns(:,:,2)',2*rangeValuesAll(2,:));
+    moonlightSubtendedAngle=bsxfun(@rdivide,targetSizeSolns(:,:,2)'*10,2*rangeValuesAll(2,:));
     moonlightSubtendedAngle(isnan(moonlightSubtendedAngle))=0;
-    moonlightSubtendedAngle=atand(moonlightSubtendedAngle)*2;
+    moonlightSubtendedAngle=atan(moonlightSubtendedAngle)*2;
     
     daylightSubtendedAngle=bsxfun(@rdivide,targetSizeSolns(:,:,1)',2*rangeValuesAll(1,:));
     daylightSubtendedAngle(isnan(moonlightSubtendedAngle))=0;
-    daylightSubtendedAngle=atand(daylightSubtendedAngle)*2;
+    daylightSubtendedAngle=atan(daylightSubtendedAngle)*2;
     
     ax3=subplot(3,1,1);
 

@@ -62,7 +62,7 @@ function plotAquaticSmallestTarget
     xlabel('pupil diameter (mm)'); ylabel('angular looking upwards (deg)');
     xlim([0.005*10^3 0.02*10^3]); 
     ylim1=get(gca,'ylim'); %ylim1(2)=max(targetSizeSolns_River(:,3,1));
-    ylim([ylim1(1) 6]); ylim1=get(gca,'ylim');
+    ylim([ylim1(1) 0.003]); ylim1=get(gca,'ylim');
 %     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
 %     [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
 %     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -79,7 +79,7 @@ function plotAquaticSmallestTarget
     xlabel('pupil diameter (mm)'); ylabel('angular horizontal viewing (deg)');
     xlim([0.005*10^3 0.02*10^3]); 
     ylim1=get(gca,'ylim'); 
-    ylim([ylim1(1) 40]); ylim1=get(gca,'ylim');
+    ylim([ylim1(1) .1]); ylim1=get(gca,'ylim');
 %     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
 %     [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
 %     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
