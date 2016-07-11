@@ -10,8 +10,8 @@ function aquaticSmallestTarget_River
     end
     
     pupilValues=linspace(minpupil,maxpupil,25);
-    T_down=[1e-4 1e-3 1e-3 1e-1]; delta_down=[1e-3 1e-2 1e-2 1];
-    T_hor=[1e-3 1e-2 1e-1 100]; delta_hor=[1e-2 1e-2 1e-1 1000];
+    T_down=[1e-4 1e-3 1e-3 1e-2 1e-2 1e-1]; delta_down=[1e-3 1e-2 1e-2 1];
+    T_hor=[1e-3 1e-2 1e-1 1 10 100]; delta_hor=[1e-2 1e-2 1e-1 1000];
     depth=7;
     targetSizeSolns_River=zeros(length(rangeValues),length(pupilValues),2);
     tol=6e-4;
