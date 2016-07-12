@@ -1,86 +1,81 @@
-function pupilSizevsRangeConstantDepth_River
-    run ../figXX_compviz/Parameters.m
+function riverMoonlightFiringRange
+    run ../figXX_compviz/ParametersSensitivity.m
 
     %% CONSTANT DEPTH VALUE RANGE OF VISION VS PUPIL SIZE
 
     PROMPT = 0;
 
     if PROMPT
-    coastalWaterDepth=input('Input depth value in vector form between 1-15:\n');
+        coastalWaterDepth=input('Input depth value in vector form between 1-15:\n');
     else 
         coastalWaterDepth=[8];
     end
 
     coastalWaterDepth=sort(coastalWaterDepth,'descend');
    
-    pupilValues=linspace(minpupil,maxpupil,10); %rangeValues=linspace(minvisualrange,maxvisualrange,2500);
-    minvisualrange=1; maxvisualrange=10;
+    pupilValues=linspace(minpupil,maxpupil,30); %rangeValues=linspace(minvisualrange,maxvisualrange,2500);
+    minvisualrange=1; maxvisualrange=5;
     rangeValues=linspace(minvisualrange,maxvisualrange,5000);
-    
-    rDownwelling=0.01;
-    rHorizontal=0.01;
-    deltaD=1e-3;
-    deltaH=1e-4;
-    tol=4e-6;
-    
-    visualRange_River=zeros(length(pupilValues),length(coastalWaterDepth),2);
+   
+    visualRange_Moonlight=zeros(length(pupilValues),length(coastalWaterDepth),2);
     
     for i=1:length(coastalWaterDepth);
         depth=coastalWaterDepth(i);
         for j=1:length(pupilValues)
             A=pupilValues(j);
+          
             possibleSolnDownwelling=zeros(length(rangeValues),1);
             possibleSolnHorizontal=zeros(length(rangeValues),1);
             for k=1:length(rangeValues)
                 r=rangeValues(k);
                 possibleSolnDownwelling(k)=firingThresh(depth,lambda,...
-                    photoreceptorAbsorption_River,a_River,b_River,Kd_River,Ld_River,...
+                    pAbsorb_Moonlight,a_Moonlight,b_Moonlight,Kd_Moonlight,Ld_Moonlight,...
                     r,A,X,Dt,q,d,k,len,T,M,R);
                 possibleSolnHorizontal(k)=firingThresh(depth,lambda,...
-                    photoreceptorAbsorption_River,a_River,b_River,Kh_River,Lh_River,...
+                    pAbsorb_Moonlight,a_Moonlight,b_Moonlight,Kh_Moonlight,Lh_Moonlight,...
                     r,A,X,Dt,q,d,k,len,T,M,R);
             end
-            IDXUp = knnsearch(possibleSolnDownwelling,1,'distance','seuclidean');
-            IDXHor=knnsearch(possibleSolnHorizontal,1,'distance','seuclidean');
-            visualRange_River(j,i,1) = rangeValues(IDXUp);
-            visualRange_River(j,i,2)=rangeValues(IDXHor);
+            IDXUp = knnsearch(possibleSolnDownwelling,1);
+            IDXHor=knnsearch(possibleSolnHorizontal,1);
+            visualRange_Moonlight(j,i,1) = rangeValues(IDXUp);
+            visualRange_Moonlight(j,i,2)=rangeValues(IDXHor);
             fprintf('iteration pupil: %d\n',j);
         end
         fprintf('iteration: %d\n',i);
     end
                 
-    save('pupilSizevsRangeConstantDepth_River','visualRange_River','pupilValues');
+    save('riverMoonlightFiringRange','visualRange_Moonlight','pupilValues');
 
-    drdA_River=visualRange_River;
-    dVdA_River=visualRange_River;
-    visualVolume_River=visualRange_River;
+    drdA_Moonlight=visualRange_Moonlight;
+    dVdA_Moonlight=visualRange_Moonlight;
+    visualVolume_Moonlight=visualRange_Moonlight;
 
-    for i=1:size(visualRange_River,3);
-        for j=1:size(visualRange_River,2);
-            for k=1:size(visualRange_River,1);
-                visualVolume_River(k,j,i)=integral3(f,0,visualRange_River(k,j,i),...
+    for i=1:size(visualRange_Moonlight,3);
+        for j=1:size(visualRange_Moonlight,2);
+            for k=1:size(visualRange_Moonlight,1);
+                visualVolume_Moonlight(k,j,i)=integral3(f,0,visualRange_Moonlight(k,j,i),...
                 elevationMin,elevationMax,...
                 azimuthMin,azimuthMax);
             end
         end
     end
     
-    for i=1:size(visualRange_River,3);
-        for j=1:size(visualRange_River,2);
-            drdA_River(:,j,i)=percderivative(pupilValues*10^3,visualRange_River(:,j,i));
-            dVdA_River(:,j,i)=percderivative(pupilValues*10^3,visualVolume_River(:,j,i));
+    for i=1:size(visualRange_Moonlight,3);
+        for j=1:size(visualRange_Moonlight,2);
+            drdA_Moonlight(:,j,i)=percderivative(pupilValues*10^3,visualRange_Moonlight(:,j,i));
+            dVdA_Moonlight(:,j,i)=percderivative(pupilValues*10^3,visualVolume_Moonlight(:,j,i));
         end
     end
 
-    save('pupilSizevsRangeConstantDepth_River','visualRange_River','pupilValues','drdA_River','dVdA_River','visualVolume_River');
+    save('riverMoonlightFiringRange','visualRange_Moonlight','pupilValues','drdA_Moonlight','dVdA_Moonlight','visualVolume_Moonlight');
 
 
 function  solution=firingThresh(depth,lambda,photoreceptorAbsorption,aAll,bAll,KAll,LAll,r,A,X,Dt,q,d,k,len,T,M,R)
     lambda1=lambda(1); lambda2=lambda(end);
-    a=aAll(:,depth);
+    a=aAll;
     K=KAll(:,depth);
     L=LAll(:,depth);
-    b=bAll(:,depth);
+    b=bAll;
     
     alphaInterp=@(l) interp1(lambda,photoreceptorAbsorption,l,'pchip');
     aInterp=@(l) interp1(lambda,a,l,'pchip');
