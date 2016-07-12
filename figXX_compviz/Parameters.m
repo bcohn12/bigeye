@@ -185,6 +185,6 @@ f = @(rho,phi,theta) rho.^2.*sin(phi); %volume equation in spherical coordinates
 minpupil=0.001; % largest diameter of pupil, meters
 maxpupil=0.03; % smallest diameter of pupil, meters
 
- Wlambdaylambda=csvread('../figXX_compviz/Wlambda.csv');
+Wlambdaylambda=csvread('../figXX_compviz/Wlambda.csv');
 
 save('../fig06_aircomparison/Parameters')
