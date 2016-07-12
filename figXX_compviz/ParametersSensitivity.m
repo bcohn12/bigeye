@@ -16,54 +16,54 @@ maxpupil=0.03; % smallest diameter of pupil, meters
 %% BEAM ATTENUATION COEFFICIENT
 %MOONLIGHT
 a_Moonlight=xlsread('hydrolight/moonlight/Mmoonlight.xls','a');
-a_Moonlight=a_Moonlight(5:end,2);
+a_Moonlight=a_Moonlight(4:end,2);
 %BASELINE
 a_Baseline=xlsread('hydrolight/baseline/Mbaseline.xls','a');
-a_Baseline=a_Baseline(5:end,2);
+a_Baseline=a_Baseline(4:end,2);
 %CLEAR
 a_Clear=xlsread('hydrolight/clear/MClear.xls','a');
-a_Clear=a_Clear(5:end,2);
+a_Clear=a_Clear(4:end,2);
 %HIGH ABSORPTION
 a_Highabs=xlsread('hydrolight/highabs/Mhighabs.xls','a');
-a_Highabs=a_Highabs(5:end,2);
+a_Highabs=a_Highabs(4:end,2);
 
 %% SCATTERING COEFFICIENT
 %MOONLIGHT
 b_Moonlight=xlsread('hydrolight/moonlight/Mmoonlight.xls','b');
-b_Moonlight=b_Moonlight(5:end,2);
+b_Moonlight=b_Moonlight(4:end,2);
 %BASELINE
 b_Baseline=xlsread('hydrolight/baseline/Mbaseline.xls','b');
-b_Baseline=b_Baseline(5:end,2);
+b_Baseline=b_Baseline(4:end,2);
 %CLEAR
 b_Clear=xlsread('hydrolight/clear/MClear.xls','b');
-b_Clear=b_Clear(5:end,2);
+b_Clear=b_Clear(4:end,2);
 %HIGH ABSORPTION
 b_Highabs=xlsread('hydrolight/highabs/Mhighabs.xls','a');
-b_Highabs=b_Highabs(5:end,2);
+b_Highabs=b_Highabs(4:end,2);
 
 %% K-FUNCTION
 %MOONLIGHT
 Kd_Moonlight=xlsread('hydrolight/moonlight/Mmoonlight.xls','Kd');
-Kd_Moonlight=Kd_Moonlight(5:44,2:16);
+Kd_Moonlight=Kd_Moonlight(4:43,3:17);
 
 Ku_Moonlight=xlsread('hydrolight/moonlight/Mmoonlight.xls','Ku');
-Ku_Moonlight=Ku_Moonlight(5:44,2:16);
+Ku_Moonlight=Ku_Moonlight(4:43,3:17);
 
 Kh_Moonlight=zeros(size(Kd_Moonlight,1),size(Kd_Moonlight,2));
 %BASELINE
 Kd_Baseline=xlsread('hydrolight/baseline/MBaseline.xls','Kd');
-Kd_Baseline=Kd_Baseline(4:40,2:16);
+Kd_Baseline=Kd_Baseline(4:43,3:17);
 
 Ku_Baseline=xlsread('hydrolight/baseline/MBaseline.xls','Ku');
-Ku_Baseline=Ku_Baseline(4:40,2:16);
+Ku_Baseline=Ku_Baseline(4:43,3:17);
 
 Kh_Baseline=zeros(size(Kd_Baseline,1),size(Kd_Baseline,2));
 %CLEAR
 Kd_Clear=xlsread('hydrolight/clear/MClear.xls','Kd');
-Kd_Clear=Kd_Clear(4:40,2:16);
+Kd_Clear=Kd_Clear(4:43,3:17);
 
 Ku_Clear=xlsread('hydrolight/clear/MClear.xls','Ku');
-Ku_Clear=Ku_Clear(4:40,2:16);
+Ku_Clear=Ku_Clear(4:43,3:17);
 
 Kh_Clear=zeros(size(Kd_Clear,1),size(Kd_Clear,2));
 %HIGH ABSORPTION
@@ -74,35 +74,35 @@ Kd_Highabs=xlsread('hydrolight/highabs/Mhighabs.xls','Kd');
 %% SPECTRAL RADIANCE
 %MOONLIGHT
 Ld_Moonlight=xlsread('hydrolight/moonlight/Mmoonlight.xls','Ld');
-lambda=Ld_Moonlight(5:end,1);
-Ld_Moonlight=Ld_Moonlight(5:end,4:end)*5.03e15;
+lambda=Ld_Moonlight(4:end,1);
+Ld_Moonlight=Ld_Moonlight(4:end,4:end)*5.03e15;
 
 Lu_Moonlight=xlsread('hydrolight/moonlight/Mmoonlight.xls','Lu');
-Lu_Moonlight=Lu_Moonlight(5:end,4:end)*5.03e15;
+Lu_Moonlight=Lu_Moonlight(4:end,4:end)*5.03e15;
 
 Lh_Moonlight=xlsread('hydrolight/moonlight/Mmoonlight.xls','Lh_2');
-Lh_Moonlight=Lh_Moonlight(5:end,4:end)*5.03e15;
+Lh_Moonlight=Lh_Moonlight(4:end,4:end)*5.03e15;
 
 %BASELINE
 Ld_Baseline=xlsread('hydrolight/baseline/MBaseline.xls','Ld');
 %lambda=Ld_Baseline(5:end,1);
-Ld_Baseline=Ld_Baseline(5:end,4:end)*5.03e15;
+Ld_Baseline=Ld_Baseline(4:end,4:end);
 
 Lu_Baseline=xlsread('hydrolight/baseline/MBaseline.xls','Lu');
-Lu_Baseline=Lu_Baseline(5:end,4:end)*5.03e15;
+Lu_Baseline=Lu_Baseline(4:end,4:end);
 
 Lh_Baseline=xlsread('hydrolight/baseline/MBaseline.xls','Lh_2');
-Lh_Baseline=Lh_Baseline(5:end,4:end)*5.03e15;
+Lh_Baseline=Lh_Baseline(4:end,4:end);
 
 %CLEAR
 Ld_Clear=xlsread('hydrolight/clear/MClear.xls','Ld');
-Ld_Clear=Ld_Clear(5:end,4:end)*5.03e15;
+Ld_Clear=Ld_Clear(4:end,4:end)*5.03e15;
 
 Lu_Clear=xlsread('hydrolight/clear/MClear.xls','Lu');
-Lu_Clear=Lu_Clear(5:end,4:end)*5.03e15;
+Lu_Clear=Lu_Clear(4:end,4:end)*5.03e15;
 
 Lh_Clear=xlsread('hydrolight/clear/MClear.xls','Lh_2');
-Lh_Clear=Lh_Clear(5:end,4:end)*5.03e15;
+Lh_Clear=Lh_Clear(4:end,4:end)*5.03e15;
 
 %% PHOTORECEPTOR ABSORPTION
 A=1; a0A=800; a1A=3.1;
