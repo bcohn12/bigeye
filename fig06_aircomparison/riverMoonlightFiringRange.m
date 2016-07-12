@@ -16,30 +16,73 @@ function riverMoonlightFiringRange
     pupilValues=linspace(minpupil,maxpupil,30); %rangeValues=linspace(minvisualrange,maxvisualrange,2500);
     minvisualrange=1; maxvisualrange=5;
     rangeValues=linspace(minvisualrange,maxvisualrange,5000);
+    r_down=2; r_hor=1;   tol=5e-4;
    
     visualRange_Moonlight=zeros(length(pupilValues),length(coastalWaterDepth),2);
     
     for i=1:length(coastalWaterDepth);
-        depth=coastalWaterDepth(i);
+        depth=coastalWaterDepth(i);        
         for j=1:length(pupilValues)
             A=pupilValues(j);
-          
-            possibleSolnDownwelling=zeros(length(rangeValues),1);
-            possibleSolnHorizontal=zeros(length(rangeValues),1);
-            for k=1:length(rangeValues)
-                r=rangeValues(k);
-                possibleSolnDownwelling(k)=firingThresh(depth,lambda,...
-                    pAbsorb_Moonlight,a_Moonlight,b_Moonlight,Kd_Moonlight,Ld_Moonlight,...
-                    r,A,X,Dt,q,d,k,len,T,M,R);
-                possibleSolnHorizontal(k)=firingThresh(depth,lambda,...
-                    pAbsorb_Moonlight,a_Moonlight,b_Moonlight,Kh_Moonlight,Lh_Moonlight,...
-                    r,A,X,Dt,q,d,k,len,T,M,R);
+            delta_down=10^(floor(log10(r_down))-4);
+            delta_hor=10^(floor(log10(r_hor))-4);
+            
+            possibleSolnDownwelling=10;
+            while abs(possibleSolnDownwelling-1)>tol
+                possibleSolnDownwelling=firingThresh(depth,lambda,...
+                     pAbsorb_Moonlight,a_Moonlight,b_Moonlight,Kd_Moonlight,Ld_Moonlight,...
+                     r_down,A,X,Dt,q,d,k,len,T,M,R);
+                 
+                 if possibleSolnDownwelling>1
+                     r_down=r_down-delta_down;
+                 else
+                     r_down=r_down+delta_down;
+                 end
+                 clc;
+                 fprintf('pupil iteration: %d %d\n',j,i);
+                    fprintf('solution downwelling: %f\n',possibleSolnDownwelling);
+                    fprintf('r: %f\n',r_down);
+                    fprintf('error downwellling: %f\n', abs(possibleSolnDownwelling-1));
             end
-            IDXUp = knnsearch(possibleSolnDownwelling,1);
-            IDXHor=knnsearch(possibleSolnHorizontal,1);
-            visualRange_Moonlight(j,i,1) = rangeValues(IDXUp);
-            visualRange_Moonlight(j,i,2)=rangeValues(IDXHor);
-            fprintf('iteration pupil: %d\n',j);
+            
+            possibleSolnHorizontal=10;
+            while abs(possibleSolnHorizontal-1)>tol
+                 possibleSolnHorizontal=firingThresh(depth,lambda,...
+                     pAbsorb_Moonlight,a_Moonlight,b_Moonlight,Kh_Moonlight,Lh_Moonlight,...
+                     r_hor,A,X,Dt,q,d,k,len,T,M,R);
+                 
+                 if possibleSolnHorizontal>1
+                     r_hor=r_hor-delta_hor;
+                 else
+                     r_hor=r_hor+delta_hor;
+                 end
+                 clc;
+                 fprintf('pupil iteration: %d %d\n',j,i);
+                 fprintf('solution horizontal: %f\n',possibleSolnHorizontal);
+                 fprintf('r: %f\n',r_hor);
+                 fprintf('error horizontal: %f\n', abs(possibleSolnHorizontal-1));
+            end    
+            
+            visualRange_Moonlight(j,i,1)=r_down;
+            visualRange_Moonlight(j,i,2)=r_hor;
+            
+                
+%             possibleSolnDownwelling=zeros(length(rangeValues),1);
+%             possibleSolnHorizontal=zeros(length(rangeValues),1);
+%             for k=1:length(rangeValues)
+%                 r=rangeValues(k);
+%                 possibleSolnDownwelling(k)=firingThresh(depth,lambda,...
+%                     pAbsorb_Moonlight,a_Moonlight,b_Moonlight,Kd_Moonlight,Ld_Moonlight,...
+%                     r,A,X,Dt,q,d,k,len,T,M,R);
+%                 possibleSolnHorizontal(k)=firingThresh(depth,lambda,...
+%                     pAbsorb_Moonlight,a_Moonlight,b_Moonlight,Kh_Moonlight,Lh_Moonlight,...
+%                     r,A,X,Dt,q,d,k,len,T,M,R);
+%             end
+%             IDXUp = knnsearch(possibleSolnDownwelling,1);
+%             IDXHor=knnsearch(possibleSolnHorizontal,1);
+%             visualRange_Moonlight(j,i,1) = rangeValues(IDXUp);
+%             visualRange_Moonlight(j,i,2)=rangeValues(IDXHor);
+%             fprintf('iteration pupil: %d\n',j);
         end
         fprintf('iteration: %d\n',i);
     end
@@ -62,8 +105,8 @@ function riverMoonlightFiringRange
     
     for i=1:size(visualRange_Moonlight,3);
         for j=1:size(visualRange_Moonlight,2);
-            drdA_Moonlight(:,j,i)=percderivative(pupilValues*10^3,visualRange_Moonlight(:,j,i));
-            dVdA_Moonlight(:,j,i)=percderivative(pupilValues*10^3,visualVolume_Moonlight(:,j,i));
+            drdA_Moonlight(:,j,i)=derivative(pupilValues*10^3,visualRange_Moonlight(:,j,i));
+            dVdA_Moonlight(:,j,i)=derivative(pupilValues*10^3,visualVolume_Moonlight(:,j,i));
         end
     end
 

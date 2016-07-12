@@ -52,9 +52,9 @@ function plotComparisonRange
     dVdA_River=[smooth(dVdA_River(:,:,1),7), smooth(dVdA_River(:,:,2),7)];
     
     visualRange_RiverM=[visualRange_Moonlight(:,:,1), visualRange_Moonlight(:,:,2)];
-    drdA_RiverM=[smooth(drdA_Moonlight(:,:,1)), smooth(drdA_Moonlight(:,:,2))];
+    drdA_RiverM=[smooth(drdA_Moonlight(:,:,1),5), smooth(drdA_Moonlight(:,:,2),5)];
     visualVolume_RiverM=[visualVolume_Moonlight(:,:,1) visualVolume_Moonlight(:,:,2)];
-    dVdA_RiverM=[smooth(dVdA_Moonlight(:,:,1),7), smooth(dVdA_Moonlight(:,:,2),7)];
+    dVdA_RiverM=[smooth(dVdA_Moonlight(:,:,1),5), smooth(dVdA_Moonlight(:,:,2),5)];
 
 %%
 figure(); clf();
@@ -124,8 +124,8 @@ figure(); clf();
 %         'River looking upwards depth 10m','River looking upwards depth 7m',...
 %         'River horizontal depth 10m', 'River horizontal depth 7m'};
 %   
-        key={'River looking upwards depth 7m',...
-        'River horizontal depth 7m'};
+        key={'River looking upwards depth 8m',...
+        'River horizontal depth 8m'};
     
     columnlegend(2,key,'location','north',...
         'fontsize',8)
@@ -259,8 +259,8 @@ figure(); clf();
 %         'River looking upwards depth 10m','River looking upwards depth 7m',...
 %         'River horizontal depth 10m', 'River horizontal depth 7m'};
 %   
-        key={'River looking upwards depth 7m',...
-        'River horizontal depth 7m'};
+        key={'River looking upwards depth 8m',...
+        'River horizontal depth 8m'};
     
     columnlegend(2,key,'location','north',...
         'fontsize',8)
@@ -337,8 +337,8 @@ figure(); clf();
 %         'River horizontal depth 10m', 'River horizontal depth 7m'};
 %     
     key={'Daylight','Moonlight','Starlight',...
-        'River looking upwards depth 7m',...
-        'River horizontal depth 7m'};
+        'River looking upwards depth 8m',...
+        'River horizontal depth 8m'};
     
   
     columnlegend(2,key,'location','north',...
@@ -416,8 +416,8 @@ figure(); clf();
 %         'River horizontal depth 10m', 'River horizontal depth 7m'};
 %     
     key={'Daylight','Moonlight','Starlight',...
-       'River looking upwards depth 7m',...
-        'River horizontal depth 7m'};
+       'River looking upwards depth 8m',...
+        'River horizontal depth 8m'};
     
     columnlegend(2,key,'location','north',...
         'fontsize',8);

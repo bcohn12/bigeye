@@ -13,40 +13,77 @@ function pupilSizevsRangeConstantDepth_River
 
     coastalWaterDepth=sort(coastalWaterDepth,'descend');
    
-    pupilValues=linspace(minpupil,maxpupil,10); %rangeValues=linspace(minvisualrange,maxvisualrange,2500);
+    pupilValues=linspace(minpupil,maxpupil,30); %rangeValues=linspace(minvisualrange,maxvisualrange,2500);
     minvisualrange=1; maxvisualrange=10;
     rangeValues=linspace(minvisualrange,maxvisualrange,5000);
-    
-    rDownwelling=0.01;
-    rHorizontal=0.01;
-    deltaD=1e-3;
-    deltaH=1e-4;
-    tol=4e-6;
-    
+   
+    r_down=5; r_hor=3.3; tol=5e-4;
+   
     visualRange_River=zeros(length(pupilValues),length(coastalWaterDepth),2);
     
     for i=1:length(coastalWaterDepth);
         depth=coastalWaterDepth(i);
         for j=1:length(pupilValues)
             A=pupilValues(j);
-            possibleSolnDownwelling=zeros(length(rangeValues),1);
-            possibleSolnHorizontal=zeros(length(rangeValues),1);
-            for k=1:length(rangeValues)
-                r=rangeValues(k);
-                possibleSolnDownwelling(k)=firingThresh(depth,lambda,...
-                    photoreceptorAbsorption_River,a_River,b_River,Kd_River,Ld_River,...
-                    r,A,X,Dt,q,d,k,len,T,M,R);
-                possibleSolnHorizontal(k)=firingThresh(depth,lambda,...
-                    photoreceptorAbsorption_River,a_River,b_River,Kh_River,Lh_River,...
-                    r,A,X,Dt,q,d,k,len,T,M,R);
+            delta_down=10^(floor(log10(r_down))-4);
+            delta_hor=10^(floor(log10(r_hor))-4);
+            
+            possibleSolnDownwelling=10;
+            while abs(possibleSolnDownwelling-1)>tol
+                possibleSolnDownwelling=firingThresh(depth,lambda,...
+                     photoreceptorAbsorption_River,a_River,b_River,Kd_River,Ld_River,...
+                     r_down,A,X,Dt,q,d,k,len,T,M,R);
+                 
+                 if possibleSolnDownwelling>1
+                     r_down=r_down-delta_down;
+                 else
+                     r_down=r_down+delta_down;
+                 end
+                 clc;
+                 fprintf('pupil iteration: %d %d\n',j,i);
+                    fprintf('solution downwelling: %f\n',possibleSolnDownwelling);
+                    fprintf('r: %f\n',r_down);
+                    fprintf('error downwellling: %f\n', abs(possibleSolnDownwelling-1));
             end
-            IDXUp = knnsearch(possibleSolnDownwelling,1,'distance','seuclidean');
-            IDXHor=knnsearch(possibleSolnHorizontal,1,'distance','seuclidean');
-            visualRange_River(j,i,1) = rangeValues(IDXUp);
-            visualRange_River(j,i,2)=rangeValues(IDXHor);
-            fprintf('iteration pupil: %d\n',j);
-        end
-        fprintf('iteration: %d\n',i);
+            
+            possibleSolnHorizontal=10;
+            while abs(possibleSolnHorizontal-1)>tol
+                 possibleSolnHorizontal=firingThresh(depth,lambda,...
+                     photoreceptorAbsorption_River,a_River,b_River,Kh_River,Lh_River,...
+                     r_hor,A,X,Dt,q,d,k,len,T,M,R);
+                 
+                 if possibleSolnHorizontal>1
+                     r_hor=r_hor-delta_hor;
+                 else
+                     r_hor=r_hor+delta_hor;
+                 end
+                 clc;
+                 fprintf('pupil iteration: %d %d\n',j,i);
+                 fprintf('solution horizontal: %f\n',possibleSolnHorizontal);
+                 fprintf('r: %f\n',r_hor);
+                 fprintf('error horizontal: %f\n', abs(possibleSolnHorizontal-1));
+            end    
+            
+            visualRange_River(j,i,1)=r_down;
+            visualRange_River(j,i,2)=r_hor;
+%             possibleSolnDownwelling=zeros(length(rangeValues),1);
+%             possibleSolnHorizontal=zeros(length(rangeValues),1);
+%             for k=1:length(rangeValues)
+%                 r=rangeValues(k);
+%                 possibleSolnDownwelling(k)=firingThresh(depth,lambda,...
+%                     photoreceptorAbsorption_River,a_River,b_River,Kd_River,Ld_River,...
+%                     r,A,X,Dt,q,d,k,len,T,M,R);
+%                 possibleSolnHorizontal(k)=firingThresh(depth,lambda,...
+%                     photoreceptorAbsorption_River,a_River,b_River,Kh_River,Lh_River,...
+%                     r,A,X,Dt,q,d,k,len,T,M,R);
+%             end
+%             IDXUp = knnsearch(possibleSolnDownwelling,1,'distance','seuclidean');
+%             IDXHor=knnsearch(possibleSolnHorizontal,1,'distance','seuclidean');
+%             visualRange_River(j,i,1) = rangeValues(IDXUp);
+%             visualRange_River(j,i,2)=rangeValues(IDXHor);
+%             fprintf('iteration pupil: %d\n',j);
+         end
+%         fprintf('iteration: %d\n',i);
     end
                 
     save('pupilSizevsRangeConstantDepth_River','visualRange_River','pupilValues');
@@ -67,8 +104,8 @@ function pupilSizevsRangeConstantDepth_River
     
     for i=1:size(visualRange_River,3);
         for j=1:size(visualRange_River,2);
-            drdA_River(:,j,i)=percderivative(pupilValues*10^3,visualRange_River(:,j,i));
-            dVdA_River(:,j,i)=percderivative(pupilValues*10^3,visualVolume_River(:,j,i));
+            drdA_River(:,j,i)=derivative(pupilValues*10^3,visualRange_River(:,j,i));
+            dVdA_River(:,j,i)=derivative(pupilValues*10^3,visualVolume_River(:,j,i));
         end
     end
 
