@@ -77,6 +77,10 @@ Kd_Highabs=Kd_Highabs(4:43,3:17);
 Ku_Highabs=xlsread('hydrolight/highabs/Mhighabs.xls','Ku');
 Ku_Highabs=Ku_Highabs(4:43,3:17);
 
+<<<<<<< .mine
+Kh_Highabs=zeros(size(Kd_Highabs,1),size(Kd_Highabs,2));
+
+=======
 Kh_Highabs=zeros(size(Kd_Highabs,1),size(Kd_Highabs,2));
 %HIGH SCATTERING
 Kd_Highscat=xlsread('hydrolight/highscat/Mhighscat.xls','Kd');
@@ -86,6 +90,7 @@ Ku_Highscat=xlsread('hydrolight/highscat/Mhighscat.xls','Ku');
 Ku_Highscat=Ku_Highscat(4:43,3:17);
 
 Kh_Highscat=zeros(size(Kd_Highscat,1),size(Kd_Highscat,2));
+>>>>>>> .r8923
 %% SPECTRAL RADIANCE
 %MOONLIGHT
 Ld_Moonlight=xlsread('hydrolight/moonlight/Mmoonlight.xls','Ld');
@@ -116,10 +121,18 @@ Lu_Clear=Lu_Clear(4:end,4:end)*5.03e15;
 
 Lh_Clear=xlsread('hydrolight/clear/MClear.xls','Lh_2');
 Lh_Clear=Lh_Clear(4:end,4:end)*5.03e15;
+<<<<<<< .mine
+%HIGH ABSORPTION
+=======
 %HIGH ABSORPTION
 Ld_Highabs=xlsread('hydrolight/highabs/Mhighabs.xls','Ld');
 Ld_Highabs=Ld_Highabs(4:end,4:end);
+>>>>>>> .r8923
 
+<<<<<<< .mine
+
+
+=======
 Lu_Highabs=xlsread('hydrolight/highabs/Mhighabs.xls','Lu');
 Lu_Highabs=Lu_Highabs(4:end,4:end);
 
@@ -135,6 +148,7 @@ Lu_Highscat=Lu_Highscat(4:end,4:end);
 Lh_Highscat=xlsread('hydrolight/highscat/Mhighscat.xls','Lh_2');
 Lh_Highscat=Lh_Highscat(4:end,4:end);
 
+>>>>>>> .r8923
 %% PHOTORECEPTOR ABSORPTION
 A=1; a0A=800; a1A=3.1;
 B=0.5; a0B=176; a1B=1.52;
