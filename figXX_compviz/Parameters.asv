@@ -26,7 +26,6 @@ k=0.035; % photoreceptor absorbtion, units 1/micrometers
 len=57;  % length of photoreceptor, in micrometers
 
 X=0.011; %units: photons/s, dark-noise rate/photoreceptor @16.5degrees Celsius
-%X_daylight=0.011; %units: photons/s, dark-noise rate/photoreceptor @16.5degrees Celsius
 X_land=0.08; %units:photons/s, dark-noise rate/photoreceptor @23.5 degrees Celsius
 XVals=[X_land,X,X];
 
@@ -64,18 +63,13 @@ Kh_Sun=zeros(size(Kd_Sun,1),size(Kd_Sun,2));
 %Upwelling, horizontal, downwelling radiance
 Lu_Sun=xlsread('hydrolight/base_sun/Hydrolight_BrownWater.xlsx','Lu');
 lambda=Lu_Sun(4:end,1);
-Lu_Sun=Lu_Sun(4:end,4:end);
+Lu_Sun=Lu_Sun(4:end,4:end)*5.03e15;
 
 Lh_Sun=xlsread('hydrolight/base_sun/Hydrolight_BrownWater.xlsx','Lh_2');
-Lh_Sun=Lh_Sun(4:end,4:end);
+Lh_Sun=Lh_Sun(4:end,4:end)*5.03e15;
 
 Ld_Sun=xlsread('hydrolight/base_sun/Hydrolight_BrownWater.xlsx','Ld');
-Ld_Sun=Ld_Sun(4:end,4:end);
-
-Lu_Sun=Lu_Sun*5.03e15;
-Lh_Sun=Lh_Sun*5.03e15;
-Ld_Sun=Ld_Sun*5.03e15;
-
+Ld_Sun=Ld_Sun(4:end,4:end)*5.03e15;
 
 %% MOONLIGHT
 %Absorption Coefficient
@@ -88,36 +82,60 @@ b_Moonlight=b_Moonlight(4:end,3);
 Ku_Moonlight=xlsread('hydrolight/base_moon/Mbase_moon.xls','Ku');
 Ku_Moonlight=Ku_Moonlight(4:end,3:end);
 
-Kd_Moonlight=xlread('hydrolight/base_moon/Mbase_moon.xls','Kd');
+Kd_Moonlight=xlsread('hydrolight/base_moon/Mbase_moon.xls','Kd');
 Kd_Moonlight=Kd_Moonlight(4:end,3:end);
 
 Kh_Moonlight=zeros(size(Kd_Moonlight,1),size(Kd_Moonlight,2));
 %Spectral Radiance
 %Upwelling, horizontal,downwelling radiance
 Lu_Moonlight=xlsread('hydrolight/base_moon/Mbase_moon.xls','Lu');
-Lu_Moonlight=Lu_Moonlight(4:end,4:end);
+Lu_Moonlight=Lu_Moonlight(4:end,4:end)*5.03e15;
+
+Ld_Moonlight=xlsread('hydrolight/base_moon/Mbase_moon.xls','Ld');
+Ld_Moonlight=Ld_Moonlight(4:end,4:end)*5.03e15;
+
+Lh_Moonlight=xlsread('hydrolight/base_moon/Mbase_moon.xls','Lh_2');
+Lh_Moonlight=Lh_Moonlight(4:end,4:end)*5.03e15;
+
+%%STARLIGHT
+%Absorption Coefficient
+a_Starlight=xlsread('hydrolight/base_star/Mbase_star.xls','a');
+a_Starlight=a_Starlight(4:end,3);
+%Scattering Coefficient
+b_Starlight=xlsread('hydrolight/base_star/Mbase_star.xls','b');
+b_Starlight=b_Starlight(4:end,3);
+%Diffuse Spectral Attenuation Coeff
+Ku_Starlight=xlsread('hydrolight/base_star/Mbase_star.xls','Ku');
+Ku_Starlight=Ku_Starlight(4:end,3:end);
+
+Kd_Starlight=xlsread('hydrolight/base_star/Mbase_star.xls','Kd');
+Kd_Starlight=Kd_Starlight(4:end,3:end);
+
+Kh_Starlight=zeros(size(Kd_Starlight,1),size(Kd_Starlight,2));
+%Spectral Radiance
+%Upwelling,horizontal,downwellling radiance
+Lu_Starlight=xlsread('hydrolight/base_star/Mbase_star.xls','Lu');
+Lu_Starlight=Lu_St
 
 
-%% Photoreceptor absorption
-[LdMax_River, indLd_River]=max(Ld_Sun);
-lambdaLdMax_River=lambda(indLd_River(1));
-
-[LdMax_Coastal, indLd_Coastal]=max(Ld_Coastal);
-lambdaLdMax_Coastal=lambda(indLd_Coastal(1));
-
+%% PHOTORECEPTOR ABSORPTION
 A=1; a0A=800; a1A=3.1;
 B=0.5; a0B=176; a1B=1.52;
 
-photoreceptorAbsorption_River=A*exp(-a0A*(log10(lambda./lambdaLdMax_River)).^2.*...
-    (1+a1A*log10(lambda./lambdaLdMax_River)+(3*a1A^2/8).*log10(lambda./lambdaLdMax_River).^2)+...
+[~, ind_Su]=max(Ld_Sun);
+lambdaMax_Su=lambda(ind_Su(1));
+[~,ind_M]=max(Ld_Moonlight);
+lambdaMax_M=lambda(ind_M(1));
+
+pAbsorb_Sun=A*exp(-a0A*(log10(lambda./lambdaMax_Su)).^2.*...
+    (1+a1A*log10(lambda./lambdaMax_Su)+(3*a1A^2/8).*log10(lambda./lambdaMax_Su).^2)+...
     B*exp(-a0B*(log10(lambda./368)).^2.*...
     (1+a1B*log10(lambda./368)+(3*a1B^2/8)*log10(lambda./368))));
 
-photoreceptorAbsorption_Coastal=A*exp(-a0A*(log10(lambda./lambdaLdMax_Coastal)).^2.*...
-    (1+a1A*log10(lambda./lambdaLdMax_Coastal)+(3*a1A^2/8).*log10(lambda./lambdaLdMax_Coastal).^2)+...
-    B*exp(-a0B*(log10(lambda./368)).^2.*...
+pAbsorb_Moonlight=A*exp(-a0A*(log10(lambda./lambdaMax_M)).^2.*...
+    (1+a1A*log10(lambda./lambdaMax_M)+(3*a1A^2/8).*log10(lambda./lambdaMax_M).^2)+...
+     B*exp(-a0B*(log10(lambda./368)).^2.*...
     (1+a1B*log10(lambda./368)+(3*a1B^2/8)*log10(lambda./368))));
-
 
 
 %% SENSORY VOLUME PARAMS

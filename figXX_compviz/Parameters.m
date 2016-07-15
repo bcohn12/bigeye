@@ -98,7 +98,30 @@ Lh_Moonlight=xlsread('hydrolight/base_moon/Mbase_moon.xls','Lh_2');
 Lh_Moonlight=Lh_Moonlight(4:end,4:end)*5.03e15;
 
 %%STARLIGHT
+%Absorption Coefficient
+a_Starlight=xlsread('hydrolight/base_stars/Mbase_stars.xls','a');
+a_Starlight=a_Starlight(4:end,3);
+%Scattering Coefficient
+b_Starlight=xlsread('hydrolight/base_stars/Mbase_stars.xls','b');
+b_Starlight=b_Starlight(4:end,3);
+%Diffuse Spectral Attenuation Coeff
+Ku_Starlight=xlsread('hydrolight/base_stars/Mbase_stars.xls','Ku');
+Ku_Starlight=Ku_Starlight(4:end,3:end);
 
+Kd_Starlight=xlsread('hydrolight/base_stars/Mbase_stars.xls','Kd');
+Kd_Starlight=Kd_Starlight(4:end,3:end);
+
+Kh_Starlight=zeros(size(Kd_Starlight,1),size(Kd_Starlight,2));
+%Spectral Radiance
+%Upwelling,horizontal,downwellling radiance
+Lu_Starlight=xlsread('hydrolight/base_stars/Mbase_stars.xls','Lu');
+Lu_Starlight=Lu_Starlight(4:end,4:end)*5.03e15;
+
+Ld_Starlight=xlsread('hydrolight/base_stars/Mbase_stars.xls','Ld');
+Ld_Starlight=Ld_Starlight(4:end,4:end)*5.03e15;
+
+Lh_Starlight=xlsread('hydrolight/base_stars/Mbase_stars.xls','Lh_2');
+Lh_Starlight=Lh_Starlight(4:end,4:end)*5.03e15;
 
 %% PHOTORECEPTOR ABSORPTION
 A=1; a0A=800; a1A=3.1;
@@ -108,6 +131,8 @@ B=0.5; a0B=176; a1B=1.52;
 lambdaMax_Su=lambda(ind_Su(1));
 [~,ind_M]=max(Ld_Moonlight);
 lambdaMax_M=lambda(ind_M(1));
+[~,ind_St]=max(Ld_Starlight);
+lambdaMax_St=lambda(ind_St(1));
 
 pAbsorb_Sun=A*exp(-a0A*(log10(lambda./lambdaMax_Su)).^2.*...
     (1+a1A*log10(lambda./lambdaMax_Su)+(3*a1A^2/8).*log10(lambda./lambdaMax_Su).^2)+...
@@ -116,6 +141,11 @@ pAbsorb_Sun=A*exp(-a0A*(log10(lambda./lambdaMax_Su)).^2.*...
 
 pAbsorb_Moonlight=A*exp(-a0A*(log10(lambda./lambdaMax_M)).^2.*...
     (1+a1A*log10(lambda./lambdaMax_M)+(3*a1A^2/8).*log10(lambda./lambdaMax_M).^2)+...
+     B*exp(-a0B*(log10(lambda./368)).^2.*...
+    (1+a1B*log10(lambda./368)+(3*a1B^2/8)*log10(lambda./368))));
+
+pAbsorb_Starlight=A*exp(-a0A*(log10(lambda./lambdaMax_St)).^2.*...
+    (1+a1A*log10(lambda./lambdaMax_St)+(3*a1A^2/8).*log10(lambda./lambdaMax_St).^2)+...
      B*exp(-a0B*(log10(lambda./368)).^2.*...
     (1+a1B*log10(lambda./368)+(3*a1B^2/8)*log10(lambda./368))));
 
