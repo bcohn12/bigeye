@@ -121,22 +121,22 @@ Lh_Clear=xlsread('hydrolight/clear/MClear.xls','Lh_2');
 Lh_Clear=Lh_Clear(4:end,4:end)*5.03e15;
 %HIGH ABSORPTION
 Ld_Highabs=xlsread('hydrolight/highabs/Mhighabs.xls','Ld');
-Ld_Highabs=Ld_Highabs(4:end,4:end);
+Ld_Highabs=Ld_Highabs(4:end,4:end)*5.03e15;
 
 Lu_Highabs=xlsread('hydrolight/highabs/Mhighabs.xls','Lu');
-Lu_Highabs=Lu_Highabs(4:end,4:end);
+Lu_Highabs=Lu_Highabs(4:end,4:end)*5.03e15;
 
 Lh_Highabs=xlsread('hydrolight/highabs/Mhighabs.xls','Lh_2');
-Lh_Highabs=Lh_Highabs(4:end,4:end);
+Lh_Highabs=Lh_Highabs(4:end,4:end)*5.03e15;
 %HIGH SCATTERING
 Ld_Highscat=xlsread('hydrolight/highscat/Mhighscat.xls','Ld');
-Ld_Highscat=Ld_Highscat(4:end,4:end);
+Ld_Highscat=Ld_Highscat(4:end,4:end)*5.03e15;
 
 Lu_Highscat=xlsread('hydrolight/highscat/Mhighscat.xls','Lu');
-Lu_Highscat=Lu_Highscat(4:end,4:end);
+Lu_Highscat=Lu_Highscat(4:end,4:end)*5.03e15;
 
 Lh_Highscat=xlsread('hydrolight/highscat/Mhighscat.xls','Lh_2');
-Lh_Highscat=Lh_Highscat(4:end,4:end);
+Lh_Highscat=Lh_Highscat(4:end,4:end)*5.03e15;
 
 %% PHOTORECEPTOR ABSORPTION
 A=1; a0A=800; a1A=3.1;
