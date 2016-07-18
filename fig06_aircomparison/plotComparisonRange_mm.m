@@ -14,7 +14,7 @@ function plotComparisonRange
         load starlight.mat
     end 
     load terrestrial_Avsr.mat
-    load('pupilSizevsRangeConstantDepth_Coastal.mat');
+    %load('pupilSizevsRangeConstantDepth_Coastal.mat');
     load('pupilSizevsRangeConstantDepth_River.mat');
     load('riverMoonlightFiringRange.mat');
     
@@ -46,89 +46,93 @@ function plotComparisonRange
 %     dVdA_River=[dVdA_River(:,1:2,1), dVdA_River(:,1:2,2)];
 %     
      % removing 10 m case
-    visualRange_River=[visualRange_River(:,:,1), visualRange_River(:,:,2)];
-    drdA_River=[smooth(drdA_River(:,:,1)), smooth(drdA_River(:,:,2))];
-    visualVolume_River=[visualVolume_River(:,:,1) visualVolume_River(:,:,2)];
-    dVdA_River=[smooth(dVdA_River(:,:,1),7), smooth(dVdA_River(:,:,2),7)];
+    visualRange_River=[visualRange_River(:,1,1), visualRange_River(:,1,2),...
+        visualRange_River(:,2,1),...
+        visualRange_River(:,3,1)];
+    drdA_River=[smooth(drdA_River(:,1,1)), smooth(drdA_River(:,1,2)),...
+        smooth(drdA_River(:,2,1)),...
+        smooth(drdA_River(:,3,1))];
+    visualVolume_River=[visualVolume_River(:,1,1) visualVolume_River(:,1,2),...
+        visualVolume_River(:,2,1),...
+        visualRange_River(:,3,1)];
+    dVdA_River=[smooth(dVdA_River(:,1,1),7), smooth(dVdA_River(:,1,2),7),...
+        smooth(dVdA_River(:,2,1),7),...
+        smooth(dVdA_River(:,2,1),7)];
     
-    visualRange_RiverM=[visualRange_Moonlight(:,:,1), visualRange_Moonlight(:,:,2)];
-    drdA_RiverM=[smooth(drdA_Moonlight(:,:,1),5), smooth(drdA_Moonlight(:,:,2),5)];
-    visualVolume_RiverM=[visualVolume_Moonlight(:,:,1) visualVolume_Moonlight(:,:,2)];
-    dVdA_RiverM=[smooth(dVdA_Moonlight(:,:,1),5), smooth(dVdA_Moonlight(:,:,2),5)];
 
 %%
-figure(); clf();
-    subplot(2,2,1);
-    %plot(pupilValues*1e3,visualRange_Coastal,'linewidth',linewidthDef);
-    
-    %hold on;
-    plot(pupilValues*1e3,visualRange_RiverM,'linewidth',linewidthDef);
-    xlabel('pupil diameter (mm)'); ylabel('visual range (m)');
-    xlim([0.001*10^3 0.025*10^3]); ylim1=get(gca,'ylim'); 
-    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-    [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
-    set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
-    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-        [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
-    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
-    line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
-    line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
-    
-    subplot(2,2,2)
-    %plot(pupilValues*1e3,drdA_Coastal,'linewidth',linewidthDef);
-    %hold on;
-    plot(pupilValues*1e3,drdA_RiverM,'linewidth',linewidthDef);
-    xlabel('pupil diameter (mm)'); ylabel('dr/dA (m/mm)');
-    xlim([0.001*10^3 0.025*10^3]); ylim2=get(gca,'ylim'); 
-    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-    [ylim2(1) ylim2(2) ylim2(2) ylim2(1)],[1 0 0]);
-    set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
-    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-        [ylim2(1) ylim2(2) ylim2(2) ylim2(1)],[0 0 1]);
-    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
-    line([fishpupil,fishpupil],[ylim2(1),ylim2(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
-    line([tetrapodpupil,tetrapodpupil],[ylim2(1),ylim2(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
-    
-    subplot(2,2,3)
-    %plot(pupilValues*1e3,visualVolume_Coastal,'linewidth',linewidthDef);
-    %hold on;
-    plot(pupilValues*1e3,visualVolume_RiverM,'linewidth',linewidthDef);
-    xlabel('pupil diameter (mm)'); ylabel('visual volume (m^3)');
-    xlim([0.001*10^3 0.025*10^3]); ylim3=get(gca,'ylim'); 
-    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-    [ylim3(1) ylim3(2) ylim3(2) ylim3(1)],[1 0 0]);
-    set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
-    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-        [ylim3(1) ylim3(2) ylim3(2) ylim3(1)],[0 0 1]);
-    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
-    line([fishpupil,fishpupil],[ylim3(1),ylim3(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
-    line([tetrapodpupil,tetrapodpupil],[ylim3(1),ylim3(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
-    
-    subplot(2,2,4)
-    %plot(pupilValues*1e3,dVdA_Coastal,'linewidth',linewidthDef);
-    %hold on;
-    plot(pupilValues*1e3,dVdA_RiverM,'linewidth',linewidthDef);
-    xlabel('pupil diameter (mm)'); ylabel('dV/dA (m^3/mm)');
-    xlim([0.001*10^3 0.025*10^3]); ylim4=get(gca,'ylim');
-    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-    [ylim4(1) ylim4(2) ylim4(2) ylim4(1)],[1 0 0]);
-    set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
-    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-        [ylim4(1) ylim4(2) ylim4(2) ylim4(1)],[0 0 1]);
-    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
-    line([fishpupil,fishpupil],[ylim4(1),ylim4(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
-    line([tetrapodpupil,tetrapodpupil],[ylim4(1),ylim4(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
-    
-%     key={'Coastal looking upwards depth 10m','Coastal looking upwards depth 7m',...
-%         'Coastal horizontal depth 10m', 'Coastal horizontal depth 7m',...
-%         'River looking upwards depth 10m','River looking upwards depth 7m',...
-%         'River horizontal depth 10m', 'River horizontal depth 7m'};
-%   
-        key={'River looking upwards depth 8m',...
-        'River horizontal depth 8m'};
-    
-    columnlegend(2,key,'location','north',...
-        'fontsize',8)
+% figure(); clf();
+%     subplot(2,2,1);
+%     %plot(pupilValues*1e3,visualRange_Coastal,'linewidth',linewidthDef);
+%     
+%     %hold on;
+%     plot(pupilValues*1e3,visualRange_RiverM,'linewidth',linewidthDef);
+%     xlabel('pupil diameter (mm)'); ylabel('visual range (m)');
+%     xlim([0.001*10^3 0.025*10^3]); ylim1=get(gca,'ylim'); 
+%     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
+%     [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
+%     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
+%     fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
+%         [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
+%     set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
+%     line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
+%     line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
+%     
+%     subplot(2,2,2)
+%     %plot(pupilValues*1e3,drdA_Coastal,'linewidth',linewidthDef);
+%     %hold on;
+%     plot(pupilValues*1e3,drdA_RiverM,'linewidth',linewidthDef);
+%     xlabel('pupil diameter (mm)'); ylabel('dr/dA (m/mm)');
+%     xlim([0.001*10^3 0.025*10^3]); ylim2=get(gca,'ylim'); 
+%     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
+%     [ylim2(1) ylim2(2) ylim2(2) ylim2(1)],[1 0 0]);
+%     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
+%     fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
+%         [ylim2(1) ylim2(2) ylim2(2) ylim2(1)],[0 0 1]);
+%     set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
+%     line([fishpupil,fishpupil],[ylim2(1),ylim2(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
+%     line([tetrapodpupil,tetrapodpupil],[ylim2(1),ylim2(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
+%     
+%     subplot(2,2,3)
+%     %plot(pupilValues*1e3,visualVolume_Coastal,'linewidth',linewidthDef);
+%     %hold on;
+%     plot(pupilValues*1e3,visualVolume_RiverM,'linewidth',linewidthDef);
+%     xlabel('pupil diameter (mm)'); ylabel('visual volume (m^3)');
+%     xlim([0.001*10^3 0.025*10^3]); ylim3=get(gca,'ylim'); 
+%     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
+%     [ylim3(1) ylim3(2) ylim3(2) ylim3(1)],[1 0 0]);
+%     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
+%     fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
+%         [ylim3(1) ylim3(2) ylim3(2) ylim3(1)],[0 0 1]);
+%     set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
+%     line([fishpupil,fishpupil],[ylim3(1),ylim3(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
+%     line([tetrapodpupil,tetrapodpupil],[ylim3(1),ylim3(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
+%     
+%     subplot(2,2,4)
+%     %plot(pupilValues*1e3,dVdA_Coastal,'linewidth',linewidthDef);
+%     %hold on;
+%     plot(pupilValues*1e3,dVdA_RiverM,'linewidth',linewidthDef);
+%     xlabel('pupil diameter (mm)'); ylabel('dV/dA (m^3/mm)');
+%     xlim([0.001*10^3 0.025*10^3]); ylim4=get(gca,'ylim');
+%     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
+%     [ylim4(1) ylim4(2) ylim4(2) ylim4(1)],[1 0 0]);
+%     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
+%     fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
+%         [ylim4(1) ylim4(2) ylim4(2) ylim4(1)],[0 0 1]);
+%     set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
+%     line([fishpupil,fishpupil],[ylim4(1),ylim4(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
+%     line([tetrapodpupil,tetrapodpupil],[ylim4(1),ylim4(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
+%     
+% %     key={'Coastal looking upwards depth 10m','Coastal looking upwards depth 7m',...
+% %         'Coastal horizontal depth 10m', 'Coastal horizontal depth 7m',...
+% %         'River looking upwards depth 10m','River looking upwards depth 7m',...
+% %         'River horizontal depth 10m', 'River horizontal depth 7m'};
+% %   
+%         key={'River looking upwards depth 8m',...
+%         'River horizontal depth 8m'};
+%     
+%     columnlegend(2,key,'location','north',...
+%         'fontsize',8)
 
  %%    
     figure(); clf;
@@ -197,7 +201,11 @@ figure(); clf();
     %plot(pupilValues*1e3,visualRange_Coastal,'linewidth',linewidthDef);
     
     %hold on;
-    plot(pupilValues*1e3,visualRange_River,'linewidth',linewidthDef);
+    plot(pupilValues*1e3,visualRange_River(:,1),'linewidth',linewidthDef);
+    hold on;
+    plot(pupilValues*1e3,visualRange_River(:,2),':','color',[0 0.4470 0.7410],'linewidth',linewidthDef);
+    plot(pupilValues*1e3,visualRange_River(:,3),'color',[0.8500    0.3250    0.0980],'linewidth',linewidthDef);
+    plot(pupilValues*1e3,visualRange_River(:,4),'color',[0.9290    0.6940    0.1250],'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('visual range (m)');
     xlim([0.001*10^3 0.025*10^3]); ylim1=get(gca,'ylim'); 
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
@@ -212,7 +220,11 @@ figure(); clf();
     subplot(2,2,2)
     %plot(pupilValues*1e3,drdA_Coastal,'linewidth',linewidthDef);
     %hold on;
-    plot(pupilValues*1e3,drdA_River,'linewidth',linewidthDef);
+    plot(pupilValues*1e3,drdA_River(:,1),'linewidth',linewidthDef);
+    hold on;
+    plot(pupilValues*1e3,drdA_River(:,2),':','color',[0 0.4470 0.7410],'linewidth',linewidthDef);
+    plot(pupilValues*1e3,drdA_River(:,3),'color',[0.8500    0.3250    0.0980],'linewidth',linewidthDef);
+    plot(pupilValues*1e3,drdA_River(:,4),'color',[0.9290    0.6940    0.1250],'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('dr/dA (m/mm)');
     xlim([0.001*10^3 0.025*10^3]); ylim2=get(gca,'ylim'); 
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
@@ -227,7 +239,11 @@ figure(); clf();
     subplot(2,2,3)
     %plot(pupilValues*1e3,visualVolume_Coastal,'linewidth',linewidthDef);
     %hold on;
-    plot(pupilValues*1e3,visualVolume_River,'linewidth',linewidthDef);
+    plot(pupilValues*1e3,visualVolume_River(:,1),'linewidth',linewidthDef);
+    hold on;
+    plot(pupilValues*1e3,visualVolume_River(:,2),':','color',[0 0.4470 0.7410],'linewidth',linewidthDef);
+    plot(pupilValues*1e3,visualVolume_River(:,3),'color',[0.8500    0.3250    0.0980],'linewidth',linewidthDef);
+    plot(pupilValues*1e3,visualVolume_River(:,4),'color',[0.9290    0.6940    0.1250],'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('visual volume (m^3)');
     xlim([0.001*10^3 0.025*10^3]); ylim3=get(gca,'ylim'); 
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
@@ -242,7 +258,11 @@ figure(); clf();
     subplot(2,2,4)
     %plot(pupilValues*1e3,dVdA_Coastal,'linewidth',linewidthDef);
     %hold on;
-    plot(pupilValues*1e3,dVdA_River,'linewidth',linewidthDef);
+    plot(pupilValues*1e3,dVdA_River(:,1),'linewidth',linewidthDef);
+    hold on;
+    plot(pupilValues*1e3,dVdA_River(:,2),':','color',[0 0.4470 0.7410],'linewidth',linewidthDef);
+    plot(pupilValues*1e3,dVdA_River(:,3),'color',[0.8500    0.3250    0.0980],'linewidth',linewidthDef);
+    plot(pupilValues*1e3,dVdA_River(:,4),'color',[0.9290    0.6940    0.1250],'linewidth',linewidthDef);
     xlabel('pupil diameter (mm)'); ylabel('dV/dA (m^3/mm)');
     xlim([0.001*10^3 0.025*10^3]); ylim4=get(gca,'ylim');
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
@@ -259,8 +279,9 @@ figure(); clf();
 %         'River looking upwards depth 10m','River looking upwards depth 7m',...
 %         'River horizontal depth 10m', 'River horizontal depth 7m'};
 %   
-        key={'River looking upwards depth 8m',...
-        'River horizontal depth 8m'};
+        key={'Sun River up @8m','Sun River hor @8m',...
+            'Moon River up @8m',...
+            'Stars River up @8m'};
     
     columnlegend(2,key,'location','north',...
         'fontsize',8)
@@ -337,90 +358,11 @@ figure(); clf();
 %         'River horizontal depth 10m', 'River horizontal depth 7m'};
 %     
     key={'Daylight','Moonlight','Starlight',...
-        'River looking upwards depth 8m',...
-        'River horizontal depth 8m'};
+        'Aquatic'};
     
   
-    columnlegend(2,key,'location','north',...
+    columnlegend(4,key,'location','north',...
         'fontsize',8)
-%%    
-    figure(); clf();
-    subplot(2,2,1);
-    semilogy(pupilValuesAir*10^3, visualRange,'linewidth',linewidthDef);
-    hold on;
-    %semilogy(pupilValues*1e3,visualRange_Coastal,'linewidth',linewidthDef);
-    semilogy(pupilValues*1e3,visualRange_River,'linewidth',linewidthDef);
-    xlabel('pupil diameter (mm)'); ylabel('visual range (m)');
-    xlim([0.001*10^3 0.025*10^3]); ylim1=get(gca,'ylim'); 
-    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-    [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
-    set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
-    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-        [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
-    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
-    line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
-    line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
-    
-    subplot(2,2,2)
-    semilogy(pupilValuesAir*10^3,drdA,'linewidth',linewidthDef);
-    hold on;
-    %semilogy(pupilValues*1e3,drdA_Coastal,'linewidth',linewidthDef);
-    semilogy(pupilValues*1e3,drdA_River,'linewidth',linewidthDef);
-    xlabel('pupil diameter (mm)'); ylabel('dr/dA (m/mm)');
-    xlim([0.001*10^3 0.025*10^3]); ylim2=get(gca,'ylim'); 
-    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-    [ylim2(1) ylim2(2) ylim2(2) ylim2(1)],[1 0 0]);
-    set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
-    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-        [ylim2(1) ylim2(2) ylim2(2) ylim2(1)],[0 0 1]);
-    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
-    line([fishpupil,fishpupil],[ylim2(1),ylim2(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
-    line([tetrapodpupil,tetrapodpupil],[ylim2(1),ylim2(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
-    
-    subplot(2,2,3)
-    semilogy(pupilValuesAir*10^3,visualVolume,'linewidth',linewidthDef);
-    hold on;
-    %semilogy(pupilValues*1e3,visualVolume_Coastal,'linewidth',linewidthDef);
-    semilogy(pupilValues*1e3,visualVolume_River,'linewidth',linewidthDef);
-    xlabel('pupil diameter (mm)'); ylabel('visual volume (m^3)');
-    xlim([0.001*10^3 0.025*10^3]); ylim3=get(gca,'ylim'); 
-    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-    [ylim3(1) ylim3(2) ylim3(2) ylim3(1)],[1 0 0]);
-    set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
-    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-        [ylim3(1) ylim3(2) ylim3(2) ylim3(1)],[0 0 1]);
-    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
-    line([fishpupil,fishpupil],[ylim3(1),ylim3(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
-    line([tetrapodpupil,tetrapodpupil],[ylim3(1),ylim3(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
-    
-    subplot(2,2,4)
-    semilogy(pupilValuesAir*10^3,dVdA,'linewidth',linewidthDef);
-    hold on;
-    %semilogy(pupilValues*1e3,dVdA_Coastal,'linewidth',linewidthDef);
-    semilogy(pupilValues*1e3,dVdA_River,'linewidth',linewidthDef);
-    xlabel('pupil diameter (mm)'); ylabel('dV/dA (m^3/mm)');
-    xlim([0.001*10^3 0.025*10^3]); ylim4=get(gca,'ylim');
-    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-    [ylim4(1) ylim4(2) ylim4(2) ylim4(1)],[1 0 0]);
-    set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
-    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-        [ylim4(1) ylim4(2) ylim4(2) ylim4(1)],[0 0 1]);
-    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
-    line([fishpupil,fishpupil],[ylim4(1),ylim4(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
-    line([tetrapodpupil,tetrapodpupil],[ylim4(1),ylim4(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
-    
-%     key={'Daylight','Moonlight','Starlight',...
-%         'Coastal looking upwards depth 10m','Coastal looking upwards depth 7m',...
-%         'Coastal horizontal depth 10m', 'Coastal horizontal depth 7m',...
-%         'River looking upwards depth 10m','River looking upwards depth 7m',...
-%         'River horizontal depth 10m', 'River horizontal depth 7m'};
-%     
-    key={'Daylight','Moonlight','Starlight',...
-       'River looking upwards depth 8m',...
-        'River horizontal depth 8m'};
-    
-    columnlegend(2,key,'location','north',...
-        'fontsize',8);
     
 
     fprintf('fish pupil and daylight intersection %f \n',interp1q(pupilValuesAir,visualRangeDaylight,fishpupil*10^-3));
