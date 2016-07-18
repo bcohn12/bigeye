@@ -19,13 +19,13 @@ visualRangeSensitivity=zeros(length(pupilValues),length(conditions),2);
 for i=1:length(conditions)
     tol=5e-4;
     if strcmp(conditions{i},'Baseline')
-        r_down=1; r_hor=1; 
+        r_down=3; r_hor=1.5; 
     elseif strcmp(conditions{i},'Clear')
         r_down=10; r_hor=10;
     elseif strcmp(conditions{i},'Highabs')
-        r_down=1e-9; r_hor=1e-12;
+        r_down=45; r_hor=3;
     elseif strcmp(conditions{i},'Highscat')
-        r_down=1e-7; r_hor=1e-8;
+        r_down=2.3; r_hor=1.5;
     end
 
     aString=strcat('a_',conditions{i}); bString=strcat('b_',conditions{i});
@@ -100,7 +100,7 @@ function  solution=firingThresh(depth,lambda,photoreceptorAbsorption,aAll,bAll,K
     
     Xch=((T*M*A)/(2*r*d))^2*X*Dt;
     IspaceFunc=@(l) LInterp(l).*l.*(1-exp(-k*alphaInterp(l)*len));
-    IblackFunc=@(l) LInterp(l).*l.*(1-exp(-k*alphaInterp(l)*len)).*(1-exp((KInterp(l)-aInterp(l)-bInterp(l))*r));
+    IblackFunc=@(l) LInterp(l).*l.*(1-exp(-k*alphaInterp(l)*len)).*(1-exp((KInterp(l)-aInterp(l)-bInterp(l))*r));  
     
     Ispace=integral(IspaceFunc,lambda1,lambda2);
     %IspaceInterp=@(l) interp1(lambda,Ispace,l,'pchip');
@@ -110,4 +110,11 @@ function  solution=firingThresh(depth,lambda,photoreceptorAbsorption,aAll,bAll,K
     Nspace=((pi/4)^2)*(A^2)*((T/r)^2)*q*Dt*Ispace;
     Nblack=((pi/4)^2)*(A^2)*((T/r)^2)*q*Dt*Iblack;
 
-    solution=(R*sqrt(Nblack+Nspace+2*Xch))/(abs(Nblack-Nspace));        
+    solution=(R*sqrt(Nblack+Nspace+2*Xch))/(abs(Nblack-Nspace));
+    
+function c=times(a,b)
+    b(isinf(b))=0;
+    a(isinf(a))=0;
+    c=builtin('times',a,b);
+
+
