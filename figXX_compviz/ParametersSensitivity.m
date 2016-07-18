@@ -77,8 +77,6 @@ Kd_Highabs=Kd_Highabs(4:43,3:17);
 Ku_Highabs=xlsread('hydrolight/highabs/Mhighabs.xls','Ku');
 Ku_Highabs=Ku_Highabs(4:43,3:17);
 
-%Kh_Highabs=zeros(size(Kd_Highabs,1),size(Kd_Highabs,2));
-
 Kh_Highabs=zeros(size(Kd_Highabs,1),size(Kd_Highabs,2));
 %HIGH SCATTERING
 Kd_Highscat=xlsread('hydrolight/highscat/Mhighscat.xls','Kd');
@@ -172,6 +170,7 @@ pAbsorb_Highabs=A*exp(-a0A*(log10(lambda./lambdaMax_HA)).^2.*...
     (1+a1A*log10(lambda./lambdaMax_HA)+(3*a1A^2/8).*log10(lambda./lambdaMax_HA).^2)+...
     B*exp(-a0B*(log10(lambda./368)).^2.*...
     (1+a1B*log10(lambda./368)+(3*a1B^2/8)*log10(lambda./368))));
+pAbsorb_Highabs(1:6)=1e-300;
 
 pAbsorb_Highscat=A*exp(-a0A*(log10(lambda./lambdaMax_HS)).^2.*...
     (1+a1A*log10(lambda./lambdaMax_HS)+(3*a1A^2/8).*log10(lambda./lambdaMax_HS).^2)+...
