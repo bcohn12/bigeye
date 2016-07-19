@@ -10,11 +10,14 @@ LMoonlight=1e-2; %Fairly brigh moonlight in cd/m^2
 LStarlight=1e-4; %moonless clear night sky in cd/m^2
 LVals=[LDaylight,LMoonlight,LStarlight];
 
-Dt=1.16; %units: s, integration time, used typical value
+DtRiver_daylight=(8.44e-1)^-0.19; %units: s, integration time, used typical value
+DtRiver_moonlight=(2.57e-6)^-0.11;
+DtRiver_starlight=(4.39e-8)^-0.11;
 Dt_daylight=(LDaylight)^-0.19; %Donner etal 1994
 Dt_moonlight=(LMoonlight)^-0.19;
 Dt_starlight=(LStarlight)^-0.19;
 DtVals=[Dt_daylight, Dt_moonlight, Dt_starlight];
+DtVals_River=[DtRiver_daylight, DtRiver_moonlight,DtRiver_starlight];
 
 % Contrast parameters. Miller uses +/- 0.5, +/-1, and +/-2 as span 
 C0_daylight=-1; %daylight contrast value
