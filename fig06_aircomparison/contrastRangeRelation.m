@@ -7,11 +7,16 @@ function visualRangeSolns = contrastRangeRelation
 %% INITIALIZATION
 
     run ../figXX_compviz/Parameters.m
+    load ../fig02_orbitsize/OM_TF_ST.mat
+    pupil_TF = [mean(OM_TF)-std(OM_TF) mean(OM_TF)+std(OM_TF)].*0.449;
+    pupil_ST = [mean(OM_ST)-std(OM_ST) mean(OM_ST)+std(OM_ST)].*0.449;
+
+    fishpupil=mean(OM_TF)*.449;
+    tetrapodpupil=mean(OM_ST)*.449;
     
-    pupilValues=linspace(minpupil,maxpupil,5);
-    %rangeValues=linspace(0.001,100000,1000000);
+    pupilValues=[fishpupil,tetrapodpupil,pupil_TF,pupil_ST]*1e-3;
     
-    tol=4e-6;
+    tol=5e-5;
     
     WlambdaylambdaInterp= @(lambda) interp1(Wlambdaylambda(:,1),Wlambdaylambda(:,2),lambda,'pchip'); %value checked with mathematica
 
@@ -28,62 +33,53 @@ function visualRangeSolns = contrastRangeRelation
     BhS=LStarlight*integral(WlambdaylambdaInterp,lambda1,lambda2);
     IspaceS=((1.31e3)/0.89)*BhS*(1e6)^2;
     
-    IspaceAll=[IspaceD,IspaceM,IspaceS];
-    
+    IspaceAll=[IspaceD,IspaceM,IspaceS];   
     C0Range=linspace(-1,4,20);
 
 %% CALCULATE RANGE FROM FIRING THRESHOLD
-    visualRangeSolns=zeros(length(C0Range),length(pupilValues),3);
-    tempRange=zeros(length(C0Range),1);
-    deltaVals=[1e-2,1e-5,1e-6];
-    rVals=[1e-3,1e-4,1e-6];
-    for l=1:3
+    visualRangeSolns=zeros(length(C0Range),length(pupilValues),length(LVals));
+    for l=2:3
         L=LVals(l);
         Dt=DtVals(l);
         F=FVals(l);
         X=XVals(l);
         q=qVals(l);
         Ispace=IspaceAll(l);
-        %contrastRangeSolution=zeros(length(C0Range),length(pupilValues));
-        r=rVals(l);
-        delta=deltaVals(l);
-        visualRangeSolnsTemp=zeros(length(C0Range),length(pupilValues));
-        strL=sprintf('iteration luminance: %d',l);
-        disp(strL);
-        for i=1:length(pupilValues);
+        visualRangeSolnsTemp=zeros(length(C0Range),length(pupilValues));        
+        
+        if l==1
+            r=1.6e4;
+        elseif l==2
+            r=5e2;
+        else
+            r=10;
+        end
+        
+        for i=1:length(pupilValues)
             A=pupilValues(i);
-            strA=sprintf('iteration pupil: %d',i);
-            disp(strA);
             for c=1:length(C0Range)
-                rInit=r;
-                C0=C0Range(c);
-                strC0=sprintf('iteration contrast: %d',c);
-                disp(strC0);                
-                possibleSolution=10;
-                index=1;
+                delta=10^(floor(log10(r))-5);
+                C0=C0Range(c);               
                 
-                if C0>=0.5
-                    r=tempRange(c-1);
-                end
-                while abs(possibleSolution-A)>=tol
-                    index=index+1;
+                possibleSolution=10;
+                while abs(possibleSolution-1)>=tol
                     possibleSolution=firingThreshRange(...
                          WlambdaylambdaInterp,A,r,C0,L,...
                          T,F,Ispace,Dt,q,k,len,X,d,R);
-                    r=r+delta;
-                    error=abs(possibleSolution-A);
-                    %fprintf(1, repmat('\b',1,20));
+                    if possibleSolution>1
+                        r=r-delta;
+                    else
+                        r=r+delta;
+                    end
+
                     clc
-                    fprintf('possibleSolution: %f \r', possibleSolution);
-                    fprintf('range: %f \r', r);
-                    fprintf('error: %f \r', error);
-                    
-                    
-                                
+                    fprintf('iteration: %d, %d, %d \n', c,i,l);
+                    fprintf('possibleSolution: %f \n', possibleSolution);
+                    fprintf('range: %f \n', r);
+                    fprintf('error: %f \n', abs(possibleSolution-1));
                 end
                 visualRangeSolnsTemp(c,i)=r;
                 mr=visualRangeSolnsTemp(c,i);
-                tempRange(c)=mr;
                 
 %% LIMIT RANGE WITH CONTRAST THRESHOLD
                 CrFunc=@(lambda) exp(-sigma(lambda).*mr);
@@ -95,32 +91,20 @@ function visualRangeSolns = contrastRangeRelation
                 if 10^(Kt) <= abs(Cr)
                      visualRangeSolnsTemp(c,i)=mr;
                 else
-                    if mr<20
-                        tempVisualRange=linspace(mr,rVals(l),5000);
-                    else
-                        tempVisualRange=linspace(mr,0.01,mr*5);
-                    end
-                    count=1;
-                    while(10^(Kt) > abs(Cr))
-                        mr=tempVisualRange(count);
+                    delta=delta*1e1;
+                    while(10^(Kt)-abs(Cr)>tol)
+                        mr=mr-delta;
                         angularSize=(T/mr)*10^3;
                         Cr=C0*integral(CrFunc,lambda1,lambda2);
-                        Kt=liminalContrast(A,LDaylight,angularSize);
-                        
-                        visualRangeSolnsTemp(c,i)=mr;
-                        count=count+1;
+                        Kt=liminalContrast(A,L,angularSize);
+                        clc
+                        fprintf('iteration: %d, %d, %d \n', c,i,l);
+                        fprintf('range: %f \n',mr);
+                        fprintf('error: %f \n', 10^(Kt)-abs(Cr));
                     end
+                    visualRangeSolnsTemp(c,i)=mr;
                 end
-%                 if tempRange(c)>10
-%                     delta=1e-2;
-%                 else
-                    %delta=deltaVals(l);
-                %end
-                r=rInit;
-            end
-            r=min(tempRange);
-            if r>1 && l>1
-                delta=1e-3;
+
             end
         end
         visualRangeSolns(:,:,l)=visualRangeSolnsTemp;
@@ -192,4 +176,4 @@ function Kt = liminalContrast(A,L,angularSize)
             Yval=Y(deltarparam,L);
             Kt=-2*logStardeltar-Yval;
         end
-    end        
+    end         
