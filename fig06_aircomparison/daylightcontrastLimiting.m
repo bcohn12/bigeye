@@ -8,7 +8,7 @@
     % while(liminal contrast <= apparent contrast)
         % calculate apparent contrast and liminal contrast
 
-function [actRangeDaylight, Cr_daylight, angularSize, Kt_daylight] =daylightLimitingRange
+function [actRangeDaylight, Cr_daylight, angularSize, Kt_daylight] =daylightContrastLimiting
 
 %% INITIALIZE/LOAD DATA
 
@@ -26,7 +26,7 @@ lambda1=0.4; lambda2=0.7;
 
 actRangeDaylight=zeros(length(visualRangeDaylight),1);
 Cr_daylight=actRangeDaylight; angularSize=actRangeDaylight; Kt_daylight=Cr_daylight;
-
+mrprev=10;
 for i=1:length(pupilValuesTerr);
     A=pupilValuesTerr(i);
     mr=visualRangeDaylight(i);
@@ -40,34 +40,37 @@ for i=1:length(pupilValuesTerr);
     if 10^(Kt_daylight(i)) <= abs(Cr_daylight(i))
         actRangeDaylight(i)=mr;
     else
-        delta=1e-1;
-        while 10^(Kt_daylight(i))>abs(Cr_daylight(i));
-            angularSize(i)=(T/mr)*10^3;
-            Cr_daylight(i)=C0_daylight*integral(CrFunc,lambda1,lambda2);
-            Kt_daylight(i)=liminalContrast(A,LDaylight,angularSize(i));
-            
-            actRangeDaylight(i)=mr;
-            mr=mr-delta;
-            
-            clc;
-            fprintf('range: %f\n', mr);
-            fprintf('error: %f\n', abs(10^(Kt_daylight(i))-abs(Cr_daylight(i)))); 
-        end
-%         tempVisualRange=linspace(mr,0.01,max(visualRangeDaylight)*3);
-%         j=1;
-%         while(10^(Kt_daylight(i)) > abs(Cr_daylight(i)))
-%             mr=tempVisualRange(j);
+%         delta=1e-1;
+%         while 10^(Kt_daylight(i))>abs(Cr_daylight(i));
 %             angularSize(i)=(T/mr)*10^3;
 %             Cr_daylight(i)=C0_daylight*integral(CrFunc,lambda1,lambda2);
 %             Kt_daylight(i)=liminalContrast(A,LDaylight,angularSize(i));
 %             
 %             actRangeDaylight(i)=mr;
-%             j=j+1;
+%             mr=mr-delta;
+%             
+%             clc;
+%             fprintf('range: %f\n', mr);
+%             fprintf('error: %f\n', abs(10^(Kt_daylight(i))-abs(Cr_daylight(i)))); 
 %         end
-        
+        tempVisualRange=linspace(mr,mrprev,max(visualRangeDaylight)*2);
+        j=1;
+        while(10^(Kt_daylight(i)) > abs(Cr_daylight(i)))
+            mr=tempVisualRange(j);
+            angularSize(i)=(T/mr)*10^3;
+            Cr_daylight(i)=C0_daylight*integral(CrFunc,lambda1,lambda2);
+            Kt_daylight(i)=liminalContrast(A,LDaylight,angularSize(i));
+            
+            actRangeDaylight(i)=mr;
+            j=j+1;
+            clc;
+            fprintf('iteration: %d\n',i)
+            fprintf('range: %f\n',mr);
+        end
+        mrprev=mr;
     end
-    it=sprintf('iteration number: %d',i);
-    disp(it)
+    %it=sprintf('iteration number: %d',i);
+    %disp(it)
 end
 
 visualRangeDaylight=actRangeDaylight;
