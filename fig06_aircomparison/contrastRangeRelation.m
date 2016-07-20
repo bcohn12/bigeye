@@ -50,7 +50,7 @@ function visualRangeSolns = contrastRangeRelation
         if l==1
             r=1.6e4;
         elseif l==2
-            r=5e2;
+            r=620;
         else
             r=10;
         end
@@ -85,7 +85,7 @@ function visualRangeSolns = contrastRangeRelation
                 CrFunc=@(lambda) exp(-sigma(lambda).*mr);
                 Cr= C0*integral(CrFunc,lambda1,lambda2);
 
-                angularSize=(T/mr)*10^3;
+                angularSize=asin(T/(2*mr))*2*10^3;
                 Kt=liminalContrast(A,L,angularSize);
 
                 if 10^(Kt) <= abs(Cr)
