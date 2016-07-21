@@ -155,11 +155,12 @@ pAbsorb_Starlight=A*exp(-a0A*(log10(lambda./lambdaMax_St)).^2.*...
 
 %% SENSORY VOLUME PARAMS
 % aerial and water half elevation angle of sensory volume
-elevationCoastal=pi/3; %60 deg 
+elevationCoastal=pi/6; %30 deg 
 
 % azimuth is here assuming 35 degree overlap typical of fish;
 % definitely underestimate for terrestrial case
-azimuthCoastal=(2*120-35)*(pi/180); %viewing azimuth
+%azimuthCoastal=(2*120-35)*(pi/180); %viewing azimuth
+azimuthCoastal=(305)*(pi/180);
 azimuthAir = azimuthCoastal;
 
 elevationMin=pi/2-elevationCoastal;
