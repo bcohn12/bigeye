@@ -3,20 +3,12 @@ function pupilSizevsRangeConstantDepth_River
 
     %% CONSTANT DEPTH VALUE RANGE OF VISION VS PUPIL SIZE
 
-%     PROMPT = 0;
-% 
-%     if PROMPT
-%     coastalWaterDepth=input('Input depth value in vector form between 1-15:\n');
-%     else 
-%         coastalWaterDepth=[8];
-%     end
-%    coastalWaterDepth=sort(coastalWaterDepth,'descend');
     conditions={'Sun','Moonlight','Starlight'};
     pupilValues=linspace(minpupil,maxpupil,30); 
     depth=8; tol=5e-4;
    
     visualRange_River=zeros(length(pupilValues),length(conditions),2);
-    for i=1:length(conditions);
+    for i=2:length(conditions);
         if strcmp('Sun',conditions{i})
             r_down=5;r_hor=3;
         elseif strcmp('Moonlight',conditions{i})
@@ -31,6 +23,7 @@ function pupilSizevsRangeConstantDepth_River
         pAbsorbString=strcat('pAbsorb_',conditions{i});
         a=eval(aString); b=eval(bString); Kd=eval(KdString); Kh=eval(KhString);
         Ld=eval(LdString); Lh=eval(LhString); pAbsorb=eval(pAbsorbString);
+        Dt=DtVals_River(i);
         
         for j=1:length(pupilValues)
             A=pupilValues(j);
@@ -129,4 +122,5 @@ function  solution=firingThresh(depth,lambda,photoreceptorAbsorption,a,b,KAll,LA
     Nspace=((pi/4)^2)*(A^2)*((T/r)^2)*q*Dt*Ispace;
     Nblack=((pi/4)^2)*(A^2)*((T/r)^2)*q*Dt*Iblack;
 
-    solution=(R*sqrt(Nblack+Nspace+2*Xch))/(abs(Nblack-Nspace));    
+    solution=(R*sqrt(Nblack+Nspace+2*Xch))/(abs(Nblack-Nspace));  
+    

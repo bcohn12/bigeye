@@ -1,6 +1,6 @@
 function interpolateContrastRange
 
-    load('bir')
+    load('contrastRangeAll.mat')
     
     [C0RangeExtended,indices]=sort([C0Range,0]);
     C0RangeExtendedNew=sort([linspace(min(C0Range),max(C0Range),200),0]);

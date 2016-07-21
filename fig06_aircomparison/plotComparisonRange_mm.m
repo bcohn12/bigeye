@@ -16,12 +16,12 @@ function plotComparisonRange
     load terrestrial_Avsr.mat
     %load('pupilSizevsRangeConstantDepth_Coastal.mat');
     load('pupilSizevsRangeConstantDepth_River.mat');
-    load('riverMoonlightFiringRange.mat');
+    %load('riverMoonlightFiringRange.mat');
     
     pupilValuesAir=linspace(minpupil,maxpupil,25);
     
     fillboxalpha=0.18; % transparency of fillbox to show +/- std of pupil size;
-    load ../fig02_orbitsize/OM_TF_ST.mat
+    load ../fig02_orbitsize/OM_TF_ST1.mat
     pupil_TF = [mean(OM_TF)-std(OM_TF) mean(OM_TF)+std(OM_TF)].*0.449;
     pupil_ST = [mean(OM_ST)-std(OM_ST) mean(OM_ST)+std(OM_ST)].*0.449;
 
@@ -194,7 +194,7 @@ function plotComparisonRange
     
     legend({'Daylight','Moonlight','Starlight'},'location','north',...
         'fontsize',8,'orientation','horizontal');
-    legend('boxoff')
+    legend('boxoff');
 %%
     figure(); clf();
     subplot(2,2,1);
@@ -364,42 +364,71 @@ function plotComparisonRange
     columnlegend(4,key,'location','north',...
         'fontsize',8)
     
+%       DHRD_1=(interp1q(pupilValuesAir,visualRangeDaylight,fishpupil*1e-3))/...
+%           (interp1q(pupilValues,visualRange_River(:,2),fishpupil*1e-3))
+%       DHRD_2=(interp1q(pupilValuesAir,visualRangeDaylight,tetrapodpupil*1e-3))/...
+%           (interp1q(pupilValues,visualRange_River(:,2),fishpupil*1e-3))
+%       DURD_3=(interp1q(pupilValuesAir,visualRangeDaylight,fishpupil*1e-3))/...
+%           (interp1q(pupilValues,visualRange_River(:,1),fishpupil*1e-3))
+%       DURD_4=(interp1q(pupilValuesAir,visualRangeDaylight,tetrapodpupil*1e-3))/...
+%           (interp1q(pupilValues,visualRange_River(:,1),fishpupil*1e-3))
+%       
+%       DURM_5=(interp1q(pupilValuesAir,visualRangeMoonlight,fishpupil*1e-3))/...
+%           (interp1q(pupilValues,visualRange_River(:,1),fishpupil*1e-3))
+%       DURS_6=(interp1q(pupilValuesAir,visualRangeStarlight,fishpupil*1e-3))/...
+%           (interp1q(pupilValues,visualRange_River(:,1),fishpupil*1e-3))
+%       DURM_7=(interp1q(pupilValuesAir,visualRangeMoonlight,tetrapodpupil*1e-3))/...
+%           (interp1q(pupilValues,visualRange_River(:,1),fishpupil*1e-3))
+%       DURS_8=(interp1q(pupilValuesAir,visualRangeStarlight,tetrapodpupil*1e-3))/...
+%           (interp1q(pupilValues,visualRange_River(:,1),fishpupil*1e-3))
+%       
+%       MURM_9=(interp1q(pupilValuesAir,visualRangeMoonlight,fishpupil*1e-3))/...
+%            (interp1q(pupilValues,visualRange_River(:,3),fishpupil*1e-3))
+%       MURM_10=(interp1q(pupilValuesAir,visualRangeMoonlight,tetrapodpupil*1e-3))/...
+%           (interp1q(pupilValues,visualRange_River(:,3),fishpupil*1e-3))
+%       
+%       SURS_11=(interp1q(pupilValuesAir,visualRangeStarlight,fishpupil*1e-3))/...
+%           (interp1q(pupilValues,visualRange_River(:,4),fishpupil*1e-3))
+%       SURS_12=(interp1q(pupilValuesAir,visualRangeStarlight,tetrapodpupil*1e-3))/...
+%           (interp1q(pupilValues,visualRange_River(:,4),fishpupil*1e-3))
+     
 
-    fprintf('fish pupil and daylight intersection %f \n',interp1q(pupilValuesAir,visualRangeDaylight,fishpupil*10^-3));
-    fprintf('fish pupil and moonlight intersection %f \n',interp1q(pupilValuesAir,visualRangeMoonlight,fishpupil*10^-3));
-    fprintf('fish pupil and starlight intersection %f \n',interp1q(pupilValuesAir,visualRangeStarlight,fishpupil*10^-3));
-    fprintf('fish pupil and river up intersection %f \n',interp1q(pupilValuesAir,visualRange_River(:,1),fishpupil*10^-3));
-    fprintf('fish pupil and river hor intersection %f \n',interp1q(pupilValuesAir,visualRange_River(:,2),fishpupil*10^-3));
-    
-    fprintf('tetrapod pupil and daylight intersection %f \n',interp1q(pupilValuesAir,visualRangeDaylight,tetrapodpupil*10^-3));
-    fprintf('tetrapod pupil and moonlight intersection %f \n',interp1q(pupilValuesAir,visualRangeMoonlight,tetrapodpupil*10^-3));
-    fprintf('tetrapod pupil and starlight intersection %f \n',interp1q(pupilValuesAir,visualRangeStarlight,tetrapodpupil*10^-3));
-    fprintf('tetrapod pupil and river up intersection %f \n',interp1q(pupilValuesAir,visualRange_River(:,1),tetrapodpupil*10^-3));
-    fprintf('tetrapod pupil and river hor intersection %f \n',interp1q(pupilValuesAir,visualRange_River(:,2),tetrapodpupil*10^-3));
-    
-    fprintf('TF Minus and daylight intersection %f\n',interp1q(pupilValuesAir,visualRangeDaylight,pupil_TF(1)*10^-3));
-    fprintf('TF Minus and moonlight intersection %f\n',interp1q(pupilValuesAir,visualRangeMoonlight,pupil_TF(1)*10^-3));
-    fprintf('TF Minus and starlight intersection %f\n',interp1q(pupilValuesAir,visualRangeStarlight,pupil_TF(1)*10^-3));
-    fprintf('TF Minus and river up intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,1),pupil_TF(1)*10^-3));
-    fprintf('TF Minus and river hor intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,2),pupil_TF(1)*10^-3));
-    
-    fprintf('TF Plus and daylight intersection %f\n',interp1q(pupilValuesAir,visualRangeDaylight,pupil_TF(2)*10^-3));
-    fprintf('TF Plus and moonlight intersection %f\n',interp1q(pupilValuesAir,visualRangeMoonlight,pupil_TF(2)*10^-3));
-    fprintf('TF Plus and starlight intersection %f\n',interp1q(pupilValuesAir,visualRangeStarlight,pupil_TF(2)*10^-3));
-    fprintf('TF Plus and river up intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,1),pupil_TF(2)*10^-3));
-    fprintf('TF Plus and river hor intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,2),pupil_TF(2)*10^-3));
-    
-     fprintf('ST Minus and daylight intersection %f\n',interp1q(pupilValuesAir,visualRangeDaylight,pupil_ST(1)*10^-3));
-    fprintf('ST Minus and moonlight intersection %f\n',interp1q(pupilValuesAir,visualRangeMoonlight,pupil_ST(1)*10^-3));
-    fprintf('ST Minus and starlight intersection %f\n',interp1q(pupilValuesAir,visualRangeStarlight,pupil_ST(1)*10^-3));
-    fprintf('ST Minus and river up intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,1),pupil_ST(1)*10^-3));
-    fprintf('ST Minus and river hor intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,2),pupil_ST(1)*10^-3));
-    
-    fprintf('ST Plus and daylight intersection %f\n',interp1q(pupilValuesAir,visualRangeDaylight,pupil_ST(2)*10^-3));
-    fprintf('ST Plus and moonlight intersection %f\n',interp1q(pupilValuesAir,visualRangeMoonlight,pupil_ST(2)*10^-3));
-    fprintf('ST Plus and starlight intersection %f\n',interp1q(pupilValuesAir,visualRangeStarlight,pupil_ST(2)*10^-3));
-    fprintf('ST Plus and river up intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,1),pupil_ST(2)*10^-3));
-    fprintf('ST Plus and river hor intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,2),pupil_ST(2)*10^-3));
-    
+%     fprintf('fish pupil and daylight intersection %f \n',interp1q(pupilValuesAir,visualRangeDaylight,fishpupil*10^-3));
+%     fprintf('fish pupil and moonlight intersection %f \n',interp1q(pupilValuesAir,visualRangeMoonlight,fishpupil*10^-3));
+%     fprintf('fish pupil and starlight intersection %f \n',interp1q(pupilValuesAir,visualRangeStarlight,fishpupil*10^-3));
+%     fprintf('fish pupil and river up intersection %f \n',interp1q(pupilValuesAir,visualRange_River(:,1),fishpupil*10^-3));
+%     fprintf('fish pupil and river hor intersection %f \n',interp1q(pupilValuesAir,visualRange_River(:,2),fishpupil*10^-3));
+%     
+%     
+%     fprintf('tetrapod pupil and daylight intersection %f \n',interp1q(pupilValuesAir,visualRangeDaylight,tetrapodpupil*10^-3));
+%     fprintf('tetrapod pupil and moonlight intersection %f \n',interp1q(pupilValuesAir,visualRangeMoonlight,tetrapodpupil*10^-3));
+%     fprintf('tetrapod pupil and starlight intersection %f \n',interp1q(pupilValuesAir,visualRangeStarlight,tetrapodpupil*10^-3));
+%     fprintf('tetrapod pupil and river up intersection %f \n',interp1q(pupilValuesAir,visualRange_River(:,1),tetrapodpupil*10^-3));
+%     fprintf('tetrapod pupil and river hor intersection %f \n',interp1q(pupilValuesAir,visualRange_River(:,2),tetrapodpupil*10^-3));
+%     
+%     fprintf('TF Minus and daylight intersection %f\n',interp1q(pupilValuesAir,visualRangeDaylight,pupil_TF(1)*10^-3));
+%     fprintf('TF Minus and moonlight intersection %f\n',interp1q(pupilValuesAir,visualRangeMoonlight,pupil_TF(1)*10^-3));
+%     fprintf('TF Minus and starlight intersection %f\n',interp1q(pupilValuesAir,visualRangeStarlight,pupil_TF(1)*10^-3));
+%     fprintf('TF Minus and river up intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,1),pupil_TF(1)*10^-3));
+%     fprintf('TF Minus and river hor intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,2),pupil_TF(1)*10^-3));
+%     
+%     fprintf('TF Plus and daylight intersection %f\n',interp1q(pupilValuesAir,visualRangeDaylight,pupil_TF(2)*10^-3));
+%     fprintf('TF Plus and moonlight intersection %f\n',interp1q(pupilValuesAir,visualRangeMoonlight,pupil_TF(2)*10^-3));
+%     fprintf('TF Plus and starlight intersection %f\n',interp1q(pupilValuesAir,visualRangeStarlight,pupil_TF(2)*10^-3));
+%     fprintf('TF Plus and river up intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,1),pupil_TF(2)*10^-3));
+%     fprintf('TF Plus and river hor intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,2),pupil_TF(2)*10^-3));
+%     
+%      fprintf('ST Minus and daylight intersection %f\n',interp1q(pupilValuesAir,visualRangeDaylight,pupil_ST(1)*10^-3));
+%     fprintf('ST Minus and moonlight intersection %f\n',interp1q(pupilValuesAir,visualRangeMoonlight,pupil_ST(1)*10^-3));
+%     fprintf('ST Minus and starlight intersection %f\n',interp1q(pupilValuesAir,visualRangeStarlight,pupil_ST(1)*10^-3));
+%     fprintf('ST Minus and river up intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,1),pupil_ST(1)*10^-3));
+%     fprintf('ST Minus and river hor intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,2),pupil_ST(1)*10^-3));
+%     
+%     fprintf('ST Plus and daylight intersection %f\n',interp1q(pupilValuesAir,visualRangeDaylight,pupil_ST(2)*10^-3));
+%     fprintf('ST Plus and moonlight intersection %f\n',interp1q(pupilValuesAir,visualRangeMoonlight,pupil_ST(2)*10^-3));
+%     fprintf('ST Plus and starlight intersection %f\n',interp1q(pupilValuesAir,visualRangeStarlight,pupil_ST(2)*10^-3));
+%     fprintf('ST Plus and river up intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,1),pupil_ST(2)*10^-3));
+%     fprintf('ST Plus and river hor intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,2),pupil_ST(2)*10^-3));
+%     
     
     
