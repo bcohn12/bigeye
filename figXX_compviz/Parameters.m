@@ -10,20 +10,23 @@ LMoonlight=1e-2; %Fairly brigh moonlight in cd/m^2
 LStarlight=1e-4; %moonless clear night sky in cd/m^2
 LVals=[LDaylight,LMoonlight,LStarlight];
 
-DtRiver_daylight=(8.44e-1)^-0.19; %units: s, integration time, used typical value
-DtRiver_moonlight=(2.57e-6)^-0.11;
-DtRiver_starlight=(4.39e-8)^-0.11;
+Dt=1.16;
+% River_daylight=(8.44e-1)^-0.19; %units: s, integration time, used typical value
+% DtRiver_moonlight=(2.57e-6)^-0.11;
+% DtRiver_starlight=(4.39e-8)^-0.11;
 Dt_daylight=(LDaylight)^-0.19; %Donner etal 1994
 Dt_moonlight=(LMoonlight)^-0.19;
 Dt_starlight=(LStarlight)^-0.19;
 DtVals=[Dt_daylight, Dt_moonlight, Dt_starlight];
-DtVals_River=[DtRiver_daylight, DtRiver_moonlight,DtRiver_starlight];
+%DtVals_River=[DtRiver_daylight, DtRiver_moonlight,DtRiver_starlight];
 
 % Contrast parameters. Miller uses +/- 0.5, +/-1, and +/-2 as span 
 C0_daylight=-1; %daylight contrast value
 C0_moonlight=-1; %night contrast value, a guess (4 is snow). 
 C0_starlight=-1; %starlight contrast value, a guess
 C0All=[C0_daylight, C0_moonlight, C0_starlight];
+
+C0_Sun=-1; C0_Moonlight=-1; C0_Starlight=-1;
 
 k=0.035; % photoreceptor absorbtion, units 1/micrometers
 len=57;  % length of photoreceptor, in micrometers
@@ -46,6 +49,15 @@ minpupil=0.001; % largest diameter of pupil, meters
 maxpupil=0.03; % smallest diameter of pupil, meters
 
 Wlambdaylambda=csvread('../figXX_compviz/Wlambda.csv');
+ybarLambda=[0.0000 0.0001 0.0004 0.0012 0.0040 0.0116 0.02300 .0380 0.0600 0.0910,...
+    0.1390 0.2080 0.3230 0.5030 0.7100 0.8620 0.9540 0.9950 0.9950 0.9520,...
+    0.8700 0.7570 0.6310 0.5030 0.3810 0.2650 0.1750 0.1070 0.0610 0.0320 0.0170 0.0082,...
+    0.0041 0.0021 0.0011 0.0005 0.0003 0.0001 0.0001 0.0000];
+lambdabar=380:10:770;
+ybarInterp=@(l) interp1(lambdabar,ybarLambda,l,'pchip');
+fL=@(x) x;
+
+
 
 %% DAYLIGHT
 %Absorption Coefficient
@@ -73,6 +85,28 @@ Lh_Sun=Lh_Sun(4:end,4:end)*5.03e15;
 
 Ld_Sun=xlsread('hydrolight/base_sun/Hydrolight_BrownWater.xlsx','Ld');
 Ld_Sun=Ld_Sun(4:end,4:end)*5.03e15;
+%Luminance
+ybar_Daylight=ybarInterp(lambda);
+
+Bu_Sun=zeros(size(Lu_Sun,2),1);
+Bh_Sun=zeros(size(Lh_Sun,2),1);
+Bd_Sun=zeros(size(Ld_Sun,2),1);
+for i=1:size(Lu_Sun,2)
+    tempU=(Lu_Sun(:,i)/5.03e15).*ybar_Daylight.*lambda;
+    Bu_Sun(i)=trapz(lambda,tempU);
+    %tempInterpFuncU= @(l) interp1(lambda,683*tempU,l,'pchip');
+    %Bu_Sun(i)=integral(tempInterpFuncU,lambda(1),lambda(end));
+    
+    tempH=(Lh_Sun(:,i)/5.03e15).*ybar_Daylight.*lambda;
+    Bh_Sun(i)=trapz(tempH);
+    %tempInterpFuncH= @(l) interp1(lambda,683*tempH,l,'pchip');
+    %Bh_Sun(i)=integral(tempInterpFuncH,lambda(1),lambda(2));
+    
+    tempD=(Ld_Sun(:,i)/5.03e15).*ybar_Daylight.*lambda;
+    Bd_Sun(i)=trapz(tempD);
+    %tempInterpFuncD= @(l) interp1(lambda,683*tempD,l,'pchip');
+    %Bd_Sun(i)=integral(tempInterpFuncD,lambda(1),lambda(end));
+end
 
 %% MOONLIGHT
 %Absorption Coefficient
@@ -99,8 +133,30 @@ Ld_Moonlight=Ld_Moonlight(4:end,4:end)*5.03e15;
 
 Lh_Moonlight=xlsread('hydrolight/base_moon/Mbase_moon.xls','Lh_2');
 Lh_Moonlight=Lh_Moonlight(4:end,4:end)*5.03e15;
+%Luminance
+ybar_Moonlight=ybarInterp(lambda);
 
-%%STARLIGHT
+Bu_Moonlight=zeros(size(Lu_Moonlight,2),1);
+Bh_Moonlight=zeros(size(Lh_Moonlight,2),1);
+Bd_Moonlight=zeros(size(Ld_Moonlight,2),1);
+for i=1:size(Lu_Moonlight,2)
+    tempU=(Lu_Moonlight(:,i)/5.03e15).*ybar_Moonlight.*lambda;
+    Bu_Moonlight(i)=trapz(lambda,tempU);
+    %tempInterpFuncU= @(l) interp1(lambda,683*tempU,l,'pchip');
+    %Bu_Moonlight(i)=integral(tempInterpFuncU,lambda(1),lambda(end));
+    
+    tempH=(Lh_Moonlight(:,i)/5.03e15).*ybar_Moonlight.*lambda;
+    Bh_Moonlight(i)=trapz(lambda,tempH);
+    %tempInterpFuncH= @(l) interp1(lambda,683*tempH,l,'pchip');
+    %Bh_Moonlight(i)=integral(tempInterpFuncH,lambda(1),lambda(end));
+    
+    tempD=(Ld_Moonlight(:,i)/5.03e15).*ybar_Moonlight.*lambda;
+    Bd_Moonlight(i)=trapz(lambda,tempD);
+    %tempInterpFuncD= @(l) interp1(lambda,683*tempD,l,'pchip');
+    %Bd_Moonlight(i)=integral(tempInterpFuncD,lambda(1),lambda(end));
+end
+
+%% STARLIGHT
 %Absorption Coefficient
 a_Starlight=xlsread('hydrolight/base_stars/Mbase_stars.xls','a');
 a_Starlight=a_Starlight(4:end,3);
@@ -125,6 +181,28 @@ Ld_Starlight=Ld_Starlight(4:end,4:end)*5.03e15;
 
 Lh_Starlight=xlsread('hydrolight/base_stars/Mbase_stars.xls','Lh_2');
 Lh_Starlight=Lh_Starlight(4:end,4:end)*5.03e15;
+%Luminance
+ybar_Starlight=ybarInterp(lambda);
+
+Bu_Starlight=zeros(size(Lu_Starlight,2),1);
+Bh_Starlight=zeros(size(Lh_Starlight,2),1);
+Bd_Starlight=zeros(size(Ld_Starlight,2),1);
+for i=1:size(Lu_Starlight,2)
+    tempU=(Lu_Starlight(:,i)/5.03e15).*ybar_Starlight.*lambda;
+    Bu_Starlight(i)=trapz(lambda,tempU);
+    %tempInterpFuncU= @(l) interp1(lambda,683*tempU,l,'pchip');
+    %Bu_Starlight(i)=integral(tempInterpFuncU,lambda(1),lambda(end));
+    
+    tempH=(Lh_Starlight(:,i)/5.03e15).*ybar_Starlight.*lambda;
+    Bh_Starlight(i)=trapz(lambda,tempH);
+    %tempInterpFuncH= @(l) interp1(lambda,683*tempH,l,'pchip');
+    %Bh_Starlight(i)=integral(tempInterpFuncH,lambda(1),lambda(end));
+    
+    tempD=(Ld_Starlight(:,i)/5.03e15).*ybar_Starlight.*lambda;
+    Bd_Starlight(i)=trapz(lambda,tempD);
+    %tempInterpFuncD= @(l) interp1(lambda,683*tempD,l,'pchip');
+    %Bd_Starlight(i)=integral(tempInterpFuncD,lambda(1),lambda(end));
+end
 
 %% PHOTORECEPTOR ABSORPTION
 A=1; a0A=800; a1A=3.1;
