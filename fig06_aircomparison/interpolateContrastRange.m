@@ -1,7 +1,4 @@
-function interpolateContrastRange
-
-    load('contrastRangeAll.mat')
-    
+function [interpVisualRange,C0RangeExtendedNew] =interpolateContrastRange(C0Range,visualRangeSolns)
     [C0RangeExtended,indices]=sort([C0Range,0]);
     C0RangeExtendedNew=sort([linspace(min(C0Range),max(C0Range),200),0]);
     
@@ -19,7 +16,7 @@ function interpolateContrastRange
             dum=[];
         end
     end
-            
+end
             
     
 
