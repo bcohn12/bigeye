@@ -14,7 +14,7 @@ function visualRangeSolns = contrastRangeRelation
     fishpupil=mean(OM_TF)*.449;
     tetrapodpupil=mean(OM_ST)*.449;
     
-    pupilValues=[fishpupil,tetrapodpupil,pupil_TF,pupil_ST]*1e-3;
+    pupilValues=sort([fishpupil,tetrapodpupil,pupil_TF,pupil_ST]*1e-3);
     
     tol=5e-5;
     
@@ -38,7 +38,7 @@ function visualRangeSolns = contrastRangeRelation
 
 %% CALCULATE RANGE FROM FIRING THRESHOLD
     visualRangeSolns=zeros(length(C0Range),length(pupilValues),length(LVals));
-    for l=2:3
+    for l=1:3
         L=LVals(l);
         Dt=DtVals(l);
         F=FVals(l);
@@ -48,9 +48,9 @@ function visualRangeSolns = contrastRangeRelation
         visualRangeSolnsTemp=zeros(length(C0Range),length(pupilValues));        
         
         if l==1
-            r=1.6e4;
+            r=1.4e4;
         elseif l==2
-            r=620;
+            r=230;
         else
             r=10;
         end
@@ -59,8 +59,7 @@ function visualRangeSolns = contrastRangeRelation
             A=pupilValues(i);
             for c=1:length(C0Range)
                 delta=10^(floor(log10(r))-5);
-                C0=C0Range(c);               
-                
+                C0=C0Range(c);                       
                 possibleSolution=10;
                 while abs(possibleSolution-1)>=tol
                     possibleSolution=firingThreshRange(...
@@ -71,7 +70,6 @@ function visualRangeSolns = contrastRangeRelation
                     else
                         r=r+delta;
                     end
-
                     clc
                     fprintf('iteration: %d, %d, %d \n', c,i,l);
                     fprintf('possibleSolution: %f \n', possibleSolution);
@@ -85,22 +83,26 @@ function visualRangeSolns = contrastRangeRelation
                 CrFunc=@(lambda) exp(-sigma(lambda).*mr);
                 Cr= C0*integral(CrFunc,lambda1,lambda2);
 
-                angularSize=asin(T/(2*mr))*2*10^3;
+                angularSize=atan(T/(2*mr))*2*10^3;
                 Kt=liminalContrast(A,L,angularSize);
 
                 if 10^(Kt) <= abs(Cr)
                      visualRangeSolnsTemp(c,i)=mr;
                 else
                     delta=delta*1e1;
-                    while(10^(Kt)-abs(Cr)>tol)
+                    %tempRange=linspace(mr,mr/1e3,ceil(mr)*1e2);
+                    %count=1;
+                    while(10^(Kt)>abs(Cr))
                         mr=mr-delta;
-                        angularSize=(T/mr)*10^3;
+                        %mr=tempRange(count);
+                        angularSize=atan(T/(2*mr))*2*10^3;
                         Cr=C0*integral(CrFunc,lambda1,lambda2);
                         Kt=liminalContrast(A,L,angularSize);
                         clc
                         fprintf('iteration: %d, %d, %d \n', c,i,l);
                         fprintf('range: %f \n',mr);
                         fprintf('error: %f \n', 10^(Kt)-abs(Cr));
+                        %count=count+1;
                     end
                     visualRangeSolnsTemp(c,i)=mr;
                 end
@@ -117,7 +119,7 @@ function  solution=firingThreshRange(WHandle,A,r,C0,L,T,F,Ispace,Dt,q,k,len,X,d,
     sigma=@(lambda) ((1.1e-3*lambda.^(-4))+(0.008*lambda.^(-2.09)))/(1e3); %value checked with mathmematica
     
     Nspace=(pi/4)^2*(T/r)^2*A^2*Ispace*Dt*q*((k*len)/(2.3+(k*len)));
-    Xch=((T*F*A)/(2*r*d))^2*X*Dt;
+    Xch=((T*F*A)/(r*d))^2*X*Dt;
 
     %APPARENT RADIANCE OF THE GREY OBJECT
     Bgfunc=@(lambda) WHandle(lambda).*(1+(C0.*exp(-sigma(lambda).*r)));
@@ -168,7 +170,6 @@ function Kt = liminalContrast(A,L,angularSize)
         Kt=-2*log10(deltarparam);
     else
         Xparam=X(deltarparam,L);
-        Xmparam=Xm(L);
         if Xparam>0 && Xparam<=0.20
             Yval=1.45*Xparam;
             Kt =-2*logStardeltar-Yval;

@@ -3,12 +3,21 @@ function pupilSizevsRangeConstantDepth_River
 
     %% CONSTANT DEPTH VALUE RANGE OF VISION VS PUPIL SIZE
 
+%     PROMPT = 0;
+% 
+%     if PROMPT
+%     coastalWaterDepth=input('Input depth value in vector form between 1-15:\n');
+%     else 
+%         coastalWaterDepth=[8];
+%     end
+%    coastalWaterDepth=sort(coastalWaterDepth,'descend');
     conditions={'Sun','Moonlight','Starlight'};
     pupilValues=linspace(minpupil,maxpupil,30); 
     depth=8; tol=5e-4;
    
     visualRange_River=zeros(length(pupilValues),length(conditions),2);
-    for i=2:length(conditions);
+    actRange_River=visualRange_River;
+    for i=1:length(conditions);
         if strcmp('Sun',conditions{i})
             r_down=5;r_hor=3;
         elseif strcmp('Moonlight',conditions{i})
@@ -20,10 +29,13 @@ function pupilSizevsRangeConstantDepth_River
         aString=strcat('a_',conditions{i}); bString=strcat('b_',conditions{i});
         KdString=strcat('Kd_',conditions{i}); KhString=strcat('Kh_',conditions{i});
         LdString=strcat('Ld_',conditions{i}); LhString=strcat('Lh_',conditions{i});
+        BdString=strcat('Bd_',conditions{i}); BhString=strcat('Bh_',conditions{i});
+        C0String=strcat('C0_',conditions{i});
+        
         pAbsorbString=strcat('pAbsorb_',conditions{i});
         a=eval(aString); b=eval(bString); Kd=eval(KdString); Kh=eval(KhString);
         Ld=eval(LdString); Lh=eval(LhString); pAbsorb=eval(pAbsorbString);
-        Dt=DtVals_River(i);
+        Bd=eval(BdString); Bh=eval(BhString); C0=eval(C0String);
         
         for j=1:length(pupilValues)
             A=pupilValues(j);
@@ -68,7 +80,6 @@ function pupilSizevsRangeConstantDepth_River
             
             visualRange_River(j,i,1)=r_down;
             visualRange_River(j,i,2)=r_hor;
-
          end
 %         fprintf('iteration: %d\n',i);
     end
@@ -112,7 +123,7 @@ function  solution=firingThresh(depth,lambda,photoreceptorAbsorption,a,b,KAll,LA
     
     Xch=((T*M*A)/(2*r*d))^2*X*Dt;
     IspaceFunc=@(l) LInterp(l).*l.*(1-exp(-k*alphaInterp(l)*len));
-    IblackFunc=@(l) LInterp(l).*l.*(1-exp(-k*alphaInterp(l)*len)).*(1-exp((KInterp(l)-aInterp(l)-bInterp(l))*r));
+    IblackFunc=@(l) LInterp(l).*l.*(1-exp(-k*alphaInterp(l)*len)).*(1+(C0*exp((KInterp(l)-aInterp(l)-bInterp(l))*r)));
     
     Ispace=integral(IspaceFunc,lambda1,lambda2);
     %IspaceInterp=@(l) interp1(lambda,Ispace,l,'pchip');
@@ -122,5 +133,4 @@ function  solution=firingThresh(depth,lambda,photoreceptorAbsorption,a,b,KAll,LA
     Nspace=((pi/4)^2)*(A^2)*((T/r)^2)*q*Dt*Ispace;
     Nblack=((pi/4)^2)*(A^2)*((T/r)^2)*q*Dt*Iblack;
 
-    solution=(R*sqrt(Nblack+Nspace+2*Xch))/(abs(Nblack-Nspace));  
-    
+    solution=(R*sqrt(Nblack+Nspace+2*Xch))/(abs(Nblack-Nspace));    

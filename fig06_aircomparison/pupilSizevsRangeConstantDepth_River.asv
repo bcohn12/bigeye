@@ -16,21 +16,26 @@ function pupilSizevsRangeConstantDepth_River
     depth=8; tol=5e-4;
    
     visualRange_River=zeros(length(pupilValues),length(conditions),2);
-    for i=3:length(conditions);
+    actRange_River=visualRange_River;
+    for i=1:length(conditions);
         if strcmp('Sun',conditions{i})
             r_down=5;r_hor=3;
         elseif strcmp('Moonlight',conditions{i})
             r_down=2;r_hor=1;
         elseif strcmp('Starlight',conditions{i})
-            r_down=1e-17;r_hor=1e-20;
+            r_down=1;r_hor=.3;
         end
         
         aString=strcat('a_',conditions{i}); bString=strcat('b_',conditions{i});
         KdString=strcat('Kd_',conditions{i}); KhString=strcat('Kh_',conditions{i});
         LdString=strcat('Ld_',conditions{i}); LhString=strcat('Lh_',conditions{i});
+        BdString=strcat('Bd_',conditions{i}); BhString=strcat('Bh_',conditions{i});
+        C0String=strcat('C0_',conditions{i});
+        
         pAbsorbString=strcat('pAbsorb_',conditions{i});
         a=eval(aString); b=eval(bString); Kd=eval(KdString); Kh=eval(KhString);
         Ld=eval(LdString); Lh=eval(LhString); pAbsorb=eval(pAbsorbString);
+        Bd=eval(BdString); Bh=eval(BhString); C0=eval(C0String);
         
         for j=1:length(pupilValues)
             A=pupilValues(j);
@@ -75,7 +80,24 @@ function pupilSizevsRangeConstantDepth_River
             
             visualRange_River(j,i,1)=r_down;
             visualRange_River(j,i,2)=r_hor;
-
+            
+            CrFunc=@(lambda) exp(-sigma(lambda).*mr);
+            Cr_down(i)= C0_moonlight*integral(CrFunc,lambda1,lambda2);
+    
+            angularSize(i)=(T/mr)*10^3;
+            Kt(i)=liminalContrast(A,Bd,angularSize(i));
+            
+            tempVisualRange=linspace(mr,mr/100,max(visualRangeMoonlight)*10);
+            ind=1;
+            while(10^(Kt(i)) > abs(Cr_down(i)))
+                mr=tempVisualRange(j);
+                angularSize(i)=(T/mr)*10^3;
+                Cr_down(i)=C0_moonlight*integral(CrFunc,lambda1,lambda2);
+                Kt(i)=liminalContrast(A,Bd,angularSize(i));
+                
+                actRangeMoonlight(i)=mr;
+                ind=ind+1;
+            end
          end
 %         fprintf('iteration: %d\n',i);
     end
@@ -119,7 +141,7 @@ function  solution=firingThresh(depth,lambda,photoreceptorAbsorption,a,b,KAll,LA
     
     Xch=((T*M*A)/(2*r*d))^2*X*Dt;
     IspaceFunc=@(l) LInterp(l).*l.*(1-exp(-k*alphaInterp(l)*len));
-    IblackFunc=@(l) LInterp(l).*l.*(1-exp(-k*alphaInterp(l)*len)).*(1-exp((KInterp(l)-aInterp(l)-bInterp(l))*r));
+    IblackFunc=@(l) LInterp(l).*l.*(1-exp(-k*alphaInterp(l)*len)).*(1+(C0*exp((KInterp(l)-aInterp(l)-bInterp(l))*r)));
     
     Ispace=integral(IspaceFunc,lambda1,lambda2);
     %IspaceInterp=@(l) interp1(lambda,Ispace,l,'pchip');
