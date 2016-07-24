@@ -391,6 +391,12 @@ function plotComparisonRange
 %           (interp1q(pupilValues,visualRange_River(:,4),fishpupil*1e-3))
 %       SURS_12=(interp1q(pupilValuesAir,visualRangeStarlight,tetrapodpupil*1e-3))/...
 %           (interp1q(pupilValues,visualRange_River(:,4),fishpupil*1e-3))
+
+dVDdVRU_1=(interp1q(pupilValuesAir,dVdADaylight',fishpupil*1e-3))/...
+    (interp1q(pupilValues',dVdA_River(:,1),fishpupil*1e-3))
+dVDdVRU_1=(interp1q(pupilValuesAir,dVdADaylight',tetrapodpupil*1e-3))/...
+    (interp1q(pupilValues',dVdA_River(:,1),fishpupil*1e-3))
+
      
 
 %     fprintf('fish pupil and daylight intersection %f \n',interp1q(pupilValuesAir,visualRangeDaylight,fishpupil*10^-3));

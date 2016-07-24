@@ -27,24 +27,26 @@ function plotContrastRange
         'digited','digited higher SD'};
     
     figure();
-    plot(C0RangeNew,contrastRange_River,'linewidth',linewidthDef)
+    plot(C0RangeNew,contrastRange_River(:,3),'linewidth',linewidthDef)
     hold on;
+    plot(C0RangeNew,contrastRange_River(:,5),'linewidth',linewidthDef)
     xlabel('contrast'); ylabel('visual range (m)');
     title('Aquatic Daylight Contrast vs Range')
     ylim1=get(gca,'Ylim'); xlim1=get(gca,'Xlim');
     fillboxTF = patch([minFishContrast minFishContrast,...
         maxFishContrast maxFishContrast], ...
-    [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
+    [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
 %     fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
 %         [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
 %     set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
     
-    columnlegend(3,key,'location','north',...
-        'fontsize',8)
+    %columnlegend(3,key,'location','north',...
+     %   'fontsize',8)
     figure();
-    plot(C0RangeNew,contrastRange,'linewidth',linewidthDef)
+    plot(C0RangeNew,contrastRange(:,3),'linewidth',linewidthDef)
     hold on;
+    plot(C0RangeNew,contrastRange(:,5),'linewidth',linewidthDef)
     xlabel('contrast'); ylabel('visual range (m)');
     title('Aerial Daylight Contrast vs Range')
         ylim1=get(gca,'Ylim'); xlim1=get(gca,'Xlim');
@@ -53,5 +55,5 @@ function plotContrastRange
     [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
     set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
     
-    columnlegend(3,key,'location','north',...
-        'fontsize',8)
+    %columnlegend(3,key,'location','north',...
+     %   'fontsize',8)
