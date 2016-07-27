@@ -6,3 +6,4 @@ EROOT=strrep(startupPath,'\','/');
 addpath([EROOT '/aerial model']);
 addpath([EROOT '/aquatic model']);
 addpath([EROOT '/figures']);
+addpath([EROOT, '/image contrast']);
