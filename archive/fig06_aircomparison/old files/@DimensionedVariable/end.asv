@@ -1,3 +1,0 @@
-function endIndex = end(vIn,indexToFindEnd,numberOfIndexes)
-sizeVector = size(vIn.value);
-endIndex = sizeVector(indexToFindEnd);
