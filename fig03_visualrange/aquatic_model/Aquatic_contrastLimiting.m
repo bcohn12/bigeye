@@ -74,7 +74,7 @@ global EROOT
         end
     end
     visualRange_River=actRange_River;   
-    save([EROOT ' '/visibilityAquatic_All','visualRange_River','pupilValues')
+    save([EROOT '/aquatic_model/visibilityAquatic_All.mat'],'visualRange_River','pupilValues')
 
 function Kt = liminalContrast(A,L,angularSize)
     %% FUNCTION DEFINTIONS
