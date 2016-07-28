@@ -1,0 +1,1601 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     63744,       1592]
+NotebookOptionsPosition[     62471,       1549]
+NotebookOutlinePosition[     62829,       1565]
+CellTagsIndexPosition[     62786,       1562]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Quit", "[", "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.669123101162939*^9, 3.669123102375004*^9}, {
+  3.669132682769643*^9, 3.6691326832979937`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"\[Lambda]Daylight", "=", 
+   RowBox[{"Import", "[", 
+    RowBox[{"FileNameJoin", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"NotebookDirectory", "[", "]"}], ",", 
+       "\"\<daylightRadiance.csv\>\""}], "}"}], "]"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[Lambda]D", "=", 
+   RowBox[{"\[Lambda]Daylight", "[", 
+    RowBox[{"[", 
+     RowBox[{"All", ",", "1"}], "]"}], "]"}]}], ";", 
+  RowBox[{"\[Lambda]D", "=", 
+   RowBox[{"\[Lambda]D", 
+    TemplateBox[{Null},
+     "QuantityUnit",
+     DisplayFunction->(TooltipBox[
+       StyleBox[
+        RowBox[{
+          StyleBox["\"\[Micro]m\"", "QuantityUnitTraditionalInput"]}], 
+        ShowStringCharacters -> False], "Unit: micrometers"]& ),
+     InterpretationFunction->(RowBox[{"Quantity", "[", 
+        RowBox[{"1", ",", "\"Micrometers\""}], "]"}]& )]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"daylightRadiance", "=", 
+   RowBox[{"\[Lambda]Daylight", "[", 
+    RowBox[{"[", 
+     RowBox[{"All", ",", "2"}], "]"}], "]"}]}], ";", " ", 
+  RowBox[{"daylightRadiance", "=", 
+   RowBox[{"daylightRadiance", 
+    TemplateBox[{Null},
+     "QuantityUnit",
+     DisplayFunction->(TooltipBox[
+       StyleBox[
+        RowBox[{
+          StyleBox[
+           
+           RowBox[{"\"mW\"", "\[InvisibleSpace]", "\"/(\"", 
+             "\[InvisibleSpace]", 
+             SuperscriptBox["\"cm\"", "2"], "\[InvisibleSpace]", 
+             "\"\[Micro]m\"", "\[ThinSpace]", "\"sr\"", "\[InvisibleSpace]", 
+             "\")\""}], "QuantityUnitTraditionalInput"]}], 
+        ShowStringCharacters -> False], 
+       "Unit: milliwatts per centimeter squared micrometer steradian"]& ),
+     InterpretationFunction->(RowBox[{"Quantity", "[", 
+        RowBox[{"1", ",", 
+          FractionBox["\"Milliwatts\"", 
+           RowBox[{
+             SuperscriptBox["\"Centimeters\"", "2"], " ", "\"Micrometers\"", 
+             " ", "\"Steradians\""}]]}], "]"}]& )]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[Lambda]D", "=", 
+   RowBox[{"UnitConvert", "[", 
+    RowBox[{"\[Lambda]D", ",", "\"\<Meters\>\""}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"daylightRadiance", "=", 
+   RowBox[{"UnitConvert", "[", 
+    RowBox[{"daylightRadiance", ",", 
+     RowBox[{"\"\<Watts\>\"", "/", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", "\"\<Meters\>\"", ")"}], "^", "2"}], " ", 
+        "\"\<Steradians\>\"", " ", "\"\<Meters\>\""}], ")"}]}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"I\[Lambda]Daylight", "=", 
+    RowBox[{"Transpose", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"QuantityMagnitude", "@", 
+        RowBox[{"N", "[", "\[Lambda]D", "]"}]}], ",", " ", 
+       RowBox[{"QuantityMagnitude", "@", 
+        RowBox[{"N", "[", "daylightRadiance", "]"}]}]}], "}"}], "]"}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[Lambda]Vegetative", "=", 
+   RowBox[{"Import", "[", 
+    RowBox[{"FileNameJoin", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"NotebookDirectory", "[", "]"}], ",", 
+       "\"\<vegetativeRadiance.csv\>\""}], "}"}], "]"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[Lambda]V", "=", 
+   RowBox[{"\[Lambda]Vegetative", "[", 
+    RowBox[{"[", 
+     RowBox[{"All", ",", "1"}], "]"}], "]"}]}], ";", " ", 
+  RowBox[{"\[Lambda]V", "=", 
+   RowBox[{"\[Lambda]V", 
+    TemplateBox[{Null},
+     "QuantityUnit",
+     DisplayFunction->(TooltipBox[
+       StyleBox[
+        RowBox[{
+          StyleBox["\"nm\"", "QuantityUnitTraditionalInput"]}], 
+        ShowStringCharacters -> False], "Unit: nanometers"]& ),
+     InterpretationFunction->(RowBox[{"Quantity", "[", 
+        RowBox[{"1", ",", "\"Nanometers\""}], "]"}]& )]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"vegetativeRadiance", "=", 
+   RowBox[{"\[Lambda]Vegetative", "[", 
+    RowBox[{"[", 
+     RowBox[{"All", ",", "2"}], "]"}], "]"}]}], ";", 
+  RowBox[{"vegetativeRadiance", "=", 
+   RowBox[{"vegetativeRadiance", 
+    TemplateBox[{Null},
+     "QuantityUnit",
+     DisplayFunction->(TooltipBox[
+       StyleBox[
+        RowBox[{
+          StyleBox[
+           
+           RowBox[{"\"W\"", "\[InvisibleSpace]", "\"/(\"", 
+             "\[InvisibleSpace]", 
+             SuperscriptBox["\"m\"", "2"], "\[InvisibleSpace]", "\"nm\"", 
+             "\[ThinSpace]", "\"sr\"", "\[InvisibleSpace]", "\")\""}], 
+           "QuantityUnitTraditionalInput"]}], ShowStringCharacters -> False], 
+       "Unit: watts per meter squared nanometer steradian"]& ),
+     InterpretationFunction->(RowBox[{"Quantity", "[", 
+        RowBox[{"1", ",", 
+          FractionBox["\"Watts\"", 
+           RowBox[{
+             SuperscriptBox["\"Meters\"", "2"], " ", "\"Nanometers\"", " ", 
+             "\"Steradians\""}]]}], "]"}]& )]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[Lambda]V", "=", 
+   RowBox[{"UnitConvert", "[", 
+    RowBox[{"\[Lambda]V", ",", "\"\<Meters\>\""}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"vegetativeRadiance", "=", 
+   RowBox[{"UnitConvert", "[", 
+    RowBox[{"vegetativeRadiance", ",", 
+     RowBox[{"\"\<Watts\>\"", "/", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", "\"\<Meters\>\"", ")"}], "^", "2"}], " ", 
+        "\"\<Steradians\>\"", " ", "\"\<Meters\>\""}], ")"}]}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"I\[Lambda]Vegetative", "=", 
+    RowBox[{"Transpose", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"QuantityMagnitude", "@", 
+        RowBox[{"N", "[", "\[Lambda]V", "]"}]}], ",", 
+       RowBox[{"QuantityMagnitude", "@", 
+        RowBox[{"N", "[", "vegetativeRadiance", "]"}]}]}], "}"}], "]"}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[Lambda]Moonlight", "=", 
+   RowBox[{"Import", "[", 
+    RowBox[{"FileNameJoin", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"NotebookDirectory", "[", "]"}], ",", 
+       "\"\<moonlightRadiance.csv\>\""}], "}"}], "]"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[Lambda]M", "=", 
+   RowBox[{"\[Lambda]Moonlight", "[", 
+    RowBox[{"[", 
+     RowBox[{"All", ",", "1"}], "]"}], "]"}]}], ";", 
+  RowBox[{"\[Lambda]M", "=", 
+   RowBox[{"\[Lambda]M", 
+    TemplateBox[{Null},
+     "QuantityUnit",
+     DisplayFunction->(TooltipBox[
+       StyleBox[
+        RowBox[{
+          StyleBox["\"\[Micro]m\"", "QuantityUnitTraditionalInput"]}], 
+        ShowStringCharacters -> False], "Unit: micrometers"]& ),
+     InterpretationFunction->(RowBox[{"Quantity", "[", 
+        RowBox[{"1", ",", "\"Micrometers\""}], "]"}]& )]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"moonlightRadiance", "=", 
+   RowBox[{"\[Lambda]Moonlight", "[", 
+    RowBox[{"[", 
+     RowBox[{"All", ",", "2"}], "]"}], "]"}]}], ";", 
+  RowBox[{"moonlightRadiance", "=", 
+   RowBox[{"moonlightRadiance", 
+    TemplateBox[{Null},
+     "QuantityUnit",
+     DisplayFunction->(TooltipBox[
+       StyleBox[
+        RowBox[{
+          StyleBox[
+           
+           RowBox[{"\"W\"", "\[InvisibleSpace]", "\"/(\"", 
+             "\[InvisibleSpace]", 
+             SuperscriptBox["\"m\"", "2"], "\[InvisibleSpace]", 
+             "\"\[Micro]m\"", "\[ThinSpace]", "\"sr\"", "\[InvisibleSpace]", 
+             "\")\""}], "QuantityUnitTraditionalInput"]}], 
+        ShowStringCharacters -> False], 
+       "Unit: watts per meter squared micrometer steradian"]& ),
+     InterpretationFunction->(RowBox[{"Quantity", "[", 
+        RowBox[{"1", ",", 
+          FractionBox["\"Watts\"", 
+           RowBox[{
+             SuperscriptBox["\"Meters\"", "2"], " ", "\"Micrometers\"", " ", 
+             "\"Steradians\""}]]}], "]"}]& )]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[Lambda]M", "=", 
+   RowBox[{"UnitConvert", "[", 
+    RowBox[{"\[Lambda]M", ",", "\"\<Meters\>\""}], "]"}]}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"moonlightRadiance", "=", 
+   RowBox[{"UnitConvert", "[", 
+    RowBox[{"moonlightRadiance", ",", 
+     RowBox[{"\"\<Watts\>\"", "/", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", "\"\<Meters\>\"", ")"}], "^", "2"}], " ", 
+        "\"\<Steradians\>\"", " ", "\"\<Meters\>\""}], ")"}]}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"I\[Lambda]Moonlight", "=", 
+    RowBox[{"Transpose", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"QuantityMagnitude", "@", 
+        RowBox[{"N", "[", "\[Lambda]M", "]"}]}], ",", 
+       RowBox[{"QuantityMagnitude", "@", 
+        RowBox[{"N", "[", "moonlightRadiance", "]"}]}]}], "}"}], "]"}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[Lambda]Starlight", "=", 
+   RowBox[{"Import", "[", 
+    RowBox[{"FileNameJoin", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"NotebookDirectory", "[", "]"}], ",", 
+       "\"\<starlightRadiance.csv\>\""}], "}"}], "]"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[Lambda]S", "=", 
+   RowBox[{"\[Lambda]Starlight", "[", 
+    RowBox[{"[", 
+     RowBox[{"All", ",", "1"}], "]"}], "]"}]}], ";", 
+  RowBox[{"\[Lambda]S", "=", 
+   RowBox[{"\[Lambda]S", 
+    TemplateBox[{Null},
+     "QuantityUnit",
+     DisplayFunction->(TooltipBox[
+       StyleBox[
+        RowBox[{
+          StyleBox["\"\[Micro]m\"", "QuantityUnitTraditionalInput"]}], 
+        ShowStringCharacters -> False], "Unit: micrometers"]& ),
+     InterpretationFunction->(RowBox[{"Quantity", "[", 
+        RowBox[{"1", ",", "\"Micrometers\""}], "]"}]& )]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"starlightRadiance", "=", 
+   RowBox[{"\[Lambda]Starlight", "[", 
+    RowBox[{"[", 
+     RowBox[{"All", ",", "2"}], "]"}], "]"}]}], ";", " ", 
+  RowBox[{"starlightRadiance", "=", 
+   RowBox[{"starlightRadiance", 
+    TemplateBox[{Null},
+     "QuantityUnit",
+     DisplayFunction->(TooltipBox[
+       StyleBox[
+        RowBox[{
+          StyleBox[
+           
+           RowBox[{"\"W\"", "\[InvisibleSpace]", "\"/(\"", 
+             "\[InvisibleSpace]", 
+             SuperscriptBox["\"m\"", "2"], "\[InvisibleSpace]", 
+             "\"\[Micro]m\"", "\[ThinSpace]", "\"sr\"", "\[InvisibleSpace]", 
+             "\")\""}], "QuantityUnitTraditionalInput"]}], 
+        ShowStringCharacters -> False], 
+       "Unit: watts per meter squared micrometer steradian"]& ),
+     InterpretationFunction->(RowBox[{"Quantity", "[", 
+        RowBox[{"1", ",", 
+          FractionBox["\"Watts\"", 
+           RowBox[{
+             SuperscriptBox["\"Meters\"", "2"], " ", "\"Micrometers\"", " ", 
+             "\"Steradians\""}]]}], "]"}]& )]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[Lambda]S", "=", 
+   RowBox[{"UnitConvert", "[", 
+    RowBox[{"\[Lambda]S", ",", "\"\<Meters\>\""}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"starlightRadiance", "=", 
+   RowBox[{"UnitConvert", "[", 
+    RowBox[{"starlightRadiance", ",", 
+     RowBox[{"\"\<Watts\>\"", "/", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", "\"\<Meters\>\"", ")"}], "^", "2"}], " ", 
+        "\"\<Steradians\>\"", " ", "\"\<Meters\>\""}], ")"}]}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"I\[Lambda]Starlight", "=", 
+    RowBox[{"Transpose", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"QuantityMagnitude", "@", 
+        RowBox[{"N", "[", "\[Lambda]S", "]"}]}], ",", 
+       RowBox[{"QuantityMagnitude", "@", 
+        RowBox[{"N", "[", "starlightRadiance", "]"}]}]}], "}"}], "]"}]}], 
+   ";"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"RRGGreen", "=", 
+   RowBox[{"Import", "[", 
+    RowBox[{"FileNameJoin", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"NotebookDirectory", "[", "]"}], ",", "\"\<RRGGreen.csv\>\""}],
+       "}"}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[Lambda]RRGGreen", "=", 
+   RowBox[{"RRGGreen", "[", 
+    RowBox[{"[", 
+     RowBox[{"All", ",", "1"}], "]"}], "]"}]}], ";", " ", 
+  RowBox[{"\[Lambda]RRGGreen", "=", 
+   RowBox[{"\[Lambda]RRGGreen", 
+    TemplateBox[{Null},
+     "QuantityUnit",
+     DisplayFunction->(TooltipBox[
+       StyleBox[
+        RowBox[{
+          StyleBox["\"nm\"", "QuantityUnitTraditionalInput"]}], 
+        ShowStringCharacters -> False], "Unit: nanometers"]& ),
+     InterpretationFunction->(RowBox[{"Quantity", "[", 
+        RowBox[{"1", ",", "\"Nanometers\""}], "]"}]& )]}]}], ";", " ", 
+  RowBox[{"\[Lambda]RRGGreen", "=", 
+   RowBox[{"UnitConvert", "[", 
+    RowBox[{"\[Lambda]RRGGreen", ",", "\"\<Meters\>\""}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"RRGGreen", "=", 
+   RowBox[{"RRGGreen", "[", 
+    RowBox[{"[", 
+     RowBox[{"All", ",", "2"}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+
+ RowBox[{
+  RowBox[{
+   RowBox[{"RRGGreenRatio", "=", 
+    RowBox[{"Transpose", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"QuantityMagnitude", "@", 
+        RowBox[{"N", "[", "\[Lambda]RRGGreen", "]"}]}], ",", 
+       RowBox[{"N", "[", "RRGGreen", "]"}]}], "}"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"RRGBlack", "=", 
+   RowBox[{"Import", "[", 
+    RowBox[{"FileNameJoin", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"NotebookDirectory", "[", "]"}], ",", "\"\<RRGBlack.csv\>\""}],
+       "}"}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[Lambda]RRGBlack", "=", 
+   RowBox[{"RRGBlack", "[", 
+    RowBox[{"[", 
+     RowBox[{"All", ",", "1"}], "]"}], "]"}]}], ";", " ", 
+  RowBox[{"\[Lambda]RRGBlack", "=", 
+   RowBox[{"\[Lambda]RRGBlack", 
+    TemplateBox[{Null},
+     "QuantityUnit",
+     DisplayFunction->(TooltipBox[
+       StyleBox[
+        RowBox[{
+          StyleBox["\"nm\"", "QuantityUnitTraditionalInput"]}], 
+        ShowStringCharacters -> False], "Unit: nanometers"]& ),
+     InterpretationFunction->(RowBox[{"Quantity", "[", 
+        RowBox[{"1", ",", "\"Nanometers\""}], "]"}]& )]}]}], ";", " ", 
+  RowBox[{"\[Lambda]RRGBlack", "=", 
+   RowBox[{"UnitConvert", "[", 
+    RowBox[{"\[Lambda]RRGBlack", ",", "\"\<Meters\>\""}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"RRGBlack", "=", 
+   RowBox[{"RRGBlack", "[", 
+    RowBox[{"[", 
+     RowBox[{"All", ",", "2"}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+
+ RowBox[{
+  RowBox[{
+   RowBox[{"RRGBlackRatio", "=", 
+    RowBox[{"Transpose", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"QuantityMagnitude", "@", 
+        RowBox[{"N", "[", "\[Lambda]RRGBlack", "]"}]}], ",", 
+       RowBox[{"N", "[", "RRGBlack", "]"}]}], "}"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Export", "[", 
+   RowBox[{
+    RowBox[{"FileNameJoin", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"NotebookDirectory", "[", "]"}], ",", 
+       "\"\<SIDaylight.csv\>\""}], "}"}], "]"}], ",", "I\[Lambda]Daylight"}], 
+   "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Export", "[", 
+   RowBox[{
+    RowBox[{"FileNameJoin", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"NotebookDirectory", "[", "]"}], ",", 
+       "\"\<SIVegetative.csv\>\""}], "}"}], "]"}], ",", 
+    "I\[Lambda]Vegetative"}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Export", "[", 
+   RowBox[{
+    RowBox[{"FileNameJoin", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"NotebookDirectory", "[", "]"}], ",", 
+       "\"\<SIMoonlight.csv\>\""}], "}"}], "]"}], ",", 
+    "I\[Lambda]Moonlight"}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Export", "[", 
+   RowBox[{
+    RowBox[{"FileNameJoin", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"NotebookDirectory", "[", "]"}], ",", 
+       "\"\<SIStarlight.csv\>\""}], "}"}], "]"}], ",", 
+    "I\[Lambda]Starlight"}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Export", "[", 
+   RowBox[{
+    RowBox[{"FileNameJoin", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"NotebookDirectory", "[", "]"}], ",", 
+       "\"\<SIRRGGreen.csv\>\""}], "}"}], "]"}], ",", "RRGGreenRatio"}], 
+   "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Export", "[", 
+   RowBox[{
+    RowBox[{"FileNameJoin", "[", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"NotebookDirectory", "[", "]"}], ",", 
+       "\"\<SIRRGBlack.csv\>\""}], "}"}], "]"}], ",", "RRGBlackRatio"}], 
+   "]"}], ";"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.669141172526725*^9, 3.669141235284423*^9}, {
+   3.669141276362151*^9, 3.669141422969756*^9}, {3.669141531855484*^9, 
+   3.6691415537193317`*^9}, {3.669141610361895*^9, 3.669141943455518*^9}, {
+   3.669141974103459*^9, 3.669141993385604*^9}, {3.6692208478017607`*^9, 
+   3.669220866380698*^9}, {3.669220916560583*^9, 3.6692209585624533`*^9}, {
+   3.669221065686524*^9, 3.669221071037402*^9}, {3.669221665748732*^9, 
+   3.6692216856605997`*^9}, {3.669221716183448*^9, 3.669221904899431*^9}, 
+   3.669223769689516*^9, 3.669225738109106*^9}],
+
+Cell[BoxData["  "], "Input",
+ CellChangeTimes->{{3.669141885506751*^9, 3.669141885897684*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"\[Eta]Daylight", "=", "0.35"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[Eta]Night", "=", "0.35"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[CapitalDelta]tDaylight", "=", 
+   SuperscriptBox["1976", 
+    RowBox[{"-", "0.28"}]]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[CapitalDelta]tNight", "=", "1.16"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"XNight", "=", "0.011"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"XDaylight", "=", "0.08"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"R", "=", "1.96"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"d", "=", 
+   RowBox[{"3", 
+    TemplateBox[{Null},
+     "QuantityUnit",
+     DisplayFunction->(TooltipBox[
+       StyleBox[
+        RowBox[{
+          StyleBox["\"\[Micro]m\"", "QuantityUnitTraditionalInput"]}], 
+        ShowStringCharacters -> False], "Unit: micrometers"]& ),
+     InterpretationFunction->(RowBox[{"Quantity", "[", 
+        RowBox[{"1", ",", "\"Micrometers\""}], "]"}]& )]}]}], ";", " ", 
+  RowBox[{"d", "=", 
+   RowBox[{"QuantityMagnitude", "@", 
+    RowBox[{"UnitConvert", "[", 
+     RowBox[{"d", ",", "\"\<Meters\>\""}], "]"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"fDaylight", "=", "8.3"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"fNight", "=", "2.1"}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"T", "=", 
+    RowBox[{"1", 
+     TemplateBox[{Null},
+      "QuantityUnit",
+      DisplayFunction->(TooltipBox[
+        StyleBox[
+         RowBox[{
+           StyleBox["\"cm\"", "QuantityUnitTraditionalInput"]}], 
+         ShowStringCharacters -> False], "Unit: centimeters"]& ),
+      InterpretationFunction->(RowBox[{"Quantity", "[", 
+         RowBox[{"1", ",", "\"Centimeters\""}], "]"}]& )]}]}], ";", " ", 
+   RowBox[{"T", "=", 
+    RowBox[{"QuantityMagnitude", "@", 
+     RowBox[{"UnitConvert", "[", 
+      RowBox[{"T", ",", "\"\<Meters\>\""}], "]"}]}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"elevationCoastal", "=", 
+    RowBox[{"\[Pi]", "/", "3"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"azimuthMin", "=", "0"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"azimuthMax", "=", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"2", "*", "120"}], "-", "35"}], ")"}], "*", 
+    RowBox[{"(", 
+     RowBox[{"\[Pi]", "/", "180"}], ")"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"elevationMin", "=", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"\[Pi]", "/", "2"}], ")"}], "-", "elevationCoastal"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"elevationMaxCoastal", "=", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"\[Pi]", "/", "2"}], ")"}], "+", "elevationCoastal"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"elevationMaxLand", "=", 
+    RowBox[{"\[Pi]", "/", "2"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"minpupil", "=", 
+   RowBox[{"1", 
+    TemplateBox[{Null},
+     "QuantityUnit",
+     DisplayFunction->(TooltipBox[
+       StyleBox[
+        RowBox[{
+          StyleBox["\"mm\"", "QuantityUnitTraditionalInput"]}], 
+        ShowStringCharacters -> False], "Unit: millimeters"]& ),
+     InterpretationFunction->(RowBox[{"Quantity", "[", 
+        RowBox[{"1", ",", "\"Millimeters\""}], "]"}]& )]}]}], ";", " ", 
+  RowBox[{"minpupil", "=", 
+   RowBox[{"QuantityMagnitude", "@", 
+    RowBox[{"UnitConvert", "[", 
+     RowBox[{"minpupil", ",", "\"\<Meters\>\""}], "]"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"maxpupil", "=", 
+   RowBox[{"4", 
+    TemplateBox[{Null},
+     "QuantityUnit",
+     DisplayFunction->(TooltipBox[
+       StyleBox[
+        RowBox[{
+          StyleBox["\"cm\"", "QuantityUnitTraditionalInput"]}], 
+        ShowStringCharacters -> False], "Unit: centimeters"]& ),
+     InterpretationFunction->(RowBox[{"Quantity", "[", 
+        RowBox[{"1", ",", "\"Centimeters\""}], "]"}]& )]}]}], ";", " ", 
+  RowBox[{"maxpupil", "=", 
+   RowBox[{"QuantityMagnitude", "@", 
+    RowBox[{"UnitConvert", "[", 
+     RowBox[{"maxpupil", ",", "\"\<Meters\>\""}], "]"}]}]}], 
+  ";"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.669136842429989*^9, 3.66913685937366*^9}, {
+  3.669139270584597*^9, 3.669139618691927*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", 
+   RowBox[{"Stavenga", " ", "et", " ", "al", " ", "1993"}], "*)"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", 
+   RowBox[{"Vitamin", " ", "A1", " ", "rhodopsin", " ", "constants"}], "*)"}],
+   "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"a0\[Alpha]", "=", "380"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"a1\[Alpha]", "=", "6.09"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"a0\[Beta]", "=", "247"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"a1\[Beta]", "=", "3.59"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"A\[Alpha]", "=", "1"}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"A\[Beta]", "=", "0.29"}], ";"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"Peak", " ", "Absorabance", " ", "Wavelengths"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"\[Lambda]max\[Alpha]", "=", 
+     RowBox[{"500", 
+      TemplateBox[{Null},
+       "QuantityUnit",
+       DisplayFunction->(TooltipBox[
+         StyleBox[
+          RowBox[{
+            StyleBox["\"nm\"", "QuantityUnitTraditionalInput"]}], 
+          ShowStringCharacters -> False], "Unit: nanometers"]& ),
+       InterpretationFunction->(RowBox[{"Quantity", "[", 
+          RowBox[{"1", ",", "\"Nanometers\""}], "]"}]& )]}]}], ";", " ", 
+    RowBox[{"\[Lambda]max\[Alpha]", "=", 
+     RowBox[{"QuantityMagnitude", "@", 
+      RowBox[{"UnitConvert", "[", 
+       RowBox[{"\[Lambda]max\[Alpha]", ",", "\"\<Meters\>\""}], "]"}]}]}], 
+    ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"\[Lambda]max\[Beta]", "=", 
+     RowBox[{"350", 
+      TemplateBox[{Null},
+       "QuantityUnit",
+       DisplayFunction->(TooltipBox[
+         StyleBox[
+          RowBox[{
+            StyleBox["\"nm\"", "QuantityUnitTraditionalInput"]}], 
+          ShowStringCharacters -> False], "Unit: nanometers"]& ),
+       InterpretationFunction->(RowBox[{"Quantity", "[", 
+          RowBox[{"1", ",", "\"Nanometers\""}], "]"}]& )]}]}], ";", " ", 
+    RowBox[{"\[Lambda]max\[Beta]", "=", 
+     RowBox[{"QuantityMagnitude", "@", 
+      RowBox[{"UnitConvert", "[", 
+       RowBox[{"\[Lambda]max\[Beta]", ",", "\"\<Meters\>\""}], "]"}]}]}], 
+    ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"x\[Alpha]", "[", "\[Lambda]_", "]"}], ":=", " ", 
+     RowBox[{"Log", "[", 
+      RowBox[{"\[Lambda]", "/", "\[Lambda]max\[Alpha]"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"x\[Beta]", "[", "\[Lambda]_", "]"}], ":=", " ", 
+     RowBox[{"Log", "[", 
+      RowBox[{"\[Lambda]", "/", "\[Lambda]max\[Beta]"}], "]"}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", 
+    RowBox[{"SSH", " ", "template", " ", "calculations"}], "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"\[Alpha]", "[", "\[Lambda]_", "]"}], ":=", " ", 
+     RowBox[{"A\[Alpha]", "*", 
+      RowBox[{"Exp", "[", 
+       RowBox[{
+        RowBox[{"-", "a0\[Alpha]"}], "*", 
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{"x\[Alpha]", "[", "\[Lambda]", "]"}], ")"}], "2"], "*", 
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          RowBox[{"(", 
+           RowBox[{"a1\[Alpha]", "*", 
+            RowBox[{"x\[Alpha]", "[", "\[Lambda]", "]"}]}], ")"}], "+", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"3", "/", "8"}], ")"}], "*", 
+            SuperscriptBox["a1\[Alpha]", "2"], "*", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{"x\[Alpha]", "[", "\[Lambda]", "]"}], ")"}], "2"]}], 
+           ")"}]}], ")"}]}], "]"}]}]}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"\[Beta]", "[", "\[Lambda]_", "]"}], ":=", " ", 
+     RowBox[{"A\[Beta]", "*", 
+      RowBox[{"Exp", "[", 
+       RowBox[{
+        RowBox[{"-", "a0\[Beta]"}], "*", 
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{"x\[Beta]", "[", "\[Lambda]", "]"}], ")"}], "2"], "*", 
+        RowBox[{"(", 
+         RowBox[{"1", "+", 
+          RowBox[{"(", 
+           RowBox[{"a1\[Beta]", "*", 
+            RowBox[{"x\[Beta]", "[", "\[Lambda]", "]"}]}], ")"}], "+", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"(", 
+             RowBox[{"3", "/", "8"}], ")"}], "*", 
+            SuperscriptBox["a1\[Beta]", "2"], "*", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{"x\[Beta]", "[", "\[Lambda]", "]"}], ")"}], "2"]}], 
+           ")"}]}], ")"}]}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"A", "[", "\[Lambda]_", "]"}], ":=", " ", 
+     RowBox[{
+      RowBox[{"\[Alpha]", "[", "\[Lambda]", "]"}], "+", 
+      RowBox[{"\[Beta]", "[", "\[Lambda]", "]"}]}]}], ";"}]}]}]], "Input",
+ CellChangeTimes->{{3.669125451217211*^9, 3.669125524526326*^9}, {
+  3.6691269449216433`*^9, 3.669126967663348*^9}, {3.6691319187518883`*^9, 
+  3.669131920310039*^9}, {3.669132130049879*^9, 3.6691321726256847`*^9}, {
+  3.669132206796591*^9, 3.669132426086729*^9}, {3.669134078803327*^9, 
+  3.669134089649642*^9}}],
+
+Cell[BoxData["\[IndentingNewLine]"], "Input",
+ CellChangeTimes->{
+  3.669123115719623*^9, {3.6691232364051027`*^9, 3.669123264019351*^9}, {
+   3.669123294492537*^9, 3.669123317630587*^9}, {3.6691234673958883`*^9, 
+   3.669123473833997*^9}, {3.669123550694839*^9, 3.6691236283244267`*^9}, {
+   3.6691236978396873`*^9, 3.6691237491628857`*^9}, {3.669123792288507*^9, 
+   3.6691238267257833`*^9}, {3.66912387089879*^9, 3.669123941461192*^9}, {
+   3.669123981088632*^9, 3.669123999194449*^9}, {3.669124065187003*^9, 
+   3.669124143974997*^9}, {3.669124181181716*^9, 3.669124406560876*^9}, {
+   3.669124567207406*^9, 3.66912460061681*^9}, {3.669125250821073*^9, 
+   3.669125277073185*^9}, 3.66912701705652*^9, {3.669132441905727*^9, 
+   3.669132443824847*^9}, {3.669135794094763*^9, 3.6691358716463833`*^9}, 
+   3.6691359311928587`*^9, {3.669135992290608*^9, 3.669136067476049*^9}, {
+   3.669141159213315*^9, 3.669141165323935*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"PC", "=", 
+   RowBox[{
+    RowBox[{"QuantityMagnitude", "@", 
+     RowBox[{"UnitConvert", "[", 
+      RowBox[{"N", "[", 
+       RowBox[{"Quantity", "[", 
+        RowBox[{"1", ",", "\"\<PlanckConstant\>\""}], "]"}], "]"}], "]"}]}], "//",
+     "UnitSimplify"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CL", "=", 
+    RowBox[{
+     RowBox[{"QuantityMagnitude", "@", 
+      RowBox[{"UnitConvert", "[", 
+       RowBox[{"N", "[", 
+        RowBox[{"Quantity", "[", 
+         RowBox[{"1", ",", "\"\<SpeedOfLight\>\""}], "]"}], "]"}], "]"}]}], "//",
+      "UnitSimplify"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[Lambda]1", "=", 
+   RowBox[{"400", 
+    TemplateBox[{Null},
+     "QuantityUnit",
+     DisplayFunction->(TooltipBox[
+       StyleBox[
+        RowBox[{
+          StyleBox["\"nm\"", "QuantityUnitTraditionalInput"]}], 
+        ShowStringCharacters -> False], "Unit: nanometers"]& ),
+     InterpretationFunction->(RowBox[{"Quantity", "[", 
+        RowBox[{"1", ",", "\"Nanometers\""}], "]"}]& )]}]}], ";", " ", 
+  RowBox[{"\[Lambda]1", "=", 
+   RowBox[{"QuantityMagnitude", "@", 
+    RowBox[{"UnitConvert", "[", 
+     RowBox[{"\[Lambda]1", ",", "\"\<Meters\>\""}], "]"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"\[Lambda]2", "=", 
+   RowBox[{"700", 
+    TemplateBox[{Null},
+     "QuantityUnit",
+     DisplayFunction->(TooltipBox[
+       StyleBox[
+        RowBox[{
+          StyleBox["\"nm\"", "QuantityUnitTraditionalInput"]}], 
+        ShowStringCharacters -> False], "Unit: nanometers"]& ),
+     InterpretationFunction->(RowBox[{"Quantity", "[", 
+        RowBox[{"1", ",", "\"Nanometers\""}], "]"}]& )]}]}], ";", " ", 
+  RowBox[{"\[Lambda]2", "=", 
+   RowBox[{"QuantityMagnitude", "@", 
+    RowBox[{"UnitConvert", "[", 
+     RowBox[{"\[Lambda]2", ",", "\"\<Meters\>\""}], "]"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"k", "=", 
+   RowBox[{"0.03511", "/", 
+    TemplateBox[{Null},
+     "QuantityUnit",
+     DisplayFunction->(TooltipBox[
+       StyleBox[
+        RowBox[{
+          StyleBox["\"\[Micro]m\"", "QuantityUnitTraditionalInput"]}], 
+        ShowStringCharacters -> False], "Unit: micrometers"]& ),
+     InterpretationFunction->(RowBox[{"Quantity", "[", 
+        RowBox[{"1", ",", "\"Micrometers\""}], "]"}]& )]}]}], ";", 
+  RowBox[{"k", "=", 
+   RowBox[{"QuantityMagnitude", "@", 
+    RowBox[{"UnitConvert", "[", 
+     RowBox[{"k", ",", "\"\<Meters\>\""}], "]"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"l", "=", 
+    RowBox[{"57", 
+     TemplateBox[{Null},
+      "QuantityUnit",
+      DisplayFunction->(TooltipBox[
+        StyleBox[
+         RowBox[{
+           StyleBox["\"\[Micro]m\"", "QuantityUnitTraditionalInput"]}], 
+         ShowStringCharacters -> False], "Unit: micrometers"]& ),
+      InterpretationFunction->(RowBox[{"Quantity", "[", 
+         RowBox[{"1", ",", "\"Micrometers\""}], "]"}]& )]}]}], ";", 
+   RowBox[{"l", "=", 
+    RowBox[{"QuantityMagnitude", "@", 
+     RowBox[{"UnitConvert", "[", 
+      RowBox[{"l", ",", "\"\<Meters\>\""}], "]"}]}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"\[Sigma]", "[", "\[Lambda]_", "]"}], ":=", " ", 
+   RowBox[{"Module", "[", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[Lambda]SI", "=", "\[Lambda]"}], "}"}], ",", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"\[Lambda]m", "=", 
+       RowBox[{"\[Lambda]SI", 
+        TemplateBox[{Null},
+         "QuantityUnit",
+         DisplayFunction->(TooltipBox[
+           StyleBox[
+            RowBox[{
+              StyleBox["\"m\"", "QuantityUnitTraditionalInput"]}], 
+            ShowStringCharacters -> False], "Unit: meters"]& ),
+         InterpretationFunction->(RowBox[{"Quantity", "[", 
+            RowBox[{"1", ",", "\"Meters\""}], "]"}]& )]}]}], ";", " ", 
+      RowBox[{"\[Lambda]\[Mu]m", "=", 
+       RowBox[{"QuantityMagnitude", "@", 
+        RowBox[{"UnitConvert", "[", 
+         RowBox[{"\[Lambda]m", ",", "\"\<Micrometers\>\""}], "]"}]}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"valkm", "=", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"1.1", "*", 
+            SuperscriptBox["10", 
+             RowBox[{"-", "3"}]], "*", 
+            SuperscriptBox[
+             RowBox[{"(", "\[Lambda]\[Mu]m", ")"}], 
+             RowBox[{"-", "4"}]]}], ")"}], "+", 
+          RowBox[{"(", 
+           RowBox[{"8", "*", 
+            SuperscriptBox["10", 
+             RowBox[{"-", "2"}]], "*", 
+            SuperscriptBox[
+             RowBox[{"(", "\[Lambda]\[Mu]m", ")"}], 
+             RowBox[{"-", "1"}]]}], ")"}]}], ")"}], 
+        TemplateBox[{Null},
+         "QuantityUnit",
+         DisplayFunction->(TooltipBox[
+           StyleBox[
+            RowBox[{
+              StyleBox["\"km\"", "QuantityUnitTraditionalInput"]}], 
+            ShowStringCharacters -> False], "Unit: kilometers"]& ),
+         InterpretationFunction->(RowBox[{"Quantity", "[", 
+            RowBox[{"1", ",", "\"Kilometers\""}], "]"}]& )]}]}], " ", ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"valm", "=", 
+       RowBox[{"UnitConvert", "[", 
+        RowBox[{"valkm", ",", "\"\<Meters\>\""}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"attenuation", "=", 
+       RowBox[{"QuantityMagnitude", "@", "valm"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"Return", "[", "attenuation", "]"}]}]}], "]"}]}], 
+  ";"}]}], "Input",
+ CellChangeTimes->{{3.669125291998578*^9, 3.6691253107485027`*^9}, {
+   3.669125351356699*^9, 3.669125428328277*^9}, {3.6691256898534307`*^9, 
+   3.669125711028665*^9}, {3.6691257714606743`*^9, 3.6691259455869093`*^9}, {
+   3.669125990629324*^9, 3.6691260783032722`*^9}, {3.669126217995373*^9, 
+   3.669126297863701*^9}, {3.669126335601351*^9, 3.669126365656459*^9}, {
+   3.6691263968663273`*^9, 3.669126401633491*^9}, {3.66912652998282*^9, 
+   3.6691266564492807`*^9}, {3.669127032840242*^9, 3.669127035244089*^9}, {
+   3.669130256015328*^9, 3.669130262291621*^9}, 3.669130331608182*^9, {
+   3.669131907082234*^9, 3.6691319120932837`*^9}, {3.669132453000792*^9, 
+   3.6691325904274282`*^9}, {3.669133947684849*^9, 3.669133990508463*^9}, {
+   3.669134022566826*^9, 3.669134031437454*^9}, {3.669135142006097*^9, 
+   3.669135143653509*^9}, {3.6691353438361893`*^9, 3.669135538914679*^9}, {
+   3.669135726288086*^9, 3.669135726495573*^9}, {3.6691361147738256`*^9, 
+   3.669136340236244*^9}, {3.669136391176923*^9, 3.669136415793885*^9}, {
+   3.66913645385779*^9, 3.66913648278878*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"I\[Lambda]DaylightInterp", "=", 
+   RowBox[{"Interpolation", "[", "I\[Lambda]Daylight", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Ispace\[Lambda]", "[", "\[Lambda]_", "]"}], ":=", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"I\[Lambda]DaylightInterp", "[", "\[Lambda]", "]"}], "*", 
+      "\[Lambda]"}], ")"}], "*", 
+    RowBox[{"(", 
+     RowBox[{"\[Lambda]", "/", 
+      RowBox[{"(", 
+       RowBox[{"PC", "*", "CL"}], ")"}]}], ")"}], "*", 
+    RowBox[{"(", 
+     RowBox[{"1", "-", 
+      RowBox[{"Exp", "[", 
+       RowBox[{
+        RowBox[{"-", "k"}], "*", 
+        RowBox[{"A", "[", "\[Lambda]", "]"}], "*", "l"}], "]"}]}], ")"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"IspaceDaylight", "=", 
+  RowBox[{"NIntegrate", "[", 
+   RowBox[{
+    RowBox[{"Ispace\[Lambda]", "[", "\[Lambda]", "]"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"\[Lambda]", ",", "\[Lambda]1", ",", "\[Lambda]2"}], "}"}]}], 
+   "]"}], " ", 
+  RowBox[{"(*", 
+   RowBox[{"photons", "/", 
+    RowBox[{"(", 
+     RowBox[{
+      SuperscriptBox["m", "2"], "sr", " ", "s"}], ")"}]}], "*)"}]}]}], "Input",\
+
+ CellChangeTimes->{{3.669126664027227*^9, 3.6691267863644257`*^9}, {
+   3.669126842674205*^9, 3.669126851016111*^9}, {3.6691269094770403`*^9, 
+   3.6691269163063726`*^9}, {3.6691270515461483`*^9, 
+   3.6691270760769157`*^9}, {3.6691300329350452`*^9, 
+   3.6691300346610126`*^9}, {3.6691300712321177`*^9, 
+   3.6691301219111233`*^9}, {3.669130184098646*^9, 3.669130231189893*^9}, {
+   3.669130265452273*^9, 3.669130288444162*^9}, {3.669130339448122*^9, 
+   3.669130390323859*^9}, {3.669130441395512*^9, 3.66913047158502*^9}, 
+   3.669130551385973*^9, {3.6691305941843357`*^9, 3.669130880746553*^9}, {
+   3.669130946804439*^9, 3.669130946962882*^9}, {3.6691310009508133`*^9, 
+   3.669131078101716*^9}, {3.669131119515376*^9, 3.669131268631586*^9}, {
+   3.6691313005603943`*^9, 3.66913145568883*^9}, {3.669131641565332*^9, 
+   3.669131725247827*^9}, {3.669131760072947*^9, 3.669131778677474*^9}, {
+   3.669131856232348*^9, 3.669132091124057*^9}, {3.669132434769911*^9, 
+   3.6691324384484377`*^9}, {3.669132595158049*^9, 3.6691326706434*^9}, {
+   3.6691327025856047`*^9, 3.669132705385631*^9}, {3.669132746911606*^9, 
+   3.669133106493561*^9}, {3.669133174928526*^9, 3.669133502909704*^9}, {
+   3.669133574153227*^9, 3.6691335865514812`*^9}, {3.669133732700469*^9, 
+   3.669133736873155*^9}, {3.6691338416886997`*^9, 3.669133942668556*^9}, {
+   3.669133994086953*^9, 3.669134070890049*^9}, {3.669134106210184*^9, 
+   3.669134120297442*^9}, {3.669134859483856*^9, 3.669134894851317*^9}, {
+   3.669135136737974*^9, 3.669135137798355*^9}, {3.669135249567542*^9, 
+   3.669135257199747*^9}, {3.6691359784258204`*^9, 3.669135983212105*^9}, {
+   3.669136699243312*^9, 3.6691367746701117`*^9}, {3.669140022763904*^9, 
+   3.669140044219652*^9}}],
+
+Cell[BoxData["3.854211063970718`*^12"], "Output",
+ CellChangeTimes->{{3.669133013168234*^9, 3.669133020597138*^9}, 
+   3.669133066271453*^9, 3.669133107473374*^9, 3.669133189653792*^9, {
+   3.66913325458294*^9, 3.669133270313571*^9}, {3.6691333869740467`*^9, 
+   3.66913345682215*^9}, 3.669133503756181*^9, 3.669133575658306*^9, 
+   3.6691336886408787`*^9, 3.669133737575688*^9, {3.6691338526010447`*^9, 
+   3.669133900584786*^9}, 3.669134003633045*^9, {3.669134035790756*^9, 
+   3.669134121253326*^9}, 3.6691349002527723`*^9, 3.66913516052914*^9, 
+   3.669135983936934*^9, 3.6691367160915623`*^9, {3.669136747224865*^9, 
+   3.6691367814265223`*^9}, 3.669140045758594*^9, 3.669142015628727*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"RRGBlackInterp", "=", 
+   RowBox[{"Interpolation", "[", "RRGBlackRatio", "]"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Iref\[Lambda]", "[", 
+    RowBox[{"\[Lambda]_", ",", "r_"}], "]"}], ":=", " ", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"RRGBlackInterp", "[", "\[Lambda]", "]"}], "*", 
+       RowBox[{"I\[Lambda]DaylightInterp", "[", "\[Lambda]", "]"}], "*", 
+       "\[Lambda]"}], ")"}], ")"}], "*", 
+    RowBox[{"(", 
+     RowBox[{"\[Lambda]", "/", 
+      RowBox[{"(", 
+       RowBox[{"PC", "*", "CL"}], ")"}]}], ")"}], "*", 
+    RowBox[{"(", 
+     RowBox[{"1", "-", 
+      RowBox[{"Exp", "[", 
+       RowBox[{
+        RowBox[{"-", "k"}], "*", 
+        RowBox[{"A", "[", "\[Lambda]", "]"}], "*", "l"}], "]"}]}], ")"}], "*", 
+    RowBox[{"(", 
+     RowBox[{"Exp", "[", 
+      RowBox[{
+       RowBox[{"-", 
+        RowBox[{"\[Sigma]", "[", "\[Lambda]", "]"}]}], "*", "r"}], "]"}], 
+     ")"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"Iblack\[Lambda]", "[", 
+    RowBox[{"\[Lambda]_", ",", "r_"}], "]"}], ":=", " ", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"I\[Lambda]DaylightInterp", "[", "\[Lambda]", "]"}], "*", 
+      "\[Lambda]"}], ")"}], "*", 
+    RowBox[{"(", 
+     RowBox[{"\[Lambda]", "/", 
+      RowBox[{"(", 
+       RowBox[{"PC", "*", "CL"}], ")"}]}], ")"}], "*", 
+    RowBox[{"(", 
+     RowBox[{"1", "-", 
+      RowBox[{"Exp", "[", 
+       RowBox[{
+        RowBox[{"-", "k"}], "*", 
+        RowBox[{"A", "[", "\[Lambda]", "]"}], "*", "l"}], "]"}]}], ")"}], "*", 
+    RowBox[{"(", 
+     RowBox[{"1", "-", 
+      RowBox[{"Exp", "[", 
+       RowBox[{
+        RowBox[{"-", 
+         RowBox[{"\[Sigma]", "[", "l", "]"}]}], "*", "r"}], "]"}]}], 
+     ")"}]}]}], ";"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.669134988510111*^9, 3.6691351251145*^9}, {
+  3.669135164741241*^9, 3.669135332684647*^9}, {3.669136075567025*^9, 
+  3.669136111182477*^9}, {3.669136496617416*^9, 3.6691366716433496`*^9}, {
+  3.66913678883952*^9, 3.6691367997080936`*^9}, {3.669139096941691*^9, 
+  3.669139226185255*^9}, {3.669140235866955*^9, 3.669140240427527*^9}}],
+
+Cell[BoxData[
+ TagBox[
+  TemplateBox[{RowBox[{
+      StyleBox[
+       TagBox["InterpolatingFunction", "SummaryHead"], 
+       "NonInterpretableSummary"], 
+      StyleBox["[", "NonInterpretableSummary"], 
+      DynamicModuleBox[{Typeset`open$$ = False}, 
+       PanelBox[
+        PaneSelectorBox[{False -> GridBox[{{
+              PaneBox[
+               ButtonBox[
+                DynamicBox[
+                 FEPrivate`FrontEndResource[
+                 "FEBitmaps", "SquarePlusIconMedium"]], 
+                ButtonFunction :> (Typeset`open$$ = True), Appearance -> None,
+                 Evaluator -> Automatic, Method -> "Preemptive"], 
+               Alignment -> {Center, Center}, ImageSize -> 
+               Dynamic[{
+                 Automatic, 3.5 CurrentValue["FontCapHeight"]/
+                  AbsoluteCurrentValue[Magnification]}]], 
+              GraphicsBox[{{{}, {}, {
+                  Directive[
+                   Opacity[1.], 
+                   RGBColor[0.368417, 0.506779, 0.709798], 
+                   AbsoluteThickness[1]], 
+                  LineBox[CompressedData["
+1:eJxFyX0wGwYcxvHUKVuGdl2m29TOy+pGXTetTmvy+y09bRW7eal2NaZ21Zt5
+b71Vghk3NeqtQhJB3hOSLGGJRs1mTLGWRVD10qiZUg6x0qZObmv/mT+e+97n
+HsevkkJizAgEgs+LvSyfVlX67cEq6HrjTl4SV4TKKfQ21lUB2ak/oiOyDUdb
+SG5aWzow+mz+Wmm7hedjL1uKCunQGJ5OrHy/HbMKS31PPKXDlp8en69q8Ce7
+kR7fxGrYqa2Jlf+hwcBynudxfTWQUrxZ18mtaMpizTecq4HegrilTzrVGDAQ
+tHl7sAai2ImTxQ9vovHfss0lMgMsFV1314rU2CExQkorA9z0m4HGfBnOeCwm
+r7swYaLFxZTU3ow8J5YZhc6EZ2vLr0ffUyKt6Mr9ZSsWUEbom2G9ClRrR2sZ
+NBZkEC2eDh9SoEVpNJ+/wYLn+alZlPAfcb1FSsyMr4WjXW5kpk6KFE1OlP9k
+LUw4HU09Q5ai6DDVSAtlg8/uS5YVF5swroyQK+9mQ/8zGWymS9EvWnEayHVg
+c3PV68tIMXax9qUyVHWgu3vjnYALEqxV7SkxONcD+2fOjek2CZb4HlqQsOvB
+VeNNdhCIcEo14RFl3QBGSscRco8I+0sok3pqA4zoKG8vykX458RQ3y9PGmDO
++reMaQsxsgo2ggc9OPAqKXSEqpXi+L3q6IREDgS7s0dPDijwUcRex7VGDlDM
+Bw3LDs3oHBoxdmWGAx9Ez1uttisw3rxVIbLnwpu6Ic5amxLn9o/k3A/jwvhi
+uSp3RY7u1CHTSgkXhMmvHTAymjG3eLZe3ccFs8bPLu4xydHM6tZHVAIPJtYi
+acHlSqw4JTQYfHgwHJBzPPmkEoOenOHGpPFgTrfv3SIfJT7Qze74VcaDoZ6w
+/MedCkxPKCzoW+BBSOuUeuMtBWLmqknrwAdOyO6078zlSIJ4ZlEkH3zNPM9f
+SJOhxqvvbxcmH/6RHRitkcuwmLvg0q3lg/k1r44j/VL85rZ98S5rARAr98/H
+TDfh1S/2Pgo/IYDvH191trOV4tn3DIYfaC9/v8hadROi5IF9nEYASZ52w1qT
+BD9nl1H8DQIYpWc+zN2SYHbA2cJxdyFwO7OXbDUiTDm4Rfv0ayEM3DmnJxEl
+WJV3KbazQQicHVsfZ84IsbtsLmN2UgjEMX4ymShGJxvX7J0k0f++fipPMBa0
+7V6Vhlpasu0PK1WnfX/fttCt51gTQQx613VMeGH/wyyHXcfE0M4MtKIWi1Gy
+Is5xvCyG5MBXiio4EvwPrb7grg==
+                   "]]}}}, {
+               DisplayFunction -> Identity, AspectRatio -> 1, 
+                Axes -> {False, False}, AxesLabel -> {None, None}, 
+                AxesOrigin -> {3.*^-7, 0.036000000000000004`}, 
+                DisplayFunction :> Identity, 
+                Frame -> {{True, True}, {True, True}}, 
+                FrameLabel -> {{None, None}, {None, None}}, FrameStyle -> 
+                Directive[
+                  Opacity[0.5], 
+                  Thickness[Tiny], 
+                  RGBColor[0.368417, 0.506779, 0.709798]], 
+                FrameTicks -> {{None, None}, {None, None}}, 
+                GridLines -> {None, None}, GridLinesStyle -> Directive[
+                  GrayLevel[0.5, 0.4]], ImageSize -> 
+                Dynamic[{
+                  Automatic, 3.5 CurrentValue["FontCapHeight"]/
+                   AbsoluteCurrentValue[Magnification]}], 
+                Method -> {
+                 "DefaultBoundaryStyle" -> Automatic, "ScalingFunctions" -> 
+                  None}, PlotRange -> {{3.0073*^-7, 6.9874*^-7}, {
+                 0.04273582203132098, 0.10608780627658611`}}, 
+                PlotRangeClipping -> True, PlotRangePadding -> {{
+                   Scaled[0.1], 
+                   Scaled[0.1]}, {
+                   Scaled[0.1], 
+                   Scaled[0.1]}}, Ticks -> {Automatic, Automatic}}], 
+              GridBox[{{
+                 RowBox[{
+                   TagBox["\"Domain: \"", "SummaryItemAnnotation"], 
+                   "\[InvisibleSpace]", 
+                   TagBox[
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{"3.0073`*^-7", ",", "6.9874`*^-7"}], "}"}], "}"}],
+                     "SummaryItem"]}]}, {
+                 RowBox[{
+                   TagBox["\"Output: \"", "SummaryItemAnnotation"], 
+                   "\[InvisibleSpace]", 
+                   TagBox["\"scalar\"", "SummaryItem"]}]}}, 
+               GridBoxAlignment -> {
+                "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, AutoDelete -> 
+               False, GridBoxItemSize -> {
+                "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+               GridBoxSpacings -> {
+                "Columns" -> {{2}}, "Rows" -> {{Automatic}}}, 
+               BaseStyle -> {
+                ShowStringCharacters -> False, NumberMarks -> False, 
+                 PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+            GridBoxAlignment -> {"Rows" -> {{Top}}}, AutoDelete -> False, 
+            GridBoxItemSize -> {
+             "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+            BaselinePosition -> {1, 1}], True -> GridBox[{{
+              PaneBox[
+               ButtonBox[
+                DynamicBox[
+                 FEPrivate`FrontEndResource[
+                 "FEBitmaps", "SquareMinusIconMedium"]], 
+                ButtonFunction :> (Typeset`open$$ = False), Appearance -> 
+                None, Evaluator -> Automatic, Method -> "Preemptive"], 
+               Alignment -> {Center, Center}, ImageSize -> 
+               Dynamic[{
+                 Automatic, 3.5 CurrentValue["FontCapHeight"]/
+                  AbsoluteCurrentValue[Magnification]}]], 
+              GraphicsBox[{{{}, {}, {
+                  Directive[
+                   Opacity[1.], 
+                   RGBColor[0.368417, 0.506779, 0.709798], 
+                   AbsoluteThickness[1]], 
+                  LineBox[CompressedData["
+1:eJxFyX0wGwYcxvHUKVuGdl2m29TOy+pGXTetTmvy+y09bRW7eal2NaZ21Zt5
+b71Vghk3NeqtQhJB3hOSLGGJRs1mTLGWRVD10qiZUg6x0qZObmv/mT+e+97n
+HsevkkJizAgEgs+LvSyfVlX67cEq6HrjTl4SV4TKKfQ21lUB2ak/oiOyDUdb
+SG5aWzow+mz+Wmm7hedjL1uKCunQGJ5OrHy/HbMKS31PPKXDlp8en69q8Ce7
+kR7fxGrYqa2Jlf+hwcBynudxfTWQUrxZ18mtaMpizTecq4HegrilTzrVGDAQ
+tHl7sAai2ImTxQ9vovHfss0lMgMsFV1314rU2CExQkorA9z0m4HGfBnOeCwm
+r7swYaLFxZTU3ow8J5YZhc6EZ2vLr0ffUyKt6Mr9ZSsWUEbom2G9ClRrR2sZ
+NBZkEC2eDh9SoEVpNJ+/wYLn+alZlPAfcb1FSsyMr4WjXW5kpk6KFE1OlP9k
+LUw4HU09Q5ai6DDVSAtlg8/uS5YVF5swroyQK+9mQ/8zGWymS9EvWnEayHVg
+c3PV68tIMXax9qUyVHWgu3vjnYALEqxV7SkxONcD+2fOjek2CZb4HlqQsOvB
+VeNNdhCIcEo14RFl3QBGSscRco8I+0sok3pqA4zoKG8vykX458RQ3y9PGmDO
++reMaQsxsgo2ggc9OPAqKXSEqpXi+L3q6IREDgS7s0dPDijwUcRex7VGDlDM
+Bw3LDs3oHBoxdmWGAx9Ez1uttisw3rxVIbLnwpu6Ic5amxLn9o/k3A/jwvhi
+uSp3RY7u1CHTSgkXhMmvHTAymjG3eLZe3ccFs8bPLu4xydHM6tZHVAIPJtYi
+acHlSqw4JTQYfHgwHJBzPPmkEoOenOHGpPFgTrfv3SIfJT7Qze74VcaDoZ6w
+/MedCkxPKCzoW+BBSOuUeuMtBWLmqknrwAdOyO6078zlSIJ4ZlEkH3zNPM9f
+SJOhxqvvbxcmH/6RHRitkcuwmLvg0q3lg/k1r44j/VL85rZ98S5rARAr98/H
+TDfh1S/2Pgo/IYDvH191trOV4tn3DIYfaC9/v8hadROi5IF9nEYASZ52w1qT
+BD9nl1H8DQIYpWc+zN2SYHbA2cJxdyFwO7OXbDUiTDm4Rfv0ayEM3DmnJxEl
+WJV3KbazQQicHVsfZ84IsbtsLmN2UgjEMX4ymShGJxvX7J0k0f++fipPMBa0
+7V6Vhlpasu0PK1WnfX/fttCt51gTQQx613VMeGH/wyyHXcfE0M4MtKIWi1Gy
+Is5xvCyG5MBXiio4EvwPrb7grg==
+                   "]]}}}, {
+               DisplayFunction -> Identity, AspectRatio -> 1, 
+                Axes -> {False, False}, AxesLabel -> {None, None}, 
+                AxesOrigin -> {3.*^-7, 0.036000000000000004`}, 
+                DisplayFunction :> Identity, 
+                Frame -> {{True, True}, {True, True}}, 
+                FrameLabel -> {{None, None}, {None, None}}, FrameStyle -> 
+                Directive[
+                  Opacity[0.5], 
+                  Thickness[Tiny], 
+                  RGBColor[0.368417, 0.506779, 0.709798]], 
+                FrameTicks -> {{None, None}, {None, None}}, 
+                GridLines -> {None, None}, GridLinesStyle -> Directive[
+                  GrayLevel[0.5, 0.4]], ImageSize -> 
+                Dynamic[{
+                  Automatic, 3.5 CurrentValue["FontCapHeight"]/
+                   AbsoluteCurrentValue[Magnification]}], 
+                Method -> {
+                 "DefaultBoundaryStyle" -> Automatic, "ScalingFunctions" -> 
+                  None}, PlotRange -> {{3.0073*^-7, 6.9874*^-7}, {
+                 0.04273582203132098, 0.10608780627658611`}}, 
+                PlotRangeClipping -> True, PlotRangePadding -> {{
+                   Scaled[0.1], 
+                   Scaled[0.1]}, {
+                   Scaled[0.1], 
+                   Scaled[0.1]}}, Ticks -> {Automatic, Automatic}}], 
+              GridBox[{{
+                 RowBox[{
+                   TagBox["\"Domain: \"", "SummaryItemAnnotation"], 
+                   "\[InvisibleSpace]", 
+                   TagBox[
+                    RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{"3.0073`*^-7", ",", "6.9874`*^-7"}], "}"}], "}"}],
+                     "SummaryItem"]}]}, {
+                 RowBox[{
+                   TagBox["\"Output: \"", "SummaryItemAnnotation"], 
+                   "\[InvisibleSpace]", 
+                   TagBox["\"scalar\"", "SummaryItem"]}]}, {
+                 RowBox[{
+                   TagBox["\"Order: \"", "SummaryItemAnnotation"], 
+                   "\[InvisibleSpace]", 
+                   TagBox["3", "SummaryItem"]}]}, {
+                 RowBox[{
+                   TagBox["\"Method: \"", "SummaryItemAnnotation"], 
+                   "\[InvisibleSpace]", 
+                   TagBox["\"Hermite\"", "SummaryItem"]}]}, {
+                 RowBox[{
+                   TagBox["\"Periodic: \"", "SummaryItemAnnotation"], 
+                   "\[InvisibleSpace]", 
+                   TagBox["False", "SummaryItem"]}]}}, 
+               GridBoxAlignment -> {
+                "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, AutoDelete -> 
+               False, GridBoxItemSize -> {
+                "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+               GridBoxSpacings -> {
+                "Columns" -> {{2}}, "Rows" -> {{Automatic}}}, 
+               BaseStyle -> {
+                ShowStringCharacters -> False, NumberMarks -> False, 
+                 PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+            GridBoxAlignment -> {"Rows" -> {{Top}}}, AutoDelete -> False, 
+            GridBoxItemSize -> {
+             "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+            BaselinePosition -> {1, 1}]}, 
+         Dynamic[Typeset`open$$], ImageSize -> Automatic], BaselinePosition -> 
+        Baseline], DynamicModuleValues :> {}], 
+      StyleBox["]", "NonInterpretableSummary"]}]},
+   "CopyTag",
+   DisplayFunction->(#& ),
+   InterpretationFunction->(
+    "                                 -7           -7\n\
+InterpolatingFunction[{{3.0073 10  , 6.9874 10  }}, <>]"& )],
+  False,
+  Editable->False,
+  SelectWithContents->True,
+  Selectable->False]], "Output",
+ CellChangeTimes->{3.66914024306269*^9, 3.6691420191518393`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"pupilValues", "=", 
+   RowBox[{"Array", "[", 
+    RowBox[{
+     RowBox[{"#", " ", "&"}], ",", "10", ",", 
+     RowBox[{"{", 
+      RowBox[{"minpupil", ",", "maxpupil"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"P", "=", 
+    RowBox[{"pupilValues", "[", 
+     RowBox[{"[", "1", "]"}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"minrange", "=", "1"}], ";", " ", 
+  RowBox[{"maxrange", "=", "10000"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"rangeValuesDaylight", "=", 
+    RowBox[{"Array", "[", 
+     RowBox[{
+      RowBox[{"#", "&"}], ",", "100", ",", 
+      RowBox[{"{", 
+       RowBox[{"minrange", ",", "maxrange"}], "}"}]}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"possibleSolD", "=", 
+    RowBox[{"{", "}"}]}], ";"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"For", "[", 
+   RowBox[{
+    RowBox[{"j", "=", "1"}], ",", 
+    RowBox[{"j", "\[LessEqual]", " ", 
+     RowBox[{"Length", "[", "rangeValuesDaylight", "]"}]}], ",", 
+    RowBox[{"j", "++"}], ",", "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"r", "=", 
+      RowBox[{"rangeValuesDaylight", "[", 
+       RowBox[{"[", "j", "]"}], "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"Nspace", "=", 
+      RowBox[{
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"\[Pi]", "/", "4"}], ")"}], "2"], "*", 
+       SuperscriptBox["P", "2"], "*", 
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"T", "/", "r"}], ")"}], "2"], "*", "IspaceDaylight", "*", 
+       "\[Eta]Daylight", "*", "\[CapitalDelta]tDaylight"}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Xch", "=", 
+      RowBox[{
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"T", "*", "fDaylight", "*", "P"}], ")"}], "/", 
+          RowBox[{"(", 
+           RowBox[{"r", "*", "d"}], ")"}]}], ")"}], "2"], "*", "XDaylight", 
+       "*", "\[CapitalDelta]tDaylight"}]}], ";", "\[IndentingNewLine]", 
+     "\[IndentingNewLine]", 
+     RowBox[{"Iblack", "=", 
+      RowBox[{"NIntegrate", "[", 
+       RowBox[{
+        RowBox[{"Iblack\[Lambda]", "[", 
+         RowBox[{"\[Lambda]", ",", "r"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"\[Lambda]", ",", "\[Lambda]1", ",", "\[Lambda]2"}], "}"}]}],
+        "]"}]}], ";", "\[IndentingNewLine]", 
+     RowBox[{"Iref", "=", 
+      RowBox[{"NIntegrate", "[", 
+       RowBox[{
+        RowBox[{"Iref\[Lambda]", "[", 
+         RowBox[{"\[Lambda]", ",", "r"}], "]"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"\[Lambda]", ",", "\[Lambda]1", ",", "\[Lambda]2"}], "}"}]}],
+        "]"}]}], ";", "\[IndentingNewLine]", "\[IndentingNewLine]", 
+     RowBox[{"AppendTo", "[", 
+      RowBox[{"possibleSolD", ",", "Iref"}], "]"}]}]}], "]"}], 
+  "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]"}], "Input",
+ CellChangeTimes->{{3.669139670527742*^9, 3.669139715479363*^9}, {
+  3.669139761618497*^9, 3.6691399530319567`*^9}, {3.669139991233917*^9, 
+  3.6691400188166637`*^9}, {3.669140050539509*^9, 3.669140340686026*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"NIntegrate", "::", "ncvb"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"NIntegrate failed to converge to prescribed accuracy after \
+\[NoBreak]\\!\\(9\\)\[NoBreak] recursive bisections in \[NoBreak]\\!\\(\
+\[Lambda]\\)\[NoBreak] near \[NoBreak]\\!\\({\[Lambda]}\\)\[NoBreak] = \
+\[NoBreak]\\!\\({6.064465817751686`*^-7}\\)\[NoBreak]. NIntegrate obtained \
+\[NoBreak]\\!\\(2.225548587317777`15.954589770191005*^-6212\\)\[NoBreak] and \
+\[NoBreak]\\!\\(5.447615481124166`15.954589770191005*^-6214\\)\[NoBreak] for \
+the integral and error estimates. \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/NIntegrate/ncvb\\\", \
+ButtonNote -> \\\"NIntegrate::ncvb\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.669140359617271*^9, 3.669142041587675*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"NIntegrate", "::", "ncvb"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"NIntegrate failed to converge to prescribed accuracy after \
+\[NoBreak]\\!\\(9\\)\[NoBreak] recursive bisections in \[NoBreak]\\!\\(\
+\[Lambda]\\)\[NoBreak] near \[NoBreak]\\!\\({\[Lambda]}\\)\[NoBreak] = \
+\[NoBreak]\\!\\({6.064465817751686`*^-7}\\)\[NoBreak]. NIntegrate obtained \
+\[NoBreak]\\!\\(8.655028298884696`15.954589770191005*^-12356\\)\[NoBreak] and \
+\[NoBreak]\\!\\(4.238805089937738`15.954589770191005*^-12357\\)\[NoBreak] for \
+the integral and error estimates. \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/NIntegrate/ncvb\\\", \
+ButtonNote -> \\\"NIntegrate::ncvb\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.669140359617271*^9, 3.669142051209247*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"NIntegrate", "::", "ncvb"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"NIntegrate failed to converge to prescribed accuracy after \
+\[NoBreak]\\!\\(9\\)\[NoBreak] recursive bisections in \[NoBreak]\\!\\(\
+\[Lambda]\\)\[NoBreak] near \[NoBreak]\\!\\({\[Lambda]}\\)\[NoBreak] = \
+\[NoBreak]\\!\\({6.064465817751686`*^-7}\\)\[NoBreak]. NIntegrate obtained \
+\[NoBreak]\\!\\(4.472104229948814`15.954589770191005*^-18499\\)\[NoBreak] and \
+\[NoBreak]\\!\\(3.466458015346128`15.954589770191005*^-18500\\)\[NoBreak] for \
+the integral and error estimates. \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/NIntegrate/ncvb\\\", \
+ButtonNote -> \\\"NIntegrate::ncvb\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.669140359617271*^9, 3.669142060829376*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"General", "::", "stop"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Further output of \
+\[NoBreak]\\!\\(\\*StyleBox[\\(NIntegrate :: ncvb\\), \\\"MessageName\\\"]\\)\
+\[NoBreak] will be suppressed during this calculation. \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/General/stop\\\", \
+ButtonNote -> \\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.669140359617271*^9, 3.669142060851385*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"NIntegrate", "::", "slwcon"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Numerical integration converging too slowly; suspect one \
+of the following: singularity, value of the integration is 0, highly \
+oscillatory integrand, or WorkingPrecision too small. \\!\\(\\*ButtonBox[\\\"\
+\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/NIntegrate/slwcon\\\", ButtonNote -> \
+\\\"NIntegrate::slwcon\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.669140359617271*^9, 3.669142309440154*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"NIntegrate", "::", "slwcon"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Numerical integration converging too slowly; suspect one \
+of the following: singularity, value of the integration is 0, highly \
+oscillatory integrand, or WorkingPrecision too small. \\!\\(\\*ButtonBox[\\\"\
+\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/NIntegrate/slwcon\\\", ButtonNote -> \
+\\\"NIntegrate::slwcon\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.669140359617271*^9, 3.6691423189796457`*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"NIntegrate", "::", "slwcon"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Numerical integration converging too slowly; suspect one \
+of the following: singularity, value of the integration is 0, highly \
+oscillatory integrand, or WorkingPrecision too small. \\!\\(\\*ButtonBox[\\\"\
+\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/NIntegrate/slwcon\\\", ButtonNote -> \
+\\\"NIntegrate::slwcon\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.669140359617271*^9, 3.669142328505615*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"General", "::", "stop"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Further output of \
+\[NoBreak]\\!\\(\\*StyleBox[\\(NIntegrate :: slwcon\\), \
+\\\"MessageName\\\"]\\)\[NoBreak] will be suppressed during this calculation. \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/General/stop\\\", \
+ButtonNote -> \\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.669140359617271*^9, 3.6691423285308027`*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["possibleSolD"], "Input",
+ CellChangeTimes->{{3.669140307512088*^9, 3.6691403083397293`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "3.419875826957481`*^-60", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", 
+   ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", 
+   ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", 
+   ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", 
+   ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", 
+   ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", 
+   ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", 
+   ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", 
+   ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", 
+   ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", 
+   ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", 
+   ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", 
+   ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", 
+   ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", 
+   ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", 
+   ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", 
+   ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`", ",", "0.`"}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.669140308715807*^9, 3.6691433887031717`*^9}]
+}, Open  ]]
+},
+WindowSize->{1003, 755},
+WindowMargins->{{15, Automatic}, {Automatic, 0}},
+FrontEndVersion->"10.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (September 9, \
+2014)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 187, 4, 28, "Input"],
+Cell[748, 26, 17140, 472, 843, "Input"],
+Cell[17891, 500, 94, 1, 28, "Input"],
+Cell[17988, 503, 4482, 128, 439, "Input"],
+Cell[22473, 633, 5134, 132, 346, "Input"],
+Cell[27610, 767, 927, 13, 46, "Input"],
+Cell[28540, 782, 6665, 166, 280, "Input"],
+Cell[CellGroupData[{
+Cell[35230, 952, 2898, 61, 68, "Input"],
+Cell[38131, 1015, 694, 9, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[38862, 1029, 2233, 62, 114, "Input"],
+Cell[41098, 1093, 10931, 216, 70, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[52066, 1314, 3232, 87, 364, "Input"],
+Cell[55301, 1403, 886, 15, 48, "Message"],
+Cell[56190, 1420, 888, 15, 48, "Message"],
+Cell[57081, 1437, 888, 15, 48, "Message"],
+Cell[57972, 1454, 555, 11, 24, "Message"],
+Cell[58530, 1467, 600, 11, 42, "Message"],
+Cell[59133, 1480, 602, 11, 42, "Message"],
+Cell[59738, 1493, 600, 11, 42, "Message"],
+Cell[60341, 1506, 559, 11, 24, "Message"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[60937, 1522, 106, 1, 28, "Input"],
+Cell[61046, 1525, 1409, 21, 91, "Output"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
