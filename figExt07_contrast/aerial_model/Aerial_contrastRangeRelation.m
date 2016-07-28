@@ -1,7 +1,9 @@
 function [visualRangeSolns,C0Range,pupilValues] = Aerial_contrastRangeRelation
+global EROOT
 %% INITIALIZATION
-    run ../../figXX_compviz/Parameters.m
-    load ../../fig02_orbitsize/OM_TF_ST.mat
+    run Parameters.m
+    load('Parameters.mat')
+    load OM_TF_ST.mat
     
     pupil_TF = [mean(OM_TF)-std(OM_TF) mean(OM_TF)+std(OM_TF)].*0.449;
     pupil_ST = [mean(OM_ST)-std(OM_ST) mean(OM_ST)+std(OM_ST)].*0.449;
@@ -39,7 +41,7 @@ function [visualRangeSolns,C0Range,pupilValues] = Aerial_contrastRangeRelation
                     r=r+delta;
                 end
                 clc
-                fprintf('iteration: %d, %d, %d \n', c,i);
+                fprintf('iteration: %d, %d \n', c,i);
                 fprintf('possibleSolution: %f \n', possibleSolution);
                 fprintf('range: %f \n', r);
                 fprintf('error: %f \n', abs(possibleSolution-1));
@@ -64,7 +66,7 @@ function [visualRangeSolns,C0Range,pupilValues] = Aerial_contrastRangeRelation
                     Cr=C0*integral(CrFunc,lambda1,lambda2);
                     Kt=liminalContrast(A,Bh,angularSize);
                     clc
-                    fprintf('iteration: %d, %d, %d \n', c,i);
+                    fprintf('iteration: %d, %d \n', c,i);
                     fprintf('range: %f \n',mr);
                     fprintf('error: %f \n', 10^(Kt)-abs(Cr));
                 end
@@ -73,7 +75,7 @@ function [visualRangeSolns,C0Range,pupilValues] = Aerial_contrastRangeRelation
 
         end
     end
-    save('Aerial_daylightContrastRange','visualRangeSolns','C0Range','pupilValues');                
+    save([EROOT,'figExt07_contrast/aerial_model/Aerial_daylightContrastRange.mat'],'visualRangeSolns','C0Range','pupilValues');                
 
     
 function  solution=firingThreshRange(WHandle,A,r,C0,L,T,F,Ispace,Dt,q,k,len,X,d,R)

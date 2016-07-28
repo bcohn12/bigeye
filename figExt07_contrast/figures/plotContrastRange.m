@@ -1,7 +1,10 @@
 function plotContrastRange
-
     close all;
-    run ../../figXX_compviz/Parameters.m
+    run Parameters.m
+    
+    [e,em]=fileExists;
+    while ~all(e)
+        
     
     if exist('Aerial_daylightContrastRange.mat','file')==2
         load('Aerial_daylightContrastRange.mat')
@@ -67,4 +70,11 @@ function plotContrastRange
     line([0.3 0.3],[ylim1(1) ylim1(2)],'linestyle',':','color','r');
     line([-0.1 -0.1],[ylim1(1) ylim1(2)],'linestyle',':','color','r');
     line([0.1 0.1],[ylim1(1) ylim1(2)],'linestyle',':','color','r');
+   
+function [e,em]=fileExists
+    e1={exist('Aerial_daylightContrastRange.mat','file')==2,'Aerial_daylightContrastRange.m'};
+    e2={exist('Aquatic_daylightContrastRange.mat','file')==2, 'Aquatic_daylightContrastRange.m'};
+    e3={exist('imageContrastValues.mat','file')==2,'getBugContrast.m'};
+    e=[e1{1} e2{1} e3{1}];
+    em=[e1{2} e2{2} e3{2}];
     

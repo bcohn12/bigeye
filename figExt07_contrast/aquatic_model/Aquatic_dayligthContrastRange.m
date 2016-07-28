@@ -1,6 +1,7 @@
 function [visualRange_River,C0Range,pupilValues]=Aquatic_dayligthContrastRange
-    run ../../figXX_compviz/Parameters.m
-    load ../../fig02_orbitsize/OM_TF_ST.mat
+global EROOT
+    run Parameters.m
+    load OM_TF_ST.mat
     
     pupil_TF = [mean(OM_TF)-std(OM_TF) mean(OM_TF)+std(OM_TF)].*0.449;
     pupil_ST = [mean(OM_ST)-std(OM_ST) mean(OM_ST)+std(OM_ST)].*0.449;
@@ -111,7 +112,7 @@ function [visualRange_River,C0Range,pupilValues]=Aquatic_dayligthContrastRange
         end
     end
     
-    save('Aquatic_daylightContrastRange','C0Range','pupilValues');
+    save([EROOT, 'figExt07_contrtast/aquatic_model/Aquatic_daylightContrastRange.mat'],'C0Range','pupilValues');
             
 function  solution=firingThresh(lambda,photoreceptorAbsorption,a,b,K,L,r,A,X,Dt,q,d,k,len,T,M,R,C0)
     lambda1=lambda(1); lambda2=lambda(end);

@@ -3,7 +3,11 @@ global EROOT
 [startupPath,x,x]=fileparts(which('startup'));
 EROOT=strrep(startupPath,'\','/');
 
-addpath([EROOT '/aerial model']);
-addpath([EROOT '/aquatic model']);
+addpath([EROOT '/aerial_model']);
+addpath([EROOT '/aquatic_model']);
 addpath([EROOT '/figures']);
-addpath([EROOT, '/image contrast']);
+addpath([EROOT, '/image_contrast']);
+
+parentDir=fileparts(pwd);
+parentDir=strrep(parentDir,'\','/');
+addpath([parentDir '/data/vision']);
