@@ -2,6 +2,7 @@ function [actRangeStarlight] =Aerial_starlightContrastLimiting
 global EROOT
 %% INITIALIZE/LOAD DATA
     run Parameters.m
+    load('Parameters.mat')
     if exist('meteoAerial_Starlight.mat','file')==2
         load('meteoAerial_Starlight');
     else

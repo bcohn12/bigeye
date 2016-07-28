@@ -2,6 +2,7 @@ function [actRangeMoonlight, Cr_moonlight, angularSize, Kt_moonlight] =Aerial_mo
 global EROOT
  %% INITIALIZE/LOAD DATA
     run Parameters.m
+    load('Parameters.mat')
     if exist('meteoAerial_Moonlight.mat','file')==2
         load('meteoAerial_Moonlight');
     else

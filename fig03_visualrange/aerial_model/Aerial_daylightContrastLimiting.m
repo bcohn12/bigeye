@@ -2,6 +2,7 @@ function [actRangeDaylight] =Aerial_daylightContrastLimiting
 global EROOT
     %% INITIALIZE/LOAD DATA
     run Parameters.m
+    load('Parameters.mat')
     if exist('meteoAerial_Daylight.mat','file')==2
         load('meteoAerial_Daylight');
     else

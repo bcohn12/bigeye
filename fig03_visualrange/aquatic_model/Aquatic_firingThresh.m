@@ -2,6 +2,7 @@ function [viusalRangeRiver, pupilValues]=Aquatic_firingThresh
 global EROOT
 %% INITIALIZE VARIABLES
     run Parameters.m
+    load('Parameters.mat')
     conditions={'Daylight','Moonlight','Starlight'};
     pupilValues=linspace(minpupil,maxpupil,30); 
     depth=8; tol=5e-4;

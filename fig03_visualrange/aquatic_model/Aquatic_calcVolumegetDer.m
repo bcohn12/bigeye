@@ -1,5 +1,6 @@
 function [visualRange_River, visualVolume_River, drdA_River, dVdA_River,pupilValues] = Aquatic_calcVolumegetDer(CONTRASTTHRESH)
     run Parameters.m
+    load('Parameters.mat')
     if CONTRASTTHRESH
         load('visibilityAquatic_All.mat')
     else

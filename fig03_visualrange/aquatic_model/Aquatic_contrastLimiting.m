@@ -1,6 +1,7 @@
 function [visualRange_River,pupilValues]=Aquatic_contrastLimiting
 global EROOT
     run Parameters.m    
+    load('Parameters.mat')
     if exist('meteoAquatic_All.mat','file')==2
         load('meteoAquatic_All.mat');
     else

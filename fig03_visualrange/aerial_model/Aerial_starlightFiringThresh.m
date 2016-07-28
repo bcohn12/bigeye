@@ -1,6 +1,7 @@
 function [visualRangeStarlight,pupilValuesAir]=Aerial_starlightFiringThresh
 global EROOT
     run Parameters.m
+    load('Parameters.mat');
     Wlambdaylambda=csvread('Wlambda.csv');
 
     sigma=@(lambda) ((1.1e-3*lambda.^(-4))+(0.008*lambda.^(-2.09)))/(1e3); %value checked with mathmematica

@@ -3,6 +3,7 @@ function [visualRangeDaylight, visualRangeMoonlight, visualRangeStarlight,...
     drdADaylight,drdAMoonlight,drdAStarlight,...
     dVdADaylight, dVdAMoonlight, dVdAStarlight,pupilValuesAir]=Aerial_calcVolumegetDerivatives(CONTRASTTHRESH)
     run Parameters.m
+    load('Parameters.mat')
 
     if CONTRASTTHRESH
         fileNames={'visibilityAerial_Daylight.mat','visibilityAerial_Moonlight.mat','visibilityAerial_Starlight.mat'};

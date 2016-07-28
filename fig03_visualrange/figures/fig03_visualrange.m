@@ -1,6 +1,7 @@
 function fig03_visualrange
     close all;
     run Parameters.m
+    load('Parameters.mat')
     load OM_TF_ST.mat
     pupil_TF = [mean(OM_TF)-std(OM_TF) mean(OM_TF)+std(OM_TF)].*0.449;
     pupil_ST = [mean(OM_ST)-std(OM_ST) mean(OM_ST)+std(OM_ST)].*0.449;
@@ -18,10 +19,11 @@ function fig03_visualrange
         end
         [e,em]=fileExists;
     end
-    
-    
+        
+    h=warndlg({'All of the code takes about 4-5hrs to run'},'Warning!');
+    waitfor(h);
     choice=questdlg({'All the required *.mat files found!',...
-        'Re-run the code?','code re-run','yes','no','no');
+        'Re-run the code?'},'code re-run','yes','no','no');
     if strcmp(choice,'yes')
         for i=1:length(em)
             fprintf('running %s\n',em{i});
