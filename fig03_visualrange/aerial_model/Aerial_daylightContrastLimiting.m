@@ -1,6 +1,7 @@
 function [actRangeDaylight] =Aerial_daylightContrastLimiting
+global EROOT
     %% INITIALIZE/LOAD DATA
-    run ../../figXX_compviz/Parameters.m
+    run Parameters.m
     if exist('meteoAerial_Daylight.mat','file')==2
         load('meteoAerial_Daylight');
     else
@@ -44,11 +45,10 @@ function [actRangeDaylight] =Aerial_daylightContrastLimiting
             end
             mrprev=mr;
         end
-
     end
 
     visualRangeDaylight=actRangeDaylight;
-    save('visibilityAerial_Daylight', 'visualRangeDaylight','pupilValuesAir');
+    save([EROOT 'fig03_visualrange/aerial_model/visibilityAerial_Daylight.mat'], 'visualRangeDaylight','pupilValuesAir');
    
 function Kt = liminalContrast(A,L,angularSize)
 

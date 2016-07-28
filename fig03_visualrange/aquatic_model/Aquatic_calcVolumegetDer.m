@@ -1,20 +1,11 @@
 function [visualRange_River, visualVolume_River, drdA_River, dVdA_River,pupilValues] = Aquatic_calcVolumegetDer(CONTRASTTHRESH)
-    run ../../figXX_compviz/Parameters.m
-    
-    e=exist('visibilityAquatic_All.mat','file')==2;
-    choice=questdlg('.mat files found! Re-run the code?','code re-run','yes','no','no');
-    switch 2*(strcmp(choice,'no')&e)+CONTRASTTHRESH
-        case 3
-            load('visibilityAquatic_All.mat');
-        case 2
-             load('meteoAquatic_All.mat');
-        case 1
-             [visualRange_River,pupilValues]=Aquatic_contrastLimiting;
-        case 0
-             [visualRange_River,pupilValues]=Aquatic_firingThresh;
-                
+    run Parameters.m
+    if CONTRASTTHRESH
+        load('visibilityAquatic_All.mat')
+    else
+        load('meteoAquatic_All.mat')
     end
-            
+                
     drdA_River=visualRange_River;
     dVdA_River=visualRange_River;
     visualVolume_River=visualRange_River;

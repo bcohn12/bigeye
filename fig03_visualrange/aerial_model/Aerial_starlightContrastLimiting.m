@@ -1,6 +1,7 @@
 function [actRangeStarlight] =Aerial_starlightContrastLimiting
+global EROOT
 %% INITIALIZE/LOAD DATA
-    run ../../figXX_compviz/Parameters.m
+    run Parameters.m
     if exist('meteoAerial_Starlight.mat','file')==2
         load('meteoAerial_Starlight');
     else
@@ -45,7 +46,7 @@ function [actRangeStarlight] =Aerial_starlightContrastLimiting
 
     visualRangeStarlight=actRangeStarlight;
 
-    save('visibilityAerial_Starlight', 'visualRangeStarlight','pupilValuesAir');
+    save([EROOT 'fig03_visualrange/aerial_model/visibilityAerial_Starlight.mat'], 'visualRangeStarlight','pupilValuesAir');
    
 
 function Kt = liminalContrast(A,L,angularSize)

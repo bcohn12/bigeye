@@ -1,7 +1,7 @@
 function [visualRangeMoonlight,pupilValuesAir]=Aerial_moonlightFiringThresh
-    run ../../figXX_compviz/Parameters.m
-
-    Wlambdaylambda=csvread('../../figXX_compviz/Wlambda.csv');
+global EROOT
+    run Parameters.m
+    Wlambdaylambda=csvread('Wlambda.csv');
 
     sigma=@(lambda) ((1.1e-3*lambda.^(-4))+(0.008*lambda.^(-2.09)))/(1e3); %value checked with mathmematica
     WlambdaylambdaInterp= @(lambda) interp1(Wlambdaylambda(:,1),Wlambdaylambda(:,2),lambda,'pchip'); %value checked with mathematica
@@ -10,7 +10,6 @@ function [visualRangeMoonlight,pupilValuesAir]=Aerial_moonlightFiringThresh
     lambda1=0.4; lambda2=0.7;
     Bh=BAerial_Moonlight*integral(WlambdaylambdaInterp,lambda1,lambda2); %value checked with mathematica
     Rh=((1.31e3)/0.89)*Bh*(1e6)^2; %value checked with mathematica
-
 
     %% RELATE PUPIL SIZE TO RANGE
     if T<0.05
@@ -49,4 +48,4 @@ function [visualRangeMoonlight,pupilValuesAir]=Aerial_moonlightFiringThresh
         fprintf('iteration %d\n',j);
     end
 
-    save('meteoAerial_Moonlight','visualRangeMoonlight','pupilValuesAir')
+    save([EROOT 'fig03_visualrange/aerial_model/meteoAerial_Moonlight.mat'],'visualRangeMoonlight','pupilValuesAir')

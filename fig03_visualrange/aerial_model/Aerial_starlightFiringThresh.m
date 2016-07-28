@@ -1,6 +1,7 @@
 function [visualRangeStarlight,pupilValuesAir]=Aerial_starlightFiringThresh
-    run ../../figXX_compviz/Parameters.m
-    Wlambdaylambda=csvread('../../figXX_compviz/Wlambda.csv');
+global EROOT
+    run Parameters.m
+    Wlambdaylambda=csvread('Wlambda.csv');
 
     sigma=@(lambda) ((1.1e-3*lambda.^(-4))+(0.008*lambda.^(-2.09)))/(1e3); %value checked with mathmematica
     WlambdaylambdaInterp= @(lambda) interp1(Wlambdaylambda(:,1),Wlambdaylambda(:,2),lambda,'pchip'); %value checked with mathematica
@@ -44,4 +45,4 @@ function [visualRangeStarlight,pupilValuesAir]=Aerial_starlightFiringThresh
        fprintf('iteration: %d\n', loop1);
     end
 
-    save('meteoAerial_Starlight','visualRangeStarlight','pupilValuesAir')        
+    save([EROOT 'fig03_visualrange/aquatic_model/meteoAerial_Starlight.mat'],'visualRangeStarlight','pupilValuesAir')        

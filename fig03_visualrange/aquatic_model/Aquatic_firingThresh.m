@@ -1,7 +1,7 @@
 function [viusalRangeRiver, pupilValues]=Aquatic_firingThresh
 global EROOT
 %% INITIALIZE VARIABLES
-    run ../../figXX_compviz/Parameters.m
+    run Parameters.m
     conditions={'Daylight','Moonlight','Starlight'};
     pupilValues=linspace(minpupil,maxpupil,30); 
     depth=8; tol=5e-4;
@@ -70,7 +70,7 @@ global EROOT
         end
     end
                 
-    save([EROOT '/aquatic_model/meteoAquatic_All.mat'],'visualRange_River','pupilValues');
+    save([EROOT 'fig03_visualrange/aquatic_model/meteoAquatic_All.mat'],'visualRange_River','pupilValues');
 
 function  solution=firingThresh(depth,lambda,photoreceptorAbsorption,a,b,KAll,LAll,r,A,X,Dt,q,d,k,len,T,M,R,C0)
     lambda1=lambda(1); lambda2=lambda(end);

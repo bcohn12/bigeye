@@ -2,26 +2,15 @@ function [visualRangeDaylight, visualRangeMoonlight, visualRangeStarlight,...
     visualVolumeDaylight, visualVolumeMoonlight, visualVolumeStarlight,...
     drdADaylight,drdAMoonlight,drdAStarlight,...
     dVdADaylight, dVdAMoonlight, dVdAStarlight,pupilValuesAir]=Aerial_calcVolumegetDerivatives(CONTRASTTHRESH)
-    run ../../figXX_compviz/Parameters.m
+    run Parameters.m
 
     if CONTRASTTHRESH
         fileNames={'visibilityAerial_Daylight.mat','visibilityAerial_Moonlight.mat','visibilityAerial_Starlight.mat'};
-         if exist(fileNames{1},'file')==2 && exist(fileNames{2},'file')==2 && exist(fileNames{3},'file')
-             load(fileNames{1}); load(fileNames{2}); load(fileNames{3});
-         else
-             [visualRangeDaylight,pupilValuesAir]=Aerial_daylightContrastLimiting;
-             [visualRangeMoonlight,pupilValuesAir]=Aerial_daylightContrastLimiting;
-             [visualRangeStarlight,pupilValuesAir]=Aerial_daylightContrastLimiting;
-         end             
+        load(fileNames{1}); load(fileNames{2}); load(fileNames{3});
+                  
     else
-        fileNames={'meteoAerial_Daylight.mat','meteoAerial_Moonlight.mat','meteoAerial_Starlight.mat'};
-         if exist(fileNames{1},'file')==2 && exist(fileNames{2},'file')==2 && exist(fileNames{3},'file')
-             load(fileNames{1}); load(fileNames{2}); load(fileNames{3});
-         else
-             [visualRangeDaylight,pupilValuesAir]=Aerial_daylightFiringThresh;
-             [visualRangeMoonlight,pupilValuesAir]=Aerial_daylightFiringThresh;
-             [visualRangeStarlight,pupilValuesAir]=Aerial_daylightFiringThresh;
-         end          
+        fileNames={'meteoAerial_Daylight.mat','meteoAerial_Moonlight.mat','meteoAerial_Starlight.mat'};        
+        load(fileNames{1}); load(fileNames{2}); load(fileNames{3});               
     end
 
     %% CALCULATE VOLUME

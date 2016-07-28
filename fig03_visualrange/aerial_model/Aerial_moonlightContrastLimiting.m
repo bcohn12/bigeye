@@ -1,8 +1,7 @@
 function [actRangeMoonlight, Cr_moonlight, angularSize, Kt_moonlight] =Aerial_moonlightContrastLimiting
-
-    %% INITIALIZE/LOAD DATA
+global EROOT
  %% INITIALIZE/LOAD DATA
-    run ../../figXX_compviz/Parameters.m
+    run Parameters.m
     if exist('meteoAerial_Moonlight.mat','file')==2
         load('meteoAerial_Moonlight');
     else
@@ -13,7 +12,6 @@ function [actRangeMoonlight, Cr_moonlight, angularSize, Kt_moonlight] =Aerial_mo
     lambda1=0.4; lambda2=0.7;
 
     %% CALCULATE RANGE MOONLIGHT
-
     actRangeMoonlight=zeros(length(visualRangeMoonlight),1);
     Cr_moonlight=actRangeMoonlight; angularSize=actRangeMoonlight; Kt_moonlight=Cr_moonlight;
 
@@ -46,9 +44,8 @@ function [actRangeMoonlight, Cr_moonlight, angularSize, Kt_moonlight] =Aerial_mo
     end
     visualRangeMoonlight=actRangeMoonlight;
 
-    save('visibilityAerial_Moonlight', 'visualRangeMoonlight','pupilValuesAir');
+    save([EROOT 'fig03_visualrange/aerial_model/visibilityAerial_Moonlight.mat'], 'visualRangeMoonlight','pupilValuesAir');
    
-
 function Kt = liminalContrast(A,L,angularSize)
 
     %% FUNCTION DEFINTIONS

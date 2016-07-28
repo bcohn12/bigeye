@@ -1,8 +1,8 @@
 function [visualRangeDaylight,pupilValuesAir]=Aerial_daylightFiringThresh
-%Input: will be read in from Parameters.m file
+global EROOT
 %% INITIALIZE VARIABLES    
-    run ../../figXX_compviz/Parameters.m 
-    Wlambdaylambda=csvread('../../figXX_compviz/Wlambda.csv');
+    run Parameters.m 
+    Wlambdaylambda=csvread('Wlambda.csv');
     
     sigma=@(lambda) ((1.1e-3*lambda.^(-4))+(0.008*lambda.^(-2.09)))/(1e3); %extinction coeff, value checked with mathmematica
     WlambdaylambdaInterp= @(lambda) interp1(Wlambdaylambda(:,1),Wlambdaylambda(:,2),lambda,'pchip'); %value checked with mathematica
@@ -51,4 +51,4 @@ function [visualRangeDaylight,pupilValuesAir]=Aerial_daylightFiringThresh
         fprintf('iteration: %d\n', j);
     end
 
-    save('meteoAerial_Daylight','visualRangeDaylight','pupilValuesAir')        
+    save([EROOT 'fig03_visualrange/aerial_model/meteoAerial_Daylight.mat'],'visualRangeDaylight','pupilValuesAir')        

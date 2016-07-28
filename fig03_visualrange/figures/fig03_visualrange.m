@@ -1,8 +1,34 @@
-function plotAerialAquaticVisualRangeVolDer
+function fig03_visualrange
     close all;
-    run ../../figXX_compviz/Parameters.m
-    
+    run Parameters.m
+    load OM_TF_ST.mat
+    pupil_TF = [mean(OM_TF)-std(OM_TF) mean(OM_TF)+std(OM_TF)].*0.449;
+    pupil_ST = [mean(OM_ST)-std(OM_ST) mean(OM_ST)+std(OM_ST)].*0.449;
+    fishpupil=mean(OM_TF)*.449;
+    tetrapodpupil=mean(OM_ST)*.449;
     CONTRASTTHRESH=1;
+    
+    [e,em]=fileExists;  
+    while(~all(e))
+        notFound=find(e==0);
+        warning('Not all *.mat files required are found some are going to be re-run');
+        for i=1:length(notFound)
+            fprintf('running %s\n',em{notFound(i)});
+            run(em{notFound(i)});
+        end
+        [e,em]=fileExists;
+    end
+    
+    
+    choice=questdlg({'All the required *.mat files found!',...
+        'Re-run the code?','code re-run','yes','no','no');
+    if strcmp(choice,'yes')
+        for i=1:length(em)
+            fprintf('running %s\n',em{i});
+            run(em{i})
+        end
+    end
+                   
     [visualRange_River, visualVolume_River, drdA_River, dVdA_River,pupilValues] = Aquatic_calcVolumegetDer(CONTRASTTHRESH);
     [visualRangeDaylight, visualRangeMoonlight, visualRangeStarlight,...
     visualVolumeDaylight, visualVolumeMoonlight, visualVolumeStarlight,...
@@ -10,15 +36,8 @@ function plotAerialAquaticVisualRangeVolDer
     dVdADaylight, dVdAMoonlight, dVdAStarlight,pupilValuesAir]=Aerial_calcVolumegetDerivatives(CONTRASTTHRESH);
     
     fillboxalpha=0.18; % transparency of fillbox to show +/- std of pupil size;
-    load ../../fig02_orbitsize/OM_TF_ST.mat
-    pupil_TF = [mean(OM_TF)-std(OM_TF) mean(OM_TF)+std(OM_TF)].*0.449;
-    pupil_ST = [mean(OM_ST)-std(OM_ST) mean(OM_ST)+std(OM_ST)].*0.449;
-
-    fishpupil=mean(OM_TF)*.449;
-    tetrapodpupil=mean(OM_ST)*.449;
-
     linewidthDef=2;
-    
+        
     visualRange=[visualRangeDaylight, visualRangeMoonlight, visualRangeStarlight];
     drdA=[smooth(drdADaylight)';smooth(drdAMoonlight)';smooth(drdAStarlight)'];
     visualVolume=[visualVolumeDaylight;visualVolumeMoonlight;visualVolumeStarlight];
@@ -37,7 +56,6 @@ function plotAerialAquaticVisualRangeVolDer
         smooth(dVdA_River(:,2,1),7)];   
 
 %% AQUATIC PLOTS
-
     figure(); clf();
     subplot(2,2,1);
     plot(pupilValues*1e3,visualRange_River(:,1),'linewidth',linewidthDef);
@@ -112,7 +130,7 @@ function plotAerialAquaticVisualRangeVolDer
             'Stars River up @8m'};
     
     columnlegend(2,key,'location','north',...
-        'fontsize',8)
+        'fontsize',8);
 %%  AERIAL AQUATIC
     figure(); clf();
     subplot(2,2,1);
@@ -178,7 +196,7 @@ function plotAerialAquaticVisualRangeVolDer
     key={'Daylight','Moonlight','Starlight',...
         'Aquatic'};  
     columnlegend(4,key,'location','north',...
-        'fontsize',8)
+        'fontsize',8);
 
 %% CALCULATE INTERSECTION AND GAIN
  
@@ -210,13 +228,11 @@ function plotAerialAquaticVisualRangeVolDer
 %       SURS_12=(interp1q(pupilValuesAir,visualRangeStarlight,tetrapodpupil*1e-3))/...
 %           (interp1q(pupilValues,visualRange_River(:,4),fishpupil*1e-3))
 
-%dVDdVRU_1=(interp1q(pupilValuesAir,dVdADaylight',fishpupil*1e-3))/...
-%    (interp1q(pupilValues',dVdA_River(:,1),fishpupil*1e-3))
-%dVDdVRU_1=(interp1q(pupilValuesAir,dVdADaylight',tetrapodpupil*1e-3))/...
-%    (interp1q(pupilValues',dVdA_River(:,1),fishpupil*1e-3))
-
-     
-
+%         dVDdVRU_1=(interp1q(pupilValuesAir,dVdADaylight',fishpupil*1e-3))/...
+%             (interp1q(pupilValues',dVdA_River(:,1),fishpupil*1e-3))
+%         dVDdVRU_1=(interp1q(pupilValuesAir,dVdADaylight',tetrapodpupil*1e-3))/...
+%             (interp1q(pupilValues',dVdA_River(:,1),fishpupil*1e-3))
+   
 %     fprintf('fish pupil and daylight intersection %f \n',interp1q(pupilValuesAir,visualRangeDaylight,fishpupil*10^-3));
 %     fprintf('fish pupil and moonlight intersection %f \n',interp1q(pupilValuesAir,visualRangeMoonlight,fishpupil*10^-3));
 %     fprintf('fish pupil and starlight intersection %f \n',interp1q(pupilValuesAir,visualRangeStarlight,fishpupil*10^-3));
@@ -255,4 +271,14 @@ function plotAerialAquaticVisualRangeVolDer
 %     fprintf('ST Plus and river hor intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,2),pupil_ST(2)*10^-3));
 %     
     
-    
+function [e,em]=fileExists
+    e2={exist('visibilityAquatic_All.mat','file')==2, 'Aquatic_contrastLimiting.m'};
+    e1={exist('meteoAquatic_All.mat','file')==2, 'Aquatic_firingThresh.m'};
+    e6={exist('visibilityAerial_Daylight.mat','file')==2, 'Aerial_daylightContrastLimiting.m'};
+    e7={exist('visibilityAerial_Moonlight.mat','file')==2, 'Aerial_moonlightContrastLimiting.m'};
+    e8={exist('visibilityAerial_Starlight.mat','file')==2, 'Aerial_starlightContrastLimiting.m'};
+    e3={exist('meteoAerial_Daylight.mat','file')==2, 'Aerial_daylightFiringThresh.m'};
+    e4={exist('meteoAerial_Moonlight.mat','file')==2, 'Aerial_moonlightFiringThresh.m'};
+    e5={exist('meteoAerial_Starlight.mat','file')==2,'Aerial_starlightFiringThresh.m'};
+    e=[e1{1},e2{1},e3{1},e4{1},e5{1},e6{1},e7{1},e8{1}];
+    em={e1{2},e2{2},e3{2},e4{2},e5{2},e6{2},e7{2},e8{2}};
