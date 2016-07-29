@@ -1,7 +1,7 @@
 function Parameters
     close all;
-    parametersPath=which('Parameters.m');
-    parametersPath=fileparts(parametersPath);
+    global BIGEYEROOT
+    parametersPath=[BIGEYEROOT 'data/vision'];
     %% Common Parameters:
     k=0.035; % photoreceptor absorbtion, units 1/micrometers
     len=57;  % length of photoreceptor, in micrometers
