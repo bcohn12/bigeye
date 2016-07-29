@@ -31,6 +31,7 @@ function Parameters
     azimuthMaxAir=azimuthAir;
 
     %% AEIRAL MODEL
+    lambda=(355:10:745)';
     %photoeceptor detection efficiency
     qAerial_Daylight=0.5; qAerial_Moonlight=0.36; qAerial_Starlight=0.36; 
     qAerialVals=[qAerial_Daylight,qAerial_Moonlight,qAerial_Starlight];
@@ -87,29 +88,28 @@ function Parameters
     % DAYLIGHT
     %Absorption Coefficient
     aAquatic_Daylight=xlsread([parametersPath,'/hydrolight/base_sun/Hydrolight_BrownWater.xlsx'],'a_Model');
-    aAquatic_Daylight=aAquatic_Daylight(2:end,3);
+    aAquatic_Daylight=aAquatic_Daylight(:,1);
     %Scattering Coefficient
     bAquatic_Daylight=xlsread([parametersPath,'/hydrolight/base_sun/Hydrolight_BrownWater.xlsx'],'b_Model');
-    bAquatic_Daylight=bAquatic_Daylight(2:end,3);
+    bAquatic_Daylight=bAquatic_Daylight(:,1);
     %Diffuse Spectral Attenuation Coeff
     KuAquatic_Daylight=xlsread([parametersPath,'/hydrolight/base_sun/Hydrolight_BrownWater.xlsx'],'Ku');
-    KuAquatic_Daylight=KuAquatic_Daylight(4:end,3:end);
+    KuAquatic_Daylight=KuAquatic_Daylight(:,:);
 
     KdAquatic_Daylight=xlsread([parametersPath,'/hydrolight/base_sun/Hydrolight_BrownWater.xlsx'],'Kd');
-    KdAquatic_Daylight=KdAquatic_Daylight(4:end,3:end);
+    KdAquatic_Daylight=KdAquatic_Daylight(:,:);
 
     KhAquatic_Daylight=zeros(size(KdAquatic_Daylight,1),size(KdAquatic_Daylight,2));
     %Spectral Radiance
     %Upwelling, horizontal, downwelling radiance
     LuAquatic_Daylight=xlsread([parametersPath,'/hydrolight/base_sun/Hydrolight_BrownWater.xlsx'],'Lu');
-    lambda=LuAquatic_Daylight(4:end,1);
-    LuAquatic_Daylight=LuAquatic_Daylight(4:end,4:end)*5.03e15;
+    LuAquatic_Daylight=LuAquatic_Daylight(:,:)*5.03e15;
 
     LhAquatic_Daylight=xlsread([parametersPath,'/hydrolight/base_sun/Hydrolight_BrownWater.xlsx'],'Lh_2');
-    LhAquatic_Daylight=LhAquatic_Daylight(4:end,4:end)*5.03e15;
+    LhAquatic_Daylight=LhAquatic_Daylight(:,:)*5.03e15;
 
     LdAquatic_Daylight=xlsread([parametersPath,'/hydrolight/base_sun/Hydrolight_BrownWater.xlsx'],'Ld');
-    LdAquatic_Daylight=LdAquatic_Daylight(4:end,4:end)*5.03e15;
+    LdAquatic_Daylight=LdAquatic_Daylight(:,:)*5.03e15;
     %Luminance
     ybarAquatic_Daylight=ybarAquaticInterp(lambda);
 
@@ -130,28 +130,28 @@ function Parameters
     % MOONLIGHT
     %Absorption Coefficient
     aAquatic_Moonlight=xlsread([parametersPath,'/hydrolight/base_moon/Mbase_moon.xls'],'a');
-    aAquatic_Moonlight=aAquatic_Moonlight(4:end,3);
+    aAquatic_Moonlight=aAquatic_Moonlight(:,1);
     %Scattering Coefficient
     bAquatic_Moonlight=xlsread([parametersPath,'/hydrolight/base_moon/Mbase_moon.xls'],'b');
-    bAquatic_Moonlight=bAquatic_Moonlight(4:end,3);
+    bAquatic_Moonlight=bAquatic_Moonlight(:,1);
     %Diffuse Spectral Attenuation Coeff
     KuAquatic_Moonlight=xlsread([parametersPath,'/hydrolight/base_moon/Mbase_moon.xls'],'Ku');
-    KuAquatic_Moonlight=KuAquatic_Moonlight(4:end,3:end);
+    KuAquatic_Moonlight=KuAquatic_Moonlight(:,:);
 
     KdAquatic_Moonlight=xlsread([parametersPath,'/hydrolight/base_moon/Mbase_moon.xls'],'Kd');
-    KdAquatic_Moonlight=KdAquatic_Moonlight(4:end,3:end);
+    KdAquatic_Moonlight=KdAquatic_Moonlight(:,:);
 
     KhAquatic_Moonlight=zeros(size(KdAquatic_Moonlight,1),size(KdAquatic_Moonlight,2));
     %Spectral Radiance
     %Upwelling, horizontal,downwelling radiance
-    LuAquatic_Moonlight=xlsread([parametersPath,'/hydrolight/base_moon/Mbase_moon.xls'],'Lu');
-    LuAquatic_Moonlight=LuAquatic_Moonlight(4:end,4:end)*5.03e15;
+    LuAquatic_Moonlight=xlsread([parametersPath,'/hydrolight/base_moon/Mbase_moon.xlsx'],'Lu');
+    LuAquatic_Moonlight=LuAquatic_Moonlight(:,:)*5.03e15;
 
-    LdAquatic_Moonlight=xlsread([parametersPath,'/hydrolight/base_moon/Mbase_moon.xls'],'Ld');
-    LdAquatic_Moonlight=LdAquatic_Moonlight(4:end,4:end)*5.03e15;
+    LdAquatic_Moonlight=xlsread([parametersPath,'/hydrolight/base_moon/Mbase_moon.xlsx'],'Ld');
+    LdAquatic_Moonlight=LdAquatic_Moonlight(:,:)*5.03e15;
 
-    LhAquatic_Moonlight=xlsread([parametersPath,'/hydrolight/base_moon/Mbase_moon.xls'],'Lh_2');
-    LhAquatic_Moonlight=LhAquatic_Moonlight(4:end,4:end)*5.03e15;
+    LhAquatic_Moonlight=xlsread([parametersPath,'/hydrolight/base_moon/Mbase_moon.xlsx'],'Lh_2');
+    LhAquatic_Moonlight=LhAquatic_Moonlight(:,:)*5.03e15;
     %Luminance
     ybarAquatic_Moonlight=ybarAquaticInterp(lambda);
 
@@ -173,28 +173,28 @@ function Parameters
     % STARLIGHT
     %Absorption Coefficient
     aAquatic_Starlight=xlsread([parametersPath,'/hydrolight/base_stars/Mbase_stars.xls'],'a');
-    aAquatic_Starlight=aAquatic_Starlight(4:end,3);
+    aAquatic_Starlight=aAquatic_Starlight(:,1);
     %Scattering Coefficient
     bAquatic_Starlight=xlsread([parametersPath,'/hydrolight/base_stars/Mbase_stars.xls'],'b');
-    bAquatic_Starlight=bAquatic_Starlight(4:end,3);
+    bAquatic_Starlight=bAquatic_Starlight(:,1);
     %Diffuse Spectral Attenuation Coeff
     KuAquatic_Starlight=xlsread([parametersPath,'/hydrolight/base_stars/Mbase_stars.xls'],'Ku');
-    KuAquatic_Starlight=KuAquatic_Starlight(4:end,3:end);
+    KuAquatic_Starlight=KuAquatic_Starlight(:,:);
 
     KdAquatic_Starlight=xlsread([parametersPath,'/hydrolight/base_stars/Mbase_stars.xls'],'Kd');
-    KdAquatic_Starlight=KdAquatic_Starlight(4:end,3:end);
+    KdAquatic_Starlight=KdAquatic_Starlight(:,:);
 
     KhAquatic_Starlight=zeros(size(KdAquatic_Starlight,1),size(KdAquatic_Starlight,2));
     %Spectral Radiance
     %Upwelling,horizontal,downwellling radiance
     LuAquatic_Starlight=xlsread([parametersPath,'/hydrolight/base_stars/Mbase_stars.xls'],'Lu');
-    LuAquatic_Starlight=LuAquatic_Starlight(4:end,4:end)*5.03e15;
+    LuAquatic_Starlight=LuAquatic_Starlight(:,:)*5.03e15;
 
     LdAquatic_Starlight=xlsread([parametersPath,'/hydrolight/base_stars/Mbase_stars.xls'],'Ld');
-    LdAquatic_Starlight=LdAquatic_Starlight(4:end,4:end)*5.03e15;
+    LdAquatic_Starlight=LdAquatic_Starlight(:,:)*5.03e15;
 
     LhAquatic_Starlight=xlsread([parametersPath,'/hydrolight/base_stars/Mbase_stars.xls'],'Lh_2');
-    LhAquatic_Starlight=LhAquatic_Starlight(4:end,4:end)*5.03e15;
+    LhAquatic_Starlight=LhAquatic_Starlight(:,:)*5.03e15;
     %Luminance
     ybarAquatic_Starlight=ybarAquaticInterp(lambda);
 
