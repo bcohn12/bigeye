@@ -1,5 +1,5 @@
 function [visualRange_River,pupilValues]=Aquatic_contrastLimiting
-global EROOT
+global BIGEYEROOT
     run Parameters.m    
     load('Parameters.mat')
     if exist('meteoAquatic_All.mat','file')==2
@@ -75,7 +75,7 @@ global EROOT
         end
     end
     visualRange_River=actRange_River;   
-    save([EROOT 'fig03_visualrange/aquatic_model/visibilityAquatic_All.mat'],'visualRange_River','pupilValues')
+    save([BIGEYEROOT 'fig03_visualrange/aquatic_model/visibilityAquatic_All.mat'],'visualRange_River','pupilValues')
 
 function Kt = liminalContrast(A,L,angularSize)
     %% FUNCTION DEFINTIONS

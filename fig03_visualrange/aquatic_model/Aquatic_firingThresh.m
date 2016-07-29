@@ -1,5 +1,5 @@
 function [viusalRangeRiver, pupilValues]=Aquatic_firingThresh
-global EROOT
+global BIGEYEROOT
 %% INITIALIZE VARIABLES
     run Parameters.m
     load('Parameters.mat')
