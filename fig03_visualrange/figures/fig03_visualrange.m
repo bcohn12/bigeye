@@ -40,7 +40,7 @@ function fig03_visualrange
     fillboxalpha=0.18; % transparency of fillbox to show +/- std of pupil size;
     linewidthDef=2;
         
-    visualRange=[visualRangeDaylight, visualRangeMoonlight, visualRangeStarlight];
+    visualRange=[visualRangeDaylight, visualRangeMoonlight, smooth(visualRangeStarlight)];
     drdA=[smooth(drdADaylight)';smooth(drdAMoonlight)';smooth(drdAStarlight)'];
     visualVolume=[visualVolumeDaylight;visualVolumeMoonlight;visualVolumeStarlight];
     dVdA=[smooth(dVdADaylight,7)';smooth(dVdAMoonlight,7)';smooth(dVdAStarlight,7)'];
