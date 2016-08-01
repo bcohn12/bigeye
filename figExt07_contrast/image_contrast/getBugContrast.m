@@ -1,5 +1,5 @@
 function [bugContrast,fishContrast,baseFileNames]=getBugContrast 
-global EROOT
+global BIGEYEROOT
     close all;	% Close all figure windows except those created by imtool.
     imtool close all;	% Close all figure windows created by imtool.
 
@@ -86,6 +86,6 @@ global EROOT
         close all;
     end
 
-save([EROOT '/image_contrast/imageContrastValues.mat'],'bugContrast','fishContrast','baseFileNames');
+save([BIGEYEROOT 'figExt07_contrast/image_contrast/imageContrastValues'],'bugContrast','fishContrast','baseFileNames');
 
 
