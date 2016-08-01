@@ -62,6 +62,9 @@ function Parameters
     FAerial_Daylight=8.8; %F-number: focal length/pupil diamter(D) for bright light
     FAerial_Moonlight=2.1; FAerial_Starlight=2.1; %F-number: focal lenght/D for light starved
     FAerial=[FAerial_Daylight,FAerial_Moonlight,FAerial_Starlight];
+    
+    %Intensitiy Parameter Coefficient
+    BbarAerial=(1.31e15)/0.89;
 
     %% AQUATIC MODEL
     qAquatic=0.36; %Efficiency
