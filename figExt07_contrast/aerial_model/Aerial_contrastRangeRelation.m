@@ -1,5 +1,5 @@
 function [visualRangeSolns,C0Range,pupilValues] = Aerial_contrastRangeRelation
-global EROOT
+global BIGEYEROOT
 %% INITIALIZATION
     run Parameters.m
     load('Parameters.mat')
@@ -75,7 +75,7 @@ global EROOT
 
         end
     end
-    save([EROOT,'figExt07_contrast/aerial_model/Aerial_daylightContrastRange.mat'],'visualRangeSolns','C0Range','pupilValues');                
+    save([BIGEYEROOT,'figExt07_contrast/aerial_model/Aerial_daylightContrastRange.mat'],'visualRangeSolns','C0Range','pupilValues');                
 
     
 function  solution=firingThreshRange(WHandle,A,r,C0,L,T,F,Ispace,Dt,q,k,len,X,d,R)
