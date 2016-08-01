@@ -1,5 +1,5 @@
 function [visualRangeStarlight,pupilValuesAir]=Aerial_starlightFiringThresh
-global EROOT
+global BIGEYEROOT
     run Parameters.m
     load('Parameters.mat');
     Wlambdaylambda=csvread('Wlambda.csv');
@@ -28,7 +28,7 @@ global EROOT
             r=rangeValuesAir(loop2);
 
             Nh=(pi/4)^2*(T/r)^2*A^2*Rh*DtAerial_Starlight*qAerial_Starlight*(1-exp(-k*len));
-            Nfalse=((T*FAerial_Starlight*A)/(r*d))^2*XAerial*DtAerial_Starlight;
+            Nfalse=((T*FAerial_Starlight*A)/(2*r*d))^2*XAerial*DtAerial_Starlight;
 
             %APPARENT RADIANCE OF THE GREY OBJECT
             Bofunc=@(lambda) WlambdaylambdaInterp(lambda).*(1+(C0Aerial_Starlight.*exp(-sigma(lambda).*r)));
@@ -46,4 +46,4 @@ global EROOT
        fprintf('iteration: %d\n', loop1);
     end
 
-    save([EROOT 'fig03_visualrange/aquatic_model/meteoAerial_Starlight.mat'],'visualRangeStarlight','pupilValuesAir')        
+    save([BIGEYEROOT 'fig03_visualrange/aquatic_model/meteoAerial_Starlight.mat'],'visualRangeStarlight','pupilValuesAir')        

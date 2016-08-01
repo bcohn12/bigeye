@@ -71,7 +71,7 @@ global BIGEYEROOT
         end
     end
                 
-    save([EROOT 'fig03_visualrange/aquatic_model/meteoAquatic_All.mat'],'visualRange_River','pupilValues');
+    save([BIGEYEROOT 'fig03_visualrange/aquatic_model/meteoAquatic_All.mat'],'visualRange_River','pupilValues');
 
 function  solution=firingThresh(depth,lambda,photoreceptorAbsorption,a,b,KAll,LAll,r,A,X,Dt,q,d,k,len,T,M,R,C0)
     lambda1=lambda(1); lambda2=lambda(end);

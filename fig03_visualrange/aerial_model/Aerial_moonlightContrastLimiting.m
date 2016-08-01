@@ -1,5 +1,5 @@
 function [actRangeMoonlight, Cr_moonlight, angularSize, Kt_moonlight] =Aerial_moonlightContrastLimiting
-global EROOT
+global BIGEYEROOT
  %% INITIALIZE/LOAD DATA
     run Parameters.m
     load('Parameters.mat')
@@ -23,7 +23,7 @@ global EROOT
         CrFunc=@(lambda) exp(-sigma(lambda).*mr);
         Cr_moonlight(i)= C0Aerial_Moonlight*integral(CrFunc,lambda1,lambda2);
 
-        angularSize(i)=atan(T/(2*mr))*2*10^3;
+        angularSize(i)=(T/mr)*10^3;
         Kt_moonlight(i)=liminalContrast(A,BAerial_Moonlight,angularSize(i));
 
         if 10^(Kt_moonlight(i)) <= abs(Cr_moonlight(i))
@@ -33,7 +33,7 @@ global EROOT
             j=1;
             while(10^(Kt_moonlight(i)) > abs(Cr_moonlight(i)))
                 mr=tempVisualRange(j);
-                angularSize(i)=atan(T/(2*mr))*2*10^3;
+                angularSize(i)=(T/mr)*10^3;
                 Cr_moonlight(i)=C0Aerial_Moonlight*integral(CrFunc,lambda1,lambda2);
                 Kt_moonlight(i)=liminalContrast(A,BAerial_Moonlight,angularSize(i));
 
@@ -45,7 +45,7 @@ global EROOT
     end
     visualRangeMoonlight=actRangeMoonlight;
 
-    save([EROOT 'fig03_visualrange/aerial_model/visibilityAerial_Moonlight.mat'], 'visualRangeMoonlight','pupilValuesAir');
+    save([BIGEYEROOT 'fig03_visualrange/aerial_model/visibilityAerial_Moonlight.mat'], 'visualRangeMoonlight','pupilValuesAir');
    
 function Kt = liminalContrast(A,L,angularSize)
 

@@ -1,5 +1,5 @@
 function [visualRangeDaylight,pupilValuesAir]=Aerial_daylightFiringThresh
-global EROOT
+global BIGEYEROOT
 %% INITIALIZE VARIABLES    
     run Parameters.m 
     load('Parameters.mat')
@@ -32,7 +32,7 @@ global EROOT
 
             Nh=(pi/4)^2*(T/r)^2*A^2*Rh*DtAerial_Daylight*qAerial_Daylight*...
                 ((k*len)/(2.3+(k*len)));
-            Nfalse=((T*FAerial_Daylight*A)/(r*d))^2*...
+            Nfalse=((T*FAerial_Daylight*A)/(2*r*d))^2*...
                 XAerial*DtAerial_Daylight; 
 
             %APPARENT RADIANCE OF THE GREY OBJECT
@@ -52,4 +52,4 @@ global EROOT
         fprintf('iteration: %d\n', j);
     end
 
-    save([EROOT 'fig03_visualrange/aerial_model/meteoAerial_Daylight.mat'],'visualRangeDaylight','pupilValuesAir')        
+    save([BIGEYEROOT 'fig03_visualrange/aerial_model/meteoAerial_Daylight.mat'],'visualRangeDaylight','pupilValuesAir')        

@@ -1,5 +1,5 @@
 function [visualRangeMoonlight,pupilValuesAir]=Aerial_moonlightFiringThresh
-global EROOT
+global BIGEYEROOT
     run Parameters.m
     load('Parameters.mat')
     Wlambdaylambda=csvread('Wlambda.csv');
@@ -16,7 +16,7 @@ global EROOT
     if T<0.05
         minvisualrange=1; maxvisualrange=500;
     else
-        minvisualrange=50; maxvisualrange=2500;
+        minvisualrange=50; maxvisualrange=3300;
     end
 
     pupilValuesAir=linspace(minpupil,maxpupil,25);
@@ -29,7 +29,7 @@ global EROOT
 
             Nh=(pi/4)^2*(T/r)^2*A^2*Rh*DtAerial_Moonlight*qAerial_Moonlight*...
                 (1-exp(-k*len));
-            Nfalse=((T*FAerial_Moonlight*A)/(r*d))^2*XAerial*DtAerial_Moonlight;
+            Nfalse=((T*FAerial_Moonlight*A)/(2*r*d))^2*XAerial*Dt;
 
             %APPARENT RADIANCE OF THE GREY OBJECT
             Bofunc=@(lambda) WlambdaylambdaInterp(lambda).*(1+(C0Aerial_Moonlight.*exp(-sigma(lambda).*r)));
@@ -49,4 +49,4 @@ global EROOT
         fprintf('iteration %d\n',j);
     end
 
-    save([EROOT 'fig03_visualrange/aerial_model/meteoAerial_Moonlight.mat'],'visualRangeMoonlight','pupilValuesAir')
+    save([BIGEYEROOT 'fig03_visualrange/aerial_model/meteoAerial_Moonlight.mat'],'visualRangeMoonlight','pupilValuesAir')

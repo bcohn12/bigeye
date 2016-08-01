@@ -1,5 +1,5 @@
 function [actRangeDaylight] =Aerial_daylightContrastLimiting
-global EROOT
+global BIGEYEROOT
     %% INITIALIZE/LOAD DATA
     run Parameters.m
     load('Parameters.mat')
@@ -24,7 +24,7 @@ global EROOT
         CrFunc=@(lambda) exp(-sigma(lambda).*mr);
         Cr_daylight(i)= C0Aerial_Daylight*integral(CrFunc,lambda1,lambda2);
 
-        angularSize(i)=atan(T/(2*mr))*2*10^3;
+        angularSize(i)=(T/mr)*10^3;
         Kt_daylight(i)=liminalContrast(A,BAerial_Daylight,angularSize(i));
 
         if 10^(Kt_daylight(i)) <= abs(Cr_daylight(i))
@@ -34,7 +34,7 @@ global EROOT
             j=1;
             while(10^(Kt_daylight(i)) > abs(Cr_daylight(i)))
                 mr=tempVisualRange(j);
-                angularSize(i)=atan(T/(2*mr))*10^3;
+                angularSize(i)=(T/mr)*10^3;
                 Cr_daylight(i)=C0Aerial_Daylight*integral(CrFunc,lambda1,lambda2);
                 Kt_daylight(i)=liminalContrast(A,BAerial_Daylight,angularSize(i));
 
@@ -49,7 +49,7 @@ global EROOT
     end
 
     visualRangeDaylight=actRangeDaylight;
-    save([EROOT 'fig03_visualrange/aerial_model/visibilityAerial_Daylight.mat'], 'visualRangeDaylight','pupilValuesAir');
+    save([BIGEYEROOT 'fig03_visualrange/aerial_model/visibilityAerial_Daylight.mat'], 'visualRangeDaylight','pupilValuesAir');
    
 function Kt = liminalContrast(A,L,angularSize)
 
