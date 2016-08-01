@@ -46,4 +46,4 @@ global BIGEYEROOT
        fprintf('iteration: %d\n', loop1);
     end
 
-    save([BIGEYEROOT 'fig03_visualrange/aquatic_model/meteoAerial_Starlight.mat'],'visualRangeStarlight','pupilValuesAir')        
+    save([BIGEYEROOT 'fig03_visualrange/aerial_model/meteoAerial_Starlight.mat'],'visualRangeStarlight','pupilValuesAir')        
