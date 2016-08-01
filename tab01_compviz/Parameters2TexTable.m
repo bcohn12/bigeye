@@ -9,7 +9,7 @@ global BIGEYEROOT
         'Definition';
         'Reference'};
 
-    %% AERIAL VISION MODEL
+%% AERIAL VISION MODEL
     %DAYLIGHT
     daylightAerialParameters={'$\eta$';
         '$\Delta t$';
@@ -68,15 +68,14 @@ global BIGEYEROOT
     commonAerialValues={num2str(XAerial);...
         '$0.0011 \lambda_{\mu \text{m}}^{-4} + 0.008 \lambda_{\mu \text{m}}^{-2.09}$';...
         num2str(BbarAerial,'%10.2e')};
-    commonAerialDef={'dark noise rate @$23.5^{\circ}\text{C}$ ($\text{RH}\, \text{s}^{-1}$)';
+    commonAerialDef={'dark noise rate @$23.5^{\circ}\,\text{C}$ ($\text{RH}\, \text{s}^{-1}$)';
         'extinction factor ($\text{km}^{-1}$)';...
         'intensity parameter coefficient'};
     commonAerialRefKey={'\cite{Aho93a}';
         '\cite{Midd52a}';
         '\cite{Snyd79a}'};
-
-    %% AQUATIC VISION MODEL
-    aquaticParameters={'$\eta';
+ %% AQUATIC VISION MODEL  
+    aquaticParameters={'$\eta$';
         '$\Delta t$';
         '$M$';
         '$c(\lambda)$';
@@ -84,26 +83,26 @@ global BIGEYEROOT
     aquaticValues={num2str(qAquatic);...
         num2str(DtAquatic);
         num2str(M);...
-        '$c(\lambda)=b(\lambda)+a(\lambda)'
+        '$c(\lambda)=b(\lambda)+a(\lambda)$'
         num2str(XAquatic)};
     aquaticDef={'detection efficiency';
         'integration time (s)';
         'ratio of focal length and pupil radius, $2f/D$ (Matthiessen''s ratio)';
         'beam attenuation coefficient ($\text{m}^{-1}$)';
-        'dark noise rate @$16.5^{\circ} \, \text{C}$ ($\text{Rh } \text{s}^{-1}$)'};
+        'dark noise rate @$16.5^{\circ} \, \text{C}$ ($\text{Rh } \,\text{s}^{-1}$)'};
     aquaticRefKey={'\cite{Nils14a}';
         '\cite{Donn95a} via \cite{Nils14a}';
         '\cite{Nils14a}';
         '\cite{Midd52a}';...
         '\cite{Aho93a}'};
-
+%% ALL MODELS
     commonParameters={'$\gamma$';...
     '$k$';
     '$l$';
     '$d$';
     'R';
     'T';
-    'C_\text{O}';...
+    '$C_\text{O}$';...
     'D'};
     commonValues={0.449;...
     num2str(k);...
