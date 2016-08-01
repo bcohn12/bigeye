@@ -52,7 +52,7 @@ function Parameters
     % Contrast parameters. Miller uses +/- 0.5, +/-1, and +/-2 as span 
     C0Aerial_Daylight=-1; %aerial daylight contrast value, target black
     C0Aerial_Moonlight=-1; %aerial moonlight contrast value, target black 
-    C0Aerial_Starlight=-1; %aerial starlight contrast value, taget black
+    C0Aerial_Starlight=1; %aerial starlight contrast value, taget black
     C0Aerial=[C0Aerial_Daylight, C0Aerial_Moonlight, C0Aerial_Starlight];
 
     %Dark Noise
@@ -69,6 +69,7 @@ function Parameters
     %% AQUATIC MODEL
     qAquatic=0.36; %Efficiency
     DtAquatic=1.16; %Integration time
+    Dt=1.16;
 
     %Contrast parameters
     C0Aquatic_Daylight=-1; %aquatic contrast value, black target
