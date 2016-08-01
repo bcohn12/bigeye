@@ -1,7 +1,8 @@
 function [visualRange,pupilValues]=Aquatic_visRangeSensitivity
-
+    global BIGEYEROOT
     run ParametersSensitivity.m
-
+    load('ParametersSensitivity.mat');
+    
     conditions={'HighTurbidity','Clear','AbsDom','ScatDom'};
     waterDepth=8;
     pupilValues=linspace(minpupil,maxpupil,30);   
@@ -73,9 +74,8 @@ function [visualRange,pupilValues]=Aquatic_visRangeSensitivity
         end
     end
 
-    save('Aquatic_visRangeSensitivty','conditions','visualRangeSensitivity','pupilValues','waterDepth');
-    
-    
+    save([BIGEYEROOT 'figExt06_sensitivity/aquatic_model/Aquatic_visRangeSensitivity.mat'],'conditions','visualRangeSensitivity','pupilValues','waterDepth');
+     
 function  solution=firingThresh(depth,lambda,photoreceptorAbsorption,aAll,bAll,KAll,LAll,r,A,X,Dt,q,d,k,len,T,M,R)
     lambda1=lambda(1); lambda2=lambda(end);
     a=aAll;
@@ -105,5 +105,3 @@ function c=times(a,b)
     b(isinf(b))=0;
     a(isinf(a))=0;
     c=builtin('times',a,b);
-
-
