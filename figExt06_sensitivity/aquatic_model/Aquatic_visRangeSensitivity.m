@@ -19,14 +19,11 @@ function [visualRange,pupilValues]=Aquatic_visRangeSensitivity
         elseif strcmp(conditions{i},'ScatDom')
             r_down=2.3; r_hor=1.5;
         end
-
-        aString=strcat('a_',conditions{i}); bString=strcat('b_',conditions{i});
-        KdString=strcat('Kd_',conditions{i}); KhString=strcat('Kh_',conditions{i});
-        LdString=strcat('Ld_',conditions{i}); LhString=strcat('Lh_',conditions{i});
-        pAbsorbString=strcat('pAbsorb_',conditions{i});
-
-        a=eval(aString); b=eval(bString); Kd=eval(KdString); Kh=eval(KhString);
-        Ld=eval(LdString); Lh=eval(LhString); pAbsorb=eval(pAbsorbString);
+        
+        a=a.(conditions{i}); b=b.(conditions{i});
+        Kd=Kd.(conditions{i}); Kh=Kh.(conditions{i});
+        Ld=Ld.(conditions{i}); Lh=Lh.(conditions{i});
+        pAbsorb=pAbsorb.(conditions{i});
 
         for j=1:length(pupilValues)
                 A=pupilValues(j);
