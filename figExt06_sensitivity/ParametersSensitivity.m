@@ -35,11 +35,11 @@ global BIGEYEROOT
     a_Clear=xlsread('hydrolight/Clear/MClear.xls','a');
     a_Clear=a_Clear(:,1);
     %HIGH ABSORPTION
-    a_Highabs=xlsread('hydrolight/AbsDom/MAbsDom.xls','a');
-    a_Highabs=a_Highabs(:,1);
+    a_AbsDom=xlsread('hydrolight/AbsDom/MAbsDom.xls','a');
+    a_AbsDom=a_AbsDom(:,1);
     %HIGH SCATTERING
-    a_Highscat=xlsread('hydrolight/ScatDom/MScatDom.xls','a');
-    a_Highscat=a_Highscat(:,1);
+    a_ScatDom=xlsread('hydrolight/ScatDom/MScatDom.xls','a');
+    a_ScatDom=a_ScatDom(:,1);
     %% SCATTERING COEFFICIENT
     %HIGH TURBIDITY
     b_HighTurbidity=xlsread('hydrolight/HighTurbidity/MHighTurbidity.xls','b');
@@ -48,11 +48,11 @@ global BIGEYEROOT
     b_Clear=xlsread('hydrolight/Clear/MClear.xls','b');
     b_Clear=b_Clear(:,1);
     %HIGH ABSORPTION
-    b_Highabs=xlsread('hydrolight/AbsDom/MAbsDom.xls','b');
-    b_Highabs=b_Highabs(:,1);
+    b_AbsDom=xlsread('hydrolight/AbsDom/MAbsDom.xls','b');
+    b_AbsDom=b_AbsDom(:,1);
     %HIGH SCATTERING
-    b_Highscat=xlsread('hydrolight/ScatDom/MScatDom.xls','b');
-    b_Highscat=b_Highscat(:,1);
+    b_ScatDom=xlsread('hydrolight/ScatDom/MScatDom.xls','b');
+    b_ScatDom=b_ScatDom(:,1);
     %% K-FUNCTION
     %HIGH TURBIDITY
     Kd_HighTurbidity=xlsread('hydrolight/HighTurbidity/MHighTurbidity.xls','Kd');
@@ -71,21 +71,21 @@ global BIGEYEROOT
 
     Kh_Clear=zeros(size(Kd_Clear,1),size(Kd_Clear,2));
     %HIGH ABSORPTION
-    Kd_Highabs=xlsread('hydrolight/AbsDom/MAbsDom.xls','Kd');
-    Kd_Highabs=Kd_Highabs(:,:);
+    Kd_AbsDom=xlsread('hydrolight/AbsDom/MAbsDom.xls','Kd');
+    Kd_AbsDom=Kd_AbsDom(:,:);
 
-    Ku_Highabs=xlsread('hydrolight/AbsDom/MAbsDom.xls','Ku');
-    Ku_Highabs=Ku_Highabs(:,:);
+    Ku_AbsDom=xlsread('hydrolight/AbsDom/MAbsDom.xls','Ku');
+    Ku_AbsDom=Ku_AbsDom(:,:);
 
-    Kh_Highabs=zeros(size(Kd_Highabs,1),size(Kd_Highabs,2));
+    Kh_AbsDom=zeros(size(Kd_AbsDom,1),size(Kd_AbsDom,2));
     %HIGH SCATTERING
-    Kd_Highscat=xlsread('hydrolight/ScatDom/MScatDom.xls','Kd');
-    Kd_Highscat=Kd_Highscat(:,:);
+    Kd_ScatDom=xlsread('hydrolight/ScatDom/MScatDom.xls','Kd');
+    Kd_ScatDom=Kd_ScatDom(:,:);
 
-    Ku_Highscat=xlsread('hydrolight/ScatDom/MScatDom.xls','Ku');
-    Ku_Highscat=Ku_Highscat(:,:);
+    Ku_ScatDom=xlsread('hydrolight/ScatDom/MScatDom.xls','Ku');
+    Ku_ScatDom=Ku_ScatDom(:,:);
 
-    Kh_Highscat=zeros(size(Kd_Highscat,1),size(Kd_Highscat,2));
+    Kh_ScatDom=zeros(size(Kd_ScatDom,1),size(Kd_ScatDom,2));
 
     %% SPECTRAL RADIANCE
     lambda=(355:10:745)';
@@ -108,23 +108,23 @@ global BIGEYEROOT
     Lh_Clear=xlsread('hydrolight/Clear/MClear.xls','Lh_2');
     Lh_Clear=Lh_Clear(:,:)*5.03e15;
     %HIGH ABSORPTION
-    Ld_Highabs=xlsread('hydrolight/AbsDom/MAbsDom.xls','Ld');
-    Ld_Highabs=Ld_Highabs(:,:)*5.03e15;
+    Ld_AbsDom=xlsread('hydrolight/AbsDom/MAbsDom.xls','Ld');
+    Ld_AbsDom=Ld_AbsDom(:,:)*5.03e15;
 
-    Lu_Highabs=xlsread('hydrolight/AbsDom/MAbsDom.xls','Lu');
-    Lu_Highabs=Lu_Highabs(:,:)*5.03e15;
+    Lu_AbsDom=xlsread('hydrolight/AbsDom/MAbsDom.xls','Lu');
+    Lu_AbsDom=Lu_AbsDom(:,:)*5.03e15;
 
-    Lh_Highabs=xlsread('hydrolight/AbsDom/MAbsDom.xls','Lh_2');
-    Lh_Highabs=Lh_Highabs(:,:)*5.03e15;
+    Lh_AbsDom=xlsread('hydrolight/AbsDom/MAbsDom.xls','Lh_2');
+    Lh_AbsDom=Lh_AbsDom(:,:)*5.03e15;
     %HIGH SCATTERING
-    Ld_Highscat=xlsread('hydrolight/ScatDom/MScatDom.xls','Ld');
-    Ld_Highscat=Ld_Highscat(:,:)*5.03e15;
+    Ld_ScatDom=xlsread('hydrolight/ScatDom/MScatDom.xls','Ld');
+    Ld_ScatDom=Ld_ScatDom(:,:)*5.03e15;
 
-    Lu_Highscat=xlsread('hydrolight/ScatDom/MScatDom.xls','Lu');
-    Lu_Highscat=Lu_Highscat(:,:)*5.03e15;
+    Lu_ScatDom=xlsread('hydrolight/ScatDom/MScatDom.xls','Lu');
+    Lu_ScatDom=Lu_ScatDom(:,:)*5.03e15;
 
-    Lh_Highscat=xlsread('hydrolight/ScatDom/MScatDom.xls','Lh_2');
-    Lh_Highscat=Lh_Highscat(:,:)*5.03e15;
+    Lh_ScatDom=xlsread('hydrolight/ScatDom/MScatDom.xls','Lh_2');
+    Lh_ScatDom=Lh_ScatDom(:,:)*5.03e15;
 
     %% PHOTORECEPTOR ABSORPTION
     A=1; a0A=800; a1A=3.1;
@@ -134,9 +134,9 @@ global BIGEYEROOT
     lambdaMax_B=lambda(ind_B(1));
     [~,ind_C]=max(Ld_Clear);
     lambdaMax_C=lambda(ind_C(1));
-    [~,ind_HA]=max(Ld_Highabs);
+    [~,ind_HA]=max(Ld_AbsDom);
     lambdaMax_HA=lambda(ind_HA(1));
-    [~,ind_HS]=max(Ld_Highscat);
+    [~,ind_HS]=max(Ld_ScatDom);
     lambdaMax_HS=lambda(ind_HS(1));
 
     pAbsorb_HighTurbidity=A*exp(-a0A*(log10(lambda./lambdaMax_B)).^2.*...
@@ -149,13 +149,13 @@ global BIGEYEROOT
         B*exp(-a0B*(log10(lambda./368)).^2.*...
         (1+a1B*log10(lambda./368)+(3*a1B^2/8)*log10(lambda./368))));
 
-    pAbsorb_Highabs=A*exp(-a0A*(log10(lambda./lambdaMax_HA)).^2.*...
+    pAbsorb_AbsDom=A*exp(-a0A*(log10(lambda./lambdaMax_HA)).^2.*...
         (1+a1A*log10(lambda./lambdaMax_HA)+(3*a1A^2/8).*log10(lambda./lambdaMax_HA).^2)+...
         B*exp(-a0B*(log10(lambda./368)).^2.*...
         (1+a1B*log10(lambda./368)+(3*a1B^2/8)*log10(lambda./368))));
-    pAbsorb_Highabs(1:6)=1e-300;
+    pAbsorb_AbsDom(1:6)=1e-300;
 
-    pAbsorb_Highscat=A*exp(-a0A*(log10(lambda./lambdaMax_HS)).^2.*...
+    pAbsorb_ScatDom=A*exp(-a0A*(log10(lambda./lambdaMax_HS)).^2.*...
         (1+a1A*log10(lambda./lambdaMax_HS)+(3*a1A^2/8).*log10(lambda./lambdaMax_HS).^2)+...
         B*exp(-a0B*(log10(lambda./368)).^2.*...
         (1+a1B*log10(lambda./368)+(3*a1B^2/8)*log10(lambda./368))));
