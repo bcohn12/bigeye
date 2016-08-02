@@ -9,7 +9,7 @@ global BIGEYEROOT
 
     %following Middleton:
     lambda1=0.4; lambda2=0.7;
-    Bh=BAerial_Moonlight*integral(WlambdaylambdaInterp,lambda1,lambda2); %value checked with mathematica
+    Bh=BAerial.Moonlight*integral(WlambdaylambdaInterp,lambda1,lambda2); %value checked with mathematica
     Rh=((1.31e3)/0.89)*Bh*(1e6)^2; %value checked with mathematica
 
     %% RELATE PUPIL SIZE TO RANGE
@@ -27,16 +27,16 @@ global BIGEYEROOT
         for i=1:length(rangeValuesAir)
             r=rangeValuesAir(i);
 
-            Nh=(pi/4)^2*(T/r)^2*A^2*Rh*DtAerial_Moonlight*qAerial_Moonlight*...
+            Nh=(pi/4)^2*(T/r)^2*A^2*Rh*DtAerial.Moonlight*qAerial.Moonlight*...
                 (1-exp(-k*len));
-            Nfalse=((T*FAerial_Moonlight*A)/(2*r*d))^2*XAerial*Dt;
+            Nfalse=((T*FAerial.Moonlight*A)/(2*r*d))^2*XAerial*Dt;
 
             %APPARENT RADIANCE OF THE GREY OBJECT
-            Bofunc=@(lambda) WlambdaylambdaInterp(lambda).*(1+(C0Aerial_Moonlight.*exp(-sigma(lambda).*r)));
-            Bo= BAerial_Moonlight*integral(Bofunc,lambda1,lambda2);
+            Bofunc=@(lambda) WlambdaylambdaInterp(lambda).*(1+(C0Aerial.Moonlight.*exp(-sigma(lambda).*r)));
+            Bo= BAerial.Moonlight*integral(Bofunc,lambda1,lambda2);
             Ro=((1.31e3)/0.89)*Bo*(1e6)^2;
 
-            No=(pi/4)^2*(T/r)^2*A^2*Ro*DtAerial_Moonlight*qAerial_Moonlight*...
+            No=(pi/4)^2*(T/r)^2*A^2*Ro*DtAerial.Moonlight*qAerial.Moonlight*...
                 (1-exp(-k*len));
 
             eq=(R*sqrt(No+Nh+2*Nfalse))/(abs(No-Nh));

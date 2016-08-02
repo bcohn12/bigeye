@@ -22,10 +22,10 @@ global BIGEYEROOT
         mr=visualRangeStarlight(i);
 
         CrFunc=@(lambda) exp(-sigma(lambda).*mr);
-        Cr_starlight(i)= C0Aerial_Starlight*integral(CrFunc,lambda1,lambda2);
+        Cr_starlight(i)= C0Aerial.Starlight*integral(CrFunc,lambda1,lambda2);
 
         angularSize(i)=(T/(mr))*10^3;
-        Kt_starlight(i)=liminalContrast(A,BAerial_Starlight,angularSize(i));
+        Kt_starlight(i)=liminalContrast(A,BAerial.Starlight,angularSize(i));
 
         if 10^(Kt_starlight(i)) <= abs(Cr_starlight(i))
             actRangeStarlight(i)=mr;
@@ -33,8 +33,8 @@ global BIGEYEROOT
             delta=1e-6;
                 while 10^(Kt_starlight(i))>abs(Cr_starlight(i));
                     angularSize(i)=(T/mr)*10^3;
-                    Cr_starlight(i)=C0_daylight*integral(CrFunc,lambda1,lambda2);
-                    Kt_starlight(i)=liminalContrast(A,BAerial_Daylight,angularSize(i));
+                    Cr_starlight(i)=C0Aerial.Starlight*integral(CrFunc,lambda1,lambda2);
+                    Kt_starlight(i)=liminalContrast(A,BAerial.Daylight,angularSize(i));
 
                     actRangeStarlight(i)=mr;
                     mr=mr-delta;

@@ -13,18 +13,16 @@ global BIGEYEROOT
     actRange_River=zeros(size(visualRange_River,1),size(visualRange_River,2),size(visualRange_River,3));
 
     for j=1:length(conditions)
-        aString=strcat('aAquatic_',conditions{j}); bString=strcat('bAquatic_',conditions{j});
-        KdString=strcat('KdAquatic_',conditions{j}); KhString=strcat('KhAquatic_',conditions{j});      
-        BdString=strcat('BdAquatic_',conditions{j}); BhString=strcat('BhAquatic_',conditions{j});
-        C0String=strcat('C0Aquatic_',conditions{j});
-        
-        a=eval(aString); b=eval(bString); Kd=eval(KdString); Kh=eval(KhString);
+        a=aAquatic.(conditions{j}); b=bAquatic.(conditions{j}); 
+        Kd=KdAquatic.(conditions{j}); Kh=KhAquatic.(conditions{j});
         Kd=Kd(:,depth); Kh=Kh(:,depth);
+        Bd=BdAquatic.(conditions{j}); Bh=BhAquatic.(conditions{j});
+        Bd=Bd(depth); Bh=Bh(depth);
+        C0=C0Aquatic.(conditions{j});
+
         a=@(l) interp1(lambda,a,l,'pchip'); b=@(l) interp1(lambda,b,l,'pchip');
         Kd=@(l) interp1(lambda,Kd,l,'pchip'); Kh=@(l) interp1(lambda,Kh,l,'pchip');
-       
-        Bd=eval(BdString); Bh=eval(BhString); C0=eval(C0String);
-        Bd=Bd(depth); Bh=Bh(depth);
+
         for i=1:length(pupilValues)
             A=pupilValues(i);
             mr_down=visualRange_River(i,j,1);
@@ -72,6 +70,7 @@ global BIGEYEROOT
                     ind=ind+1;
                 end
             end
+            fprintf('iteration %d %d:\n',i,j);
         end
     end
     visualRange_River=actRange_River;   

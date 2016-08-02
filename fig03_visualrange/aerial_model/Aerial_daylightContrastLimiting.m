@@ -22,10 +22,10 @@ global BIGEYEROOT
         mr=visualRangeDaylight(i);
 
         CrFunc=@(lambda) exp(-sigma(lambda).*mr);
-        Cr_daylight(i)= C0Aerial_Daylight*integral(CrFunc,lambda1,lambda2);
+        Cr_daylight(i)= C0Aerial.Daylight*integral(CrFunc,lambda1,lambda2);
 
         angularSize(i)=(T/mr)*10^3;
-        Kt_daylight(i)=liminalContrast(A,BAerial_Daylight,angularSize(i));
+        Kt_daylight(i)=liminalContrast(A,BAerial.Daylight,angularSize(i));
 
         if 10^(Kt_daylight(i)) <= abs(Cr_daylight(i))
             actRangeDaylight(i)=mr;
@@ -35,8 +35,8 @@ global BIGEYEROOT
             while(10^(Kt_daylight(i)) > abs(Cr_daylight(i)))
                 mr=tempVisualRange(j);
                 angularSize(i)=(T/mr)*10^3;
-                Cr_daylight(i)=C0Aerial_Daylight*integral(CrFunc,lambda1,lambda2);
-                Kt_daylight(i)=liminalContrast(A,BAerial_Daylight,angularSize(i));
+                Cr_daylight(i)=C0Aerial.Daylight*integral(CrFunc,lambda1,lambda2);
+                Kt_daylight(i)=liminalContrast(A,BAerial.Daylight,angularSize(i));
 
                 actRangeDaylight(i)=mr;
                 j=j+1;

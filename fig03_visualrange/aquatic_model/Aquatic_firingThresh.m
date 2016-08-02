@@ -19,14 +19,12 @@ global BIGEYEROOT
             r_down=1;r_hor=.3;
         end
         
-        aString=strcat('aAquatic_',conditions{i}); bString=strcat('bAquatic_',conditions{i});
-        KdString=strcat('KdAquatic_',conditions{i}); KhString=strcat('KhAquatic_',conditions{i});
-        LdString=strcat('LdAquatic_',conditions{i}); LhString=strcat('LhAquatic_',conditions{i});
-        C0String=strcat('C0Aquatic_',conditions{i});
-        
-        pAbsorbString=strcat('pAbsorbAquatic_',conditions{i});
-        a=eval(aString); b=eval(bString); Kd=eval(KdString); Kh=eval(KhString);
-        Ld=eval(LdString); Lh=eval(LhString); pAbsorb=eval(pAbsorbString); C0=eval(C0String);      
+        a=aAquatic.(conditions{i}); b=bAquatic.(conditions{i});
+        Kd=KdAquatic.(conditions{i}); Kh=KhAquatic.(conditions{i});
+        Ld=LdAquatic.(conditions{i}); Lh=LhAquatic.(conditions{i});
+        C0=C0Aquatic.(conditions{i});
+        pAbsorb=pAbsorbAquatic.(conditions{i});
+
         for j=1:length(pupilValues)
             A=pupilValues(j);
             delta_down=10^(floor(log10(r_down))-4);
@@ -44,9 +42,9 @@ global BIGEYEROOT
                  end
                  clc;
                  fprintf('pupil iteration: %d %d\n',j,i);
-                    fprintf('solution downwelling: %f\n',possibleSolnDownwelling);
-                    fprintf('r: %f\n',r_down);
-                    fprintf('error downwellling: %f\n', abs(possibleSolnDownwelling-1));
+                 fprintf('solution downwelling: %f\n',possibleSolnDownwelling);
+                 fprintf('r: %f\n',r_down);
+                 fprintf('error downwellling: %f\n', abs(possibleSolnDownwelling-1));
             end
             
             possibleSolnHorizontal=10;

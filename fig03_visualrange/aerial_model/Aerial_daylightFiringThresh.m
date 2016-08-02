@@ -10,7 +10,7 @@ global BIGEYEROOT
 
     %following Middleton:
     lambda1=0.4; lambda2=0.7; %visible range wavelength
-    Bh=BAerial_Daylight*integral(WlambdaylambdaInterp,lambda1,lambda2); %horizon luminance, value checked with mathematica
+    Bh=BAerial.Daylight*integral(WlambdaylambdaInterp,lambda1,lambda2); %horizon luminance, value checked with mathematica
     Rh=((1.31e3)/0.89)*Bh*(1e6)^2; %horizon space-light photons/m^2 s sr, value checked with mathematica
 
     %% RELATE PUPIL SIZE TO RANGE
@@ -30,17 +30,17 @@ global BIGEYEROOT
         for i=1:length(rangeValuesAir)
             r=rangeValuesAir(i);
 
-            Nh=(pi/4)^2*(T/r)^2*A^2*Rh*DtAerial_Daylight*qAerial_Daylight*...
+            Nh=(pi/4)^2*(T/r)^2*A^2*Rh*DtAerial.Daylight*qAerial.Daylight*...
                 ((k*len)/(2.3+(k*len)));
-            Nfalse=((T*FAerial_Daylight*A)/(2*r*d))^2*...
-                XAerial*DtAerial_Daylight; 
+            Nfalse=((T*FAerial.Daylight*A)/(2*r*d))^2*...
+                XAerial*DtAerial.Daylight; 
 
             %APPARENT RADIANCE OF THE GREY OBJECT
             Bofunc=@(lambda) WlambdaylambdaInterp(lambda).*...
-                (1+(C0Aerial_Daylight.*exp(-sigma(lambda).*r)));
-            Bo= BAerial_Daylight*integral(Bofunc,lambda1,lambda2);
+                (1+(C0Aerial.Daylight.*exp(-sigma(lambda).*r)));
+            Bo= BAerial.Daylight*integral(Bofunc,lambda1,lambda2);
             Ro=((1.31e3)/0.89)*Bo*(1e6)^2;
-            No=(pi/4)^2*(T/r)^2*A^2*Ro*DtAerial_Daylight*qAerial_Daylight*...
+            No=(pi/4)^2*(T/r)^2*A^2*Ro*DtAerial.Daylight*qAerial.Daylight*...
                 ((k*len)/(2.3+(k*len)));
 
             eq=(R*sqrt(No+Nh+2*Nfalse))/(abs(No-Nh));

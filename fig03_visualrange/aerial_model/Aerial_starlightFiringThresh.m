@@ -8,7 +8,7 @@ global BIGEYEROOT
     WlambdaylambdaInterp= @(lambda) interp1(Wlambdaylambda(:,1),Wlambdaylambda(:,2),lambda,'pchip'); %value checked with mathematica
     %following Middleton:
     lambda1=0.4; lambda2=0.7;
-    Bh=BAerial_Starlight*integral(WlambdaylambdaInterp,lambda1,lambda2); %value checked with mathematica
+    Bh=BAerial.Starlight*integral(WlambdaylambdaInterp,lambda1,lambda2); %value checked with mathematica
     Rh=((1.31e3)/0.89)*Bh*(1e6)^2; %value checked with mathematica
 
 
@@ -27,15 +27,15 @@ global BIGEYEROOT
         for loop2=1:length(rangeValuesAir)
             r=rangeValuesAir(loop2);
 
-            Nh=(pi/4)^2*(T/r)^2*A^2*Rh*DtAerial_Starlight*qAerial_Starlight*(1-exp(-k*len));
-            Nfalse=((T*FAerial_Starlight*A)/(2*r*d))^2*XAerial*DtAerial_Starlight;
+            Nh=(pi/4)^2*(T/r)^2*A^2*Rh*DtAerial.Starlight*qAerial.Starlight*(1-exp(-k*len));
+            Nfalse=((T*FAerial.Starlight*A)/(2*r*d))^2*XAerial*DtAerial.Starlight;
 
             %APPARENT RADIANCE OF THE GREY OBJECT
-            Bofunc=@(lambda) WlambdaylambdaInterp(lambda).*(1+(C0Aerial_Starlight.*exp(-sigma(lambda).*r)));
-            Bg= BAerial_Starlight*integral(Bofunc,lambda1,lambda2);
+            Bofunc=@(lambda) WlambdaylambdaInterp(lambda).*(1+(C0Aerial.Starlight.*exp(-sigma(lambda).*r)));
+            Bg= BAerial.Starlight*integral(Bofunc,lambda1,lambda2);
             Ro=((1.31e3)/0.89)*Bg*(1e6)^2;
 
-            No=(pi/4)^2*(T/r)^2*A^2*Ro*DtAerial_Starlight*qAerial_Starlight*(1-exp(-k*len));
+            No=(pi/4)^2*(T/r)^2*A^2*Ro*DtAerial.Starlight*qAerial.Starlight*(1-exp(-k*len));
 
             eq=(R*sqrt(No+Nh+2*Nfalse))/(abs(No-Nh));
             possibleSolS(loop2)=eq;
