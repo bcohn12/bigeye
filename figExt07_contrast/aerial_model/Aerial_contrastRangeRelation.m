@@ -17,12 +17,12 @@ global BIGEYEROOT
     lambda1=0.4; lambda2=0.7;
     sigma=@(lambda) ((1.1e-3*lambda.^(-4))+(0.008*lambda.^(-2.09)))/(1e3); %value checked with mathmematica
     
-    Rh=BAerial_Daylight*integral(WlambdaylambdaInterp,lambda1,lambda2); %value checked with mathematica
+    Rh=BAerial.Daylight*integral(WlambdaylambdaInterp,lambda1,lambda2); %value checked with mathematica
     Nh=((1.31e3)/0.89)*Rh*(1e6)^2; %value checked with mathematica
     
 %% CALCULATE RANGE FROM FIRING THRESHOLD
-    Bh=BAerial_Daylight; Dt=DtAerial_Daylight; F=FAerial_Daylight;
-    X=XAerial; q=qAerial_Daylight;
+    Bh=BAerial.Daylight; Dt=DtAerial.Daylight; F=FAerial.Daylight;
+    X=XAerial; q=qAerial.Daylight;
 
     visualRangeSolns=zeros(length(C0Range),length(pupilValues));        
     for i=1:length(pupilValues)

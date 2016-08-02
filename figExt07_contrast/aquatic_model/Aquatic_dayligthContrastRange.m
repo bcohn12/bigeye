@@ -13,11 +13,11 @@ global BIGEYEROOT
     tol=5e-5; depth=8; r_down=5.7; r_hor=3.7;
     C0Range=linspace(-1,4,20);
     
-    a=aAquatic_Daylight; b=bAquatic_Daylight; 
-    Kd=KdAquatic_Daylight(:,depth); Kh=KhAquatic_Daylight(:,depth);
-    Ld=LdAquatic_Daylight(:,depth); Lh=LhAquatic_Daylight(:,depth);
-    Bd=BdAquatic_Daylight(depth); Bh=BhAquatic_Daylight(depth);
-    pAbsorb=pAbsorbAquatic_Daylight;
+    a=aAquatic.Daylight; b=bAquatic.Daylight; 
+    Kd=KdAquatic.Daylight(:,depth); Kh=KhAquatic.Daylight(:,depth);
+    Ld=LdAquatic.Daylight(:,depth); Lh=LhAquatic.Daylight(:,depth);
+    Bd=BdAquatic.Daylight(depth); Bh=BhAquatic.Daylight(depth);
+    pAbsorb=pAbsorbAquatic.Daylight;
     KdF=@(l) interp1(lambda,Kd,l,'pchip'); KhF=@(l) interp1(lambda,Kh,l,'pchip');
     aF=@(l) interp1(lambda,a,l,'pchip'); bF=@(l) interp1(lambda,b,l,'pchip');
       
