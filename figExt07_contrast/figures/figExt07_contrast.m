@@ -26,6 +26,7 @@ function figExt07_contrast
     end
     load('Aerial_daylightContrastRange.mat')
     load('Aquatic_daylightContrastRange.mat')
+    load('imageContrastValues.mat')
     [contrastRange_River,C0RangeNew]=interpolateContrastRange(C0Range,visualRange_River);
     [contrastRange,C0RangeNew]=interpolateContrastRange(C0Range,visualRangeSolnsTemp);
    
@@ -74,9 +75,9 @@ function figExt07_contrast
     line([0.1 0.1],[ylim1(1) ylim1(2)],'linestyle',':','color','r');
    
 function [e,em]=fileExists
-    e1={exist('Aerial_daylightContrastRange.mat','file')==2,'Aerial_daylightContrastRange.m'};
+    e1={exist('Aerial_daylightContrastRange.mat','file')==2,'Aerial_contrastRangeRelation.m'};
     e2={exist('Aquatic_daylightContrastRange.mat','file')==2, 'Aquatic_daylightContrastRange.m'};
     e3={exist('imageContrastValues.mat','file')==2,'getBugContrast.m'};
     e=[e1{1} e2{1} e3{1}];
-    em=[e1{2} e2{2} e3{2}];
+    em={e1{2} e2{2} e3{2}};
     
