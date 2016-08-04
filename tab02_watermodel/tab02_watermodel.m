@@ -5,7 +5,7 @@ global BIGEYEROOT
     load('Parameters.mat');
     run ParametersSensitivity.m
     load('ParametersSensitivity.mat')
-    a_Baseline=aAquatic_Daylight; b_Baseline=bAquatic_Daylight;
+    a.Baseline=aAquatic.Daylight; b.Baseline=bAquatic.Daylight;
     
     model_param=xlsread('MAbsDom.xls','model_param');
     Chl.AbsDom=model_param(1); mineral.AbsDom=model_param(2);
@@ -32,7 +32,7 @@ global BIGEYEROOT
     CDOM.Baseline=model_param(3); omega0.Baseline=model_param(4);
     secchi.Baseline=model_param(5);
     
-    columnlabels={' '; 
+    columnLabels={
         'Clear';
         'Absorption Dominated';
         'Baseline River';
@@ -64,26 +64,30 @@ IOPParam={'\emph{a}, 1/m';
     'Secchi depth, m'};
 ind=find(lambda==575);
 for i=1:length(waterConditions)
-    a=eval(strcat('a_',waterConditions{i})); a=a(ind);
-    b=eval(strcat('b_',waterConditions{i})); b=b(ind);
-    c=a+b; attLength=(1/c);
+    aValue=a.(waterConditions{i}); aValue=aValue(ind);
+    bValue=b.(waterConditions{i}); bValue=bValue(ind);
+    c=aValue+bValue; attLength=(1/c);
     omega0Value=omega0.(waterConditions{i});
     secchiValue=secchi.(waterConditions{i});
     
-    colIOP.(waterConditions{i})={num2str(a);
-        num2str(b);
+    colIOP.(waterConditions{i})={num2str(aValue);
+        num2str(bValue);
         num2str(c);
         num2str(attLength);
         num2str(omega0Value);
         num2str(secchiValue)};
 end
     
-rowLabels=['\textbf{Concentration parameters}';concParam;
+rowLabels=['';'';'';'\textbf{Concentration parameters}';concParam;
     '\textbf{IOPs at 575nm}'; IOPParam];
+rowValues=[];
 for i=1:length(waterConditions)
-    tab.(waterConditions{i})={' ';colConc.(waterConditions{i});
-        ' '; colIOP.(waterConditions{i})};
+    tab.(waterConditions{i})=[columnLabels{i};' ';colConc.(waterConditions{i});
+        ' '; colIOP.(waterConditions{i})];
+    rowValues=[tab.(waterConditions{i}); rowValues];
 end
+
+
 
     
     
