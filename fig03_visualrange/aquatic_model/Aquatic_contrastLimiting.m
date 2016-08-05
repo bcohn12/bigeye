@@ -16,6 +16,9 @@ global BIGEYEROOT
         a=aAquatic.(conditions{j}); b=bAquatic.(conditions{j}); 
         Kd=KdAquatic.(conditions{j}); Kh=KhAquatic.(conditions{j});
         Kd=Kd(:,depth); Kh=Kh(:,depth);
+        Ld=LdAquatic.(conditions{j})(:,depth); Lh=LhAquatic.(conditions{j})(:,depth);
+        [~,index_down]=max(Ld); [~,index_hor]=max(Lh);
+        lambda_down=lambda(index_down); lambda_hor=lambda(index_hor);
         Bd=BdAquatic.(conditions{j}); Bh=BhAquatic.(conditions{j});
         Bd=Bd(depth); Bh=Bh(depth);
         C0=C0Aquatic.(conditions{j});
@@ -28,10 +31,12 @@ global BIGEYEROOT
             mr_down=visualRange_River(i,j,1);
             mr_hor=visualRange_River(i,j,2);
 
-            CrFunc_down=@(lambda) exp((Kd(lambda)-a(lambda)-b(lambda)).*mr_down);
-            CrFunc_hor=@(lambda) exp((Kh(lambda)-a(lambda)-b(lambda)).*mr_hor);
-            Cr_down(i)= C0*integral(CrFunc_down,lambda(1),lambda(end));
-            Cr_hor(i)=C0*integral(CrFunc_hor,lambda(1),lambda(end));
+            %CrFunc_down=@(lambda) exp((Kd(lambda)-a(lambda)-b(lambda)).*mr_down);
+            %CrFunc_hor=@(lambda) exp((Kh(lambda)-a(lambda)-b(lambda)).*mr_hor);
+            %Cr_down(i)= C0*integral(CrFunc_down,lambda(1),lambda(end));
+            %Cr_hor(i)=C0*integral(CrFunc_hor,lambda(1),lambda(end));
+            Cr_down(i)=C0*exp((Kd(lambda_down)-a(lambda_down)-b(lambda_down)).*mr_down);
+            Cr_hor(i)=C0*exp((Kh(lambda_down)-a(lambda_hor)-b(lambda_hor)).*mr_hor);
 
             angularSize_down(i)=atan(T/(2*mr_down))*2*10^3;
             angularSize_hor(i)=atan(T/(2*mr_down))*2*10^3;
@@ -42,33 +47,34 @@ global BIGEYEROOT
             if (10^(Kt_down(i))<abs(Cr_down(i)))
                 actRange_River(i,j,1)=mr_down;
             else    
-                tempVisualRange=linspace(mr_down,mr_down/100,max(visualRange_River(:,j,1))*100);
+                tempVisualRange=linspace(mr_down,mr_down/10,mr_down*1000);
                 ind=1;
-                while(10^(Kt_down(i)) > abs(Cr_down(i)))
-                    mr_down=tempVisualRange(j);
+                while(10^(Kt_down(i)) - abs(Cr_down(i)))>5e-2
+                    mr_down=tempVisualRange(ind);
                     angularSize_down(i)=atan(T/(2*mr_down))*2*10^3;
-                    Cr_down(i)=C0*integral(CrFunc_down,lambda1,lambda2);
+                    %Cr_down(i)=C0*integral(CrFunc_down,lambda(1),lambda(end));
+                    Cr_down(i)=C0*exp((Kd(lambda_down)-a(lambda_down)-b(lambda_down)).*mr_down);
                     Kt_down(i)=liminalContrast(A,Bd,angularSize_down(i));
-
-                    actRange_River(i,j,1)=mr_down;
                     ind=ind+1;
+                    fprintf('error:  %f\n',10^(Kt_down(i)) -abs(Cr_down(i)));
                 end
+                actRange_River(i,j,1)=mr_down;
             end
 
             if (10^(Kt_hor(i))<abs(Cr_hor(i)))
                 actRange_River(i,j,2)=mr_hor;
             else    
-                tempVisualRange=linspace(mr_hor,mr_hor/100,max(visualRange_River(:,j,2))*100);
+                tempVisualRange=linspace(mr_hor,mr_hor/100,max(visualRange_River(:,j,2))*500);
                 ind=1;
-                while(10^(Kt_hor(i)) > abs(Cr_hor(i)))
+                while(10^(Kt_hor(i))-abs(Cr_hor(i)))>5e-2
                     mr_hor=tempVisualRange(ind);
                     angularSize_hor(i)=atan(T/(2*mr_hor))*2*10^3;
-                    Cr_down(i)=C0*integral(CrFunc_hor,lambda1,lambda2);
-                    Kt_hor(i)=liminalContrast(A,Bh,angularSize_hor(i));
-
-                    actRange_River(i,j,2)=mr_hor;
+                    Cr_hor(i)=C0*exp((Kh(lambda_down)-a(lambda_hor)-b(lambda_hor)).*mr_hor);
+                    Kt_hor(i)=liminalContrast(A,Bh,angularSize_hor(i));                    
                     ind=ind+1;
+                    fprintf('error:  %f\n',10^(Kt_hor(i)) -abs(Cr_hor(i)));
                 end
+                actRange_River(i,j,2)=mr_hor;
             end
             fprintf('iteration %d %d:\n',i,j);
         end
