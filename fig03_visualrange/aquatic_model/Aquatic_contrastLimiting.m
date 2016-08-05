@@ -31,16 +31,10 @@ global BIGEYEROOT
             mr_down=visualRange_River(i,j,1);
             mr_hor=visualRange_River(i,j,2);
 
-            %CrFunc_down=@(lambda) exp((Kd(lambda)-a(lambda)-b(lambda)).*mr_down);
-            %CrFunc_hor=@(lambda) exp((Kh(lambda)-a(lambda)-b(lambda)).*mr_hor);
-            %Cr_down(i)= C0*integral(CrFunc_down,lambda(1),lambda(end));
-            %Cr_hor(i)=C0*integral(CrFunc_hor,lambda(1),lambda(end));
             Cr_down(i)=C0*exp((Kd(lambda_down)-a(lambda_down)-b(lambda_down)).*mr_down);
             Cr_hor(i)=C0*exp((Kh(lambda_down)-a(lambda_hor)-b(lambda_hor)).*mr_hor);
-
             angularSize_down(i)=atan(T/(2*mr_down))*2*10^3;
             angularSize_hor(i)=atan(T/(2*mr_down))*2*10^3;
-
             Kt_down(i)=liminalContrast(A,Bd,angularSize_down(i));
             Kt_hor(i)=liminalContrast(A,Bh,angularSize_hor(i));
 
@@ -52,7 +46,6 @@ global BIGEYEROOT
                 while(10^(Kt_down(i)) - abs(Cr_down(i)))>5e-2
                     mr_down=tempVisualRange(ind);
                     angularSize_down(i)=atan(T/(2*mr_down))*2*10^3;
-                    %Cr_down(i)=C0*integral(CrFunc_down,lambda(1),lambda(end));
                     Cr_down(i)=C0*exp((Kd(lambda_down)-a(lambda_down)-b(lambda_down)).*mr_down);
                     Kt_down(i)=liminalContrast(A,Bd,angularSize_down(i));
                     ind=ind+1;
