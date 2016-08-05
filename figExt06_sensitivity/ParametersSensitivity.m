@@ -15,6 +15,13 @@ global BIGEYEROOT
 
     minpupil=0.001; % largest diameter of pupil, meters
     maxpupil=0.03; % smallest diameter of pupil, meters
+    C0=-1;
+    ybarAquaticLambda=[0.0000 0.0001 0.0004 0.0012 0.0040 0.0116 0.02300 .0380 0.0600 0.0910,...
+        0.1390 0.2080 0.3230 0.5030 0.7100 0.8620 0.9540 0.9950 0.9950 0.9520,...
+        0.8700 0.7570 0.6310 0.5030 0.3810 0.2650 0.1750 0.1070 0.0610 0.0320 0.0170 0.0082,...
+        0.0041 0.0021 0.0011 0.0005 0.0003 0.0001 0.0001 0.0000]; %photopic luminosity function, Mobley Light and Water book
+    lambdabar=380:10:770; %luminosity function wavelength domain
+    ybarAquaticInterp=@(l) interp1(lambdabar,ybarAquaticLambda,l,'pchip');
     %% SENSORY VOLUME PARAMS
 
     elevationCoastal=pi/3; %60 deg 
@@ -71,7 +78,7 @@ global BIGEYEROOT
 
     Kh.Clear=zeros(size(Kd.Clear,1),size(Kd.Clear,2));
     %HIGH ABSORPTION
-    Kd.AbsDom=xlsread('hydrolight/AbsDom/MAbsDom.xls','Kd');
+    Kd.AbsDom=xlsread('hydrolight/AbsDom/MAbsDom.xls','KLu');
     Kd.AbsDom=Kd.AbsDom(:,:);
 
     Ku.AbsDom=xlsread('hydrolight/AbsDom/MAbsDom.xls','Ku');
@@ -126,6 +133,21 @@ global BIGEYEROOT
     Lh.ScatDom=xlsread('hydrolight/ScatDom/MScatDom.xls','Lh_2');
     Lh.ScatDom=Lh.ScatDom(:,:)*5.03e15;
 
+    %% LUMINANCE
+    cond={'HighTurbidity','Clear','AbsDom','ScatDom'};
+    ybar=ybarAquaticInterp(lambda);
+    for j=1:length(cond)
+        for i=1:size(Lh.ScatDom,2)
+            tempU=(Lu.(cond{j})(:,i)/5.03e15).*ybar.*lambda;
+            Bu.(cond{j})(i)=trapz(lambda,tempU);
+
+            tempH=(Lh.(cond{j})(:,i)/5.03e15).*ybar.*lambda;
+            Bh.(cond{j})(i)=trapz(tempH);
+
+            tempD=(Ld.(cond{j})(:,i)/5.03e15).*ybar.*lambda;
+            Bd.(cond{j})(i)=trapz(tempD);
+        end
+    end
     %% PHOTORECEPTOR ABSORPTION
     A=1; a0A=800; a1A=3.1;
     B=0.5; a0B=176; a1B=1.52;
@@ -153,7 +175,7 @@ global BIGEYEROOT
         (1+a1A*log10(lambda./lambdaMax_HA)+(3*a1A^2/8).*log10(lambda./lambdaMax_HA).^2)+...
         B*exp(-a0B*(log10(lambda./368)).^2.*...
         (1+a1B*log10(lambda./368)+(3*a1B^2/8)*log10(lambda./368))));
-    pAbsorb.AbsDom(1:6)=1e-300;
+    %pAbsorb.AbsDom(1:5)=1e-2;
 
     pAbsorb.ScatDom=A*exp(-a0A*(log10(lambda./lambdaMax_HS)).^2.*...
         (1+a1A*log10(lambda./lambdaMax_HS)+(3*a1A^2/8).*log10(lambda./lambdaMax_HS).^2)+...

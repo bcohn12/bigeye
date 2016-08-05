@@ -28,10 +28,11 @@ function figExt06_sensitivity
     
     load('Aquatic_visRangeSensitivity.mat');
     load('meteoAquatic_All.mat');
-    
+    visualRangeSensitivity=[visualRangeSensitivity(:,1,1),visualRangeSensitivity(:,2,1),visualRangeSensitivity(:,3,1)/11,visualRangeSensitivity(:,4,1),...
+        visualRangeSensitivity(:,1,2),visualRangeSensitivity(:,2,2),visualRangeSensitivity(:,3,2),visualRangeSensitivity(:,4,2)];
     linewidthdef=2;
     figure();
-    plot(pupilValues*10^3,visualRangeSensitivity(:,:,1),'linewidth',linewidthdef);
+    plot(pupilValues*10^3,visualRangeSensitivity(:,1:4),'linewidth',linewidthdef);
     hold on;
     plot(pupilValues*10^3,visualRange_River(:,1,1),'linewidth',linewidthdef);
     xlabel('pupil diameter (mm)'); ylabel('visual range (m)')
@@ -43,7 +44,7 @@ function figExt06_sensitivity
         'fontsize',8)
 
     figure();
-    plot(pupilValues*10^3,visualRangeSensitivity(:,:,2),'linewidth',linewidthdef);
+    plot(pupilValues*10^3,visualRangeSensitivity(:,5:end),'linewidth',linewidthdef);
     hold on;
     plot(pupilValues*10^3,visualRange_River(:,1,2),'linewidth',linewidthdef);
     xlabel('pupil diameter (mm)'); ylabel('visual range (m)')

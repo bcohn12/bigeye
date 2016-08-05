@@ -1,4 +1,4 @@
-function [visualRange,pupilValues]=Aquatic_firingThreshSensitivity
+function [visualRangeSensitivity,pupilValues]=Aquatic_firingThreshSensitivity
     global BIGEYEROOT
     run ParametersSensitivity.m
     load('ParametersSensitivity.mat');
@@ -8,7 +8,7 @@ function [visualRange,pupilValues]=Aquatic_firingThreshSensitivity
     pupilValues=linspace(minpupil,maxpupil,30);   
     visualRangeSensitivity=zeros(length(pupilValues),length(conditions),2);
 
-    for i=3:length(conditions)
+    for i=1:length(conditions)
         tol=5e-4;
         if strcmp(conditions{i},'HighTurbidity')
             r_down=3; r_hor=1.5; 
@@ -25,7 +25,7 @@ function [visualRange,pupilValues]=Aquatic_firingThreshSensitivity
         LdValue=Ld.(conditions{i}); LhValue=Lh.(conditions{i});
         pAbsorbValue=pAbsorb.(conditions{i});
 
-        for j=2:length(pupilValues)
+        for j=1:length(pupilValues)
                 A=pupilValues(j);
                 delta_down=10^(floor(log10(r_down))-4);
                 delta_hor=10^(floor(log10(r_hor))-4);
@@ -71,7 +71,7 @@ function [visualRange,pupilValues]=Aquatic_firingThreshSensitivity
         end
     end
 
-    save([BIGEYEROOT 'figExt06_sensitivity/aquatic_model/Aquatic_visRangeSensitivity.mat'],'conditions','visualRangeSensitivity','pupilValues','waterDepth');
+    save([BIGEYEROOT 'figExt06_sensitivity/aquatic_model/Aquatic_meteoRangeSensitivity.mat'],'conditions','visualRangeSensitivity','pupilValues','waterDepth');
      
 function  solution=firingThresh(depth,lambda,photoreceptorAbsorption,aAll,bAll,KAll,LAll,r,A,X,Dt,q,d,k,len,T,M,R)
     a=aAll;
