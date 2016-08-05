@@ -28,7 +28,7 @@ function figExt06_sensitivity
     
     load('Aquatic_visRangeSensitivity.mat');
     load('meteoAquatic_All.mat');
-    visualRangeSensitivity=[visualRangeSensitivity(:,1,1),visualRangeSensitivity(:,2,1),visualRangeSensitivity(:,3,1)/11,visualRangeSensitivity(:,4,1),...
+    visualRangeSensitivity=[visualRangeSensitivity(:,1,1),visualRangeSensitivity(:,2,1),visualRangeSensitivity(:,3,1),visualRangeSensitivity(:,4,1),...
         visualRangeSensitivity(:,1,2),visualRangeSensitivity(:,2,2),visualRangeSensitivity(:,3,2),visualRangeSensitivity(:,4,2)];
     linewidthdef=2;
     figure();
@@ -56,7 +56,7 @@ function figExt06_sensitivity
         'fontsize',8)
     
 function [e,em]=fileExists
-    e2={exist('Aquatic_visRangeSensitivity.mat','file')==2, 'Aquatic_visRangeSensitivity.m'};
-    e1={exist('meteoAquatic_All.mat','file')==2, 'Aquatic_firingThresh.m'};
+    e2={exist('Aquatic_visRangeSensitivity.mat','file')==2, 'Aquatic_contrastLimitedSensitivity.m'};
+    e1={exist('visibilityAquatic_All.mat','file')==2, 'Aquatic_contrastLimiting.m'};
     e=[e1{1},e2{1}];
     em={e1{2},e2{2}};

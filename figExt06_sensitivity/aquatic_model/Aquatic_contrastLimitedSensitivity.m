@@ -15,7 +15,7 @@ function [visualRange,pupilValues]=Aquatic_contrastLimitedSensitivity
     actRangeSensitivity=visualRangeSensitivity;
     lambda1=lambda(1); lambda2=lambda(end);
     for k=1:length(viewing)
-        for j=2:length(conditions)              
+        for j=3:length(conditions)              
             aValue=a.(conditions{j}); bValue=b.(conditions{j});
             KValue.down=Kd.(conditions{j})(:,waterDepth); KValue.hor=Kh.(conditions{j})(:,waterDepth);
             BValue.down=Bd.(conditions{j})(waterDepth); BValue.hor=Bh.(conditions{j})(waterDepth);           
@@ -26,11 +26,12 @@ function [visualRange,pupilValues]=Aquatic_contrastLimitedSensitivity
             aValue=@(l) interp1(lambda,aValue,l,'pchip'); bValue=@(l) interp1(lambda,bValue,l,'pchip');
             KValue.down=@(l) interp1(lambda,KValue.down,l,'pchip'); KValue.hor=@(l) interp1(lambda,KValue.hor,l,'pchip');
             for i=1:length(pupilValues)
-                A=pupilValues(i);
-               if ~strcmp(conditions{j},'AbsDom');
-                   mr=visualRangeSensitivity(i,j,k);
-               else
+               A=pupilValues(i);
+               mr=visualRangeSensitivity(i,j,k);
+               tol=5e-2;
+               if strcmp(conditions{j},'AbsDom')&& strcmp(viewing{k},'down')
                    mr=visualRangeSensitivity(i,j,k)/11;
+                   tol=5e-4;
                end
                 
                 Cr.(viewing{k})=C0*exp((KValue.(viewing{k})(lmax.(viewing{k}))-aValue(lmax.(viewing{k}))-bValue(lmax.(viewing{k}))).*mr);
@@ -41,22 +42,26 @@ function [visualRange,pupilValues]=Aquatic_contrastLimitedSensitivity
                 else
                     tempVisualRange=linspace(mr,mr/10,mr*500);
                     ind=1;
-                    while(10^(Kt.(viewing{k}))-abs(Cr.(viewing{k}))>5e-2)
+                    while(10^(Kt.(viewing{k}))-abs(Cr.(viewing{k}))>tol)
                         mr=tempVisualRange(ind);
                         angularSize.(viewing{k})=atan(T/(2*mr))*2*10^3;
                         Cr.(viewing{k})=C0*exp((KValue.(viewing{k})(lmax.(viewing{k}))-aValue(lmax.(viewing{k}))-bValue(lmax.(viewing{k}))).*mr);
                         Kt.(viewing{k})=liminalContrast(A,BValue.(viewing{k}),angularSize.(viewing{k}));
-                        
-                        actRangeSensitivity(i,j,k)=mr;
+                 
                         ind=ind+1;
                         clc
+                        fprintf('iteration: %d %d %d\n',i,j,k);
                         fprintf('it: %d\n',ind);
                         fprintf('error: %f\n',10^(Kt.(viewing{k})) -abs(Cr.(viewing{k})));
                     end
+                    actRangeSensitivity(i,j,k)=mr;
                 end
             end
         end
     end
+    
+    visualRangeSensitivity=actRangeSensitivity;   
+    save([BIGEYEROOT, 'figExt06_sensitivity/aquatic_model/Aquatic_visRangeSensitivity.mat'],'visualRangeSensitivity','pupilValues');
                 
                 
 function Kt = liminalContrast(A,L,angularSize)
