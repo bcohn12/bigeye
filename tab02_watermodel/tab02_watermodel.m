@@ -78,17 +78,58 @@ for i=1:length(waterConditions)
         num2str(secchiValue)};
 end
     
-rowLabels=['';'';'';'\textbf{Concentration parameters}';concParam;
+rowLabels=[' ';'\textbf{Concentration parameters}';concParam;
     '\textbf{IOPs at 575nm}'; IOPParam];
 rowValues=[];
 for i=1:length(waterConditions)
     tab.(waterConditions{i})=[columnLabels{i};' ';colConc.(waterConditions{i});
         ' '; colIOP.(waterConditions{i})];
-    rowValues=[tab.(waterConditions{i}); rowValues];
+    rowValues=[tab.(waterConditions{i}) rowValues];
+end
+filename='tab02_watermodel.tex';
+title='Water Type';
+
+matrix2latex(rowValues,rowLabels,title,filename);
+
+
+function matrix2latex(rowvalues,rowlabels,title,filename)
+matrix=[rowlabels rowvalues];
+collabels=matrix(1,:);
+line1=''; line2='';
+for i=1:length(collabels)
+    c{i}=strsplit(collabels{i});
+    if length(c{i})==1;
+        c{i}{2}=' ';
+    end
+    line1=strcat(line1,'&',c{i}{1});
+    line2=strcat(line2,'&',c{i}{2});
+end
+line1=line1(2:end); line2=line2(2:end);
+
+fid = fopen(filename, 'w');
+
+str='';
+for i=1:size(matrix,2)
+    temp='l';
+    str=strcat(str,temp);
 end
 
-
-
-    
-    
+fprintf(fid, '\\begin{tabular}{%s}\r\n',str);
+fprintf(fid,'\\toprule\r\n');
+fprintf(fid,' &\\multicolumn{%s}{c}{\\LARGE %s}\\\\\\otoprule\r\n',num2str(size(rowvalues,2)),title);
+%fprintf(fid,'\\\\\\otoprule\r\n');
+fprintf(fid, '%s\r\n',line1);
+fprintf(fid,'%s\r\n',line2);
+for i=2:size(matrix,1)
+    str='';
+    for j=1:size(matrix,2)
+        str=strcat(str,'&',matrix{i,j});      
+    end
+    str=str(2:end);
+    fprintf(fid, '%s\\\\\\hline\r\n\r\n',str);
+end
+fprintf(fid,'\\bottomrule\r\n');
+fprintf(fid,'\\end{tabular}\r\n');
+fclose(fid);
+        
     
