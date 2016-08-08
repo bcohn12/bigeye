@@ -287,6 +287,8 @@ if isnumeric(matrix)
     end
 end
 
+
+
 if(~isempty(textsize))
     fprintf(fid, '\\begin{%s}', textsize);
 end
