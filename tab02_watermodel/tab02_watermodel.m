@@ -51,9 +51,9 @@ for i=1:length(waterConditions)
     mineralValue=mineral.(waterConditions{i});
     CDOMValue=CDOM.(waterConditions{i});
     
-    colConc.(waterConditions{i})={num2str(ChlValue);
-        num2str(mineralValue);
-        num2str(CDOMValue)};
+    colConc.(waterConditions{i})={num2str(ChlValue,'%.2f');
+        num2str(mineralValue,'%.2f');
+        num2str(CDOMValue,'%.2f')};
 end
 
 IOPParam={'\emph{a}, 1/m';
@@ -70,12 +70,12 @@ for i=1:length(waterConditions)
     omega0Value=omega0.(waterConditions{i});
     secchiValue=secchi.(waterConditions{i});
     
-    colIOP.(waterConditions{i})={num2str(aValue);
-        num2str(bValue);
-        num2str(c);
-        num2str(attLength);
-        num2str(omega0Value);
-        num2str(secchiValue)};
+    colIOP.(waterConditions{i})={num2str(aValue,'%.2f');
+        num2str(bValue,'%.2f');
+        num2str(c,'%.2f');
+        num2str(attLength,'%.2f');
+        num2str(omega0Value,'%.2f');
+        num2str(secchiValue,'%.2f')};
 end
     
 rowLabels=[' ';'\textbf{Concentration parameters}';concParam;
@@ -105,6 +105,7 @@ for i=1:length(collabels)
     line2=strcat(line2,'&',c{i}{2});
 end
 line1=line1(2:end); line2=line2(2:end);
+line1=strcat(line1,'\\\'); line2=strcat(line2,'\\\\\hline');
 
 fid = fopen(filename, 'w');
 
