@@ -153,7 +153,7 @@ global BIGEYEROOT
     matrixTemp=[numcell des.Aquatic des.Aerial valTemp];
     %matrix=[c;matrixTemp];
     
-    filename='tab03_gain.tex';
+    filename='tabExt03_gain.tex';
     matrix2latex(matrixTemp,c,filename,m,n);
         
 function matrix2latex(matrix, columnlabels,filename,labelline,valueline)
