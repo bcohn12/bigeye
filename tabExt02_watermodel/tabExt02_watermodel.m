@@ -86,7 +86,7 @@ for i=1:length(waterConditions)
         ' '; colIOP.(waterConditions{i})];
     rowValues=[tab.(waterConditions{i}) rowValues];
 end
-filename='tab02_watermodel.tex';
+filename='tabExt02_watermodel.tex';
 title='Water Type';
 
 matrix2latex(rowValues,rowLabels,title,filename);
