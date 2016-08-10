@@ -1,4 +1,4 @@
-function tab01_compviz
+function tabExt01_compviz
 global BIGEYEROOT
     run Parameters.m
     load('Parameters.mat')
