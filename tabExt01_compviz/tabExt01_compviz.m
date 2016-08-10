@@ -169,7 +169,7 @@ global BIGEYEROOT
 
     allCellTable=[rowLabels,allParameters,allValues,allDef,allRef];
 
-    filename='tab01_compviz.tex';
+    filename='tabExt01_compviz.tex';
     matrix2latex(allCellTable,filename,...
         'columnLabels',columnLabels)
     %alignment: {|p{0.3\linewidth}|p{0.15\linewidth}|p{0.15\linewidth}|p{0.4\linewidth}|p{0.15\linewidth}|}end
