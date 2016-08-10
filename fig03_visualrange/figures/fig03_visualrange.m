@@ -1,7 +1,8 @@
 function fig03_visualrange
+%% INITIALIZATION
     close all;
-    run Parameters.m
-    load('Parameters.mat')
+    %run Parameters.m
+    %load('Parameters.mat')
     load OM_TF_ST.mat
     pupil_TF = [mean(OM_TF)-std(OM_TF) mean(OM_TF)+std(OM_TF)].*0.449;
     pupil_ST = [mean(OM_ST)-std(OM_ST) mean(OM_ST)+std(OM_ST)].*0.449;
@@ -55,224 +56,318 @@ function fig03_visualrange
         visualRange_River(:,3,1)];
     dVdA_River=[smooth(dVdA_River(:,1,1),7), smooth(dVdA_River(:,1,2),7),...
         smooth(dVdA_River(:,2,1),7),...
-        smooth(dVdA_River(:,2,1),7)];   
+        smooth(dVdA_River(:,2,1),7)];
+    
+    visual.rangeAquatic=visualRange_River; visual.rangeAerial=visualRange;
+    visual.drdAAquatic=drdA_River; visual.drdAAerial=drdA';
+    visual.volumeAquatic=visualVolume_River; visual.volumeAerial=visualVolume';
+    visual.dVdAAquatic=dVdA_River; visual.dVdAAerial=dVdA';
+    
+%% FIND INTERSECTIONS
+    cond={'rangeAquatic','rangeAerial','drdAAquatic','drdAAerial',...
+        'volumeAquatic','volumeAerial','dVdAAquatic','dVdAAerial'};
 
-%% AQUATIC PLOTS
-    figure(); clf();
-    subplot(2,2,1);
-    plot(pupilValues*1e3,visualRange_River(:,1),'linewidth',linewidthDef);
-    hold on;
-    plot(pupilValues*1e3,visualRange_River(:,2),':','color',[0 0.4470 0.7410],'linewidth',linewidthDef);
-    plot(pupilValues*1e3,visualRange_River(:,3),'color',[0.8500    0.3250    0.0980],'linewidth',linewidthDef);
-    plot(pupilValues*1e3,visualRange_River(:,4),'color',[0.9290    0.6940    0.1250],'linewidth',linewidthDef);
-    xlabel('pupil diameter (mm)'); ylabel('visual range (m)');
-    xlim([0.001*10^3 0.025*10^3]); ylim1=get(gca,'ylim'); 
-    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-    [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
-    set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
-    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-        [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
-    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
-    line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
-    line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
+    for i=1:length(cond)
+        dum=visual.(cond{i});
+        if ~isempty(findstr(cond{i},'Aerial'))
+            diam=pupilValuesAir;
+        else
+            diam=pupilValues;
+        end
+        for j=1:size(dum,2)
+            func=@(x) interp1(diam,dum(:,j),x,'pchip');
+            intersectFish.(cond{i})(j)=func(fishpupil*1e-3);
+            intersectDigited.(cond{i})(j)=func(tetrapodpupil*1e-3);
+        end
+    end
     
-    subplot(2,2,2)
-    plot(pupilValues*1e3,drdA_River(:,1),'linewidth',linewidthDef);
-    hold on;
-    plot(pupilValues*1e3,drdA_River(:,2),':','color',[0 0.4470 0.7410],'linewidth',linewidthDef);
-    plot(pupilValues*1e3,drdA_River(:,3),'color',[0.8500    0.3250    0.0980],'linewidth',linewidthDef);
-    plot(pupilValues*1e3,drdA_River(:,4),'color',[0.9290    0.6940    0.1250],'linewidth',linewidthDef);
-    xlabel('pupil diameter (mm)'); ylabel('dr/dA (m/mm)');
-    xlim([0.001*10^3 0.025*10^3]); ylim2=get(gca,'ylim'); 
-    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-    [ylim2(1) ylim2(2) ylim2(2) ylim2(1)],[1 0 0]);
-    set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
-    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-        [ylim2(1) ylim2(2) ylim2(2) ylim2(1)],[0 0 1]);
-    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
-    line([fishpupil,fishpupil],[ylim2(1),ylim2(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
-    line([tetrapodpupil,tetrapodpupil],[ylim2(1),ylim2(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
-    
-    subplot(2,2,3)
-    plot(pupilValues*1e3,visualVolume_River(:,1),'linewidth',linewidthDef);
-    hold on;
-    plot(pupilValues*1e3,visualVolume_River(:,2),':','color',[0 0.4470 0.7410],'linewidth',linewidthDef);
-    plot(pupilValues*1e3,visualVolume_River(:,3),'color',[0.8500    0.3250    0.0980],'linewidth',linewidthDef);
-    plot(pupilValues*1e3,visualVolume_River(:,4),'color',[0.9290    0.6940    0.1250],'linewidth',linewidthDef);
-    xlabel('pupil diameter (mm)'); ylabel('visual volume (m^3)');
-    xlim([0.001*10^3 0.025*10^3]); ylim3=get(gca,'ylim'); 
-    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-    [ylim3(1) ylim3(2) ylim3(2) ylim3(1)],[1 0 0]);
-    set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
-    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-        [ylim3(1) ylim3(2) ylim3(2) ylim3(1)],[0 0 1]);
-    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
-    line([fishpupil,fishpupil],[ylim3(1),ylim3(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
-    line([tetrapodpupil,tetrapodpupil],[ylim3(1),ylim3(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
-    
-    subplot(2,2,4)
-    plot(pupilValues*1e3,dVdA_River(:,1),'linewidth',linewidthDef);
-    hold on;
-    plot(pupilValues*1e3,dVdA_River(:,2),':','color',[0 0.4470 0.7410],'linewidth',linewidthDef);
-    plot(pupilValues*1e3,dVdA_River(:,3),'color',[0.8500    0.3250    0.0980],'linewidth',linewidthDef);
-    plot(pupilValues*1e3,dVdA_River(:,4),'color',[0.9290    0.6940    0.1250],'linewidth',linewidthDef);
-    xlabel('pupil diameter (mm)'); ylabel('dV/dA (m^3/mm)');
-    xlim([0.001*10^3 0.025*10^3]); ylim4=get(gca,'ylim');
-    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-    [ylim4(1) ylim4(2) ylim4(2) ylim4(1)],[1 0 0]);
-    set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
-    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-        [ylim4(1) ylim4(2) ylim4(2) ylim4(1)],[0 0 1]);
-    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
-    line([fishpupil,fishpupil],[ylim4(1),ylim4(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
-    line([tetrapodpupil,tetrapodpupil],[ylim4(1),ylim4(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
-    
-        key={'Sun River up @8m','Sun River hor @8m',...
-            'Moon River up @8m',...
-            'Stars River up @8m'};
-    
-    columnlegend(2,key,'location','north',...
-        'fontsize',8);
-%%  AERIAL AQUATIC
-    figure(); clf();
-    subplot(2,2,1);
-    plot(pupilValuesAir*10^3, visualRange,'linewidth',linewidthDef);
-    hold on;
-    plot(pupilValues*1e3,visualRange_River,'linewidth',linewidthDef);
-    xlabel('pupil diameter (mm)'); ylabel('visual range (m)');
-    xlim([0.001*10^3 0.025*10^3]); ylim1=get(gca,'ylim'); 
-    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-    [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
-    set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
-    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-        [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
-    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
-    line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
-    line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
-    
-    subplot(2,2,2)
-    plot(pupilValuesAir*10^3,drdA,'linewidth',linewidthDef);
-    hold on;
-    plot(pupilValues*1e3,drdA_River,'linewidth',linewidthDef);
-    xlabel('pupil diameter (mm)'); ylabel('dr/dA (m/mm)');
-    xlim([0.001*10^3 0.025*10^3]); ylim2=get(gca,'ylim'); 
-    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-    [ylim2(1) ylim2(2) ylim2(2) ylim2(1)],[1 0 0]);
-    set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
-    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-        [ylim2(1) ylim2(2) ylim2(2) ylim2(1)],[0 0 1]);
-    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
-    line([fishpupil,fishpupil],[ylim2(1),ylim2(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
-    line([tetrapodpupil,tetrapodpupil],[ylim2(1),ylim2(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
-    
-    subplot(2,2,3)
-    plot(pupilValuesAir*10^3,visualVolume,'linewidth',linewidthDef);
-    hold on;
-    plot(pupilValues*1e3,visualVolume_River,'linewidth',linewidthDef);
-    xlabel('pupil diameter (mm)'); ylabel('visual volume (m^3)');
-    xlim([0.001*10^3 0.025*10^3]); ylim3=get(gca,'ylim'); 
-    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-    [ylim3(1) ylim3(2) ylim3(2) ylim3(1)],[1 0 0]);
-    set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
-    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-        [ylim3(1) ylim3(2) ylim3(2) ylim3(1)],[0 0 1]);
-    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
-    line([fishpupil,fishpupil],[ylim3(1),ylim3(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
-    line([tetrapodpupil,tetrapodpupil],[ylim3(1),ylim3(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
-    
-    subplot(2,2,4)
-    plot(pupilValuesAir*10^3,dVdA,'linewidth',linewidthDef);
-    hold on;
-    plot(pupilValues*1e3,dVdA_River,'linewidth',linewidthDef);
-    xlabel('pupil diameter (mm)'); ylabel('dV/dA (m^3/mm)');
-    xlim([0.001*10^3 0.025*10^3]); ylim4=get(gca,'ylim');
-    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
-    [ylim4(1) ylim4(2) ylim4(2) ylim4(1)],[1 0 0]);
-    set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
-    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
-        [ylim4(1) ylim4(2) ylim4(2) ylim4(1)],[0 0 1]);
-    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
-    line([fishpupil,fishpupil],[ylim4(1),ylim4(2)],'linewidth',linewidthDef,'color','r','linestyle',':')
-    line([tetrapodpupil,tetrapodpupil],[ylim4(1),ylim4(2)],'linewidth',linewidthDef,'color','b','linestyle',':')
+%% PLOT
+    fig_props.noYsubplots = 2;
+    fig_props.noXsubplots = 4;
 
-    key={'Daylight','Moonlight','Starlight',...
-        'Aquatic'};  
-    columnlegend(4,key,'location','north',...
-        'fontsize',8);
+    fig_props.figW = 18*2;   % cm
+    fig_props.figH = 10*2;  % cm
 
-%% CALCULATE INTERSECTION AND GAIN
- 
-%       DHRD_1=(interp1q(pupilValuesAir,visualRangeDaylight,fishpupil*1e-3))/...
-%           (interp1q(pupilValues,visualRange_River(:,2),fishpupil*1e-3))
-%       DHRD_2=(interp1q(pupilValuesAir,visualRangeDaylight,tetrapodpupil*1e-3))/...
-%           (interp1q(pupilValues,visualRange_River(:,2),fishpupil*1e-3))
-%       DURD_3=(interp1q(pupilValuesAir,visualRangeDaylight,fishpupil*1e-3))/...
-%           (interp1q(pupilValues,visualRange_River(:,1),fishpupil*1e-3))
-%       DURD_4=(interp1q(pupilValuesAir,visualRangeDaylight,tetrapodpupil*1e-3))/...
-%           (interp1q(pupilValues,visualRange_River(:,1),fishpupil*1e-3))
-      
-%      DURM_5=(interp1q(pupilValuesAir,visualRangeMoonlight,fishpupil*1e-3))/...
-%          (interp1q(pupilValues,visualRange_River(:,1),fishpupil*1e-3))
-%      DURS_6=(interp1q(pupilValuesAir,visualRangeStarlight,fishpupil*1e-3))/...
-%          (interp1q(pupilValues,visualRange_River(:,1),fishpupil*1e-3))
-%       DURM_7=(interp1q(pupilValuesAir,visualRangeMoonlight,tetrapodpupil*1e-3))/...
-%           (interp1q(pupilValues,visualRange_River(:,1),fishpupil*1e-3))
-%       DURS_8=(interp1q(pupilValuesAir,visualRangeStarlight,tetrapodpupil*1e-3))/...
-%           (interp1q(pupilValues,visualRange_River(:,1),fishpupil*1e-3))
-%       
-%      MURM_9=(interp1q(pupilValuesAir,visualRangeMoonlight,fishpupil*1e-3))/...
-%           (interp1q(pupilValues,visualRange_River(:,3),fishpupil*1e-3))
-%     MURM_10=(interp1q(pupilValuesAir,visualRangeMoonlight,tetrapodpupil*1e-3))/...
-%          (interp1q(pupilValues,visualRange_River(:,3),fishpupil*1e-3))
-      
-%      SURS_11=(interp1q(pupilValuesAir,visualRangeStarlight,fishpupil*1e-3))/...
-%          (interp1q(pupilValues,visualRange_River(:,4),fishpupil*1e-3))
-%      SURS_12=(interp1q(pupilValuesAir,visualRangeStarlight,tetrapodpupil*1e-3))/...
-%          (interp1q(pupilValues,visualRange_River(:,4),fishpupil*1e-3))
+    fig_props.ml = 1.5;
+    fig_props.mt = 0.8;
 
-%         dVDdVRU_1=(interp1q(pupilValuesAir,dVdADaylight',fishpupil*1e-3))/...
-%             (interp1q(pupilValues',dVdA_River(:,1),fishpupil*1e-3))
-%         dVDdVRU_1=(interp1q(pupilValuesAir,dVdADaylight',tetrapodpupil*1e-3))/...
-%             (interp1q(pupilValues',dVdA_River(:,1),fishpupil*1e-3))
+    create_BE_figure
+    fig_props.sub_pW = fig_props.sub_pW-.5;
+    time_subsamp = 1;
+    time_limit = 0.4;
+    text_pos = [-5,2*time_limit/10,50];
+    text_color = [0 0 0];
+    text_size = 12;
+    pn = {'Color','FontSize','FontWeight',};
+    pv = {text_color,text_size,'bold'};
+
+% Aquatic Range
+    plotnoX = 1;
+    plotnoY = 1;
+    ha11 = create_BE_axes(plotnoX,plotnoY,fig_props);
+
+    hl11_1=line('XData',pupilValues*1e3,'YData',visualRange_River(:,1),...
+        'linewidth',linewidthDef,'color',[0 0.4470 0.7410]);
+    hold on
+    hl11_2=line('XData',pupilValues*1e3,'YData',visualRange_River(:,2),...
+        'linewidth',linewidthDef,'color',[0 0.4470 0.7410],'linestyle',':');
+    hl11_3=line('XData',pupilValues*1e3,'YData',visualRange_River(:,3),...
+        'linewidth',linewidthDef,'color','k');
+    hl11_4=line('XData',pupilValues*1e3,'YData',visualRange_River(:,4),...
+        'linewidth',linewidthDef,'color',[0.9290 0.6940 0.1250]);
+    xlim([1,25]); ylim1=get(gca,'ylim'); 
+    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
+        [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
+        set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
+    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
+            [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
+    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
+    line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],...
+        'linewidth',linewidthDef,'color','r','linestyle',':');
+    line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],...
+            'linewidth',linewidthDef,'color','b','linestyle',':');
+    plot(fishpupil,intersectFish.rangeAquatic(1:2),'o',...
+        'markeredgecolor','k','markerfacecolor','k','markersize',5);
+    x=15;
+    text(x,interp1q(pupilValues,visualRange_River(:,1),x*1e-3)+0.5,'daylight,up',...
+        'fontsize',10,'interpreter','latex')
+    text(x,interp1q(pupilValues,visualRange_River(:,2),x*1e-3)+0.5,'daylight,horizontal',...
+        'fontsize',10,'interpreter','latex')
+    text(x,interp1q(pupilValues,visualRange_River(:,3),x*1e-3)+0.5,'moonlight,up',...
+        'fontsize',10,'interpreter','latex')
+    text(x,interp1q(pupilValues,visualRange_River(:,4),x*1e-3)+0.5,'starlight,up',...
+        'fontsize',10,'interpreter','latex')
+    num1=sprintf('\\textbf{%s~m}',num2str(round(interp1q(pupilValues,visualRange_River(:,1),fishpupil*1e-3))));
+    num2=sprintf('\\textbf{%s~m}',num2str(round(interp1q(pupilValues,visualRange_River(:,2),fishpupil*1e-3))));
+    text(fishpupil+0.5,interp1q(pupilValues,visualRange_River(:,1),fishpupil*1e-3)-0.3,num1,...
+        'fontsize',10,'interpreter','latex');
+    text(fishpupil+0.5,interp1(pupilValues,visualRange_River(:,2),fishpupil*1e-3)-0.3,num2,...
+        'fontsize',10,'interpreter','latex');
+    ylabel('visual range ($r$) (m)','interpreter','latex','fontsize',10,'fontname','helvetica');
+    axis square
+    
+% Aquatic Derivative Range wrt Pupil Diameter
+    plotnoX=2;
+    plotnoY=1;
+    ha12=create_BE_axes(plotnoX,plotnoY,fig_props);
+
+    hl12_1=line('XData',pupilValues*1e3,'YData',drdA_River(:,1),...
+        'linewidth',linewidthDef,'color',[0 0.4470 0.7410]);
+    hold on
+    hl12_2=line('XData',pupilValues*1e3,'YData',drdA_River(:,2),...
+        'linewidth',linewidthDef,'color',[0 0.4470 0.7410],'linestyle',':');
+    hl12_3=line('XData',pupilValues*1e3,'YData',drdA_River(:,3),...
+        'linewidth',linewidthDef,'color','k');
+    hl12_4=line('XData',pupilValues*1e3,'YData',drdA_River(:,4),...
+        'linewidth',linewidthDef,'color',[0.9290 0.6940 0.1250]);
+    xlim([1,25]); ylim1=get(gca,'ylim'); 
+    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
+        [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
+        set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
+    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
+            [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
+    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
+    line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],...
+        'linewidth',linewidthDef,'color','r','linestyle',':');
+    line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],...
+            'linewidth',linewidthDef,'color','b','linestyle',':');
+    ylabel('d$r$/d$D$ (m/mm)','interpreter','latex','fontsize',10,'fontname','helvetica');
+    axis square 
    
-%     fprintf('fish pupil and daylight intersection %f \n',interp1q(pupilValuesAir,visualRangeDaylight,fishpupil*10^-3));
-%     fprintf('fish pupil and moonlight intersection %f \n',interp1q(pupilValuesAir,visualRangeMoonlight,fishpupil*10^-3));
-%     fprintf('fish pupil and starlight intersection %f \n',interp1q(pupilValuesAir,visualRangeStarlight,fishpupil*10^-3));
-%     fprintf('fish pupil and river up intersection %f \n',interp1q(pupilValuesAir,visualRange_River(:,1),fishpupil*10^-3));
-%     fprintf('fish pupil and river hor intersection %f \n',interp1q(pupilValuesAir,visualRange_River(:,2),fishpupil*10^-3));
-%     
-%     
-%     fprintf('tetrapod pupil and daylight intersection %f \n',interp1q(pupilValuesAir,visualRangeDaylight,tetrapodpupil*10^-3));
-%     fprintf('tetrapod pupil and moonlight intersection %f \n',interp1q(pupilValuesAir,visualRangeMoonlight,tetrapodpupil*10^-3));
-%     fprintf('tetrapod pupil and starlight intersection %f \n',interp1q(pupilValuesAir,visualRangeStarlight,tetrapodpupil*10^-3));
-%     fprintf('tetrapod pupil and river up intersection %f \n',interp1q(pupilValuesAir,visualRange_River(:,1),tetrapodpupil*10^-3));
-%     fprintf('tetrapod pupil and river hor intersection %f \n',interp1q(pupilValuesAir,visualRange_River(:,2),tetrapodpupil*10^-3));
-%     
-%     fprintf('TF Minus and daylight intersection %f\n',interp1q(pupilValuesAir,visualRangeDaylight,pupil_TF(1)*10^-3));
-%     fprintf('TF Minus and moonlight intersection %f\n',interp1q(pupilValuesAir,visualRangeMoonlight,pupil_TF(1)*10^-3));
-%     fprintf('TF Minus and starlight intersection %f\n',interp1q(pupilValuesAir,visualRangeStarlight,pupil_TF(1)*10^-3));
-%     fprintf('TF Minus and river up intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,1),pupil_TF(1)*10^-3));
-%     fprintf('TF Minus and river hor intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,2),pupil_TF(1)*10^-3));
-%     
-%     fprintf('TF Plus and daylight intersection %f\n',interp1q(pupilValuesAir,visualRangeDaylight,pupil_TF(2)*10^-3));
-%     fprintf('TF Plus and moonlight intersection %f\n',interp1q(pupilValuesAir,visualRangeMoonlight,pupil_TF(2)*10^-3));
-%     fprintf('TF Plus and starlight intersection %f\n',interp1q(pupilValuesAir,visualRangeStarlight,pupil_TF(2)*10^-3));
-%     fprintf('TF Plus and river up intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,1),pupil_TF(2)*10^-3));
-%     fprintf('TF Plus and river hor intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,2),pupil_TF(2)*10^-3));
-%     
-%     fprintf('ST Minus and daylight intersection %f\n',interp1q(pupilValuesAir,visualRangeDaylight,pupil_ST(1)*10^-3));
-%     fprintf('ST Minus and moonlight intersection %f\n',interp1q(pupilValuesAir,visualRangeMoonlight,pupil_ST(1)*10^-3));
-%     fprintf('ST Minus and starlight intersection %f\n',interp1q(pupilValuesAir,visualRangeStarlight,pupil_ST(1)*10^-3));
-%     fprintf('ST Minus and river up intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,1),pupil_ST(1)*10^-3));
-%     fprintf('ST Minus and river hor intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,2),pupil_ST(1)*10^-3));
-%     
-%     fprintf('ST Plus and daylight intersection %f\n',interp1q(pupilValuesAir,visualRangeDaylight,pupil_ST(2)*10^-3));
-%     fprintf('ST Plus and moonlight intersection %f\n',interp1q(pupilValuesAir,visualRangeMoonlight,pupil_ST(2)*10^-3));
-%     fprintf('ST Plus and starlight intersection %f\n',interp1q(pupilValuesAir,visualRangeStarlight,pupil_ST(2)*10^-3));
-%     fprintf('ST Plus and river up intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,1),pupil_ST(2)*10^-3));
-%     fprintf('ST Plus and river hor intersection %f\n',interp1q(pupilValuesAir,visualRange_River(:,2),pupil_ST(2)*10^-3));
-%     
-    
+% Aquatic Volume
+    plotnoX=1;
+    plotnoY=2;
+    ha21=create_BE_axes(plotnoX,plotnoY,fig_props);
+
+    hl21_1=line('XData',pupilValues*1e3,'YData',visualVolume_River(:,1)/1e3,...
+        'linewidth',linewidthDef,'color',[0 0.4470 0.7410]);
+    hold on
+    hl21_2=line('XData',pupilValues*1e3,'YData',visualVolume_River(:,2)/1e3,...
+        'linewidth',linewidthDef,'color',[0 0.4470 0.7410],'linestyle',':');
+    hl21_3=line('XData',pupilValues*1e3,'YData',visualVolume_River(:,3)/1e3,...
+        'linewidth',linewidthDef,'color','k');
+    hl21_4=line('XData',pupilValues*1e3,'YData',visualVolume_River(:,4)/1e3,...
+        'linewidth',linewidthDef,'color',[0.9290 0.6940 0.1250]);
+    xlim([1,25]); ylim1=get(gca,'ylim'); 
+    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
+        [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
+        set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
+    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
+            [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
+    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
+    line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],...
+        'linewidth',linewidthDef,'color','r','linestyle',':');
+    line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],...
+            'linewidth',linewidthDef,'color','b','linestyle',':');
+    ylabel('visual volume ($V$) ($10^3$m$^3$)','interpreter','latex','fontsize',10,'fontname','helvetica');
+    xlabel('pupil diamter ($D$) (mm)', 'interpreter','latex','fontsize',10,'fontname','helvetica');
+    axis square
+
+% Aquatic Derivative Volume wrt Pupil Diameter
+    plotnoX=2;
+    plotnoY=2;
+    ha22=create_BE_axes(plotnoX,plotnoY,fig_props);
+
+    hl22_1=line('XData',pupilValues*1e3,'YData',dVdA_River(:,1)/1e3,...
+        'linewidth',linewidthDef,'color',[0 0.4470 0.7410]);
+    hold on
+    hl22_2=line('XData',pupilValues*1e3,'YData',dVdA_River(:,2)/1e3,...
+        'linewidth',linewidthDef,'color',[0 0.4470 0.7410],'linestyle',':');
+    hl22_3=line('XData',pupilValues*1e3,'YData',dVdA_River(:,3)/1e3,...
+        'linewidth',linewidthDef,'color','k');
+    hl22_4=line('XData',pupilValues*1e3,'YData',dVdA_River(:,4)/1e3,...
+        'linewidth',linewidthDef,'color',[0.9290 0.6940 0.1250]);
+    xlim([1,25]); ylim1=get(gca,'ylim'); 
+    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
+        [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
+        set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
+    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
+            [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
+    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
+    line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],...
+        'linewidth',linewidthDef,'color','r','linestyle',':');
+    line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],...
+            'linewidth',linewidthDef,'color','b','linestyle',':');
+    plot(fishpupil,intersectFish.dVdAAquatic(1)/1e3,'o',...
+        'markeredgecolor','k','markerfacecolor','k','markersize',5);
+    num1=sprintf('\\textbf{%s~m$^3$/mm}',num2str(round(interp1q(pupilValues,dVdA_River(:,1),fishpupil*1e-3))));
+    text(fishpupil+0.5,(interp1q(pupilValues,dVdA_River(:,1),fishpupil*1e-3)/1e3)+.002,num1,...
+        'fontsize',10,'interpreter','latex');
+    ylabel('d$V$/d$D$ ($10^3$m$^3$/mm)','interpreter','latex','fontsize',10,'fontname','helvetica');
+    xlabel('pupil diameter ($D$) (mm)','interpreter','latex','fontsize',10,'fontname','helvetica');
+    axis square
+
+% Aerial Range
+    plotnoX = 3;
+    plotnoY = 1;
+    ha31 = create_BE_axes(plotnoX,plotnoY,fig_props);
+
+    hl31_1=line('XData',pupilValuesAir*1e3,'YData',visualRange(:,1)/1e2,...
+        'linewidth',linewidthDef,'color',[0 0.4470 0.7410]);
+    hold on
+    hl31_2=line('XData',pupilValuesAir*1e3,'YData',visualRange(:,2)/1e2,...
+        'linewidth',linewidthDef,'color','k');
+    hl31_3=line('XData',pupilValuesAir*1e3,'YData',visualRange(:,3)/1e2,...
+        'linewidth',linewidthDef,'color',[0.9290 0.6940 0.1250]);
+    xlim([1,25]); ylim1=get(gca,'ylim'); 
+    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
+        [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
+        set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
+    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
+            [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
+    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
+    line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],...
+        'linewidth',linewidthDef,'color','r','linestyle',':');
+    line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],...
+            'linewidth',linewidthDef,'color','b','linestyle',':');
+    plot(fishpupil,intersectFish.rangeAerial(1)/1e2,'o',...
+        'markeredgecolor','k','markerfacecolor','k','markersize',5);
+    plot(tetrapodpupil,intersectDigited.rangeAerial(1)/1e2,'o',...
+        'markeredgecolor','k','markerfacecolor','k','markersize',5);
+    x=18;
+    text(x,(interp1q(pupilValuesAir,visualRange(:,1),x*1e-3)+145)/1e2,'daylight',...
+        'fontsize',10,'interpreter','latex')
+    text(x,(interp1q(pupilValuesAir,visualRange(:,2),x*1e-3)+110)/1e2,'moonlight',...
+        'fontsize',10,'interpreter','latex')
+    text(x,(interp1q(pupilValuesAir,visualRange(:,3),x*1e-3)+75)/1e2,'starlight',...
+        'fontsize',10,'interpreter','latex')
+    num1=sprintf('\\textbf{%s~m}',num2str(round(interp1q(pupilValuesAir,visualRange(:,1),fishpupil*1e-3))));
+    num2=sprintf('\\textbf{%s~m}',num2str(round(interp1q(pupilValuesAir,visualRange(:,1),tetrapodpupil*1e-3))));
+    text(fishpupil+0.5,(interp1q(pupilValuesAir,visualRange(:,1),fishpupil*1e-3)-10)/1e2,num1,...
+        'fontsize',10,'interpreter','latex');
+    text(tetrapodpupil-0.5,(interp1(pupilValuesAir,visualRange(:,1),tetrapodpupil*1e-3)+25)/1e2,num2,...
+        'fontsize',10,'interpreter','latex','horizontalalignment','right');
+    ylabel('visual range ($r$) ($10^2$m)','interpreter','latex','fontsize',10,'fontname','helvetica');
+    axis square
+
+% Aerial Derivative Range wrt Pupil Diameter
+    plotnoX = 4;
+    plotnoY = 1;
+    ha41 = create_BE_axes(plotnoX,plotnoY,fig_props);
+
+    hl41_1=line('XData',pupilValuesAir*1e3,'YData',drdA(1,:)/1e2,...
+        'linewidth',linewidthDef,'color',[0 0.4470 0.7410]);
+    hold on
+    hl41_2=line('XData',pupilValuesAir*1e3,'YData',drdA(2,:)/1e2,...
+        'linewidth',linewidthDef,'color','k');
+    hl41_3=line('XData',pupilValuesAir*1e3,'YData',drdA(3,:)/1e2,...
+        'linewidth',linewidthDef,'color',[0.9290 0.6940 0.1250]);
+    xlim([1,25]); ylim1=get(gca,'ylim'); ylim([ylim1(1) ylim1(2)]);
+    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
+        [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
+        set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
+    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
+            [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
+    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
+    line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],...
+        'linewidth',linewidthDef,'color','r','linestyle',':');
+    line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],...
+            'linewidth',linewidthDef,'color','b','linestyle',':');
+    ylabel('d$r$/d$D$ ($10^2$m/mm)','interpreter','latex','fontsize',10,'fontname','helvetica');
+    axis square
+ 
+% Aerial Volume
+    plotnoX = 3;
+    plotnoY = 2;
+    ha32 = create_BE_axes(plotnoX,plotnoY,fig_props);
+
+    hl32_1=line('XData',pupilValuesAir*1e3,'YData',visualVolume(1,:)/1e8,...
+        'linewidth',linewidthDef,'color',[0 0.4470 0.7410]);
+    hold on
+    hl32_2=line('XData',pupilValuesAir*1e3,'YData',visualVolume(2,:)/1e8,...
+        'linewidth',linewidthDef,'color','k');
+    hl32_3=line('XData',pupilValuesAir*1e3,'YData',visualVolume(3,:)/1e8,...
+        'linewidth',linewidthDef,'color',[0.9290 0.6940 0.1250]);
+    xlim([1,25]); ylim1=get(gca,'ylim'); 
+    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
+        [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
+        set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
+    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
+            [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
+    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
+    line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],...
+        'linewidth',linewidthDef,'color','r','linestyle',':');
+    line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],...
+            'linewidth',linewidthDef,'color','b','linestyle',':');
+    ylabel('visual volume ($V$) ($10^8$m$^3$/mm)','interpreter','latex','fontsize',10,'fontname','helvetica');
+    xlabel('pupil diameter ($D$) (mm)','interpreter','latex','fontsize',10,...
+        'fontname','helvetica');
+    axis square
+
+% Aerial Derivative Volume wrt Pupil Diameter
+    plotnoX = 4;
+    plotnoY = 2;
+    ha42 = create_BE_axes(plotnoX,plotnoY,fig_props);
+
+    hl42_1=line('XData',pupilValuesAir*1e3,'YData',dVdA(1,:)/1e7,...
+        'linewidth',linewidthDef,'color',[0 0.4470 0.7410]);
+    hold on
+    hl42_2=line('XData',pupilValuesAir*1e3,'YData',dVdA(1,:)/1e7,...
+        'linewidth',linewidthDef,'color','k');
+    hl42_3=line('XData',pupilValuesAir*1e3,'YData',dVdA(3,:)/1e7,...
+        'linewidth',linewidthDef,'color',[0.9290 0.6940 0.1250]);
+    xlim([1,25]); ylim1=get(gca,'ylim'); 
+    fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
+        [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
+        set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
+    fillboxST = patch([pupil_ST(1) pupil_ST(1) pupil_ST(2) pupil_ST(2)], ...
+            [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[0 0 1]);
+    set(fillboxST,'facealpha',fillboxalpha,'edgecolor','none');
+    line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],...
+        'linewidth',linewidthDef,'color','r','linestyle',':');
+    line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],...
+            'linewidth',linewidthDef,'color','b','linestyle',':');
+    plot(fishpupil,intersectFish.dVdAAerial(1)/1e7,'o',...
+        'markeredgecolor','k','markerfacecolor','k','markersize',5);
+    num1=sprintf('\\textbf{%s~m$^3$/mm}',num2str(round(interp1q(pupilValuesAir,dVdA(1,:)',fishpupil*1e-3)),'%10.1e'));
+    text(fishpupil+.5,(interp1q(pupilValuesAir,dVdA(1,:)',fishpupil*1e-3)/1e7)-0.3,num1,...
+        'fontsize',10,'interpreter','latex');
+    ylabel('d$V$/dA ($10^7$m$^3$/mm)','interpreter','latex','fontsize',10,'fontname','helvetica');
+    xlabel('pupil diameter ($D$) (mm)','interpreter','latex','fontsize',10,...
+        'fontname','helvetica');
+    axis square
+
+
 function [e,em]=fileExists
     e2={exist('visibilityAquatic_All.mat','file')==2, 'Aquatic_contrastLimiting.m'};
     e1={exist('meteoAquatic_All.mat','file')==2, 'Aquatic_firingThresh.m'};
