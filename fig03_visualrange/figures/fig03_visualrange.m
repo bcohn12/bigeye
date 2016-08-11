@@ -1,8 +1,6 @@
 function fig03_visualrange
 %% INITIALIZATION
     close all;
-    %run Parameters.m
-    %load('Parameters.mat')
     load OM_TF_ST.mat
     pupil_TF = [mean(OM_TF)-std(OM_TF) mean(OM_TF)+std(OM_TF)].*0.449;
     pupil_ST = [mean(OM_ST)-std(OM_ST) mean(OM_ST)+std(OM_ST)].*0.449;
