@@ -33,18 +33,18 @@ global BIGEYEROOT
     secchi.Baseline=model_param(5);
     
     columnLabels={
-        'Clear';
-        'Absorption Dominated';
-        'Baseline River';
-        'High Turbidity';
-        'Scattering Dominated'};
+        '\textbf{Clear}';
+        '\textbf{Absorption} \textbf{Dominated}';
+        '\textbf{Baseline} \textbf{River}';
+        '\textbf{High} \textbf{Turbidity}';
+        '\textbf{Scattering} \textbf{Dominated}'};
 waterConditions={'Clear','AbsDom','Baseline','HighTurbidity','ScatDom'};
 %% ROW DEFINTIONS
 
 %Concentraation parameters
 
 concParam={'Chlorophyll-\emph{a}, mg/m$^3$';
-    '"brown earth" minearl particles, gm/m$^3$';
+    '"brown earth" mineral particles, gm/m$^3$';
     'CDOM absorption, 1/m at 440~nm'};
 for i=1:length(waterConditions)
     ChlValue=Chl.(waterConditions{i});
@@ -79,7 +79,7 @@ for i=1:length(waterConditions)
 end
     
 rowLabels=[' ';'\textbf{Concentration parameters}';concParam;
-    '\textbf{IOPs at 575nm}'; IOPParam];
+    '\textbf{IOPs at 575~nm}'; IOPParam];
 rowValues=[];
 for i=1:length(waterConditions)
     tab.(waterConditions{i})=[columnLabels{i};' ';colConc.(waterConditions{i});
@@ -105,7 +105,7 @@ for i=1:length(collabels)
     line2=strcat(line2,'&',c{i}{2});
 end
 line1=line1(2:end); line2=line2(2:end);
-line1=strcat(line1,'\\\'); line2=strcat(line2,'\\\\\hline');
+line1=strcat(line1,'\\'); line2=strcat(line2,'\\');
 
 fid = fopen(filename, 'w');
 
@@ -114,10 +114,13 @@ for i=1:size(matrix,2)
     temp='l';
     str=strcat(str,temp);
 end
+str(1)='g';
+str(4)='a';
 
 fprintf(fid, '\\begin{tabular}{%s}\r\n',str);
 fprintf(fid,'\\toprule\r\n');
-fprintf(fid,' &\\multicolumn{%s}{c}{\\LARGE %s}\\\\\\otoprule\r\n',num2str(size(rowvalues,2)),title);
+fprintf(fid,'\\rowcolor{Gray}\r\n');
+fprintf(fid,' &\\multicolumn{%s}{c}{\\LARGE\\color{white} %s}\\\\\r\n',num2str(size(rowvalues,2)),title);
 %fprintf(fid,'\\\\\\otoprule\r\n');
 fprintf(fid, '%s\r\n',line1);
 fprintf(fid,'%s\r\n',line2);
@@ -127,7 +130,11 @@ for i=2:size(matrix,1)
         str=strcat(str,'&',matrix{i,j});      
     end
     str=str(2:end);
-    fprintf(fid, '%s\\\\\\hline\r\n\r\n',str);
+    str=strcat('\color{white}',str);
+    if ~isempty(findstr(matrix{i,j},'Concentration parameters'))||~isempty(findstr(matrix{i,j},'IOP'))
+        str=strrep(str,'\color{white}','');
+    end
+    fprintf(fid, '%s\\\\\r\n',str);
 end
 fprintf(fid,'\\bottomrule\r\n');
 fprintf(fid,'\\end{tabular}\r\n');
