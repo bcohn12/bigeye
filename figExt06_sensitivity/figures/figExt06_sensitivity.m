@@ -1,7 +1,11 @@
 function figExt06_sensitivity
-    close all;
-    run ParametersSensitivity
-    load('ParametersSensitivity.mat')
+%% INITIALIZE
+    close all;   
+    load OM_TF_ST.mat
+    pupil_TF = [mean(OM_TF)-std(OM_TF) mean(OM_TF)+std(OM_TF)].*0.449;
+    pupil_ST = [mean(OM_ST)-std(OM_ST) mean(OM_ST)+std(OM_ST)].*0.449;
+    fishpupil=mean(OM_TF)*.449;
+    tetrapodpupil=mean(OM_ST)*.449;
     
     [e,em]=fileExists;  
     while(~all(e))
@@ -27,33 +31,90 @@ function figExt06_sensitivity
     end
     
     load('Aquatic_visRangeSensitivity.mat');
-    load('meteoAquatic_All.mat');
+    load('visibilityAquatic_All.mat');
     visualRangeSensitivity=[visualRangeSensitivity(:,1,1),visualRangeSensitivity(:,2,1),visualRangeSensitivity(:,3,1),visualRangeSensitivity(:,4,1),...
         visualRangeSensitivity(:,1,2),visualRangeSensitivity(:,2,2),visualRangeSensitivity(:,3,2),visualRangeSensitivity(:,4,2)];
     linewidthdef=2;
-    figure();
-    plot(pupilValues*10^3,visualRangeSensitivity(:,1:4),'linewidth',linewidthdef);
+
+%% PLOT
+    fig_props.noYsubplots = 1;
+    fig_props.noXsubplots = 2;
+
+    fig_props.figW = 25;   % cm
+    fig_props.figH = 10;  % cm
+
+    fig_props.ml = 0.8;
+    fig_props.mt = 0.8;
+    fig_props.bottom_margin=2;
+    create_BE_figure
+    fig_props.sub_pW = fig_props.sub_pW-.5;
+    time_subsamp = 1;
+    time_limit = 0.4;
+    text_pos = [-5,2*time_limit/10,50];
+    text_color = [0 0 0];
+    text_size = 12;
+    pn = {'Color','FontSize','FontWeight',};
+    pv = {text_color,text_size,'bold'};
+    colors=get(gca,'colororder'); clf;
+    x=17;
+% Sensitivity Upward Viewing
+    plotnoX= 1;
+    plotnoY= 1;
+    ha1 = create_BE_axes(plotnoX,plotnoY,fig_props);
+    hl1.A=line('XData',pupilValues*10^3,'YData',visualRangeSensitivity(:,1),...
+        'color',colors(1,:),'linewidth',linewidthdef);
     hold on;
-    plot(pupilValues*10^3,visualRange_River(:,1,1),'linewidth',linewidthdef);
-    xlabel('pupil diameter (mm)'); ylabel('visual range (m)')
-
-    key={'high turbidity up @8m','clear up @8m','absorption dominated up @8m','scattering dominated up @8m',...
-        'baseline up @8m'};
-
-    columnlegend(2,key,'location','north',...
-        'fontsize',8)
-
-    figure();
-    plot(pupilValues*10^3,visualRangeSensitivity(:,5:end),'linewidth',linewidthdef);
+    for i=2:4
+        str=char(i+'A'-1);
+        hl1.(str)=line('XData',pupilValues*10^3,'YData',visualRangeSensitivity(:,i),...
+            'color',colors(i,:),'linewidth',linewidthdef);
+    end
+    hl1.E=line('XData',pupilValues*10^3,'YData',visualRange_River(:,1,1),...
+        'color',colors(5,:),'linewidth',linewidthdef);
+    ylim1=get(gca,'ylim');
+    line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],...
+        'linewidth',linewidthdef,'color','r','linestyle',':');
+    line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],...
+            'linewidth',linewidthdef,'color','b','linestyle',':');
+    ylabel('\bfvisual range (\itr) \rm\bf(m)','interpreter','tex',...
+        'fontsize',12,'fontname','helvetica');
+    xlabel('\bfpupil diameter (\itD) \rm\bf(mm)','interpreter','tex',...
+        'fontsize',12,'fontname','helvetica');
+    text(x,3*ylim1(2)/5,'\bfupward viewing','interpreter',...
+        'tex','fontsize',13,'fontname','helvetica');
+    axis square
+        
+% Sensitivity Horizontal Viewing
+    plotnoX=2;
+    plotnoY=1;
+    ha2=create_BE_axes(plotnoX,plotnoY,fig_props);
+    hl2.A=line('XData',pupilValues*10^3,'YData',visualRangeSensitivity(:,5),...
+        'color',colors(1,:),'linewidth',linewidthdef);
     hold on;
-    plot(pupilValues*10^3,visualRange_River(:,1,2),'linewidth',linewidthdef);
-    xlabel('pupil diameter (mm)'); ylabel('visual range (m)')
-
-    key={'high turbidity hor @8m','clear hor @8m','absorption dominated hor @8m','scattering dominated hor @8m',...
-        'baseline hor @8m'};
-
-    columnlegend(2,key,'location','north',...
-        'fontsize',8)
+    for i=6:8
+        str=char(i+'A'-4);
+        hl1.(str)=line('XData',pupilValues*10^3,'YData',visualRangeSensitivity(:,i),...
+            'color',colors(i-4,:),'linewidth',linewidthdef);
+    end
+    hl1.E=line('XData',pupilValues*10^3,'YData',visualRange_River(:,1,2),...
+        'color',colors(5,:),'linewidth',linewidthdef);
+    line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],...
+        'linewidth',linewidthdef,'color','r','linestyle',':');
+    line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],...
+            'linewidth',linewidthdef,'color','b','linestyle',':');
+    ylabel('\bfvisual range (\itr) \rm\bf(m)','interpreter','tex',...
+        'fontsize',12,'fontname','helvetica');
+    xlabel('\bfpupil diameter (\itD) \rm\bf(mm)','interpreter','tex',...
+        'fontsize',12,'fontname','helvetica');
+    text(x,3*ylim1(2)/5,'\bfhorizontal viewing','interpreter','tex',...
+        'fontsize',13,'fontname','helvetica');
+    axis square
+    
+hLegend=legend('high turbidity @8 m','clear @8 m',...
+    'absorption  dominated @8 m','scattering dominated @8 m','baseline @8 m');
+set(hLegend,'box','off'); set(hLegend,'interpreter','tex'); 
+set(hLegend,'fontsize',11,'fontname','helvetica'); set(hLegend,'orientation','horizontal')
+rect=[0.375 0 0.25 0.1]; set(hLegend,'Position',rect)
     
 function [e,em]=fileExists
     e2={exist('Aquatic_visRangeSensitivity.mat','file')==2, 'Aquatic_contrastLimitedSensitivity.m'};
