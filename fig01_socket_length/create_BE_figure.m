@@ -3,7 +3,7 @@ if ~isfield(fig_props,'left_margin')
 end
 
 if ~isfield(fig_props,'right_margin')
-    fig_props.right_margin = .3;        %Right margin
+    fig_props.right_margin = 0.3;        %Right margin
 end
 
 if ~isfield(fig_props,'bottom_margin')
