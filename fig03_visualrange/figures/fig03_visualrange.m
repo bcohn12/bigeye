@@ -54,7 +54,7 @@ function fig03_visualrange
         visualRange_River(:,3,1)];
     dVdA_River=[smooth(dVdA_River(:,1,1),7), smooth(dVdA_River(:,1,2),7),...
         smooth(dVdA_River(:,2,1),7),...
-        smooth(dVdA_River(:,2,1),7)];
+        smooth(dVdA_River(:,3,1),7)];
     
     visual.rangeAquatic=visualRange_River; visual.rangeAerial=visualRange;
     visual.drdAAquatic=drdA_River; visual.drdAAerial=drdA';
@@ -84,10 +84,10 @@ function fig03_visualrange
     fig_props.noXsubplots = 4;
 
     fig_props.figW = 18*2;   % cm
-    fig_props.figH = 10*2;  % cm
+    fig_props.figH = 16.7;  % cm
 
-    fig_props.ml = 1.5;
-    fig_props.mt = 0.8;
+    fig_props.ml = 1.8;
+    fig_props.mt = 0.6;
 
     create_BE_figure
     fig_props.sub_pW = fig_props.sub_pW-.5;
@@ -127,21 +127,22 @@ function fig03_visualrange
     plot(fishpupil,intersectFish.rangeAquatic(1:2),'o',...
         'markeredgecolor','k','markerfacecolor','k','markersize',5);
     x=15;
-    text(x,interp1q(pupilValues,visualRange_River(:,1),x*1e-3)+0.5,'daylight,up',...
-        'fontsize',10,'interpreter','latex')
-    text(x,interp1q(pupilValues,visualRange_River(:,2),x*1e-3)+0.5,'daylight,horizontal',...
-        'fontsize',10,'interpreter','latex')
-    text(x,interp1q(pupilValues,visualRange_River(:,3),x*1e-3)+0.5,'moonlight,up',...
-        'fontsize',10,'interpreter','latex')
-    text(x,interp1q(pupilValues,visualRange_River(:,4),x*1e-3)+0.5,'starlight,up',...
-        'fontsize',10,'interpreter','latex')
-    num1=sprintf('\\textbf{%s~m}',num2str(round(interp1q(pupilValues,visualRange_River(:,1),fishpupil*1e-3))));
-    num2=sprintf('\\textbf{%s~m}',num2str(round(interp1q(pupilValues,visualRange_River(:,2),fishpupil*1e-3))));
+    text(x,interp1q(pupilValues,visualRange_River(:,1),x*1e-3)+0.8,'daylight,up',...
+        'fontsize',11,'interpreter','tex','fontname','helvetica')
+    text(x,interp1q(pupilValues,visualRange_River(:,2),x*1e-3)+0.8,'daylight,horizontal',...
+        'fontsize',11,'interpreter','tex','fontname','helvetica')
+    text(x,interp1q(pupilValues,visualRange_River(:,3),x*1e-3)+0.8,'moonlight,up',...
+        'fontsize',11,'interpreter','tex','fontname','helvetica')
+    text(x,interp1q(pupilValues,visualRange_River(:,4),x*1e-3)+0.8,'starlight,up',...
+        'fontsize',11,'interpreter','tex','fontname','helvetica')
+    num1=sprintf('\\bf%s m',num2str(round(interp1q(pupilValues,visualRange_River(:,1),fishpupil*1e-3))));
+    num2=sprintf('\\bf%s m',num2str(round(interp1q(pupilValues,visualRange_River(:,2),fishpupil*1e-3))));
     text(fishpupil+0.5,interp1q(pupilValues,visualRange_River(:,1),fishpupil*1e-3)-0.3,num1,...
-        'fontsize',10,'interpreter','latex');
+        'fontsize',11,'interpreter','tex','fontname','helvetica');
     text(fishpupil+0.5,interp1(pupilValues,visualRange_River(:,2),fishpupil*1e-3)-0.3,num2,...
-        'fontsize',10,'interpreter','latex');
-    ylabel('visual range ($r$) (m)','interpreter','latex','fontsize',10,'fontname','helvetica');
+        'fontsize',11,'interpreter','tex','fontname','helvetica');
+    y11=ylabel('\bf visual range (\itr) \rm\bf(m)',...
+        'fontsize',12,'fontname','helvetica','interpreter','tex');
     axis square
     
 % Aquatic Derivative Range wrt Pupil Diameter
@@ -169,7 +170,8 @@ function fig03_visualrange
         'linewidth',linewidthDef,'color','r','linestyle',':');
     line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],...
             'linewidth',linewidthDef,'color','b','linestyle',':');
-    ylabel('d$r$/d$D$ (m/mm)','interpreter','latex','fontsize',10,'fontname','helvetica');
+    ylabel('\bfd\itr/\rm\bfd\itD \rm\bf(m/mm)','interpreter','tex',...
+        'fontsize',12,'fontname','helvetica');
     axis square 
    
 % Aquatic Volume
@@ -197,8 +199,10 @@ function fig03_visualrange
         'linewidth',linewidthDef,'color','r','linestyle',':');
     line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],...
             'linewidth',linewidthDef,'color','b','linestyle',':');
-    ylabel('visual volume ($V$) ($10^2$m$^3$)','interpreter','latex','fontsize',10,'fontname','helvetica');
-    xlabel('pupil diamter ($D$) (mm)', 'interpreter','latex','fontsize',10,'fontname','helvetica');
+    ylabel('\bfvisual volume (\itV) \rm\bf(10^2m^3)','interpreter','tex',...
+        'fontsize',12,'fontname','helvetica');
+    xlabel('\bfpupil diamter (\itD) \rm\bf(mm)', 'interpreter','tex',...
+        'fontsize',12,'fontname','helvetica');
     axis square
 
 % Aquatic Derivative Volume wrt Pupil Diameter
@@ -228,13 +232,16 @@ function fig03_visualrange
             'linewidth',linewidthDef,'color','b','linestyle',':');
     plot(fishpupil,intersectFish.dVdAAquatic(1)/1e1,'o',...
         'markeredgecolor','k','markerfacecolor','k','markersize',5);
-    num1=sprintf('\\textbf{%s~m$^3$/mm}',num2str(round(interp1q(pupilValues,dVdA_River(:,1),fishpupil*1e-3))));
-    text(fishpupil+0.5,(interp1q(pupilValues,dVdA_River(:,1),fishpupil*1e-3)/1e1)+.2,num1,...
-        'fontsize',10,'interpreter','latex');
-    ylabel('d$V$/d$D$ ($10$m$^3$/mm)','interpreter','latex','fontsize',10,'fontname','helvetica');
-    xlabel('pupil diameter ($D$) (mm)','interpreter','latex','fontsize',10,'fontname','helvetica');
+    num1=sprintf('\\bf%s m^3/mm',num2str(round(interp1q(pupilValues,dVdA_River(:,1),fishpupil*1e-3))));
+    text(fishpupil+0.5,(interp1q(pupilValues,dVdA_River(:,1),fishpupil*1e-3)/1e1)+.5,num1,...
+        'fontsize',10,'interpreter','tex','fontname','helvetica');
+    ylabel('\bfd\itV/\rm\bfd\itD \rm\bf(10m^3/mm)','interpreter','tex',...
+        'fontsize',12,'fontname','helvetica');
+    x22=xlabel('\bfpupil diameter (\itD) \rm\bf(mm)','interpreter','tex',...
+    'fontsize',12,'fontname','helvetica');
     axis square
-
+%annotation(hf,'rectangle',...
+    %[0.00482523148148149 0.0254062499999999 0.472310185185185 0.943239583333336]);
 % Aerial Range
     plotnoX = 3;
     plotnoY = 1;
@@ -262,20 +269,21 @@ function fig03_visualrange
         'markeredgecolor','k','markerfacecolor','k','markersize',5);
     plot(tetrapodpupil,intersectDigited.rangeAerial(1)/1e2,'o',...
         'markeredgecolor','k','markerfacecolor','k','markersize',5);
-    x=18;
-    text(x,(interp1q(pupilValuesAir,visualRange(:,1),x*1e-3)+145)/1e2,'daylight',...
-        'fontsize',10,'interpreter','latex')
-    text(x,(interp1q(pupilValuesAir,visualRange(:,2),x*1e-3)+110)/1e2,'moonlight',...
-        'fontsize',10,'interpreter','latex')
-    text(x,(interp1q(pupilValuesAir,visualRange(:,3),x*1e-3)+75)/1e2,'starlight',...
-        'fontsize',10,'interpreter','latex')
-    num1=sprintf('\\textbf{%s~m}',num2str(round(interp1q(pupilValuesAir,visualRange(:,1),fishpupil*1e-3))));
-    num2=sprintf('\\textbf{%s~m}',num2str(round(interp1q(pupilValuesAir,visualRange(:,1),tetrapodpupil*1e-3))));
+    x=16;
+    text(x,(interp1q(pupilValuesAir,visualRange(:,1),x*1e-3)+188)/1e2,'daylight',...
+        'fontsize',12,'interpreter','tex','fontname','helvetica')
+    text(x,(interp1q(pupilValuesAir,visualRange(:,2),x*1e-3)+140)/1e2,'moonlight',...
+        'fontsize',12,'interpreter','tex','fontname','helvetica')
+    text(x,(interp1q(pupilValuesAir,visualRange(:,3),x*1e-3)+97)/1e2,'starlight',...
+        'fontsize',12,'interpreter','tex','fontname','helvetica')
+    num1=sprintf('\\bf%s m',num2str(round(interp1q(pupilValuesAir,visualRange(:,1),fishpupil*1e-3))));
+    num2=sprintf('\\bf%s m',num2str(round(interp1q(pupilValuesAir,visualRange(:,1),tetrapodpupil*1e-3))));
     text(fishpupil+0.5,(interp1q(pupilValuesAir,visualRange(:,1),fishpupil*1e-3)-10)/1e2,num1,...
-        'fontsize',10,'interpreter','latex');
+        'fontsize',11,'interpreter','tex','fontname','helvetica');
     text(tetrapodpupil-0.5,(interp1(pupilValuesAir,visualRange(:,1),tetrapodpupil*1e-3)+25)/1e2,num2,...
-        'fontsize',10,'interpreter','latex','horizontalalignment','right');
-    ylabel('visual range ($r$) ($10^2$m)','interpreter','latex','fontsize',10,'fontname','helvetica');
+        'fontsize',11,'interpreter','tex','horizontalalignment','right','fontname','helvetica');
+    ylabel('\bfvisual range (\itr) \rm\bf(10^2m)','interpreter','tex',...
+        'fontsize',12,'fontname','helvetica');
     axis square
 
 % Aerial Derivative Range wrt Pupil Diameter
@@ -301,7 +309,8 @@ function fig03_visualrange
         'linewidth',linewidthDef,'color','r','linestyle',':');
     line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],...
             'linewidth',linewidthDef,'color','b','linestyle',':');
-    ylabel('d$r$/d$D$ ($10^2$m/mm)','interpreter','latex','fontsize',10,'fontname','helvetica');
+    ylabel('\bfd\itr/\rm\bfd\itD \rm\bf(10^2m/mm)','interpreter','tex',...
+        'fontsize',12,'fontname','helvetica');
     axis square
  
 % Aerial Volume
@@ -327,9 +336,10 @@ function fig03_visualrange
         'linewidth',linewidthDef,'color','r','linestyle',':');
     line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],...
             'linewidth',linewidthDef,'color','b','linestyle',':');
-    ylabel('visual volume ($V$) ($10^8$m$^3$/mm)','interpreter','latex','fontsize',10,'fontname','helvetica');
-    xlabel('pupil diameter ($D$) (mm)','interpreter','latex','fontsize',10,...
-        'fontname','helvetica');
+    ylabel('\bfvisual volume (\itV) \rm\bf(10^8m^3/mm)','interpreter','tex',...
+        'fontsize',12,'fontname','helvetica');
+    xlabel('\bfpupil diameter (\itD) \rm\bf(mm)','interpreter','tex',...
+        'fontsize',12,'fontname','helvetica');
     axis square
 
 % Aerial Derivative Volume wrt Pupil Diameter
@@ -357,11 +367,13 @@ function fig03_visualrange
             'linewidth',linewidthDef,'color','b','linestyle',':');
     plot(fishpupil,intersectFish.dVdAAerial(1)/1e7,'o',...
         'markeredgecolor','k','markerfacecolor','k','markersize',5);
-    num1=sprintf('\\textbf{%s~m$^3$/mm}',num2str(round(interp1q(pupilValuesAir,dVdA(1,:)',fishpupil*1e-3)),'%10.1e'));
+    num1=sprintf('\\bf%s m^3/mm',num2str(round(interp1q(pupilValuesAir,dVdA(1,:)',fishpupil*1e-3)),'%10.1e'));
     text(fishpupil+.5,(interp1q(pupilValuesAir,dVdA(1,:)',fishpupil*1e-3)/1e7)-0.3,num1,...
-        'fontsize',10,'interpreter','latex');
-    ylabel('d$V$/d$D$ ($10^7$m$^3$/mm)','interpreter','latex','fontsize',10,'fontname','helvetica');
-    xlabel('pupil diameter ($D$) (mm)','interpreter','latex','fontsize',10,...
+        'fontsize',11,'interpreter','tex','fontname','helvetica');
+    ylabel('\bfd\itV/\rm\bfd\itD \rm\bf(10^7m^3/mm)','interpreter','tex',...
+        'fontsize',12,'fontname','helvetica');
+    xlabel('\bfpupil diameter (\itD) \rm\bf(mm)','interpreter','tex',...
+        'fontsize',12,...
         'fontname','helvetica');
     axis square
 
