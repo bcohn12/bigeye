@@ -1,7 +1,5 @@
 function figExt07_contrast
     close all;
-    run Parameters.m
-    load('Parameters.mat')
     load OM_TF_ST.mat
     
     [e,em]=fileExists;
@@ -28,7 +26,7 @@ function figExt07_contrast
     load('Aquatic_daylightContrastRange.mat')
     load('imageContrastValues.mat')
     [contrastRange_River,C0RangeNew]=interpolateContrastRange(C0Range,visualRange_River);
-    [contrastRange,C0RangeNew]=interpolateContrastRange(C0Range,visualRangeSolnsTemp);
+    [contrastRange,C0RangeNew]=interpolateContrastRange(C0Range,visualRangeSolns);
    
     fillboxalpha=0.18; % transparency of fillbox to show +/- std of pupil size;
     
@@ -39,41 +37,161 @@ function figExt07_contrast
     tetrapodpupil=mean(OM_ST)*.449;
 
     minFishContrast=min(fishContrast); minBugContrast=min(bugContrast);
-    maxFishContrast=max(fishContrast); maxBugContrast=max(bugContrast);
+    maxFishContrast=max(fishContrast); maxBugContrast=max(bugContrast); 
     
-    linewidthDef=2;
-    key={'finned lower SD', 'digited lower SD','finned','finned higher SD',...
-        'digited','digited higher SD'};
+    linewidthdef=2;
+%% FIND INTERSECTIONS
+    visualRange.FishAquaticUp=contrastRange_River(:,3,1);
+    visualRange.DigitAquaticUp=contrastRange_River(:,5,1);
+    visualRange.FishAquaticHor=contrastRange_River(:,3,2);
+    visualRange.DigitAquaticHor=contrastRange_River(:,5,2);
+    visualRange.FishAerial=contrastRange(:,3);
+    visualRange.DigitAerial=contrastRange(:,5);
     
-    figure();
-    plot(C0RangeNew,contrastRange_River(:,3,1),'linewidth',linewidthDef)
-    hold on;
-    plot(C0RangeNew,contrastRange_River(:,3,2),':',...
-        'color',[0 0.4470 0.7410],'linewidth',linewidthDef)
-    plot(C0RangeNew,contrastRange_River(:,5,1),...
-        'color',[0.8500    0.3250    0.0980],'linewidth',linewidthDef)
-    plot(C0RangeNew,contrastRange_River(:,5,2),':',...
-        'color',[0.8500    0.3250    0.0980],'linewidth',linewidthDef)
-    xlabel('contrast'); ylabel('visual range (m)');
-    title('Aquatic Daylight Contrast vs Range')
-    ylim1=get(gca,'Ylim'); xlim1=get(gca,'Xlim');
-    line([-0.3 -0.3],[ylim1(1) ylim1(2)],'linestyle',':','color','b');
-    line([0.3 0.3],[ylim1(1) ylim1(2)],'linestyle',':','color','b');
-    line([-0.1 -0.1],[ylim1(1) ylim1(2)],'linestyle',':','color','b');
-    line([0.1 0.1],[ylim1(1) ylim1(2)],'linestyle',':','color','b');
+    conditions={'FishAquaticUp','DigitAquaticUp','FishAquaticHor',...
+        'DigitAquaticHor','FishAerial','DigitAerial'};
+    contrastinter=[-0.3 -0.1 0.1 0.3];
+    
+    for i=1:length(conditions)
+        func=@(x) interp1q(C0RangeNew,visualRange.(conditions{i}),x);
+        for j=1:length(contrastinter)
+            intersectval(j,i)=func(contrastinter(j));
+        end
+    end
 
-    figure();
-    plot(C0RangeNew,contrastRange(:,3),'linewidth',linewidthDef)
+%%  PLOT
+    fig_props.noYsubplots = 1;
+    fig_props.noXsubplots = 2;
+
+    fig_props.figW = 22;   % cm
+    fig_props.figH = 12;  % cm
+
+    fig_props.ml = 2;
+    fig_props.mt = 0.8;
+
+    create_BE_figure
+    fig_props.sub_pW = fig_props.sub_pW-.5;
+    time_subsamp = 1;
+    time_limit = 0.4;
+    text_pos = [-5,2*time_limit/10,50];
+    text_color = [0 0 0];
+    text_size = 12;
+    pn = {'Color','FontSize','FontWeight',};
+    pv = {text_color,text_size,'bold'};
+
+% Aquatic contrast plot 
+    plotnoY=1;
+    plotnoX=1;
+    ha1=create_BE_axes(plotnoX,plotnoY,fig_props);
+    
+    hl11=line('XData',C0RangeNew,'YData',visualRange.FishAquaticUp,...
+        'color',[0 0.4470 0.7410],'linewidth',linewidthdef);
     hold on;
-    plot(C0RangeNew,contrastRange(:,5),'linewidth',linewidthDef)
-    xlabel('contrast'); ylabel('visual range (m)');
-    title('Aerial Daylight Contrast vs Range')
-        ylim1=get(gca,'Ylim'); xlim1=get(gca,'Xlim');
-    line([-0.3 -0.3],[ylim1(1) ylim1(2)],'linestyle',':','color','r');
-    line([0.3 0.3],[ylim1(1) ylim1(2)],'linestyle',':','color','r');
-    line([-0.1 -0.1],[ylim1(1) ylim1(2)],'linestyle',':','color','r');
-    line([0.1 0.1],[ylim1(1) ylim1(2)],'linestyle',':','color','r');
-   
+    hl12=line('XData',C0RangeNew,'YData',visualRange.DigitAquaticUp,...
+        'color',[0.85,0.325,0.098],'linewidth',linewidthdef);
+    hl13=line('XData',C0RangeNew,'YData',visualRange.FishAquaticHor,...
+        'color',[0 0.4470 0.7410],'linewidth',linewidthdef,'linestyle',':');
+    hl14=line('XData',C0RangeNew,'YData',visualRange.DigitAquaticHor,...
+        'color',[0.85,0.325,0.098],'linewidth',linewidthdef,'linestyle',':');
+    for i=1:length(conditions)-2
+        plot(contrastinter,intersectval(:,i),'o',...
+            'markeredgecolor','k','markerfacecolor','k','markersize',5);
+    end
+    ylim1=get(gca,'ylim');
+    for i=1:length(contrastinter)
+        line([contrastinter(i) contrastinter(i)],[ylim1(1) ylim1(2)],...
+            'color','b','linestyle',':','linewidth',1.2);
+    end
+    xlabel('\bfcontrast','interpreter','tex',...
+        'fontsize',12,'fontname','helvetica');
+    ylabel('\bfvisual range (\itr) \rm\bf(m)','interpreter','tex',...
+        'fontsize',12,'fontname','helvetica');
+    x=2;
+    text(x,(interp1q(C0RangeNew,visualRange.DigitAquaticUp,x)+0.9),...
+        'upward,','interpreter','tex',...
+        'fontsize',9,'fontname','helvetica');
+    text(x,(interp1q(C0RangeNew,visualRange.DigitAquaticUp,x)+0.6),...
+        'digited pupil diameter','interpreter','tex',...
+        'fontsize',9,'fontname','helvetica');
+    text(x,(interp1q(C0RangeNew,visualRange.FishAquaticUp,x)-0.2),...
+        'upward,','interpreter','tex',...
+        'fontsize',9,'fontname','helvetica');
+    text(x,(interp1q(C0RangeNew,visualRange.FishAquaticUp,x)-0.5),...
+        'finned pupil diameter','interpreter','tex',...
+        'fontsize',9,'fontname','helvetica');
+    
+    text(x,(interp1q(C0RangeNew,visualRange.DigitAquaticHor,x)+0.8),...
+        'horizontal,','interpreter','tex',...
+        'fontsize',9,'fontname','helvetica');
+    text(x,(interp1q(C0RangeNew,visualRange.DigitAquaticHor,x)+0.5),...
+        'digited pupil diameter','interpreter','tex',...
+        'fontsize',9,'fontname','helvetica');
+    text(x,(interp1q(C0RangeNew,visualRange.FishAquaticHor,x)-0.2),...
+        'horizontal,','interpreter','tex',...
+        'fontsize',9,'fontname','helvetica');
+    text(x,(interp1q(C0RangeNew,visualRange.FishAquaticHor,x)-0.5),...
+        'finned pupil diameter','interpreter','tex',...
+        'fontsize',9,'fontname','helvetica');
+    annotation('textbox',...
+        [0.091 0.2 0.03 0.05],...
+        'String',{'-0.3'},...
+        'LineStyle','none',...
+        'FontSize',6,...
+        'FitBoxToText','off',...
+        'BackgroundColor',[1 1 1]);
+    annotation('textbox',...
+        [0.143 0.2 0.03 0.05],...
+        'String',{'0.3'},...
+        'LineStyle','none',...
+        'FontSize',6,...
+        'FitBoxToText','off',...
+        'BackgroundColor',[1 1 1]);
+    axis square
+% Aerial Contrast Plot
+    plotnoX=2;
+    plotnoY=1;
+    ha2=create_BE_axes(plotnoX,plotnoY,fig_props);
+    
+    hl21=line('XData',C0RangeNew,'YData',visualRange.DigitAerial,...
+        'color',[0 0.4470 0.7410],'linewidth',linewidthdef);
+    hold on;
+    hl22=line('XData',C0RangeNew,'YData',visualRange.FishAerial,...
+        'color',[0.85,0.325,0.098],'linewidth',linewidthdef);
+    for i=length(conditions)-1:length(conditions)
+        plot(contrastinter,intersectval(:,i),'o',...
+            'markeredgecolor','k','markerfacecolor','k','markersize',5);
+    end
+    ylim1=get(gca,'ylim');
+    for i=1:length(contrastinter)
+        line([contrastinter(i) contrastinter(i)],[ylim1(1) ylim1(2)],...
+            'color','b','linestyle',':','linewidth',1.2);
+    end
+    xlabel('\bfcontrast','interpreter','tex',...
+        'fontsize',12,'fontname','helvetica');
+    ylabel('\bfvisual range (\itr) \rm\bf(m)','interpreter','tex',...
+        'fontsize',12,'fontname','helvetica');
+    x=1.5;
+    text(x,(interp1q(C0RangeNew,visualRange.DigitAerial,x)+140),...
+        'digited pupil diameter','interpreter','tex',...
+        'fontsize',9,'fontname','helvetica');
+    text(x,(interp1q(C0RangeNew,visualRange.FishAerial,x)+100),...
+        'finned pupil diameter','interpreter','tex',...
+        'fontsize',9,'fontname','helvetica');
+    annotation('textbox',...
+        [0.579 0.2 0.03 0.05],...      
+        'String',{'-0.3'},...
+        'LineStyle','none',...
+        'FontSize',6,...
+        'FitBoxToText','off',...
+        'BackgroundColor',[1 1 1]);
+    annotation('textbox',...
+        [0.633 0.2 0.03 0.05],...
+        'String',{'0.3'},...
+        'LineStyle','none',...
+        'FontSize',6,...
+        'FitBoxToText','off',...
+        'BackgroundColor',[1 1 1]);
+    axis square
 function [e,em]=fileExists
     e1={exist('Aerial_daylightContrastRange.mat','file')==2,'Aerial_contrastRangeRelation.m'};
     e2={exist('Aquatic_daylightContrastRange.mat','file')==2, 'Aquatic_daylightContrastRange.m'};
