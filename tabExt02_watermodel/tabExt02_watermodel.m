@@ -9,28 +9,28 @@ global BIGEYEROOT
     
     model_param=xlsread('MAbsDom.xls','model_param');
     Chl.AbsDom=model_param(1); mineral.AbsDom=model_param(2);
-    CDOM.AbsDom=model_param(3); omega0.AbsDom=model_param(4);
-    secchi.AbsDom=model_param(5);
+    CDOM.AbsDom=model_param(3); omega0.AbsDom=model_param(5);
+    secchi.AbsDom=model_param(4);
     
     model_param=xlsread('MClear.xls','model_param');
     Chl.Clear=model_param(1); mineral.Clear=model_param(2);
-    CDOM.Clear=model_param(3); omega0.Clear=model_param(4);
-    secchi.Clear=model_param(5);
+    CDOM.Clear=model_param(3); omega0.Clear=model_param(5);
+    secchi.Clear=model_param(4);
     
     model_param=xlsread('MHighTurbidity.xls','model_param');
     Chl.HighTurbidity=model_param(1); mineral.HighTurbidity=model_param(2);
-    CDOM.HighTurbidity=model_param(3); omega0.HighTurbidity=model_param(4);
-    secchi.HighTurbidity=model_param(5);
+    CDOM.HighTurbidity=model_param(3); omega0.HighTurbidity=model_param(5);
+    secchi.HighTurbidity=model_param(4);
     
     model_param=xlsread('MScatDom.xls','model_param');
     Chl.ScatDom=model_param(1); mineral.ScatDom=model_param(2);
-    CDOM.ScatDom=model_param(3); omega0.ScatDom=model_param(4);
-    secchi.ScatDom=model_param(5);
+    CDOM.ScatDom=model_param(3); omega0.ScatDom=model_param(5);
+    secchi.ScatDom=model_param(4);
     
     model_param=xlsread('Hydrolight_BrownWater.xlsx','model_param');
     Chl.Baseline=model_param(1); mineral.Baseline=model_param(2);
-    CDOM.Baseline=model_param(3); omega0.Baseline=model_param(4);
-    secchi.Baseline=model_param(5);
+    CDOM.Baseline=model_param(3); omega0.Baseline=model_param(5);
+    secchi.Baseline=model_param(4);
     
     columnLabels={
         '\textbf{Clear}';
@@ -38,7 +38,8 @@ global BIGEYEROOT
         '\textbf{Baseline} \textbf{River}';
         '\textbf{High} \textbf{Turbidity}';
         '\textbf{Scattering} \textbf{Dominated}'};
-waterConditions={'Clear','AbsDom','Baseline','HighTurbidity','ScatDom'};
+waterConditions={'ScatDom','HighTurbidity','Baseline','AbsDom','Clear'};
+waterConditions=fliplr(waterConditions);
 %% ROW DEFINTIONS
 
 %Concentraation parameters
@@ -63,6 +64,7 @@ IOPParam={'\emph{a}, 1/m';
     '$\omega_\text{o}$';
     'Secchi depth, m'};
 ind=find(lambda==575);
+waterConditions=fliplr(waterConditions);
 for i=1:length(waterConditions)
     aValue=a.(waterConditions{i}); aValue=aValue(ind);
     bValue=b.(waterConditions{i}); bValue=bValue(ind);
