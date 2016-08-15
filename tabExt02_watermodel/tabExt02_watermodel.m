@@ -38,6 +38,7 @@ global BIGEYEROOT
         '\textbf{Baseline} \textbf{River}';
         '\textbf{High} \textbf{Turbidity}';
         '\textbf{Scattering} \textbf{Dominated}'};
+    
 waterConditions={'ScatDom','HighTurbidity','Baseline','AbsDom','Clear'};
 waterConditions=fliplr(waterConditions);
 %% ROW DEFINTIONS
@@ -103,8 +104,8 @@ for i=1:length(collabels)
     if length(c{i})==1;
         c{i}{2}=' ';
     end
-    line1=strcat(line1,'&',c{i}{1});
-    line2=strcat(line2,'&',c{i}{2});
+    line1=strcat(c{i}{1},'&',line1);
+    line2=strcat(c{i}{2},'&',line2);
 end
 line1=line1(2:end); line2=line2(2:end);
 line1=strcat(line1,'\\'); line2=strcat(line2,'\\');
