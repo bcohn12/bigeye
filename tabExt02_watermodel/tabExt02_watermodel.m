@@ -45,7 +45,7 @@ waterConditions=fliplr(waterConditions);
 
 %Concentraation parameters
 q = char(39);
-brownearth = strcat(' `` ', 'brown earth', q, q, ' mineral particles, gm/m$^3$' );
+brownearth = strcat(' `` ', 'brown earth', q, q, ' mineral particles, g/m$^3$' );
 
 concParam={'Chlorophyll-\emph{a}, mg/m$^3$';
     brownearth;
