@@ -33,7 +33,7 @@ global BIGEYEROOT
     secchi.Baseline=model_param(4);
     
     columnLabels={
-        '\\textbf{Clear}';
+        '\textbf{Clear}';
         '\textbf{Absorption} \textbf{Dominated}';
         '\textbf{Baseline} \textbf{River}';
         '\textbf{High} \textbf{Turbidity}';
@@ -44,9 +44,11 @@ waterConditions=fliplr(waterConditions);
 %% ROW DEFINTIONS
 
 %Concentraation parameters
+q = char(39);
+brownearth = strcat(' `` ', 'brown earth', q, q, ' mineral particles, gm/m$^3$' );
 
 concParam={'Chlorophyll-\emph{a}, mg/m$^3$';
-    '``brown earth'' mineral particles, gm/m$^3$';
+    brownearth;
     'CDOM absorption, 1/m at 440~nm'};
 for i=1:length(waterConditions)
     ChlValue=Chl.(waterConditions{i});
@@ -89,7 +91,8 @@ for i=1:length(waterConditions)
         ' '; colIOP.(waterConditions{i})];
     rowValues=[tab.(waterConditions{i}) rowValues];
 end
-filename='tabExt02_watermodel.tex';
+
+filename = [BIGEYEROOT 'tabExt02_watermodel/tabExt02_watermodel.tex']; 
 title='Water Type';
 
 matrix2latex(rowValues,rowLabels,title,filename);
@@ -104,10 +107,10 @@ for i=1:length(collabels)
     if length(c{i})==1;
         c{i}{2}=' ';
     end
-    line1=strcat(c{i}{1},'&',line1);
-    line2=strcat(c{i}{2},'&',line2);
+    line1=strcat('&',c{i}{1},line1);
+    line2=strcat('&',c{i}{2},line2);
 end
-line1=line1(2:end); line2=line2(2:end);
+line1=line1(1:end-1); line2=line2(1:end-1);
 line1=strcat(line1,'\\'); line2=strcat(line2,'\\');
 
 fid = fopen(filename, 'w');
