@@ -1,5 +1,6 @@
 function tabExt04_length
 %% INITIALIZE
+global BIGEYEROOT
     [~,~,XlsData.GS] = xlsread('bigEye.xlsx',1,'B3:C64');
     [~,~,XlsData.Eye] = xlsread('bigEye.xlsx',1,'T3:T64');
     [~,~,XlsData.Length] = xlsread('bigEye.xlsx',1,'P3:P64');
@@ -24,10 +25,12 @@ function tabExt04_length
     eyeCol = 20;     % OM
 
 %% CREATE TABLE
-    
-    [TF_orbit_length_span, gsTF]=loc_ConvData(XlsData,TFind,lengthCol,refKeyCol,eyeCol,genusCol,speciesCol,stageBegin,stageEnd,'TFout.tex');
-    [ST_orbit_length_span, gsST]=loc_ConvData(XlsData,STind,lengthCol,refKeyCol,eyeCol,genusCol,speciesCol,stageBegin,stageEnd,'STout.tex');
-    [all_orbit_length_span, allgsTF]=loc_ConvData(XlsData,[TFind; STind],lengthCol,refKeyCol,eyeCol,genusCol,speciesCol,stageBegin,stageEnd,'allout.tex');
+    TFfilename=[BIGEYEROOT  'tabExt04_length/TFout.tex'];
+    STfilename=[BIGEYEROOT 'tabExt04_length/STout.tex'];
+    allfilename=[BIGEYEROOT 'tabExt04_length/allout.tex'];
+    [TF_orbit_length_span, gsTF]=loc_ConvData(XlsData,TFind,lengthCol,refKeyCol,eyeCol,genusCol,speciesCol,stageBegin,stageEnd,TFfilename);
+    [ST_orbit_length_span, gsST]=loc_ConvData(XlsData,STind,lengthCol,refKeyCol,eyeCol,genusCol,speciesCol,stageBegin,stageEnd,STfilename);
+    [all_orbit_length_span, allgsTF]=loc_ConvData(XlsData,[TFind; STind],lengthCol,refKeyCol,eyeCol,genusCol,speciesCol,stageBegin,stageEnd,allfilename);
     
 function [orbit_length_span, gs] = loc_ConvData(gdat,speciesIndex,lengthCol, refkeyCol,eyeCol,genusCol,speciesCol,stageBegin,stageEnd,filename)
     global numTF

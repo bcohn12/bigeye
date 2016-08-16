@@ -1,7 +1,7 @@
 function tabExt03_gain
 global BIGEYEROOT
-    run Parameters.m
-    load('Parameters.mat')
+    %run Parameters.m
+    %load('Parameters.mat')
     
     load('visibilityAerial_Daylight.mat')
     load('visibilityAerial_Moonlight.mat')
@@ -153,7 +153,7 @@ global BIGEYEROOT
     matrixTemp=[numcell des.Aquatic des.Aerial valTemp];
     %matrix=[c;matrixTemp];
     
-    filename='tabExt03_gain.tex';
+    filename=[BIGEYEROOT 'tabExt03_gain/tabExt03_gain.tex'];
     matrix2latex(matrixTemp,c,filename,m,n);
         
 function matrix2latex(matrix, columnlabels,filename,labelline,valueline)
