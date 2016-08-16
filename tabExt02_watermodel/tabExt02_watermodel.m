@@ -33,7 +33,7 @@ global BIGEYEROOT
     secchi.Baseline=model_param(4);
     
     columnLabels={
-        '\textbf{Clear}';
+        '\\textbf{Clear}';
         '\textbf{Absorption} \textbf{Dominated}';
         '\textbf{Baseline} \textbf{River}';
         '\textbf{High} \textbf{Turbidity}';
@@ -46,7 +46,7 @@ waterConditions=fliplr(waterConditions);
 %Concentraation parameters
 
 concParam={'Chlorophyll-\emph{a}, mg/m$^3$';
-    '"brown earth" mineral particles, gm/m$^3$';
+    '``brown earth'' mineral particles, gm/m$^3$';
     'CDOM absorption, 1/m at 440~nm'};
 for i=1:length(waterConditions)
     ChlValue=Chl.(waterConditions{i});
@@ -61,7 +61,7 @@ end
 IOPParam={'\emph{a}, 1/m';
     '\emph{b}, 1/m';
     '\emph{c}, 1/m';
-    'Attenuation length (1/c), m';
+    'Attenuation length (1/\emph{c}), m';
     '$\omega_\text{o}$';
     'Secchi depth, m'};
 ind=find(lambda==575);
