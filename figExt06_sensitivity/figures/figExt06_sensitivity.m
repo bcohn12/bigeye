@@ -1,4 +1,5 @@
 function figExt06_sensitivity
+global BIGEYEROOT
 %% INITIALIZE
     close all;   
     load OM_TF_ST.mat
@@ -80,7 +81,7 @@ function figExt06_sensitivity
         'fontsize',12,'fontname','helvetica');
     xlabel('\bfpupil diameter (\itD) \rm\bf(mm)','interpreter','tex',...
         'fontsize',12,'fontname','helvetica');
-    text(x,3*ylim1(2)/5,'\bfupward viewing','interpreter',...
+    text(x,1.8*ylim1(2)/5,'\bfupward viewing','interpreter',...
         'tex','fontsize',13,'fontname','helvetica');
     axis square
         
@@ -106,7 +107,7 @@ function figExt06_sensitivity
         'fontsize',12,'fontname','helvetica');
     xlabel('\bfpupil diameter (\itD) \rm\bf(mm)','interpreter','tex',...
         'fontsize',12,'fontname','helvetica');
-    text(x,3*ylim1(2)/5,'\bfhorizontal viewing','interpreter','tex',...
+    text(x,1.8*ylim1(2)/5,'\bfhorizontal viewing','interpreter','tex',...
         'fontsize',13,'fontname','helvetica');
     axis square
     
@@ -115,6 +116,9 @@ hLegend=legend('high turbidity @8 m','clear @8 m',...
 set(hLegend,'box','off'); set(hLegend,'interpreter','tex'); 
 set(hLegend,'fontsize',11,'fontname','helvetica'); set(hLegend,'orientation','horizontal')
 rect=[0.375 0 0.25 0.1]; set(hLegend,'Position',rect)
+
+filename=[BIGEYEROOT 'figExt06_sensitivity/figures/core_figures/water_sensitivity.pdf'];
+print(filename,'-painters','-dpdf','-r600');
     
 function [e,em]=fileExists
     e2={exist('Aquatic_visRangeSensitivity.mat','file')==2, 'Aquatic_contrastLimitedSensitivity.m'};
