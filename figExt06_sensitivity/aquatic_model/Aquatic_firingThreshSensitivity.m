@@ -15,7 +15,7 @@ function [visualRangeSensitivity,pupilValues]=Aquatic_firingThreshSensitivity
         elseif strcmp(conditions{i},'Clear')
             r_down=10; r_hor=10;
         elseif strcmp(conditions{i},'AbsDom')
-            r_down=43; r_hor=3;
+            r_down=5; r_hor=3;
         elseif strcmp(conditions{i},'ScatDom')
             r_down=2.3; r_hor=1.5;
         end
@@ -73,12 +73,12 @@ function [visualRangeSensitivity,pupilValues]=Aquatic_firingThreshSensitivity
 
     save([BIGEYEROOT 'figExt06_sensitivity/aquatic_model/Aquatic_meteoRangeSensitivity.mat'],'conditions','visualRangeSensitivity','pupilValues','waterDepth');
      
-function  solution=firingThresh(depth,lambda,photoreceptorAbsorption,aAll,bAll,KAll,LAll,r,A,X,Dt,q,d,k,len,T,M,R)
-    a=aAll;
-    K=KAll(:,depth);
+function  solution=firingThresh(depth,lambda,photoreceptorAbsorption,aAll,bAll,KAll,LAll,r,A,X,Dt,q,d,k,len,T,M,R) 
     L=LAll(:,depth);
-    b=bAll;
-
+    [~,ind]=max(L);
+    a=aAll(:); a=a(ind);
+    K=KAll(:,depth); K=K(ind);
+    b=bAll(:); b=b(ind);
     
 %     alphaInterp=@(l) interp1(lambda,photoreceptorAbsorption,l,'pchip');
 %     aInterp=@(l) interp1(lambda,a,l,'pchip');
@@ -88,21 +88,33 @@ function  solution=firingThresh(depth,lambda,photoreceptorAbsorption,aAll,bAll,K
     
     Nfalse=((T*M*A)/(2*r*d))^2*X*Dt;
     Rh=L.*lambda.*(1-exp(-k*photoreceptorAbsorption*len));
-    Ro=L.*lambda.*(1-exp(-k*photoreceptorAbsorption*len)).*(1-exp((K-a-b)*r));
+
+    %Ro=L.*lambda.*(1-exp(-k*photoreceptorAbsorption*len)).*(1-exp((K-a-b)*r));
     %RhFunc=@(l) LInterp(l).*l.*(1-exp(-k*alphaInterp(l)*len));
     %RoFunc=@(l) LInterp(l).*l.*(1-exp(-k*alphaInterp(l)*len)).*(1-exp((KInterp(l)-aInterp(l)-bInterp(l))*r));  
     
     %Ispace=integral(RhFunc,lambda1,lambda2);
     %Iblack=integral(RoFunc,lambda1,lambda2);
     Ispace=trapz(lambda,Rh);
+%     for i=1:length(K)
+%         dum=1-exp((K(i)-a(i)-b(i))*r);
+%         if Ispace-abs(dum)<0
+%             dum=0;
+%         end
+%         Ro(i)=Ispace*dum;
+%     end
+    Ro=Rh.*(1-exp((K-a-b)*r));
     Iblack=trapz(lambda,Ro);
+    if isinf(Iblack)
+        Iblack=0;
+    end
     
     Nh=((pi/4)^2)*(A^2)*((T/r)^2)*q*Dt*Ispace;
     No=((pi/4)^2)*(A^2)*((T/r)^2)*q*Dt*Iblack;
 
     solution=(R*sqrt(No+Nh+2*Nfalse))/(abs(No-Nh));
     
-function c=times(a,b)
-    b(isinf(b))=0;
-    a(isinf(a))=0;
-    c=builtin('times',a,b);
+% function c=times(a,b)
+%     b(isinf(b))=0;
+%     a(isinf(a))=0;
+%     c=builtin('times',a,b);

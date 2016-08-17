@@ -9,30 +9,29 @@ function [visualRange,pupilValues]=Aquatic_contrastLimitedSensitivity
     end
     
     conditions={'HighTurbidity','Clear','AbsDom','ScatDom'};
-    viewing={'down','hor'};
+    viewing={'up','hor'};
     waterDepth=8;
     pupilValues=linspace(minpupil,maxpupil,30);   
     actRangeSensitivity=visualRangeSensitivity;
     lambda1=lambda(1); lambda2=lambda(end);
     for k=1:length(viewing)
-        for j=3:length(conditions)              
+        for j=1:length(conditions)              
             aValue=a.(conditions{j}); bValue=b.(conditions{j});
-            KValue.down=Kd.(conditions{j})(:,waterDepth); KValue.hor=Kh.(conditions{j})(:,waterDepth);
-            BValue.down=Bd.(conditions{j})(waterDepth); BValue.hor=Bh.(conditions{j})(waterDepth);           
-            LValue.down=Ld.(conditions{j})(:,waterDepth); LValue.hor=Lh.(conditions{j})(:,waterDepth);
-            [~,index.down]=max(LValue.down); [~,index.hor]=max(LValue.hor); 
-            lmax.down=lambda(index.down); lmax.hor=lambda(index.hor);
+            KValue.up=Kd.(conditions{j})(:,waterDepth); KValue.hor=Kh.(conditions{j})(:,waterDepth);
+            BValue.up=Bd.(conditions{j})(waterDepth); BValue.hor=Bh.(conditions{j})(waterDepth);           
+            LValue.up=Ld.(conditions{j})(:,waterDepth); LValue.hor=Lh.(conditions{j})(:,waterDepth);
+            [~,index.up]=max(LValue.up); [~,index.hor]=max(LValue.hor); 
+            lmax.up=lambda(index.up); lmax.hor=lambda(index.hor);
 
             aValue=@(l) interp1(lambda,aValue,l,'pchip'); bValue=@(l) interp1(lambda,bValue,l,'pchip');
-            KValue.down=@(l) interp1(lambda,KValue.down,l,'pchip'); KValue.hor=@(l) interp1(lambda,KValue.hor,l,'pchip');
+            KValue.up=@(l) interp1(lambda,KValue.up,l,'pchip'); KValue.hor=@(l) interp1(lambda,KValue.hor,l,'pchip');
             for i=1:length(pupilValues)
                A=pupilValues(i);
                mr=visualRangeSensitivity(i,j,k);
                tol=5e-2;
-               if strcmp(conditions{j},'AbsDom')&& strcmp(viewing{k},'down')
-                   mr=visualRangeSensitivity(i,j,k)/11;
-                   tol=5e-4;
-               end
+                if strcmp(conditions{j},'AbsDom')
+                    tol=5e-5;
+                end
                 
                 Cr.(viewing{k})=C0*exp((KValue.(viewing{k})(lmax.(viewing{k}))-aValue(lmax.(viewing{k}))-bValue(lmax.(viewing{k}))).*mr);
                 angularSize.(viewing{k})=atan(T/(2*mr))*2*10^3;
@@ -40,9 +39,9 @@ function [visualRange,pupilValues]=Aquatic_contrastLimitedSensitivity
                 if (10^(Kt.(viewing{k}))<abs(Cr.(viewing{k})))
                     actRangeSensitivity(i,j,1)=mr;
                 else
-                    tempVisualRange=linspace(mr,mr/10,mr*500);
+                    tempVisualRange=linspace(mr,mr/10,mr*100);
                     ind=1;
-                    while(10^(Kt.(viewing{k}))-abs(Cr.(viewing{k}))>tol)
+                    while 10^(Kt.(viewing{k}))-abs(Cr.(viewing{k}))>tol
                         mr=tempVisualRange(ind);
                         angularSize.(viewing{k})=atan(T/(2*mr))*2*10^3;
                         Cr.(viewing{k})=C0*exp((KValue.(viewing{k})(lmax.(viewing{k}))-aValue(lmax.(viewing{k}))-bValue(lmax.(viewing{k}))).*mr);
