@@ -1,4 +1,5 @@
 function figExt07_contrast
+global BIGEYEROOT
     close all;
     load OM_TF_ST.mat
     
@@ -210,6 +211,9 @@ function figExt07_contrast
         'EdgeColor',[1 1 1],...
         'BackgroundColor',[1 1 1]);
     axis square
+    
+filename=[BIGEYEROOT 'figExt07_contrast/figures/core_figures/contrast_sensitivity.pdf'];
+print(filename,'-painters','-dpdf','-r600');
 function [e,em]=fileExists
     e1={exist('Aerial_daylightContrastRange.mat','file')==2,'Aerial_contrastRangeRelation.m'};
     e2={exist('Aquatic_daylightContrastRange.mat','file')==2, 'Aquatic_daylightContrastRange.m'};
