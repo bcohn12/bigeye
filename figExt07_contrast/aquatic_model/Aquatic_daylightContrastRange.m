@@ -1,4 +1,4 @@
-function [visualRange_River,C0Range,pupilValues]=Aquatic_dayligthContrastRange
+function [visualRange_River,C0Range,pupilValues]=Aquatic_daylightContrastRange
 global BIGEYEROOT
     run Parameters.m
     load('Parameters.mat')
