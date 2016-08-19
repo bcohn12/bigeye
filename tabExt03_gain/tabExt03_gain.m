@@ -96,35 +96,62 @@ global BIGEYEROOT
         end
     end
     
+    numfunc=@(Y,x) interp1q(pupilValuesAir,Y,x);
+    denomfunc=@(Y,x) interp1q(pupilValues,Y,x);
+    f=fishpupil*1e-3; t=tetrapodpupil*1e-3;
+    
     columncond={'range','derRange','volume','derVolume'}; val={};
-          for i=1:length(columncond)
-          val{1,i}=num2str(floor(round((interp1q(pupilValuesAir,Aerial.(columncond{i})(:,1),fishpupil*1e-3)))/...
-                                 round((interp1q(pupilValues,Aquatic.(columncond{i})(:,2),fishpupil*1e-3)))));
-          val{2,i}=num2str(floor(round((interp1q(pupilValuesAir,Aerial.(columncond{i})(:,1),tetrapodpupil*1e-3)))/...
-                                 round(interp1q(pupilValues,Aquatic.(columncond{i})(:,2),fishpupil*1e-3))));
-          val{3,i}=num2str(floor(round((interp1q(pupilValuesAir,Aerial.(columncond{i})(:,1),fishpupil*1e-3)))/...
-                                 round(interp1q(pupilValues,Aquatic.(columncond{i})(:,1),fishpupil*1e-3))));
-          val{4,i}=num2str(floor(round((interp1q(pupilValuesAir,Aerial.(columncond{i})(:,1),tetrapodpupil*1e-3)))/...
-                                 round(interp1q(pupilValues,Aquatic.(columncond{i})(:,1),fishpupil*1e-3))));
-          val{5,i}=num2str(floor(round((interp1q(pupilValuesAir,Aerial.(columncond{i})(:,2),fishpupil*1e-3)))/...
-                                 round(interp1q(pupilValues,Aquatic.(columncond{i})(:,1),fishpupil*1e-3))));
-          val{6,i}=num2str(floor(round((interp1q(pupilValuesAir,Aerial.(columncond{i})(:,3),fishpupil*1e-3)))/...
-                                 round(interp1q(pupilValues,Aquatic.(columncond{i})(:,1),fishpupil*1e-3))));
-          val{7,i}=num2str(floor(round((interp1q(pupilValuesAir,Aerial.(columncond{i})(:,2),tetrapodpupil*1e-3)))/...
-                                 round(interp1q(pupilValues,Aquatic.(columncond{i})(:,1),fishpupil*1e-3))));
-          val{8,i}=num2str(floor(round((interp1q(pupilValuesAir,Aerial.(columncond{i})(:,3),tetrapodpupil*1e-3)))/...
-                                 round(interp1q(pupilValues,Aquatic.(columncond{i})(:,1),fishpupil*1e-3))));
-          val{9,i}=num2str(floor(round((interp1q(pupilValuesAir,Aerial.(columncond{i})(:,2),fishpupil*1e-3)))/...
-                                 round(interp1q(pupilValues,Aquatic.(columncond{i})(:,3),fishpupil*1e-3))));
-          val{10,i}=num2str(floor(round((interp1q(pupilValuesAir,Aerial.(columncond{i})(:,2),tetrapodpupil*1e-3)))/...
-                                  round(interp1q(pupilValues,Aquatic.(columncond{i})(:,3),fishpupil*1e-3))));
-          val{11,i}=num2str(floor(round((interp1q(pupilValuesAir,Aerial.(columncond{i})(:,3),fishpupil*1e-3)))/...
-                                  round(interp1q(pupilValues,Aquatic.(columncond{i})(:,4),fishpupil*1e-3))));
-          val{12,i}=num2str(floor(round((interp1q(pupilValuesAir,Aerial.(columncond{i})(:,3),tetrapodpupil*1e-3)))/...
-                                  round(interp1q(pupilValues,Aquatic.(columncond{i})(:,4),fishpupil*1e-3)))); 
-          end
-          num=(1:1:12);
-          for i=1:rowlength
+    for i=1:length(columncond)
+      ratio1=numfunc(Aerial.(columncond{i})(:,1),f)/...
+          denomfunc(Aquatic.(columncond{i})(:,2),f);
+      val{1,i}=num2str(round(ratio1));
+
+      ratio2=numfunc(Aerial.(columncond{i})(:,1),t)/...
+          denomfunc(Aquatic.(columncond{i})(:,2),f);
+      val{2,i}=num2str(round(ratio2));
+
+      ratio3=numfunc(Aerial.(columncond{i})(:,1),f)/...
+          denomfunc(Aquatic.(columncond{i})(:,1),f);
+      val{3,i}=num2str(round(ratio3));
+
+      ratio4=numfunc(Aerial.(columncond{i})(:,1),t)/...
+          denomfunc(Aquatic.(columncond{i})(:,1),f);
+      val{4,i}=num2str(round(ratio4));
+
+      ratio5=numfunc(Aerial.(columncond{i})(:,2),f)/...
+          denomfunc(Aquatic.(columncond{i})(:,1),f);
+      val{5,i}=num2str(round(ratio5));
+
+      ratio6=numfunc(Aerial.(columncond{i})(:,3),f)/...
+          denomfunc(Aquatic.(columncond{i})(:,1),f);
+      val{6,i}=num2str(round(ratio6));
+
+      ratio7=numfunc(Aerial.(columncond{i})(:,2),t)/...
+          denomfunc(Aquatic.(columncond{i})(:,1),f);
+      val{7,i}=num2str(round(ratio7));
+
+      ratio8=numfunc(Aerial.(columncond{i})(:,3),t)/...
+          denomfunc(Aquatic.(columncond{i})(:,1),f);
+      val{8,i}=num2str(round(ratio8));
+
+      ratio9=numfunc(Aerial.(columncond{i})(:,2),f)/...
+          denomfunc(Aquatic.(columncond{i})(:,3),f);
+      val{9,i}=num2str(round(ratio9));
+
+      ratio10=numfunc(Aerial.(columncond{i})(:,2),t)/...
+          denomfunc(Aquatic.(columncond{i})(:,3),f);
+      val{10,i}=num2str(round(ratio10));
+
+      ratio11=numfunc(Aerial.(columncond{i})(:,3),f)/...
+          denomfunc(Aquatic.(columncond{i})(:,4),f);
+      val{11,i}=num2str(round(ratio11));
+
+      ratio12=numfunc(Aerial.(columncond{i})(:,3),t)/...
+          denomfunc(Aquatic.(columncond{i})(:,4),f);
+      val{12,i}=num2str(round(ratio12));
+    end
+    num=(1:1:12);
+    for i=1:rowlength
         dTempAerial=des.Aerial{i};
         dTempAquatic=des.Aquatic{i};
         for j=length(dTempAerial):n-1
