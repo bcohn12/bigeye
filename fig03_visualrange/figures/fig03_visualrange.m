@@ -1,4 +1,5 @@
 function fig03_visualrange
+global BIGEYEROOT
 %% INITIALIZATION
     close all;
     load OM_TF_ST.mat
@@ -201,7 +202,7 @@ function fig03_visualrange
             'linewidth',linewidthDef,'color','b','linestyle',':');
     ylabel('\bfvisual volume (\itV\rm\bf) (10^2m^3)','interpreter','tex',...
         'fontsize',12,'fontname','helvetica');
-    xlabel('\bfpupil diamter (\itD\rm\bf) (mm)', 'interpreter','tex',...
+    xlabel('\bfpupil diameter (\itD\rm\bf) (mm)', 'interpreter','tex',...
         'fontsize',12,'fontname','helvetica');
     axis square
 
@@ -376,6 +377,9 @@ function fig03_visualrange
         'fontsize',12,...
         'fontname','helvetica');
     axis square
+    
+filename=[BIGEYEROOT 'fig03_visualrange/figures/core_figures/fig03_visualrange.pdf'];
+print(filename,'-painters','-dpdf','-r600');
 
 
 function [e,em]=fileExists
