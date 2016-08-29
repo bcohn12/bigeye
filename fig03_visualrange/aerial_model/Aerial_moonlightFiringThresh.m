@@ -29,7 +29,7 @@ global BIGEYEROOT
 
             Nh=(pi/4)^2*(T/r)^2*A^2*Rh*DtAerial.Moonlight*qAerial.Moonlight*...
                 (1-exp(-k*len));
-            Nfalse=((T*FAerial.Moonlight*A)/(2*r*d))^2*XAerial*Dt;
+            Nfalse=((T*FAerial.Moonlight*A)/(r*d))^2*XAerial*Dt;
 
             %APPARENT RADIANCE OF THE GREY OBJECT
             Bofunc=@(lambda) WlambdaylambdaInterp(lambda).*(1+(C0Aerial.Moonlight.*exp(-sigma(lambda).*r)));

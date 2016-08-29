@@ -28,7 +28,7 @@ global BIGEYEROOT
             r=rangeValuesAir(loop2);
 
             Nh=(pi/4)^2*(T/r)^2*A^2*Rh*DtAerial.Starlight*qAerial.Starlight*(1-exp(-k*len));
-            Nfalse=((T*FAerial.Starlight*A)/(2*r*d))^2*XAerial*DtAerial.Starlight;
+            Nfalse=((T*FAerial.Starlight*A)/(r*d))^2*XAerial*DtAerial.Starlight;
 
             %APPARENT RADIANCE OF THE GREY OBJECT
             Bofunc=@(lambda) WlambdaylambdaInterp(lambda).*(1+(C0Aerial.Starlight.*exp(-sigma(lambda).*r)));

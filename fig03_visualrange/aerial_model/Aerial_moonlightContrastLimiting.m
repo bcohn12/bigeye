@@ -23,7 +23,7 @@ global BIGEYEROOT
         CrFunc=@(lambda) exp(-sigma(lambda).*mr);
         Cr_moonlight(i)= C0Aerial.Moonlight*integral(CrFunc,lambda1,lambda2);
 
-        angularSize(i)=(T/mr)*10^3;
+        angularSize(i)=atan(T/(2*mr))*2*10^3;
         Kt_moonlight(i)=liminalContrast(A,BAerial.Moonlight,angularSize(i));
 
         if 10^(Kt_moonlight(i)) <= abs(Cr_moonlight(i))
@@ -33,7 +33,7 @@ global BIGEYEROOT
             j=1;
             while(10^(Kt_moonlight(i)) > abs(Cr_moonlight(i)))
                 mr=tempVisualRange(j);
-                angularSize(i)=(T/mr)*10^3;
+                angularSize(i)=atan(T/(2*mr))*2*10^3;
                 Cr_moonlight(i)=C0Aerial.Moonlight*integral(CrFunc,lambda1,lambda2);
                 Kt_moonlight(i)=liminalContrast(A,BAerial.Moonlight,angularSize(i));
 
