@@ -43,17 +43,7 @@ global BIGEYEROOT
                     fprintf('range: %f\n', mr);
                     fprintf('error: %f\n', abs(10^(Kt_starlight(i))-abs(Cr_starlight(i))));
                 end
-%             tempVisualRange=linspace(mr,0.01,max(visualRangeStarlight)*3);
-%             j=1;
-%             while(10^(Kt_starlight(i)) > abs(Cr_starlight(i)))
-%                 mr=tempVisualRange(j);
-%                 angularSize(i)=(T/mr)*10^3;
-%                 Cr_starlight(i)=C0Aerial_Starlight*integral(CrFunc,lambda1,lambda2);
-%                 Kt_starlight(i)=liminalContrast(A,BAerial_Starlight,angularSize(i));
-%                 
-%                 actRangeStarlight(i)=mr;
-%                 j=j+1;
-%             end
+
         end
         fprintf('iteration number: %d\n',i);
     end
