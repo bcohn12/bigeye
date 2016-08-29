@@ -52,7 +52,7 @@ function Parameters
     % Contrast parameters. Miller uses +/- 0.5, +/-1, and +/-2 as span 
     C0Aerial.Daylight=-1; %aerial daylight contrast value, target black
     C0Aerial.Moonlight=-1; %aerial moonlight contrast value, target black 
-    C0Aerial.Starlight=1; %aerial starlight contrast value, taget black
+    C0Aerial.Starlight=-1; %aerial starlight contrast value, taget black
     %C0Aerial=[C0Aerial_Daylight, C0Aerial_Moonlight, C0Aerial_Starlight];
 
     %Dark Noise
