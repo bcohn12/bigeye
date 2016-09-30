@@ -4,7 +4,7 @@ function [visualRangeSensitivity,pupilValues]=Aquatic_firingThreshSensitivity
     load('ParametersSensitivity.mat');
     
     conditions={'HighTurbidity','Clear','AbsDom','ScatDom'};
-    waterDepth=8;
+    waterDepth=15;
     pupilValues=linspace(minpupil,maxpupil,30);   
     visualRangeSensitivity=zeros(length(pupilValues),length(conditions),2);
 
@@ -27,8 +27,8 @@ function [visualRangeSensitivity,pupilValues]=Aquatic_firingThreshSensitivity
 
         for j=1:length(pupilValues)
                 A=pupilValues(j);
-                delta_down=10^(floor(log10(r_down))-4);
-                delta_hor=10^(floor(log10(r_hor))-4);
+                delta_down=10^(floor(log10(r_down))-5);
+                delta_hor=10^(floor(log10(r_hor))-5);
 
                 possibleSolnDownwelling=10;
                 while abs(possibleSolnDownwelling-1)>tol

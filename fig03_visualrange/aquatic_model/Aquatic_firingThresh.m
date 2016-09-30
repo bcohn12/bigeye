@@ -18,7 +18,8 @@ global BIGEYEROOT
         elseif strcmp('Starlight',conditions{i})
             r_down=1;r_hor=.3;
         end
-        
+        %FOR EACH DAYLIGHT, MOONLIGHT AND STARLIGHT
+        %from HYDROLIGHT simulations get a,b,Kd,Ld,Lh
         a=aAquatic.(conditions{i}); b=bAquatic.(conditions{i});
         Kd=KdAquatic.(conditions{i}); Kh=KhAquatic.(conditions{i});
         Ld=LdAquatic.(conditions{i}); Lh=LhAquatic.(conditions{i});
@@ -82,14 +83,14 @@ function  solution=firingThresh(depth,lambda,photoreceptorAbsorption,a,b,KAll,LA
     LInterp=@(l) interp1(lambda,L,l,'pchip');
     KInterp=@(l) interp1(lambda,K,l,'pchip');
     
-    Nfalse=((T*M*A)/(2*r*d))^2*X*Dt;
+    Nfalse=((T*M*A)/(2*r*d))^2*X*Dt; %pg 8 combination of line 932 and 933.
+    %pg 7, Eq 7 integrand and integral
     RhFunc=@(l) LInterp(l).*l.*(1-exp(-k*alphaInterp(l)*len));
-    RoFunc=@(l) LInterp(l).*l.*(1-exp(-k*alphaInterp(l)*len)).*(1+(C0*exp((KInterp(l)-aInterp(l)-bInterp(l))*r)));
-    
+    RoFunc=@(l) LInterp(l).*l.*(1-exp(-k*alphaInterp(l)*len)).*(1+(C0*exp((KInterp(l)-aInterp(l)-bInterp(l))*r)));    
     Rh=integral(RhFunc,lambda1,lambda2);
     Ro=integral(RoFunc,lambda1,lambda2);
-    
+    %pg 7, Eq 7 for h, and O
     Nh=((pi/4)^2)*(A^2)*((T/r)^2)*q*Dt*Rh;
     No=((pi/4)^2)*(A^2)*((T/r)^2)*q*Dt*Ro;
-
+    %pg 8, Eq8
     solution=(R*sqrt(No+Nh+2*Nfalse))/(abs(No-Nh));    
