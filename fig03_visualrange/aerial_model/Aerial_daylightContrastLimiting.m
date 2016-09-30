@@ -75,11 +75,11 @@ function Kt = liminalContrast(A,L,angularSize)
     %----------
     %supp pg 15, Eq 9
     Psi=@(L) (logLa(L)+3.5)/2.75; 
-    %supp pg 15, Eq 10
+    %supp pg 15, Eq 10, typo in the last condition of supplement
     logdeltarStar= @(L) iif(logLa(L)>1.535, @() 0.928,...
         -0.75<=logLa(L) && logLa(L)<=1.535, @() 1-(0.5*(Psi(L)^(-3.2))),...
         -2.089<=logLa(L) && logLa(L)<-0.75, @()-0.28+0.1*Psi(L)^(3.2),...
-        logLa(L)<-2.089, @() 0.19*logLa(L)+0.442);
+        logLa(L)<-2.089, @() 0.14*logLa(L)+0.442);
     %supp pg 15, Eq 11
     %sign of logdeltarStar wrong in supplement checked from Aksyutov_2008 on dropbox Eq 4
     X=@(deltar,L) -(-log10(deltar)+logdeltarStar(L));
