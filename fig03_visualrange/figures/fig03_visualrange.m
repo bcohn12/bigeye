@@ -85,7 +85,7 @@ global BIGEYEROOT
     fig_props.noXsubplots = 4;
 
     fig_props.figW = 18*2+5;   % cm
-    fig_props.figH = 16.7;  % cm
+    fig_props.figH = 18;  % cm
 
     fig_props.ml = 2.5;
     fig_props.mt = 1;
@@ -116,7 +116,7 @@ global BIGEYEROOT
         'linewidth',linewidthDef,'color','k');
     hl11_4=line('XData',pupilValues*1e3,'YData',visualRange_River(:,4),...
         'linewidth',linewidthDef,'color',[0.9290 0.6940 0.1250]);
-    xlim([1,25]); ylim1=get(gca,'ylim'); ylim([ylim1(1) ylim1(2)])
+    xlim([1,25]); ylim1=get(gca,'ylim'); ylim([ylim1(1) 10]); ylim1=get(gca,'ylim');
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
         [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
         set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -154,7 +154,8 @@ global BIGEYEROOT
     'EdgeColor',[1 1 1]);
     NumTicks = 5;
     L = get(gca,'YLim');
-    set(gca,'YTick',round(linspace(L(1),L(2),NumTicks)))
+    set(gca,'YTick',[0 2 4 6 8 10])
+    %yticks([0 2 4 6 8]);
     axis square
     
 % Aquatic Derivative Range wrt Pupil Diameter
@@ -171,7 +172,7 @@ global BIGEYEROOT
         'linewidth',linewidthDef,'color','k');
     hl12_4=line('XData',pupilValues*1e3,'YData',drdA_River(:,4),...
         'linewidth',linewidthDef,'color',[0.9290 0.6940 0.1250]);
-    xlim([1,25]); ylim1=get(gca,'ylim'); ylim([ylim1(1) ylim1(2)])
+    xlim([1,25]); ylim1=get(gca,'ylim'); ylim([ylim1(1) 0.6]); ylim1=get(gca,'ylim');
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
         [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
         set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -192,7 +193,7 @@ global BIGEYEROOT
     'EdgeColor',[1 1 1]);
     NumTicks = 5;
     L = get(gca,'YLim');
-    set(gca,'YTick',linspace(L(1),L(2),NumTicks))
+    set(gca,'YTick',[0 0.2 0.4 0.6])
     axis square 
    
 % Aquatic Volume
@@ -209,7 +210,7 @@ global BIGEYEROOT
         'linewidth',linewidthDef,'color','k');
     hl21_4=line('XData',pupilValues*1e3,'YData',visualVolume_River(:,4)/1e2,...
         'linewidth',linewidthDef,'color',[0.9290 0.6940 0.1250]);
-    xlim([1,25]); ylim1=get(gca,'ylim'); 
+    xlim([1,25]); ylim1=get(gca,'ylim');  ylim([ylim1(1) 8]); ylim1=get(gca,'ylim');
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
         [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
         set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -232,7 +233,7 @@ global BIGEYEROOT
     'EdgeColor',[1 1 1]);
     NumTicks = 5;
     L = get(gca,'YLim');
-    set(gca,'YTick',linspace(L(1),L(2),NumTicks))
+    set(gca,'YTick',[0 2 4 6 8])
     axis square
 
 % Aquatic Derivative Volume wrt Pupil Diameter
@@ -249,7 +250,7 @@ global BIGEYEROOT
         'linewidth',linewidthDef,'color','k');
     hl22_4=line('XData',pupilValues*1e3,'YData',dVdA_River(:,4)/1e1,...
         'linewidth',linewidthDef,'color',[0.9290 0.6940 0.1250]);
-    xlim([1,25]); ylim1=get(gca,'ylim'); 
+    xlim([1,25]); ylim1=get(gca,'ylim'); ylim([ylim1(1) 8]); ylim1=get(gca,'ylim');
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
         [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
         set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -277,7 +278,7 @@ global BIGEYEROOT
     'EdgeColor',[1 1 1]);
     NumTicks = 5;
     L = get(gca,'YLim');
-    set(gca,'YTick',linspace(L(1),L(2),NumTicks))
+    set(gca,'YTick',[0 2 4 6 8])
     axis square
 %annotation(hf,'rectangle',...
     %[0.00482523148148149 0.0254062499999999 0.472310185185185 0.943239583333336]);
@@ -286,16 +287,16 @@ global BIGEYEROOT
     plotnoY = 1;
     ha31 = create_BE_axes(plotnoX,plotnoY,fig_props);
 
-    hl31_1=line('XData',pupilValuesAir*1e3,'YData',visualRange(:,1)/1e2,...
+    hl31_1=line('XData',pupilValuesAir*1e3,'YData',visualRange(:,1),...
         'linewidth',linewidthDef,'color',[0 0.4470 0.7410]);
     hold on
-    hl31_2=line('XData',pupilValuesAir*1e3,'YData',visualRange(:,2)/1e2,...
+    hl31_2=line('XData',pupilValuesAir*1e3,'YData',visualRange(:,2),...
         'linewidth',linewidthDef,'color','k');
-    hl31_3=line('XData',pupilValuesAir*1e3,'YData',visualRange(:,3)/1e2,...
+    hl31_3=line('XData',pupilValuesAir*1e3,'YData',visualRange(:,3),...
         'linewidth',linewidthDef,'color',[0.9290 0.6940 0.1250]);
-    hl31_4=line('XData',pupilValues*1e3,'YData',visualRange_River(:,1)/1e2,...
+    hl31_4=line('XData',pupilValues*1e3,'YData',visualRange_River(:,1),...
         'linewidth',linewidthDef,'color',[0.4940 0.1840 0.5560]);
-    xlim([1,25]); ylim1=get(gca,'ylim');
+    xlim([1,25]); ylim1=get(gca,'ylim'); ylim([ylim1(1) 1000]); ylim1=get(gca,'ylim');
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
         [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
         set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -311,20 +312,20 @@ global BIGEYEROOT
     plot(tetrapodpupil,intersectDigited.rangeAerial(1)/1e2,'o',...
         'markeredgecolor','k','markerfacecolor','k','markersize',5);
     x=16;
-    text(x,(interp1q(pupilValuesAir,visualRange(:,1),x*1e-3)+188)/1e2,'daylight',...
+    text(x,(interp1q(pupilValuesAir,visualRange(:,1),x*1e-3)+188),'daylight',...
         'fontsize',12,'interpreter','tex','fontname','helvetica')
-    text(x,(interp1q(pupilValuesAir,visualRange(:,2),x*1e-3)+140)/1e2,'moonlight',...
+    text(x,(interp1q(pupilValuesAir,visualRange(:,2),x*1e-3)+140),'moonlight',...
         'fontsize',12,'interpreter','tex','fontname','helvetica')
-    text(x,(interp1q(pupilValuesAir,visualRange(:,3),x*1e-3)+97)/1e2,'starlight',...
+    text(x,(interp1q(pupilValuesAir,visualRange(:,3),x*1e-3)+97),'starlight',...
         'fontsize',12,'interpreter','tex','fontname','helvetica')
-    text(x,0.5,'aquatic','fontsize',12,'interpreter','tex','fontname','helvetica');
+    text(x,50,'aquatic','fontsize',12,'interpreter','tex','fontname','helvetica');
     num1=sprintf('\\bf%.1f m',interp1q(pupilValuesAir,visualRange(:,1),fishpupil*1e-3));
     num2=sprintf('\\bf%.1f m',interp1q(pupilValuesAir,visualRange(:,1),tetrapodpupil*1e-3));
-    text(fishpupil+0.5,(interp1q(pupilValuesAir,visualRange(:,1),fishpupil*1e-3)-10)/1e2,num1,...
+    text(fishpupil+0.5,(interp1q(pupilValuesAir,visualRange(:,1),fishpupil*1e-3)-10),num1,...
         'fontsize',11,'interpreter','tex','fontname','helvetica');
-    text(tetrapodpupil-0.5,(interp1(pupilValuesAir,visualRange(:,1),tetrapodpupil*1e-3)+25)/1e2,num2,...
+    text(tetrapodpupil-0.5,(interp1(pupilValuesAir,visualRange(:,1),tetrapodpupil*1e-3)+25),num2,...
         'fontsize',11,'interpreter','tex','horizontalalignment','right','fontname','helvetica');
-    ylabel('\bfvisual range (\itr\rm\bf) (10^2m)','interpreter','tex',...
+    ylabel('\bfvisual range (\itr\rm\bf) (m)','interpreter','tex',...
         'fontsize',12,'fontname','helvetica');
     annotation('textbox',...
     [0.49 0.94 0.021 0.051],...
@@ -334,7 +335,7 @@ global BIGEYEROOT
     'EdgeColor',[1 1 1]);
     NumTicks = 5;
     L = get(gca,'YLim');
-    set(gca,'YTick',linspace(L(1),L(2),NumTicks))
+    set(gca,'YTick',[0 200 400 600 800 1000])
     axis square
 
 % Aerial Derivative Range wrt Pupil Diameter
@@ -372,7 +373,7 @@ global BIGEYEROOT
     'EdgeColor',[1 1 1]);
     NumTicks = 5;
     L = get(gca,'YLim');
-    set(gca,'YTick',linspace(L(1),L(2),NumTicks))
+    set(gca,'YTick',[0 .20 .40 .60])
     axis square
  
 % Aerial Volume
@@ -389,7 +390,7 @@ global BIGEYEROOT
         'linewidth',linewidthDef,'color',[0.9290 0.6940 0.1250]);
     hl42_4=line('XData',pupilValues*1e3,'YData',visualVolume_River(:,1)/1e8,...
         'linewidth',linewidthDef,'color',[0.4940 0.1840 0.5560]);
-    xlim([1,25]); ylim1=get(gca,'ylim'); 
+    xlim([1,25]); ylim1=get(gca,'ylim'); ylim([ylim1(1) 8]); ylim1=get(gca,'ylim');
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
         [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
         set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -400,7 +401,7 @@ global BIGEYEROOT
         'linewidth',linewidthDef,'color','r','linestyle',':');
     line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],...
             'linewidth',linewidthDef,'color','b','linestyle',':');
-    ylabel('\bfvisual volume (\itV\rm\bf) (10^8m^3/mm)','interpreter','tex',...
+    ylabel('\bfvisual volume (\itV\rm\bf) (10^8m^3)','interpreter','tex',...
         'fontsize',12,'fontname','helvetica');
     xlabel('\bfpupil diameter (\itD\rm\bf) (mm)','interpreter','tex',...
         'fontsize',12,'fontname','helvetica');
@@ -412,7 +413,7 @@ global BIGEYEROOT
     'EdgeColor',[1 1 1]);
     NumTicks = 5;
     L = get(gca,'YLim');
-    set(gca,'YTick',linspace(L(1),L(2),NumTicks))
+    set(gca,'YTick',[0 2 4 6 8])
     axis square
 
 % Aerial Derivative Volume wrt Pupil Diameter
@@ -429,7 +430,7 @@ global BIGEYEROOT
         'linewidth',linewidthDef,'color',[0.9290 0.6940 0.1250]);
     hl42_4=line('XData',pupilValues*1e3,'YData',dVdA_River(:,1)/1e7,...
         'linewidth',linewidthDef,'color',[0.4940 0.1840 0.5560]);
-    xlim([1,25]); ylim1=get(gca,'ylim'); 
+    xlim([1,25]); ylim1=get(gca,'ylim'); ylim([ylim1(1) 8]); ylim1=get(gca,'ylim');
     fillboxTF = patch([pupil_TF(1) pupil_TF(1) pupil_TF(2) pupil_TF(2)], ...
         [ylim1(1) ylim1(2) ylim1(2) ylim1(1)],[1 0 0]);
         set(fillboxTF,'facealpha',fillboxalpha,'edgecolor','none');
@@ -458,7 +459,7 @@ global BIGEYEROOT
     'EdgeColor',[1 1 1]);
     NumTicks = 5;
     L = get(gca,'YLim');
-    set(gca,'YTick',linspace(L(1),L(2),NumTicks))
+    set(gca,'YTick',[0 2 4 6 8])
     axis square
     
 filename=[BIGEYEROOT 'fig03_visualrange/figures/core_figures/fig03_visualrange.pdf'];
