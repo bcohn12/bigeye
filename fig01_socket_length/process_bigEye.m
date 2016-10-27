@@ -1,4 +1,5 @@
 function xls2TexTable()
+global BIGEYEROOT
 %% xls2TexTable()
 % Convert xls table fields to LaTeX table format
 %
@@ -239,6 +240,8 @@ line(repmat(1/4,length(noElpistoOrb)),noElpistoOrb, ...
     'linestyle','none', ...
     'marker','o','markersize',circleSize,'markeredgecolor','black','markerfacecolor',[1 0 0])
 
+
+
 % plot special color for the specimen used in legend
 screb=find(strcmp('Screbinodus',gsTF(:,1)));
 line(1/4,TF_orbit_length_span(screb,1), ...
@@ -439,7 +442,9 @@ disp(['; the 3rd quartile is ' num2str(prctile(x,75))])
  
 OM_ST=x;
 
-save('OM_TF_ST.mat','OM_TF','OM_ST')
+save([BIGEYEROOT,'fig01_socket_length/FinnedDigitedOrbitLength.mat'],'onlyElpistoOrb','noElpistoOrb','noSecAqOrb','SecAqOrb')
+
+save([BIGEYEROOT,'fig01_socket_length/OM_TF_ST.mat'],'OM_TF','OM_ST')
 
 
 % Format stat result text for paper
