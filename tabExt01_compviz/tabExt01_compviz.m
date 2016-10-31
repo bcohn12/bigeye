@@ -68,7 +68,7 @@ global BIGEYEROOT
     commonAerialValues={num2str(XAerial);...
         '$0.0011 \lambda_{\mu \text{m}}^{-4} + 0.008 \lambda_{\mu \text{m}}^{-2.09}$';...
         num2str(BbarAerial,'%10.2e')};
-    commonAerialDef={'dark noise rate @$23.5^{\circ}\,\text{C}$ ($\text{RH}\, \text{s}^{-1}$)';
+    commonAerialDef={'dark noise rate @$23.5^{\circ}\,\text{C}$ ($\text{Rh}\, \text{s}^{-1}$)';
         'extinction factor ($\text{km}^{-1}$)';...
         'intensity parameter coefficient'};
     commonAerialRefKey={'\cite{Aho93a}';
@@ -112,7 +112,7 @@ global BIGEYEROOT
     num2str(T);...
     num2str(C0Aquatic.Daylight);...
     sprintf('[%d %d]',minpupil*10^3,maxpupil*10^3)};
-    commonDef={'$\gamma$';
+    commonDef={'socket length to pupil diameter conversion factor';
         'photoreceptor absorption coefficient ($\mu \text{m}^{-1}$)';
         'photoreceptor length ($\mu \text{m}$)';
         'photoreceptor diameter ($\mu \text{m}$)';
