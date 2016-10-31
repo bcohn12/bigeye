@@ -3,11 +3,12 @@ global BIGEYEROOT
 %% INITIALIZE
     close all;   
     load OM_TF_ST.mat
-    pupil_TF = [mean(OM_TF)-std(OM_TF) mean(OM_TF)+std(OM_TF)].*0.449;
-    pupil_ST = [mean(OM_ST)-std(OM_ST) mean(OM_ST)+std(OM_ST)].*0.449;
-    fishpupil=mean(OM_TF)*.449;
-    tetrapodpupil=mean(OM_ST)*.449;
+    load FinnedDigitedOrbitLength.mat
     
+    pupil_TF = [mean(noElpistoOrb)-std(noElpistoOrb) mean(noElpistoOrb)+std(noElpistoOrb)].*0.449;
+    pupil_ST = [mean(noSecAqOrb)-std(noSecAqOrb) mean(noSecAqOrb)+std(noSecAqOrb)].*0.449;
+    fishpupil=mean(noElpistoOrb)*.449;
+    tetrapodpupil=mean(noSecAqOrb)*.449;
     [e,em]=fileExists;  
     while(~all(e))
         notFound=find(e==0);
