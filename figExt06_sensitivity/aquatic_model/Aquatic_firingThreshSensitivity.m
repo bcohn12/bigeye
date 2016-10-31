@@ -4,7 +4,7 @@ function [visualRangeSensitivity,pupilValues]=Aquatic_firingThreshSensitivity
     load('ParametersSensitivity.mat');
     
     conditions={'HighTurbidity','Clear','AbsDom','ScatDom'};
-    waterDepth=15;
+    waterDepth=8;
     pupilValues=linspace(minpupil,maxpupil,30);   
     visualRangeSensitivity=zeros(length(pupilValues),length(conditions),2);
 
@@ -27,8 +27,8 @@ function [visualRangeSensitivity,pupilValues]=Aquatic_firingThreshSensitivity
 
         for j=1:length(pupilValues)
                 A=pupilValues(j);
-                delta_down=10^(floor(log10(r_down))-5);
-                delta_hor=10^(floor(log10(r_hor))-5);
+                delta_down=10^(floor(log10(r_down))-4);
+                delta_hor=10^(floor(log10(r_hor))-4);
 
                 possibleSolnDownwelling=10;
                 while abs(possibleSolnDownwelling-1)>tol
@@ -80,19 +80,36 @@ function  solution=firingThresh(depth,lambda,photoreceptorAbsorption,aAll,bAll,K
     K=KAll(:,depth); K=K(ind);
     b=bAll(:); b=b(ind);
     
+%     alphaInterp=@(l) interp1(lambda,photoreceptorAbsorption,l,'pchip');
+%     aInterp=@(l) interp1(lambda,a,l,'pchip');
+%     bInterp=@(l) interp1(lambda,b,l,'pchip');
+%     LInterp=@(l) interp1(lambda,L,l,'pchip');
+%     KInterp=@(l) interp1(lambda,K,l,'pchip');
+    
     Nfalse=((T*M*A)/(2*r*d))^2*X*Dt;
     Rh=L.*lambda.*(1-exp(-k*photoreceptorAbsorption*len));
-    
-    RhInt=trapz(lambda,Rh); %integration was done with trapz to try and avoid NaNs,
-    %didn't work was faster than integral with the same result
 
+    %Ro=L.*lambda.*(1-exp(-k*photoreceptorAbsorption*len)).*(1-exp((K-a-b)*r));
+    %RhFunc=@(l) LInterp(l).*l.*(1-exp(-k*alphaInterp(l)*len));
+    %RoFunc=@(l) LInterp(l).*l.*(1-exp(-k*alphaInterp(l)*len)).*(1-exp((KInterp(l)-aInterp(l)-bInterp(l))*r));  
+    
+    %Ispace=integral(RhFunc,lambda1,lambda2);
+    %Iblack=integral(RoFunc,lambda1,lambda2);
+    Ispace=trapz(lambda,Rh);
+%     for i=1:length(K)
+%         dum=1-exp((K(i)-a(i)-b(i))*r);
+%         if Ispace-abs(dum)<0
+%             dum=0;
+%         end
+%         Ro(i)=Ispace*dum;
+%     end
     Ro=Rh.*(1-exp((K-a-b)*r));
     Iblack=trapz(lambda,Ro);
     if isinf(Iblack)
         Iblack=0;
     end
     
-    Nh=((pi/4)^2)*(A^2)*((T/r)^2)*q*Dt*RhInt;
+    Nh=((pi/4)^2)*(A^2)*((T/r)^2)*q*Dt*Ispace;
     No=((pi/4)^2)*(A^2)*((T/r)^2)*q*Dt*Iblack;
 
     solution=(R*sqrt(No+Nh+2*Nfalse))/(abs(No-Nh));

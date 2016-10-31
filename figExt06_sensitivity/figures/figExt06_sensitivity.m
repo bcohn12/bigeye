@@ -33,8 +33,9 @@ global BIGEYEROOT
     
     load('Aquatic_visRangeSensitivity.mat');
     load('visibilityAquatic_All.mat');
-    visualRangeSensitivity=[visualRangeSensitivity(:,1,1),visualRangeSensitivity(:,2,1),visualRangeSensitivity(:,3,1),visualRangeSensitivity(:,4,1),...
-        visualRangeSensitivity(:,1,2),visualRangeSensitivity(:,2,2),visualRangeSensitivity(:,3,2),visualRangeSensitivity(:,4,2)];
+    visualRangeSensitivity=[smooth(visualRangeSensitivity(:,1,1),7),smooth(visualRangeSensitivity(:,2,1),7),smooth(visualRangeSensitivity(:,3,1),7),...
+        smooth(visualRangeSensitivity(:,4,1),7),smooth(visualRangeSensitivity(:,1,2),7),smooth(visualRangeSensitivity(:,2,2),7),...
+        smooth(visualRangeSensitivity(:,3,2),7),smooth(visualRangeSensitivity(:,4,2),7)];
     linewidthdef=2;
 
 %% PLOT
@@ -111,8 +112,8 @@ global BIGEYEROOT
         'fontsize',13,'fontname','helvetica');
     axis square
     
-hLegend=legend('high turbidity @8 m','clear @8 m',...
-    'absorption  dominated @8 m','scattering dominated @8 m','baseline @8 m');
+hLegend=legend('high turbidity @15 m','clear @15 m',...
+    'absorption  dominated @15 m','scattering dominated @15 m','baseline @8 m');
 set(hLegend,'box','off'); set(hLegend,'interpreter','tex'); 
 set(hLegend,'fontsize',11,'fontname','helvetica'); set(hLegend,'orientation','horizontal')
 rect=[0.375 0 0.25 0.1]; set(hLegend,'Position',rect)
@@ -121,7 +122,9 @@ filename=[BIGEYEROOT 'figExt06_sensitivity/figures/core_figures/water_sensitivit
 print(filename,'-painters','-dpdf','-r600');
     
 function [e,em]=fileExists
-    e2={exist('Aquatic_visRangeSensitivity.mat','file')==2, 'Aquatic_contrastLimitedSensitivity.m'};
-    e1={exist('visibilityAquatic_All.mat','file')==2, 'Aquatic_contrastLimiting.m'};
-    e=[e1{1},e2{1}];
-    em={e1{2},e2{2}};
+    e4={exist('Aquatic_visRangeSensitivity.mat','file')==2, 'Aquatic_contrastLimitedSensitivity.m'};
+    e3={exist('Aquatic_meteoRangeSensitivity.mat','file')==2, 'Aquatic_firingThreshSensitivity.m'};
+    %e2={exist('visibilityAquatic_All.mat','file')==2, 'Aquatic_contrastLimiting.m'};
+    %e1={exist('meteoAquatic_All.mat','file')==2,'Aquatic_firingThresh.m'};
+    e=[e3{1},e4{1}];
+    em={e3{2},e4{2}};
