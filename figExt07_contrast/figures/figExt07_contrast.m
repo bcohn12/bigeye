@@ -85,7 +85,7 @@ global BIGEYEROOT
         plot(contrastinter,intersectval(:,i),'o',...
             'markeredgecolor','k','markerfacecolor','k','markersize',5);
     end
-    ylim1=get(gca,'ylim');
+    ylim([0 10]); ylim1=get(gca,'ylim');
     for i=1:length(contrastinter)
         line([contrastinter(i) contrastinter(i)],[ylim1(1) ylim1(2)],...
             'color','b','linestyle',':','linewidth',1.2);

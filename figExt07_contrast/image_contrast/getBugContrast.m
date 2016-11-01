@@ -8,7 +8,7 @@ global BIGEYEROOT
         'blackCentipede.png','VietnameseCentipede.jpg',...
         '002.jpg','amazon_cichlid.png','amazon_fish.png','arowanawild.jpg','fishContrast.png'};
 
-    for i=1:length(baseFileNames)
+    for i=2:length(baseFileNames)
         baseFileName=baseFileNames{i};
         fullFileName=fullfile(baseFileName);
 
@@ -78,9 +78,9 @@ global BIGEYEROOT
         LmaxBackground=max(LBackground); LmeanBackground=mean(LBackground);
 
         if i<13
-            bugContrast(i)=(LmeanBackground-LmeanObject)/LmeanObject;
+            bugContrast(i)=(LmeanObject-LmeanBackground)/LmeanBackground;
         else
-            fishContrast(i-12)=(LmeanBackground-LmeanObject)/LmeanObject;
+            fishContrast(i-12)=(LmeanObject-LmeanBackground)/LmeanBackground;
         end
 
         close all;
