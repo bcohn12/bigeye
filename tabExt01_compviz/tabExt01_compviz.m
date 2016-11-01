@@ -127,7 +127,7 @@ global BIGEYEROOT
         '\cite{Land81a} via \cite{Nils14a}';
         ' ';
         ' ';
-        ' '};
+        ' current study '};
 
     rowLabels=cell(length(commonParameters)+...
         length(commonAerialParameters)+...
