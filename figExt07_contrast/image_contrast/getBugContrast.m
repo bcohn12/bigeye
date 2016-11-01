@@ -8,7 +8,7 @@ global BIGEYEROOT
         'blackCentipede.png','VietnameseCentipede.jpg',...
         '002.jpg','amazon_cichlid.png','amazon_fish.png','arowanawild.jpg','fishContrast.png'};
 
-    for i=2:length(baseFileNames)
+    for i=17:length(baseFileNames)
         baseFileName=baseFileNames{i};
         fullFileName=fullfile(baseFileName);
 
