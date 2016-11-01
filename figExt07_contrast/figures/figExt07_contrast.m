@@ -1,8 +1,6 @@
 function figExt07_contrast
 global BIGEYEROOT
     close all;
-    load OM_TF_ST.mat
-    
     [e,em]=fileExists;
     while ~all(e)
         notFound=find(e==0);
@@ -31,12 +29,12 @@ global BIGEYEROOT
     
     linewidthdef=2;
 %% FIND INTERSECTIONS
-    visualRange.FishAquaticUp=contrastRange_River(:,3,1);
-    visualRange.DigitAquaticUp=contrastRange_River(:,5,1);
-    visualRange.FishAquaticHor=contrastRange_River(:,3,2);
-    visualRange.DigitAquaticHor=contrastRange_River(:,5,2);
-    visualRange.FishAerial=contrastRange(:,3);
-    visualRange.DigitAerial=contrastRange(:,5);
+    visualRange.FishAquaticUp=contrastRange_River(:,1,1);
+    visualRange.DigitAquaticUp=contrastRange_River(:,2,1);
+    visualRange.FishAquaticHor=contrastRange_River(:,1,2);
+    visualRange.DigitAquaticHor=contrastRange_River(:,2,2);
+    visualRange.FishAerial=contrastRange(:,1);
+    visualRange.DigitAerial=contrastRange(:,2);
     
     conditions={'FishAquaticUp','DigitAquaticUp','FishAquaticHor',...
         'DigitAquaticHor','FishAerial','DigitAerial'};

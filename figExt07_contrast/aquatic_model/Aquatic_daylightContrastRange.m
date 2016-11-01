@@ -3,12 +3,14 @@ global BIGEYEROOT
     run Parameters.m
     load('Parameters.mat')
     load OM_TF_ST.mat
+    load FinnedDigitedOrbitLength.mat
     
-    pupil_TF = [mean(OM_TF)-std(OM_TF) mean(OM_TF)+std(OM_TF)].*0.449;
-    pupil_ST = [mean(OM_ST)-std(OM_ST) mean(OM_ST)+std(OM_ST)].*0.449;
-    fishpupil=mean(OM_TF)*.449;
-    tetrapodpupil=mean(OM_ST)*.449;    
-    pupilValues=sort([fishpupil,tetrapodpupil,pupil_TF,pupil_ST]*1e-3);
+    pupil_TF = [mean(noElpistoOrb)-std(noElpistoOrb) mean(noElpistoOrb)+std(noElpistoOrb)].*0.449;
+    pupil_ST = [mean(noSecAqOrb)-std(noSecAqOrb) mean(noSecAqOrb)+std(noSecAqOrb)].*0.449;
+    fishpupil=mean(noElpistoOrb)*.449;
+    tetrapodpupil=mean(noSecAqOrb)*.449;
+    pupilValues=sort([fishpupil,tetrapodpupil]*1e-3);
+    C0Range=linspace(-1,4,20);
     
     tol=5e-5; depth=8; r_down=5.7; r_hor=3.7;
     C0Range=linspace(-1,4,20);
