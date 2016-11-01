@@ -46,7 +46,7 @@ global BIGEYEROOT
     Aerial.range=visualRange; Aerial.derRange=drdA';
     Aerial.volume=visualVolume'; Aerial.derVolume=dVdA';
     
-    rowlength=12;
+    rowlength=13;
     columnlabels={'\textbf{\#}','\textbf{Aquatic Condition}','\textbf{Aerial Condition}',...
         '\textbf{Visual Range},\textbf{Gain}','\textbf{Visual Range},\textbf{Derivative Gain}',...
         '\textbf{Visual Volume},\textbf{Gain}','\textbf{Visual Volume},\textbf{Derivative Gain}'};
@@ -66,6 +66,7 @@ global BIGEYEROOT
     fullmatrix=[];
     description.Aquatic={'Daylight 8~m depth,.horizontal viewing,.Finned tetrapod pupil'
         'Daylight 8~m depth,.horizontal viewing,.Finned tetrapod pupil'
+        'Daylight 8~m depth,.horizontal viewing,.Digited tetrapod pupil'
         'Daylight 8m depth,.upward viewing,.Finned tetrapod pupil'
         'Daylight 8m depth,.upward viewing,.Finned tetrapod pupil'
         'Daylight 8m depth,.upward viewing,.Finned tetrapod pupil'
@@ -78,6 +79,7 @@ global BIGEYEROOT
         'Starlight 8m depth,.upward viewing,.Finned tetrapod pupil'
         'Starlight 8m depth,.upward viewing,.Finned tetrapod pupil'};
     description.Aerial={'Daylight,.Finned tetrapod pupil'
+        'Daylight,.Digited tetrapod pupil'
         'Daylight,.Digited tetrapod pupil'
         'Daylight,.Finned tetrapod pupil'
         'Daylight,.Digited tetrapod pupil'
@@ -111,48 +113,52 @@ global BIGEYEROOT
       ratio2=numfunc(Aerial.(columncond{i})(:,1),t)/...
           denomfunc(Aquatic.(columncond{i})(:,2),f);
       val{2,i}=num2str(round(ratio2));
-
-      ratio3=numfunc(Aerial.(columncond{i})(:,1),f)/...
-          denomfunc(Aquatic.(columncond{i})(:,1),f);
+      
+      ratio3=numfunc(Aerial.(columncond{i})(:,1),t)/...
+          denomfunc(Aquatic.(columncond{i})(:,2),t);
       val{3,i}=num2str(round(ratio3));
 
-      ratio4=numfunc(Aerial.(columncond{i})(:,1),t)/...
+      ratio4=numfunc(Aerial.(columncond{i})(:,1),f)/...
           denomfunc(Aquatic.(columncond{i})(:,1),f);
       val{4,i}=num2str(round(ratio4));
 
-      ratio5=numfunc(Aerial.(columncond{i})(:,2),f)/...
+      ratio5=numfunc(Aerial.(columncond{i})(:,1),t)/...
           denomfunc(Aquatic.(columncond{i})(:,1),f);
       val{5,i}=num2str(round(ratio5));
 
-      ratio6=numfunc(Aerial.(columncond{i})(:,3),f)/...
+      ratio6=numfunc(Aerial.(columncond{i})(:,2),f)/...
           denomfunc(Aquatic.(columncond{i})(:,1),f);
       val{6,i}=num2str(round(ratio6));
 
-      ratio7=numfunc(Aerial.(columncond{i})(:,2),t)/...
+      ratio7=numfunc(Aerial.(columncond{i})(:,3),f)/...
           denomfunc(Aquatic.(columncond{i})(:,1),f);
       val{7,i}=num2str(round(ratio7));
 
-      ratio8=numfunc(Aerial.(columncond{i})(:,3),t)/...
+      ratio8=numfunc(Aerial.(columncond{i})(:,2),t)/...
           denomfunc(Aquatic.(columncond{i})(:,1),f);
       val{8,i}=num2str(round(ratio8));
 
-      ratio9=numfunc(Aerial.(columncond{i})(:,2),f)/...
-          denomfunc(Aquatic.(columncond{i})(:,3),f);
+      ratio9=numfunc(Aerial.(columncond{i})(:,3),t)/...
+          denomfunc(Aquatic.(columncond{i})(:,1),f);
       val{9,i}=num2str(round(ratio9));
 
-      ratio10=numfunc(Aerial.(columncond{i})(:,2),t)/...
+      ratio10=numfunc(Aerial.(columncond{i})(:,2),f)/...
           denomfunc(Aquatic.(columncond{i})(:,3),f);
       val{10,i}=num2str(round(ratio10));
 
-      ratio11=numfunc(Aerial.(columncond{i})(:,3),f)/...
-          denomfunc(Aquatic.(columncond{i})(:,4),f);
+      ratio11=numfunc(Aerial.(columncond{i})(:,2),t)/...
+          denomfunc(Aquatic.(columncond{i})(:,3),f);
       val{11,i}=num2str(round(ratio11));
 
-      ratio12=numfunc(Aerial.(columncond{i})(:,3),t)/...
+      ratio12=numfunc(Aerial.(columncond{i})(:,3),f)/...
           denomfunc(Aquatic.(columncond{i})(:,4),f);
       val{12,i}=num2str(round(ratio12));
+
+      ratio13=numfunc(Aerial.(columncond{i})(:,3),t)/...
+          denomfunc(Aquatic.(columncond{i})(:,4),f);
+      val{13,i}=num2str(round(ratio13));
     end
-    num=(1:1:12);
+    num=(1:1:13);
     for i=1:rowlength
         dTempAerial=des.Aerial{i};
         dTempAquatic=des.Aquatic{i};
