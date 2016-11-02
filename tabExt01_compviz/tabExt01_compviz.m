@@ -21,7 +21,7 @@ global BIGEYEROOT
         num2str(BAerial.Daylight,'%10.1e')};
     daylightAerialDef={'detection efficiency';
         'integration time (s)';
-        'f-number, ratio of focal length and pupil diameter';
+        'F-number, ratio of focal length and pupil diameter';
         'daylight luminance ($\text{cd}\, \text{m}^{-2}$)'};
     daylightAerialRefKey={'\cite{Pirh07a}';
         '\cite{Donn95a}';...
@@ -38,7 +38,7 @@ global BIGEYEROOT
         num2str(BAerial.Moonlight,'%10.1e')};
     moonlightAerialDef={'detection efficiency';
         'integration time (s)';
-        'f-number, ratio of focal length and pupil diameter';
+        'F-number, ratio of focal length and pupil diameter';
         'moonlight luminance ($\text{cd}\, \text{m}^{-2}$)'};
     moonlightAerialRefKey={'\cite{Nils14a}';
         '\cite{Donn95a}';...
@@ -55,7 +55,7 @@ global BIGEYEROOT
         num2str(BAerial.Starlight,'%10.1e')};
     starlightAerialDef={'detection efficiency';
         'integration time (s)';
-        'f-number, ratio of focal length and pupil diameter';
+        'F-number, ratio of focal length and pupil diameter';
         'starlight luminance ($\text{cd}\, \text{m}^{-2}$)'};
     starlightAerialRefKey={'\cite{Nils14a}';
         '\cite{Donn95a}';...
@@ -77,17 +77,17 @@ global BIGEYEROOT
  %% AQUATIC VISION MODEL  
     aquaticParameters={'$\eta$';
         '$\Delta t$';
-        '$M$';
+        '$F$';
         '$c(\lambda)$';
         '$\mathtt{X}$'};
     aquaticValues={num2str(qAquatic);...
         num2str(DtAquatic);
-        num2str(M);...
+        num2str(M*2);...
         '$c(\lambda)=b(\lambda)+a(\lambda)$'
         num2str(XAquatic)};
     aquaticDef={'detection efficiency';
         'integration time (s)';
-        'ratio of focal length and pupil radius, $2f/D$ (Matthiessen''s ratio)';
+        'F-number, ratio of focal length and pupil diameter, based on Matthiessen''s ratio (2.55)';
         'beam attenuation coefficient ($\text{m}^{-1}$)';
         'dark noise rate @$16.5^{\circ} \, \text{C}$ ($\text{Rh } \,\text{s}^{-1}$)'};
     aquaticRefKey={'\cite{Nils14a}';
