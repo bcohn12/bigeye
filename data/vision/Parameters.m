@@ -10,7 +10,7 @@ function Parameters
     R=1.96; %units: n/a, reliability coefficient for 95% confidence, used typical value
     d=3e-6; %units: m, photoreceptor diameter, used typical value
     minpupil=0.001; % largest diameter of pupil, meters
-    maxpupil=0.03; % smallest diameter of pupil, meters
+    maxpupil=0.025; % smallest diameter of pupil, meters
 
     % SENSORY VOLUME PARAMS
     % aerial and water half elevation angle of sensory volume
