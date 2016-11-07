@@ -77,7 +77,7 @@ function Aquatic_Sensitivity
         load('Parameters')
     end
 
-    save([BIGEYEROOT 'fig03_visualrange/aquatic_model/meteoAquaticSensitivityParameters_All.mat'],'visualRange_River','pupilValues');
+    save([BIGEYEROOT 'fig03_visualrange/aquatic_model/parameter_sensitivity/meteoAquaticSensitivityParameters_All.mat'],'visualRange_River','pupilValues');
 
 %% CONTRAST LIMITING
 
@@ -158,7 +158,7 @@ function Aquatic_Sensitivity
         end
     end
     visualRange_River=actRange_River;   
-    save([BIGEYEROOT 'fig03_visualrange/aquatic_model/visibilityAquaticSensitivityParameters_All.mat'],'visualRange_River','pupilValues')
+    save([BIGEYEROOT 'fig03_visualrange/aquatic_model/parameter_senstivity/visibilityAquaticSensitivityParameters_All.mat'],'visualRange_River','pupilValues')
 
 function Kt = liminalContrast(A,L,angularSize)
     %Equations should be the same as in the aquatic case, quick annotation
