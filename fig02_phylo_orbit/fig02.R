@@ -3,6 +3,8 @@ rm(list=ls())
 ########
 #bigEye#
 ########
+this.dir <- dirname(parent.frame(2)$ofile)
+setwd(this.dir)
 
 #call libraries
 require(ape)
