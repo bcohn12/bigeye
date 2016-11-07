@@ -34,7 +34,7 @@ global BIGEYEROOT
         angularSize(i)=atan(T/(2*mr))*2*10^3; %angular size of object in mrad
         Kt_daylight(i)=liminalContrast(A,BAerial.Daylight,angularSize(i)); %line 13 of Alg 1, pg 6
 
-        if 10^(Kt_daylight(i)) <= abs(Cr_daylight(i))
+        if (10^(Kt_daylight(i)))*1.15 <= abs(Cr_daylight(i))
             actRangeDaylight(i)=mr;
         else
             tempVisualRange=linspace(mr,mrprev,max(visualRangeDaylight)*2);
