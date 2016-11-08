@@ -17,12 +17,12 @@ require(paleotree)
 #need:bigEye_topology.R; sampled.alt.csv; BMres.csv
 
 #load tree and data
-phy <- read.tree("..\\data\\paleo\\bigEye_topology.tre") #make sure to always call the most recent version!
-timeData <- read.csv("..\\data\\paleo\\sampled.alt.csv", header=T); rownames(timeData) <- timeData$taxa #these are the stratigraphic ranges
+phy <- read.tree("../data/paleo/bigEye_topology.tre") #make sure to always call the most recent version!
+timeData <- read.csv("../data/paleo/sampled.alt.csv", header=T); rownames(timeData) <- timeData$taxa #these are the stratigraphic ranges
 timeData <- as.matrix(timeData[,2:3])
 
 #eye data
-eyes <- read.csv("..\\data\\paleo\\BMres.csv", header=T)
+eyes <- read.csv("../data/paleo/BMres.csv", header=T)
 rownames(eyes) <- phy$tip.label
 eyes <- eyes[phy$tip.label,]
 
