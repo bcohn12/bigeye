@@ -1,0 +1,43 @@
+function tableMaxPercentChange
+global BIGEYEROOT
+    load('percChange.mat');
+    viewing={'Aquatic'};
+    conditions={'Aquatic','AqUp','AqHor'};
+
+    for c=1:3:length(conditions)
+        visualRangeCell.(conditions{c})=struct2cell(visualRange.(conditions{c}));
+        drdACell.(conditions{c})=struct2cell(drdA.(conditions{c}));
+        visualVolumeCell.(conditions{c})=struct2cell(visualVolume.(conditions{c}));
+        dVdACell.(conditions{c})=struct2cell(dVdA.(conditions{c}));
+        direction=1;
+        if strcmp(conditions{c},'Aquatic')
+            direction=2;
+        end
+        for i=1:direction
+            visualRangeMat.(conditions{c+i})=[];
+            drdAMat.(conditions{c+i})=[];
+            visualVolumeMat.(conditions{c+i})=[];
+            dVdAMat.(conditions{c+i})=[];
+            for j=1:length(visualRangeCell.Aquatic);
+                visualRangeMat.(conditions{c+i})=[visualRangeCell.(conditions{c}){j}(:,i) visualRangeMat.(conditions{c+i})];
+                drdAMat.(conditions{c+i})=[drdACell.(conditions{c}){j}(:,i) drdAMat.(conditions{c+i})];
+                visualVolumeMat.(conditions{c+i})=[visualVolumeCell.(conditions{c}){j}(:,i) visualVolumeMat.(conditions{c+i})];
+                dVdAMat.(conditions{c+i})=[dVdACell.(conditions{c}){j}(:,i) dVdAMat.(conditions{c+i})];
+            end
+            maxVisualRange.(conditions{c+i})=max(visualRangeMat.(conditions{c+i}),[],2);
+            minVisuialRange.(conditions{c+i})=min(visualRangeMat.(conditions{c+i}),[],2);
+            maxdrdA.(conditions{c+i})=max(drdAMat.(conditions{c+i}),[],2);
+            mindrdA.(conditions{c+i})=min(drdAMat.(conditions{c+i}),[],2);
+            maxVisualVolume.(conditions{c+i})=max(visualVolumMat.(conditions{c+i}),[],2);
+            minVisuialRange.(conditions{c+i})=min(visualRangeMat.(conditions{c+i}),[],2);
+        end
+    end
+    
+    maxVisualRangeUp=max(visualRangeMat,[],2); minVisualRangeUp=min(visualRangeMat,[],2);
+    maxVisualRangeHor=max(visualRangeMat,[],2); minVisualRangeHor=min(visualRangeMat,[],2);
+    maxdrdAUp=max(drdAMat,[],2); mindrdAUp=min(drdAMat,[],2);
+    maxdrdAHor=max(drdAHorMat,[],2); mindrdAHoar=min(drdAHorMat,[],2);
+    maxVisualVolumeUp=max(visualVolumeMat,[],2); minVisualVolumeUp=min(visualVolumeMat,[],2);
+    maxVisualVolumeHor=max(visualVolumeHorMat,[],2); minVisualVolumeHor=min(visualVolumeHorMat,[],2);
+    maxdVdAUp=max(dVdAUpMat,[],2); mindVdAUp=min(dVdAUpMat,[],2);
+    maxdVdAHor=max(dVdAHorMat,[],2); mindVdAHoar=min(dVdAHorMat,[],2);
