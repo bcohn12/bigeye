@@ -343,7 +343,7 @@ text((1)+horiz_line_len+0.01, meanOrb, [num2str(meanOrb,2) ' mm'])
 set(gca,'ylim',[0 70])
 set(gca,'xlim',[0 1.25])
 set(gca,'xtick', [1/4 1/2 3/4 1],'xticklabel',{'finned','elpisto','digited','secaq'})
-ylabel('orbit length (mm)')
+ylabel('eye socket length (mm)')
 
 
 plotnoX = 2;
