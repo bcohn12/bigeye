@@ -21,69 +21,69 @@ global BIGEYEROOT
     %horizon space-light photons/m^2 s sr, value checked with mathematica
 
 %% SENSITIVITY
-%     sensitivityParams.XAerial=0.011;
-%     sensitivityParams.qAerial=0.8;
-%     sensitivityParams.DtAerial=0.0116;
-%     sensitivityParams.d=10e-6;
-%     sensitivityParams.FAerial=3;
-%     
-%     aerialEquiv={'XAerial','qAerial.Daylight','DtAerial.Daylight','d','FAerial.Daylight'};
-%     parameters={'XAerial','qAerial','DtAerial','d','FAerial'};
-%     
-%     %% RELATE PUPIL SIZE TO RANGE
-%     pupilValuesAir=linspace(minpupil,maxpupil,25);
-%     tol=1e-4;
-%     
-%     visualRangeDaylight=zeros(length(pupilValuesAir),length(parameters));        
-%     for s=1:length(parameters)
-%         eval(sprintf('%s=%d',aerialEquiv{s},sensitivityParams.(parameters{s})));
-%         r=8000;
-%         for i=1:length(pupilValuesAir)
-%             A=pupilValuesAir(i);
-%             delta=10^(floor(log10(r))-4);
-%             possibleSoln=0;
-%             while(abs(possibleSoln-1)>tol)                           
-%                 Nh=(pi/4)^2*(T/r)^2*A^2*Rh*DtAerial.Daylight*qAerial.Daylight*...
-%                     ((k*len)/(2.3+(k*len)));
-%                 %S=(pi/4)^2*A^2*(T/r)^2*Dt*(kl/(2.3_kl))*q, for photopic, Eq5
-%                 %Nh=Rh*S, pg 5 line 545
-%                 Nfalse=((T*FAerial.Daylight*A)/(r*d))^2*...
-%                     XAerial*DtAerial.Daylight;
-%                 %pg 5 line 609
-% 
-%                 %APPARENT RADIANCE OF THE GREY OBJECT
-%                 Bofunc=@(lambda) WlambdaylambdaInterp(lambda).*...
-%                     (1+(C0Aerial.Daylight.*exp(-sigma(lambda).*r)));
-%                 Bo= BAerial.Daylight*integral(Bofunc,lambda1,lambda2);
-%                 %pg 4 Eq 3, equation in supplement left as a function
-%                 %integration not included
-%                 Ro=((1.31e3)/0.89)*Bo*(1e6)^2;
-% 
-%                 No=(pi/4)^2*(T/r)^2*A^2*Ro*DtAerial.Daylight*qAerial.Daylight*...
-%                     ((k*len)/(2.3+(k*len)));
-%                 %S=(pi/4)^2*A^2*(T/r)^2*Dt*(kl/(2.3_kl))*q, for photopic, Eq5
-%                 %No=Ro*S, pg 5 line 546
-% 
-%                 possibleSoln=(R*sqrt(No+Nh+2*Nfalse))/(abs(No-Nh));
-%                 %pg 5 Eq 6, sensitivity multiplication integrated in the
-%                 %previous lines, all provided in therms of photon count rather
-%                 %than radiance times sensitivity
-%                 if possibleSoln>1
-%                     r=r-delta;
-%                 else
-%                     r=r+delta;
-%                 end
-%                 clc;
-%                 fprintf('pupil iteration: %d %d\n',i,s);
-%                 fprintf('solution: %f\n',possibleSoln);
-%                 fprintf('r: %f\n',r);
-%                 fprintf('error: %f\n', abs(possibleSoln-1));
-%             end
-%             visualRangeDaylight(i,s)=r;
-%         end
-%         load('Parameters.mat')
-%     end
-%     save([BIGEYEROOT 'fig03_visualrange/aerial_model/parameter_sensitivity/meteoAerialParameterSensitivity_Daylight.mat'],'visualRangeDaylight','pupilValuesAir')
+    sensitivityParams.XAerial=0.011;
+    sensitivityParams.qAerial=0.8;
+    sensitivityParams.DtAerial=0.0116;
+    sensitivityParams.d=10e-6;
+    sensitivityParams.FAerial=3;
+    
+    aerialEquiv={'XAerial','qAerial.Daylight','DtAerial.Daylight','d','FAerial.Daylight'};
+    parameters={'XAerial','qAerial','DtAerial','d','FAerial'};
+    
+    %% RELATE PUPIL SIZE TO RANGE
+    pupilValuesAir=linspace(minpupil,maxpupil,25);
+    tol=1e-4;
+    
+    visualRangeDaylight=zeros(length(pupilValuesAir),length(parameters));        
+    for s=5:length(parameters)
+        eval(sprintf('%s=%d',aerialEquiv{s},sensitivityParams.(parameters{s})));
+        r=8000;
+        for i=1:length(pupilValuesAir)
+            A=pupilValuesAir(i);
+            delta=10^(floor(log10(r))-4);
+            possibleSoln=0;
+            while(abs(possibleSoln-1)>tol)                           
+                Nh=(pi/4)^2*(T/r)^2*A^2*Rh*DtAerial.Daylight*qAerial.Daylight*...
+                    ((k*len)/(2.3+(k*len)));
+                %S=(pi/4)^2*A^2*(T/r)^2*Dt*(kl/(2.3_kl))*q, for photopic, Eq5
+                %Nh=Rh*S, pg 5 line 545
+                Nfalse=((T*FAerial.Daylight*A)/(r*d))^2*...
+                    XAerial*DtAerial.Daylight;
+                %pg 5 line 609
+
+                %APPARENT RADIANCE OF THE GREY OBJECT
+                Bofunc=@(lambda) WlambdaylambdaInterp(lambda).*...
+                    (1+(C0Aerial.Daylight.*exp(-sigma(lambda).*r)));
+                Bo= BAerial.Daylight*integral(Bofunc,lambda1,lambda2);
+                %pg 4 Eq 3, equation in supplement left as a function
+                %integration not included
+                Ro=((1.31e3)/0.89)*Bo*(1e6)^2;
+
+                No=(pi/4)^2*(T/r)^2*A^2*Ro*DtAerial.Daylight*qAerial.Daylight*...
+                    ((k*len)/(2.3+(k*len)));
+                %S=(pi/4)^2*A^2*(T/r)^2*Dt*(kl/(2.3_kl))*q, for photopic, Eq5
+                %No=Ro*S, pg 5 line 546
+
+                possibleSoln=(R*sqrt(No+Nh+2*Nfalse))/(abs(No-Nh));
+                %pg 5 Eq 6, sensitivity multiplication integrated in the
+                %previous lines, all provided in therms of photon count rather
+                %than radiance times sensitivity
+                if possibleSoln>1
+                    r=r-delta;
+                else
+                    r=r+delta;
+                end
+                clc;
+                fprintf('pupil iteration: %d %d\n',i,s);
+                fprintf('solution: %f\n',possibleSoln);
+                fprintf('r: %f\n',r);
+                fprintf('error: %f\n', abs(possibleSoln-1));
+            end
+            visualRangeDaylight(i,s)=r;
+        end
+        load('Parameters.mat')
+    end
+    save([BIGEYEROOT 'fig03_visualrange/aerial_model/parameter_sensitivity/meteoAerialParameterSensitivity_Daylight.mat'],'visualRangeDaylight','pupilValuesAir')
     
 load('meteoAerialParameterSensitivity_Daylight.mat')
 

@@ -33,19 +33,19 @@ global BIGEYEROOT
    for c=1:length(conditions)
        for i=1:length(parameters)
            visualRange.(conditions{c}).(parameters{i})=allVisualRange.(conditions{c})(:,:,i+1);
-           percChangeRange.(conditions{c}).(parameters{i})=abs(visualRange.(conditions{c}).(parameters{i})-visualRange.(conditions{c}).NoChange)./visualRange.(conditions{c}).NoChange;
+           percChangeRange.(conditions{c}).(parameters{i})=(visualRange.(conditions{c}).(parameters{i})-visualRange.(conditions{c}).NoChange)./visualRange.(conditions{c}).NoChange;
            meanPercChangeRange.(conditions{c}).(parameters{i})=mean(percChangeRange.(conditions{c}).(parameters{i}));
 
            drdA.(conditions{c}).(parameters{i})=alldrdA.(conditions{c})(:,:,i+1);
-           percChangedrdA.(conditions{c}).(parameters{i})=abs(drdA.(conditions{c}).(parameters{i})-drdA.(conditions{c}).NoChange)./drdA.(conditions{c}).NoChange;
+           percChangedrdA.(conditions{c}).(parameters{i})=(drdA.(conditions{c}).(parameters{i})-drdA.(conditions{c}).NoChange)./drdA.(conditions{c}).NoChange;
            meanPercChangedrdA.(conditions{c}).(parameters{i})=mean(percChangedrdA.(conditions{c}).(parameters{i}));
 
            visualVolume.(conditions{c}).(parameters{i})=allVisualVolume.(conditions{c})(:,:,i+1);
-           percChangeVolume.(conditions{c}).(parameters{i})=abs(visualVolume.(conditions{c}).(parameters{i})-visualVolume.(conditions{c}).NoChange)./visualVolume.(conditions{c}).NoChange;
+           percChangeVolume.(conditions{c}).(parameters{i})=(visualVolume.(conditions{c}).(parameters{i})-visualVolume.(conditions{c}).NoChange)./visualVolume.(conditions{c}).NoChange;
            meanPercChangeVolume.(conditions{c}).(parameters{i})=mean(percChangeVolume.(conditions{c}).(parameters{i}));
 
            dVdA.(conditions{c}).(parameters{i})=alldVdA.(conditions{c})(:,:,i+1);
-           percChangedVdA.(conditions{c}).(parameters{i})=abs(dVdA.(conditions{c}).(parameters{i})-dVdA.(conditions{c}).NoChange)./dVdA.(conditions{c}).NoChange;
+           percChangedVdA.(conditions{c}).(parameters{i})=(dVdA.(conditions{c}).(parameters{i})-dVdA.(conditions{c}).NoChange)./dVdA.(conditions{c}).NoChange;
            meanPercChangedVdA.(conditions{c}).(parameters{i})=mean(percChangedVdA.(conditions{c}).(parameters{i}));
        end
    end
