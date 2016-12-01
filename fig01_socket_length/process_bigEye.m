@@ -183,7 +183,8 @@ disp(['The median orbit length for ST was ' num2str(median(x)) '; the 1st quarti
 disp(['; the 3rd quartile is ' num2str(prctile(x,75))])
 
 
-print(gcf, '-dpdf','orbit_box')
+filename=[BIGEYEROOT 'fig01_socket_length/orbit_box.pdf'];
+print(filename,'-painters','-dpdf','-r600');
 
 
 
@@ -349,83 +350,99 @@ plotnoX = 2;
 plotnoY = 1;
 ha4 = create_BE_axes(plotnoX,plotnoY,fig_props);
 
+[~,~,rawResGroups]=xlsread('BMresgroups.xlsx');
+rawResGroups=rawResGroups(2:end,:);
+
+indFinned=find(cellfun(@(x) strcmp(x,'finned'), rawResGroups(:,3),'UniformOutput',1));
+finnedResVals=cell2mat(rawResGroups(indFinned,2));
+indTransitional=find(cellfun(@(x) strcmp(x,'transitional'), rawResGroups(:,3),'UniformOutput',1));
+transitionalResVals=cell2mat(rawResGroups(indTransitional,2));
+indDigited=find(cellfun(@(x) strcmp(x,'digited'), rawResGroups(:,3),'UniformOutput',1));
+digitedResVals=cell2mat(rawResGroups(indDigited,2));
+indReturn=find(cellfun(@(x) strcmp(x,'return'), rawResGroups(:,3),'UniformOutput',1));
+returnResVals=cell2mat(rawResGroups(indReturn,2));
+
 % RELATIVE SIZES NOW
 % finned tetrapod minus Elpisto absolute size points
     
 relsizeTF= 100.*(noElpistoOrb./noElpistoSkl);
 
 line(repmat(1/4,length(relsizeTF),1), ...
-    relsizeTF, ...
+    finnedResVals, ...
     'linestyle','none', ...
     'marker','o','markersize',circleSize,'markeredgecolor','black','markerfacecolor',[1 0 0])
 
 % special marker for screbinodus
-line(1/4,100.*(TF_orbit_length_span(screb,1)./TF_orbit_length_span(screb,2)), ...
-    'linestyle','none', ...
-    'marker','o','markersize',circleSize,'markeredgecolor','blue','markerfacecolor',[1 0 0])
+rootFinned=0.02058466;
+% line(1/4,),rootFinned ...
+%     'linestyle','none', ...
+%     'marker','o','markersize',circleSize,'markeredgecolor','blue','markerfacecolor',[1 0 0])
 
-meanOrbpct = mean(relsizeTF);
-line([(1/4)-horiz_line_len (1/4)+horiz_line_len],[meanOrbpct meanOrbpct],'color',[1 0 0], 'linewidth',1.5)
+%meanOrbpct = mean(relsizeTF);
+line([(1/4)-horiz_line_len (1/4)+horiz_line_len],[rootFinned, rootFinned],'color',[1 0 0], 'linewidth',1.5)
 
-text((1/4)+horiz_line_len+0.01, meanOrbpct, [num2str(meanOrbpct,2) '%'])
+text((1/4)+horiz_line_len+0.01, rootFinned , [num2str(rootFinned,2)])
 
 hold on
 
 % only elpistos
-line(repmat(1/2,length(onlyElpistoOrb)),100.*(onlyElpistoOrb./onlyElpistoSkl), ...
+line(repmat(1/2,length(onlyElpistoOrb)),transitionalResVals, ...
     'linestyle','none', ...
     'marker','o','markersize',circleSize,'markeredgecolor','black','markerfacecolor',[1 0 0])
 
 % plot special color for the specimen used in legend
-tikta=find(strcmp('Tiktaalik',gsTF(:,1)));
-line(1/2,100.*(TF_orbit_length_span(tikta,1)./TF_orbit_length_span(tikta,2)), ...
-    'linestyle','none', ...
-    'marker','o','markersize',circleSize,'markeredgecolor','blue','markerfacecolor',[1 0 0])
-
-meanOrb = mean(100.*(onlyElpistoOrb./onlyElpistoSkl));
-line([(1/2)-horiz_line_len (1/2)+horiz_line_len],[meanOrb meanOrb],'color',[1 0 0],'linewidth',1.5)
-text((1/2)+horiz_line_len+0.01, meanOrb, [num2str(meanOrb,2) ' %'])
+% tikta=find(strcmp('Tiktaalik',gsTF(:,1)));
+% line(1/2,100.*(TF_orbit_length_span(tikta,1)./TF_orbit_length_span(tikta,2)), ...
+%     'linestyle','none', ...
+%     'marker','o','markersize',circleSize,'markeredgecolor','blue','markerfacecolor',[1 0 0])
+% 
+% meanOrb = mean(100.*(onlyElpistoOrb./onlyElpistoSkl));
+rootTransitional=0.1725637;
+line([(1/2)-horiz_line_len (1/2)+horiz_line_len],[rootTransitional, rootTransitional],'color',[1 0 0],'linewidth',1.5)
+text((1/2)+horiz_line_len+0.01, rootTransitional, [num2str(rootTransitional,2)])
 
 % digited tetrapods minus adelospondyl-colosteid clade
 
-relsizeSTminusSecAq = 100.*(noSecAqOrb./noSecAqSkl);
-line(repmat(3/4,length(noSecAqOrb),1),relsizeSTminusSecAq, ...
+%relsizeSTminusSecAq = 100.*(noSecAqOrb./noSecAqSkl);
+line(repmat(3/4,length(noSecAqOrb),1),digitedResVals, ...
     'linestyle','none', ...
     'marker','o','markersize',circleSize,'markeredgecolor','black','markerfacecolor',[0 0 1])
 
-line(3/4,relsizeSTminusSecAq(acan), ...
-    'linestyle','none', ...
-    'marker','o','markersize',circleSize,'markeredgecolor','blue','markerfacecolor',[1 0 0])
+% line(3/4,relsizeSTminusSecAq(acan), ...
+%     'linestyle','none', ...
+%     'marker','o','markersize',circleSize,'markeredgecolor','blue','markerfacecolor',[1 0 0])
 
 % plot all ST without sec aq mean
-meanOrbSkl = mean(100.*(noSecAqOrb./noSecAqSkl));
-line([(3/4)-horiz_line_len (3/4)+horiz_line_len],[meanOrbSkl meanOrbSkl],'color',[0 0 1],'linewidth',1.5)
-text((3/4)+horiz_line_len+0.01, meanOrbSkl+.5, [num2str(meanOrbSkl,2) '%'])
+%meanOrbSkl = mean(100.*(noSecAqOrb./noSecAqSkl));
+rootDigited=0.2038828;
+line([(3/4)-horiz_line_len (3/4)+horiz_line_len],[rootDigited rootDigited],'color',[0 0 1],'linewidth',1.5)
+text((3/4)+horiz_line_len+0.01, rootDigited, [num2str(rootDigited,2)])
 
 %plot only sec aq
-line(repmat(1,length(SecAqOrb),1),100.*(SecAqOrb./SecAqSkl), ...
+line(repmat(1,length(SecAqOrb),1),returnResVals, ...
     'linestyle','none', ...
     'marker','o','markersize',circleSize,'markeredgecolor','black','markerfacecolor', ...
     [0 0 1],'linewidth',1.5)
 
 %special marker for sample
-line(1,100.*(ST_orbit_length_span(colo,1)./ST_orbit_length_span(colo,2)), ...
-    'linestyle','none', ...
-    'marker','o','markersize',circleSize,'markeredgecolor','blue','markerfacecolor',[1 0 0])
+% line(1,100.*(ST_orbit_length_span(colo,1)./ST_orbit_length_span(colo,2)), ...
+%     'linestyle','none', ...
+%     'marker','o','markersize',circleSize,'markeredgecolor','blue','markerfacecolor',[1 0 0])
 
 % plot only sec aq mean
-meanOrbSkl = mean(100.*(SecAqOrb./SecAqSkl));
-line([(1)-horiz_line_len (1)+horiz_line_len],[meanOrbSkl meanOrbSkl],'color',[0 0 1],'linewidth',1.5)
-text((1)+horiz_line_len+0.01, meanOrbSkl, [num2str(meanOrbSkl,2)  '%'])
+%meanOrbSkl = mean(100.*(SecAqOrb./SecAqSkl));
+rootReturn=0.04520924;
+line([(1)-horiz_line_len (1)+horiz_line_len],[rootReturn rootReturn],'color',[0 0 1],'linewidth',1.5)
+text((1)+horiz_line_len+0.01, rootReturn, [num2str(rootReturn,2)])
 
 
-set(gca,'ylim',[0 40])
+set(gca,'ylim',[-0.3 0.5])
 set(gca,'xlim',[0 1.25])
-ylabel('100 x (orbit length/skull length)')
+ylabel('Residuals')
 set(gca,'xtick', [1/4 1/2 3/4 1],'xticklabel',{'finned','elpisto','digited','secaq'})
 
-
-print(gcf, '-dpdf','orbitData')
+filename=[BIGEYEROOT 'fig01_socket_length/orbitData.pdf'];
+print(filename,'-painters','-dpdf','-r600');
 
 x=TF_orbit_length_span(:,1);
 disp(['The median orbit length for TF was ' num2str(median(x)) '; the 1st quartile is ' ...
