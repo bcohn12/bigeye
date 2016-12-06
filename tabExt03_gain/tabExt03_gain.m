@@ -104,7 +104,32 @@ global BIGEYEROOT
     denomfunc=@(Y,x) interp1q(pupilValues,Y,x);
     f=fishpupil*1e-3; t=tetrapodpupil*1e-3;
     
-    columncond={'range','derRange','volume','derVolume'}; val={};
+    columncond={'range','derRange','volume','derVolume'}; val={}; ratios={};
+    columncond2={'range','volume'};
+    
+    for i=1:length(columncond2)
+        ratios{1,i}=denomfunc(Aquatic.(columncond2{i})(:,2),t)/...
+            denomfunc(Aquatic.(columncond2{i})(:,2),f);
+        ratios{2,i}=denomfunc(Aquatic.(columncond2{i})(:,1),t)/...
+            denomfunc(Aquatic.(columncond2{i})(:,1),f);
+        ratios{3,i}=numfunc(Aerial.(columncond2{i})(:,1),t)/...
+            numfunc(Aerial.(columncond2{i})(:,1),f);
+        ratios{4,i}=ratios{3,i}/ratios{1,i};
+        ratios{5,i}=ratios{3,i}/ratios{2,i};
+       
+        ratios{6,i}=denomfunc(Aquatic.(columncond2{i})(:,3),t)/...
+            denomfunc(Aquatic.(columncond2{i})(:,3),f);
+        ratios{7,i}=numfunc(Aerial.(columncond2{i})(:,2),t)/...
+            numfunc(Aerial.(columncond2{i})(:,2),f);
+        ratios{8,i}=ratios{7,i}/ratios{6,i};
+        
+        ratios{9,i}=denomfunc(Aquatic.(columncond2{i})(:,4),t)/...
+            denomfunc(Aquatic.(columncond2{i})(:,4),f);
+        ratios{10,i}=numfunc(Aerial.(columncond2{i})(:,3),t)/...
+            numfunc(Aerial.(columncond2{i})(:,3),f);
+        ratios{11,i}=ratios{10,i}/ratios{9,i};
+    end
+    
     for i=1:length(columncond)
       ratio1=numfunc(Aerial.(columncond{i})(:,1),f)/...
           denomfunc(Aquatic.(columncond{i})(:,2),f);
@@ -157,6 +182,7 @@ global BIGEYEROOT
       ratio13=numfunc(Aerial.(columncond{i})(:,3),t)/...
           denomfunc(Aquatic.(columncond{i})(:,4),f);
       val{13,i}=num2str(round(ratio13));
+      
     end
     num=(1:1:13);
     for i=1:rowlength
