@@ -22,20 +22,21 @@ global BIGEYEROOT
 
 %% SENSITIVITY
     sensitivityParams.XAerial=0.011;
-    sensitivityParams.qAerial=0.8;
-    sensitivityParams.DtAerial=0.0116;
+    sensitivityParams.qAerial=0.3;
+    sensitivityParams.DtAerial1=0.0116;
+    sensitivityParams.DtAerial2=1.6;
     sensitivityParams.d=10e-6;
-    sensitivityParams.FAerial=3;
+    sensitivityParams.FAerial=3/2;
     
-    aerialEquiv={'XAerial','qAerial.Daylight','DtAerial.Daylight','d','FAerial.Daylight'};
-    parameters={'XAerial','qAerial','DtAerial','d','FAerial'};
+    aerialEquiv={'XAerial','qAerial.Daylight','DtAerial.Daylight','DtAerial.Daylight','d','FAerial.Daylight'};
+    parameters={'XAerial','qAerial','DtAerial1', 'DtAerial2','d','FAerial'};
     
     %% RELATE PUPIL SIZE TO RANGE
     pupilValuesAir=linspace(minpupil,maxpupil,25);
     tol=1e-4;
     
     visualRangeDaylight=zeros(length(pupilValuesAir),length(parameters));        
-    for s=5:length(parameters)
+    for s=1:length(parameters)
         eval(sprintf('%s=%d',aerialEquiv{s},sensitivityParams.(parameters{s})));
         r=8000;
         for i=1:length(pupilValuesAir)

@@ -27,7 +27,7 @@ global BIGEYEROOT
    visualVolume.Aerial.NoChange=allVisualVolume.Aerial(:,:,1);
    dVdA.Aquatic.NoChange=alldVdA.Aquatic(:,:,1);
    dVdA.Aerial.NoChange=alldVdA.Aerial(:,:,1);
-   parameters={'X','q','Dt','d','M','contrast'};
+   parameters={'X','q','Dt1','Dt2','d','M','contrast'};
    conditions={'Aquatic','Aerial'};
    
    for c=1:length(conditions)

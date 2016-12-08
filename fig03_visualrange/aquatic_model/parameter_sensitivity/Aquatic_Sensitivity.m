@@ -9,16 +9,19 @@ function Aquatic_Sensitivity
 
     sensitivityParams.XAquatic=0.08;
     sensitivityParams.qAquatic=0.5;
-    sensitivityParams.DtAquatic=0.0116;
+    sensitivityParams.DtAquatic1=0.0116;
+    sensitivityParams.DtAquatic2=1.6;
     sensitivityParams.d=10e-6;
     sensitivityParams.M=3;
-    parameters={'XAquatic','qAquatic','DtAquatic','d','M'};
+    aquaticequiv={'XAquatic','qAquatic','DtAquatic','DtAquatic','d','M'};
+    parameters={'XAquatic','qAquatic','DtAquatic1', 'DtAquatic2','d','M'};
 
     %% SOLVE FOR RANGE
     visualRange_River=zeros(length(pupilValues),2,length(parameters),length(conditions));
     actRange_River=visualRange_River;
     for s=1:length(parameters)
-        eval(sprintf('%s=%d',parameters{s},sensitivityParams.(parameters{s})));
+     %for s=3:4
+        eval(sprintf('%s=%d',aquaticequiv{s},sensitivityParams.(parameters{s})));
         for i=1:length(conditions);
             if strcmp('Daylight',conditions{i})
                 r_down=5;r_hor=3;
@@ -81,7 +84,7 @@ function Aquatic_Sensitivity
 
 %% CONTRAST LIMITING
 
-    %load('meteoAquaticSensitivityParameters_All.mat');
+    load('meteoAquaticSensitivityParameters_All.mat');
     actRange_River=zeros(size(visualRange_River,1),size(visualRange_River,2),size(visualRange_River,3),length(conditions));
     for j=1:length(conditions)     
         for s=1:length(parameters)
@@ -158,7 +161,7 @@ function Aquatic_Sensitivity
         end
     end
     visualRange_River=actRange_River;   
-    save([BIGEYEROOT 'fig03_visualrange/aquatic_model/parameter_senstivity/visibilityAquaticSensitivityParameters_All.mat'],'visualRange_River','pupilValues')
+    save([BIGEYEROOT 'fig03_visualrange/aquatic_model/parameter_sensitivity/visibilityAquaticSensitivityParameters_All.mat'],'visualRange_River','pupilValues')
 
 function Kt = liminalContrast(A,L,angularSize)
     %Equations should be the same as in the aquatic case, quick annotation
