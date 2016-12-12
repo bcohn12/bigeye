@@ -19,7 +19,7 @@ function Parameters
     % azimuth is here assuming 35 degree overlap typical of fish;
     % definitely underestimate for terrestrial case
     azimuthCoastal=(305)*(pi/180);
-    azimuthAir = azimuthCoastal;
+    azimuthAir = ((2*156)-25)*(pi/180);
 
     elevationMin=pi/2-elevationCoastal;
     elevationMax=pi/2+elevationCoastal;
