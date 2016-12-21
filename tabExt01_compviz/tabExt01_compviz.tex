@@ -1,29 +1,29 @@
-\begin{tabular}{|L{3.5cm}|L{2cm}|L{2cm}|L{4.5cm}|L{4.5cm}|}
+\begin{tabular}{|L{3.5cm}|L{2cm}|L{4.5cm}|L{4.5cm}|L{2cm}|}
 \hline
 \textbf{ }&\textbf{Parameter}&\textbf{Value}&\textbf{Definition}&\textbf{Reference}\\\hline
 \textbf{All Models}&$\gamma$&0.449&socket length to pupil diameter conversion factor&current study\\\hline
  &$k$&0.035&photoreceptor absorption coefficient ($\mu \text{m}^{-1}$)&\cite{Part90a} via \cite{Warr98a}\\\hline
  &$l$&57&photoreceptor length ($\mu \text{m}$)&\cite{Nils14a}\\\hline
- &$d$&10&photoreceptor diameter ($\mu \text{m}$)&\cite{Land12a} via \cite{Nils14a}\\\hline
+ &$d$&3&photoreceptor diameter ($\mu \text{m}$)&\cite{Land12a} via \cite{Nils14a}\\\hline
  &R&1.96&95\% confidence level for firing threshold&\cite{Land81a} via \cite{Nils14a}\\\hline
- &T&0.1&target width (diameter for circular objects) (m)& \\\hline
- &$C_\text{O}$&-1&object/target contrast (Weber contrast)& \\\hline
- &D&[1 25]&range of pupil diameters used in calculations (mm)& current study \\\hline
+ &$T$&0.1&target width (diameter for circular objects) (m)& \\\hline
+ &$C_0$&-1&object/target contrast (Weber contrast)& \\\hline
+ &$D$&[1 25]&range of pupil diameters used in calculations (mm)& current study \\\hline
 \textbf{Aerial Vision Model, All}&$\mathtt{X}$&0.08&dark noise rate @$23.5^{\circ}\,\text{C}$ ($\text{Rh}\, \text{s}^{-1}$)&\cite{Aho93a}\\\hline
- &$\sigma_{\text{km}} (\lambda_{\mu \text{m}})$&$0.0011 \lambda_{\mu \text{m}}^{-4} + 0.008 \lambda_{\mu \text{m}}^{-2.09}$&extinction factor ($\text{km}^{-1}$)&\cite{Midd52a}\\\hline
- &$\bar{\beta}$&1.47e+15&intensity parameter coefficient&\cite{Snyd79a}\\\hline
+ &$\sigma(\lambda_{\mu \text{m}})$&$(0.0011 \lambda_{\mu \text{m}}^{-4} + 0.008 \lambda_{\mu \text{m}}^{-2.09})/1\times10^3$&extinction factor ($\text{m}^{-1}$)&\cite{Midd52a}\\\hline
+ &$\bar{\beta}$&$1.47\times 10^{15}$&intensity parameter coefficient&\cite{Wysz67a} via \cite{Snyd79a}\\\hline
 \textbf{Aerial Vision Model, Daylight}&$\eta$&0.5&detection efficiency&\cite{Pirh07a}\\\hline
  &$\Delta t$&0.27&integration time (s)&\cite{Donn95a}\\\hline
  &$F$&8.8&F-number, ratio of focal length and pupil diameter&\cite{Snyd79a}\\\hline
- &$\mathtt{L}$&1.0e+03&daylight luminance ($\text{cd}\, \text{m}^{-2}$)&\cite{Midd52a}\\\hline
+ &$L$&$10^3$&daylight luminance ($\text{cd}\, \text{m}^{-2}$)&\cite{Midd52a}\\\hline
 \textbf{Aerial Vision Model, Moonlight}&$\eta$&0.36&detection efficiency&\cite{Nils14a}\\\hline
  &$\Delta t$&2.40&integration time (s)&\cite{Donn95a}\\\hline
  &$F$&2.1&F-number, ratio of focal length and pupil diameter&\cite{Mill79a}\\\hline
- &$\mathtt{L}$&1.0e-02&moonlight luminance ($\text{cd}\, \text{m}^{-2}$)&\cite{Midd52a}\\\hline
+ &$L$&$10^{-2}$&moonlight luminance ($\text{cd}\, \text{m}^{-2}$)&\cite{Midd52a}\\\hline
 \textbf{Aerial Vision Model, Starlight}&$\eta$&0.36&detection efficiency&\cite{Nils14a}\\\hline
  &$\Delta t$&5.75&integration time (s)&\cite{Donn95a}\\\hline
  &$F$&2.1&F-number, ratio of focal length and pupil diameter&\cite{Mill79a}\\\hline
- &$\mathtt{L}$&1.0e-04&starlight luminance ($\text{cd}\, \text{m}^{-2}$)&\cite{Midd52a}\\\hline
+ &$L$&$10^{-4}$&starlight luminance ($\text{cd}\, \text{m}^{-2}$)&\cite{Midd52a}\\\hline
 \textbf{Aquatic Vision Model}&$\eta$&0.36&detection efficiency&\cite{Nils14a}\\\hline
  &$\Delta t$&1.16&integration time (s)&\cite{Donn95a} via \cite{Nils14a}\\\hline
  &$F$&1.275&F-number, ratio of focal length and pupil diameter, based on Matthiessen's ratio (2.55)&\cite{Nils14a}\\\hline
