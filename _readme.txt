@@ -50,7 +50,11 @@ Rscript fig02.R -cwd
 
 The output, in this case Figure 2 in *.pdf format, will be stored in the same folder.
 
+We have also provided code to carry out the entire selective regime analysis implemented in bayou. You will find two R scripts in the bayou folder and you can execute the code as outlined above. Both scripts perform the analysis over the entire tree set, one calculating residuals with a BM correlation struture (presented in the paper), the other with an OU correlation structure. Even though the code is written to use all cores of your processor, the run time will likely be several days. Results will be stored in form of *.csv files in the bayou folder at the very end of the computation. We supply our bayou-results in /data/paleo/bayou_output.
 
-5) In the unlikely event our code will not work with future R releases you can find and install previous releases of R here: https://cran.r-project.org/bin/windows/base/old/ The latest R version we checked our code with is R 3.3.2. If it turns out you need to roll back to this R version you must also roll back the packages required for our code (see step 3) below), as packages are continuously developed alongside the new R updates. Old packages may not work with current versions of R and vice versa. You can roll back to old packages by executing an alternate installer-file:
+
+5) In the unlikely event our code will not work with future R releases you can find and install previous releases of R here: https://cran.r-project.org/bin/windows/base/old/ The latest R version we checked our code with is R 3.3.2. If it turns out you need to roll back to this R version you must also roll back the packages required for our code, as packages are continuously developed alongside the new R updates. Old packages may not work with current versions of R and vice versa. You can roll back to old packages by executing an alternate installer-file, but you really should only do this if you have run into problems related to R and package updates/new versions.
 
 Rscript rollbackinstaller.R -cwd
+
+Windows users may have to install Rtools first (there will be a prompt), which requires a subsequent restart.
