@@ -1,6 +1,6 @@
 function Aquatic_Sensitivity
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Statistical summary of raw socket length data based on grouping
+%% Visual range calculations based on alternative parameter values
 %%
 %% Title                : A massive increase in visual range preceded the origin of terrestrial vertebrates
 %% Authors              : Ugurcan Mugan, Malcolm A. MacIver

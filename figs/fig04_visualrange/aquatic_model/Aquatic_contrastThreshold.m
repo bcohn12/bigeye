@@ -1,6 +1,6 @@
 function Aquatic_contrastThreshold
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Statistical summary of raw socket length data based on grouping
+%% Inclusion of contrast threshold for aquatic vision
 %%
 %% Title                : A massive increase in visual range preceded the origin of terrestrial vertebrates
 %% Authors              : Ugurcan Mugan, Malcolm A. MacIver

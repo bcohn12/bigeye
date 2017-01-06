@@ -1,6 +1,6 @@
 function [visualRange_River, visualVolumeAquatic, drdAAquatic, dVdAAquatic,pupilValues] = Aquatic_calcVolumegetDer(CONTRASTTHRESH)
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Statistical summary of raw socket length data based on grouping
+%% Calculation of volume and derivatives for aquatic conditions
 %%
 %% Title                : A massive increase in visual range preceded the origin of terrestrial vertebrates
 %% Authors              : Ugurcan Mugan, Malcolm A. MacIver
