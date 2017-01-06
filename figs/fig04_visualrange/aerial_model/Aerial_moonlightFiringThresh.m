@@ -37,7 +37,7 @@ global BIGEYEROOT
             %Sensitivity in the mesopic and scotopic range
             %S=(pi/4)^2*D^2*(T/r)^2*Dt*(1-exp(-kl))*q, supp pg 5, Eq 5
             %Nh=Rh*S, supp pg 5, line 545
-            Nfalse=((T*FAerial.Moonlight*A)/(r*d))^2*XAerial*Dt;
+            Nfalse=((T*FAerial.Moonlight*A)/(r*d))^2*XAerial*DtAerial.Moonlight;
             %supp pg 5, line 610
 
             %APPARENT RADIANCE OF THE GREY OBJECT
