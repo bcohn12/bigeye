@@ -1,13 +1,15 @@
-function xls2TexTable()
+function fig03_socket_length()
 global BIGEYEROOT
-%% xls2TexTable()
-% Convert xls table fields to LaTeX table format
-%
-% Chen Chen
-% 2.16.2016
+
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Statistical summary of raw socket length data based on grouping
+%%
+%% Title                : A massive increase in visual range preceded the origin of terrestrial vertebrates
+%% Authors              : Malcolm A. MacIver, Ugurcan Mugan, Chen Chen
+%% Authors' Affiliation : Northwestern University
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %% Read or Load XLS Data
-%[~,XlsData.allcol,~] = xlsread('bigEye.xls');
 [~,~,XlsData.GS] = xlsread('bigEye.xlsx',1,'B3:C64');
 [~,~,XlsData.Eye] = xlsread('bigEye.xlsx',1,'T3:T64');
 [~,~,XlsData.Length] = xlsread('bigEye.xlsx',1,'P3:P64');
@@ -33,8 +35,6 @@ eyeCol = 20;     % OM
 
 circleMax=60;    % max size of normalized eye, points
 
-
-
 %% Convert to LaTeX Table
 [TF_orbit_length_span, gsTF]=loc_ConvData(XlsData,TFind,lengthCol,refKeyCol,eyeCol,genusCol,speciesCol,stageBegin,stageEnd,'TFout.tex');
 [ST_orbit_length_span, gsST]=loc_ConvData(XlsData,STind,lengthCol,refKeyCol,eyeCol,genusCol,speciesCol,stageBegin,stageEnd,'STout.tex');
@@ -43,32 +43,6 @@ circleMax=60;    % max size of normalized eye, points
 % we need TF_orbit_length_span and ST* ... but really should rewrite
 
 [all_orbit_length_span, allgsTF]=loc_ConvData(XlsData,[TFind; STind],lengthCol,refKeyCol,eyeCol,genusCol,speciesCol,stageBegin,stageEnd,'allout.tex');
-
-
-% Set up for two panel figure
-close all
-fig_props.noYsubplots = 1;
-fig_props.noXsubplots = 2;
-
-fig_props.figW = 18;   % cm
-fig_props.figH = 10;  % cm
-
-fig_props.ml = 0.8;
-fig_props.mt = 0.8;
-
-create_BE_figure
-fig_props.sub_pW = fig_props.sub_pW-.5;
-time_subsamp = 1;
-time_limit = 0.4;
-text_pos = [-5,2*time_limit/10,50];
-text_color = [0 0 0];
-text_size = 12;
-pn = {'Color','FontSize','FontWeight',};
-pv = {text_color,text_size,'bold'};
-
-plotnoX = 1;
-plotnoY = 1;
-ha1 = create_BE_axes(plotnoX,plotnoY,fig_props);
 
 % Data analysis on table information
 
@@ -81,95 +55,6 @@ disp('Mean ST OM')
 mean(ST_orbit_length_span(:,1))
 
 datST = (ST_orbit_length_span(:,1)./ST_orbit_length_span(:,2));
-padding =zeros(3,3);
-spanTF=[TF_orbit_length_span(:,4) TF_orbit_length_span(:,3)];
-spanST=[ST_orbit_length_span(:,4) ST_orbit_length_span(:,3)];
-
-durationTF=spanTF(:,2)-spanTF(:,1);
-durationST=spanST(:,2)-spanST(:,1);
-
-
-hl1=scatter(1:length(datTF),sort(100.*datTF),35,[1 0 0],'filled');
-hold on
-
-
-alpha(hl1,0.5)
-%line(length(datTF)+1:length(datTF)+length(datST),sort(100.*datST),'linestyle','none','marker','o','markerEdgeColor','blue')
-
-hl2=scatter(length(datTF)+1:length(datTF)+length(datST),sort(100.*datST),35,[0 0 1],'filled');
-alpha(hl2,0.5)
-
-[h,icons,plots,s]=legend('TF','ST','Location','NorthWest');
-set(icons(3).Children,'FaceAlpha',0.5)
-set(icons(4).Children,'FaceAlpha',0.5)
-
-legend('boxoff')
-xlabel('Specimen #')
-ylabel('Orbit length as % of skull length')
-
-
-plotnoX = 2;
-plotnoY = 1;
-ha2 = create_BE_axes(plotnoX,plotnoY,fig_props);
-histogram(log10(datST), 5)
-hold on
-histogram(log10(datTF), 5)
-xlim([-1.4 -0.2])
-legend('ST', 'TF','Location','NorthWest')
-legend('boxoff')
-xlabel('log(orbit/skull length)')
-box off
-
-print(gcf, '-dpdf', mfilename('fullpath'));
-
-
-% prepare data for box plot
-orbit_length=[TF_orbit_length_span(:,1);ST_orbit_length_span(:,1)];
-tetgroup=[repmat('TF',length(TF_orbit_length_span(:,1)),1); ...
-    repmat('ST',length(ST_orbit_length_span(:,1)),1)]
-
-fig_props.noYsubplots = 1;
-fig_props.noXsubplots = 2;
-
-fig_props.figW = 18;   % cm
-fig_props.figH = 10;  % cm
-
-fig_props.ml = 0.8;
-fig_props.mt = 0.8;
-
-create_BE_figure
-fig_props.sub_pW = fig_props.sub_pW-.5;
-time_subsamp = 1;
-time_limit = 0.4;
-text_pos = [-5,2*time_limit/10,50];
-text_color = [0 0 0];
-text_size = 12;
-pn = {'Color','FontSize','FontWeight',};
-pv = {text_color,text_size,'bold'};
-
-plotnoX = 1;
-plotnoY = 1;
-ha1 = create_BE_axes(plotnoX,plotnoY,fig_props);
-boxplot(orbit_length,tetgroup,'notch','on','labels',{'TF', 'ST'})
-set(gca,'ylim',[0 70])
-ylabel('orbit length (mm)')
-
-plotnoX = 2;
-plotnoY = 1;
-ha2 = create_BE_axes(plotnoX,plotnoY,fig_props);
-hl1=scatter(1:length(datTF),sort(TF_orbit_length_span(:,1)),35,[1 0 0],'filled');
-alpha(hl1,0.5)
-hold on
-hl2=scatter(length(datTF)+1:length(datTF)+length(datST), ...
-    sort(ST_orbit_length_span(:,1)),35,[0 0 1],'filled');
-alpha(hl2,0.5)
-[h,icons,plots,s]=legend('TF','ST','Location','NorthWest');
-set(icons(3).Children,'FaceAlpha',0.5)
-set(icons(4).Children,'FaceAlpha',0.5)
-box on
-
-set(gca,'ylim',[0 70])
-set(gca,'xtick','')
 
 x=TF_orbit_length_span(:,1);
 disp(['The median orbit length for TF was ' num2str(median(x)) '; the 1st quartile is ' ...
@@ -182,22 +67,21 @@ disp(['The median orbit length for ST was ' num2str(median(x)) '; the 1st quarti
     num2str(prctile(x,25))])
 disp(['; the 3rd quartile is ' num2str(prctile(x,75))])
 
-
-filename=[BIGEYEROOT 'fig01_socket_length/orbit_box.pdf'];
-print(filename,'-painters','-dpdf','-r600');
-
-
-
 %
 %      ORBITDAT figure
 %
 %
+
+fig_props.noYsubplots = 1;
+fig_props.noXsubplots = 2;
+
 fig_props.figW = 18;   % cm
 fig_props.figH = 9;  % cm
 
 fig_props.ml = 0.8;
 fig_props.mt = 0.8;
-circleSize=5
+
+circleSize=5;
 create_BE_figure
 fig_props.sub_pW = fig_props.sub_pW-.5;
 time_subsamp = 1;
@@ -215,7 +99,7 @@ ha3= create_BE_axes(plotnoX,plotnoY,fig_props);
 
 % separate elpistostegalians
 
-elpisto = {'Panderichthys','Tiktaalik','Elpistostege'}
+elpisto = {'Panderichthys','Tiktaalik','Elpistostege'};
 noElpistoOrb=TF_orbit_length_span(:,1);
 noElpistoSkl=TF_orbit_length_span(:,2);
 elpistoIdx=zeros(length(TF_orbit_length_span),1);
@@ -241,8 +125,6 @@ line(repmat(1/4,length(noElpistoOrb)),noElpistoOrb, ...
     'linestyle','none', ...
     'marker','o','markersize',circleSize,'markeredgecolor','black','markerfacecolor',[1 0 0])
 
-
-
 % plot special color for the specimen used in legend
 screb=find(strcmp('Screbinodus',gsTF(:,1)));
 line(1/4,TF_orbit_length_span(screb,1), ...
@@ -256,7 +138,6 @@ text((1/4)+horiz_line_len+0.01, meanOrb, [num2str(meanOrb,2) ' mm'])
 hold on
 
 % now plot only the Epistos
-
 line(repmat(1/2,length(onlyElpistoOrb)),onlyElpistoOrb, ...
     'linestyle','none', ...
     'marker','o','markersize',circleSize,'markeredgecolor','black','markerfacecolor',[1 0 0])
@@ -274,12 +155,9 @@ text((1/2)+horiz_line_len+0.01, meanOrb, [num2str(meanOrb,2) ' mm'])
 % now only digited 
 
 % first separate the adelospondyl-colosteid clade
-
 secAqColor=[252 130 0]./255;
 % Derive sets without seconarily aquatic animals:
-
-
-secAquatic = {'Adelogyrinus','Adelospondylus','Acherontiscus','Colosteus','Greererpeton','Deltaherpeton'}
+secAquatic = {'Adelogyrinus','Adelospondylus','Acherontiscus','Colosteus','Greererpeton','Deltaherpeton'};
 noSecAqOrb=ST_orbit_length_span(:,1);
 noSecAqSkl=ST_orbit_length_span(:,2);
 secAqIdx=zeros(length(ST_orbit_length_span),1);
@@ -320,10 +198,6 @@ line([(3/4)-horiz_line_len (3/4)+horiz_line_len],[meanOrb meanOrb],'color',[0 0 
 text((3/4)+horiz_line_len+0.01, meanOrb+.4, [num2str(meanOrb,2) ' mm'])
 
 % plot all ST including sec aq mean
-%meanOrb = mean(Orb);
-%line([(2/3)-horiz_line_len (2/3)+horiz_line_len],[meanOrb meanOrb],'color',[0 0 0],'linewidth',1.5)
-%text((2/3)+horiz_line_len+0.01, meanOrb, [num2str(meanOrb,2) ' mm'])
-
 %plot all sec aq only
 line(repmat(1,length(SecAqOrb),1),SecAqOrb, ...
     'linestyle','none', ...
@@ -374,11 +248,6 @@ line(repmat(1/4,length(relsizeTF),1), ...
 
 % special marker for screbinodus
 rootFinned=0.02058466;
-% line(1/4,),rootFinned ...
-%     'linestyle','none', ...
-%     'marker','o','markersize',circleSize,'markeredgecolor','blue','markerfacecolor',[1 0 0])
-
-%meanOrbpct = mean(relsizeTF);
 line([(1/4)-horiz_line_len (1/4)+horiz_line_len],[rootFinned, rootFinned],'color',[1 0 0], 'linewidth',1.5)
 
 text((1/4)+horiz_line_len+0.01, rootFinned , [num2str(rootFinned,2)])
@@ -391,29 +260,15 @@ line(repmat(1/2,length(onlyElpistoOrb)),transitionalResVals, ...
     'marker','o','markersize',circleSize,'markeredgecolor','black','markerfacecolor',[1 0 0])
 
 % plot special color for the specimen used in legend
-% tikta=find(strcmp('Tiktaalik',gsTF(:,1)));
-% line(1/2,100.*(TF_orbit_length_span(tikta,1)./TF_orbit_length_span(tikta,2)), ...
-%     'linestyle','none', ...
-%     'marker','o','markersize',circleSize,'markeredgecolor','blue','markerfacecolor',[1 0 0])
-% 
-% meanOrb = mean(100.*(onlyElpistoOrb./onlyElpistoSkl));
 rootTransitional=0.1725637;
 line([(1/2)-horiz_line_len (1/2)+horiz_line_len],[rootTransitional, rootTransitional],'color',[1 0 0],'linewidth',1.5)
 text((1/2)+horiz_line_len+0.01, rootTransitional, [num2str(rootTransitional,2)])
 
 % digited tetrapods minus adelospondyl-colosteid clade
 
-%relsizeSTminusSecAq = 100.*(noSecAqOrb./noSecAqSkl);
 line(repmat(3/4,length(noSecAqOrb),1),digitedResVals, ...
     'linestyle','none', ...
     'marker','o','markersize',circleSize,'markeredgecolor','black','markerfacecolor',[0 0 1])
-
-% line(3/4,relsizeSTminusSecAq(acan), ...
-%     'linestyle','none', ...
-%     'marker','o','markersize',circleSize,'markeredgecolor','blue','markerfacecolor',[1 0 0])
-
-% plot all ST without sec aq mean
-%meanOrbSkl = mean(100.*(noSecAqOrb./noSecAqSkl));
 rootDigited=0.2038828;
 line([(3/4)-horiz_line_len (3/4)+horiz_line_len],[rootDigited rootDigited],'color',[0 0 1],'linewidth',1.5)
 text((3/4)+horiz_line_len+0.01, rootDigited, [num2str(rootDigited,2)])
@@ -425,12 +280,6 @@ line(repmat(1,length(SecAqOrb),1),returnResVals, ...
     [0 0 1],'linewidth',1.5)
 
 %special marker for sample
-% line(1,100.*(ST_orbit_length_span(colo,1)./ST_orbit_length_span(colo,2)), ...
-%     'linestyle','none', ...
-%     'marker','o','markersize',circleSize,'markeredgecolor','blue','markerfacecolor',[1 0 0])
-
-% plot only sec aq mean
-%meanOrbSkl = mean(100.*(SecAqOrb./SecAqSkl));
 rootReturn=0.04520924;
 line([(1)-horiz_line_len (1)+horiz_line_len],[rootReturn rootReturn],'color',[0 0 1],'linewidth',1.5)
 text((1)+horiz_line_len+0.01, rootReturn, [num2str(rootReturn,2)])
@@ -441,7 +290,7 @@ set(gca,'xlim',[0 1.25])
 ylabel('Residuals')
 set(gca,'xtick', [1/4 1/2 3/4 1],'xticklabel',{'finned','elpisto','digited','secaq'})
 
-filename=[BIGEYEROOT 'fig01_socket_length/orbitData.pdf'];
+filename=[BIGEYEROOT 'fig03_socket_length/orbitData.pdf'];
 print(filename,'-painters','-dpdf','-r600');
 
 x=TF_orbit_length_span(:,1);
@@ -459,9 +308,9 @@ disp(['; the 3rd quartile is ' num2str(prctile(x,75))])
  
 OM_ST=x;
 
-save([BIGEYEROOT,'fig01_socket_length/FinnedDigitedOrbitLength.mat'],'onlyElpistoOrb','noElpistoOrb','noSecAqOrb','SecAqOrb')
+save([BIGEYEROOT,'fig03_socket_length/FinnedDigitedOrbitLength.mat'],'onlyElpistoOrb','noElpistoOrb','noSecAqOrb','SecAqOrb')
 
-save([BIGEYEROOT,'fig01_socket_length/OM_TF_ST.mat'],'OM_TF','OM_ST')
+save([BIGEYEROOT,'fig03_socket_length/OM_TF_ST.mat'],'OM_TF','OM_ST')
 
 
 % Format stat result text for paper
@@ -502,7 +351,6 @@ fclose(fid);
 
 
 disp('Done!!');
-
 
 end
 
@@ -625,12 +473,6 @@ else
     %% Convert to LaTeX Table Format
     columnLabels = {'Taxon'; 'Orbit Length (mm)'; 'Skull Length (mm)'; 'Orbit/Skull, \%'; 'Reference'};
 end
-
-%matrix2latex(AveAP, filename, ...
-%    'columnLabels', columnLabels, ...
-%    'alignment', 'c', ...
-%    'format', '%-4.0f');
-
 orbit_length = [gdat.Eye(validInd), gdat.Length(validInd)];
 
 % (Optional) Convert output from string to double
@@ -642,7 +484,6 @@ orbit_length = cell2mat(orbit_length);
 end
 
 function matrix2latex(matrix, filename, varargin)
-
 % function: matrix2latex(...)
 % Author:   M. Koehler
 % Contact:  koehler@in.tum.de
