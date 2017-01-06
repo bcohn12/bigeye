@@ -1,30 +1,38 @@
-function [visualRange_River, visualVolume_River, drdA_River, dVdA_River,pupilValues] = Aquatic_calcVolumegetDer(CONTRASTTHRESH)
-    run Parameters.m
+function [visualRange_River, visualVolumeAquatic, drdAAquatic, dVdAAquatic,pupilValues] = Aquatic_calcVolumegetDer(CONTRASTTHRESH)
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Statistical summary of raw socket length data based on grouping
+%%
+%% Title                : A massive increase in visual range preceded the origin of terrestrial vertebrates
+%% Authors              : Ugurcan Mugan, Malcolm A. MacIver
+%% Authors' Affiliation : Northwestern University
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Initialize variables 
+run Parameters.m
     load('Parameters.mat')
     if CONTRASTTHRESH
-        load('visibilityAquatic_All.mat')
+        load('visibilityAquatic.mat')
     else
-        load('meteoAquatic_All.mat')
+        load('meteoAquatic.mat')
     end
                 
-    drdA_River=visualRange_River;
-    dVdA_River=visualRange_River;
-    visualVolume_River=visualRange_River;
-
-    for i=1:size(visualRange_River,3);
-        for j=1:size(visualRange_River,2);
-            for k=1:size(visualRange_River,1);
-                visualVolume_River(k,j,i)=integral3(f,0,visualRange_River(k,j,i),...
+    drdAAquatic=visualRangeAquatic;
+    dVdAAquatic=visualRangeAquatic;
+    visualVolumeAquatic=visualRangeAquatic;
+%% Calculate visual volume based on parameters.m
+    for i=1:size(visualRangeAquatic,3);
+        for j=1:size(visualRangeAquatic,2);
+            for k=1:size(visualRangeAquatic,1);
+                visualVolumeAquatic(k,j,i)=integral3(f,0,visualRangeAquatic(k,j,i),...
                 elevationMin,elevationMax,...
                 azimuthMin,azimuthMax);
             end
         end
     end
-    
-    for i=1:size(visualRange_River,3);
-        for j=1:size(visualRange_River,2);
-            drdA_River(:,j,i)=derivative(pupilValues*10^3,visualRange_River(:,j,i));
-            dVdA_River(:,j,i)=derivative(pupilValues*10^3,visualVolume_River(:,j,i));
+%% Calculate visual range and volume derivatives    
+    for i=1:size(visualRangeAquatic,3);
+        for j=1:size(visualRangeAquatic,2);
+            drdAAquatic(:,j,i)=derivative(DrangeAquatic*10^3,visualRangeAquatic(:,j,i));
+            dVdAAquatic(:,j,i)=derivative(DrangeAquatic*10^3,visualVolumeAquatic(:,j,i));
         end
     end
     
