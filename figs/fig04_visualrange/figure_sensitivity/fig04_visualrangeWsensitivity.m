@@ -25,7 +25,7 @@ global BIGEYEROOT
     if nargin<1
         CONTRASTTHRESH=1;
     end
-    svn 
+
     [e,em]=fileExists;  
     while(~all(e))
         notFound=find(e==0);
@@ -106,25 +106,7 @@ global BIGEYEROOT
     visual.rangeAquatic=visualRangeAquatic; visual.rangeAerial=visualRangeAerial;
     visual.drdDAquatic=drdDAquatic; visual.drdDAerial=drdDAerial;
     visual.volumeAquatic=visualVolumeAquatic; visual.volumeAerial=visualVolumeAerial;
-    visual.dVdDAquatic=dVdDAquatic; visual.dVdDAerial=dVdDAerial;
-    
-%% Find visual range, visual volume, dr/dD, dV/dD for finned and digited tetrapod pupil diameter
-    cond={'rangeAquatic','rangeAerial','drdDAquatic','drdDAerial',...
-        'volumeAquatic','volumeAerial','dVdDAquatic','dVdDAerial'};
-
-    for i=1:length(cond)
-        dum=visual.(cond{i});
-        if ~isempty(findstr(cond{i},'Aerial'))
-            diam=DrangeAerial;
-        else
-            diam=DrangeAquatic;
-        end
-        for j=1:size(dum,2)
-            func=@(x) interp1(diam,dum(:,j),x,'pchip');
-            intersectFish.(cond{i})(j)=func(finnedpupil*1e-3);
-            intersectDigited.(cond{i})(j)=func(digitedpupil*1e-3);
-        end
-    end
+    visual.dVdDAquatic=dVdDAquatic; visual.dVdDAerial=dVdDAerial;   
     
 %% Figure 4 panel plot
 
