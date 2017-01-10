@@ -1,10 +1,16 @@
 function [interpVisualRange,C0RangeSymExtendedNew] =interpolateContrastRange(C0Range,visualRangeSolns)
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Interpolate contrast to include the 0 point at which the visual range will be 0
+%%
+%% Title                : A massive increase in visual range preceded the origin of terrestrial vertebrates
+%% Authors              : Ugurcan Mugan, Malcolm A. MacIver
+%% Authors' Affiliation : Northwestern University
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     [C0RangeSym,indSym]=sort([C0Range,-C0Range(C0Range<0 & C0Range>-0.3),-C0Range(C0Range>0& C0Range<0.3)]);
     indp=find(C0Range<0 &C0Range>-0.3); indm=find(C0Range>0 &C0Range<0.3);
     [C0RangeSymExt,indExt]=sort([C0RangeSym,0]);
    
-    C0RangeSymExtendedNew=linspace(min(C0Range),max(C0Range),101);
-    
+    C0RangeSymExtendedNew=linspace(min(C0Range),max(C0Range),101);    
     interpVisualRange=zeros(length(C0RangeSymExtendedNew),...
         size(visualRangeSolns,2),...
         size(visualRangeSolns,3));
@@ -22,7 +28,3 @@ function [interpVisualRange,C0RangeSymExtendedNew] =interpolateContrastRange(C0R
         end
     end
 end
-            
-    
-
-
