@@ -1,20 +1,18 @@
 function [MYr,varargout] = era2MYr(stage)
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Convert era to the start and end MYr
-% INPUT:
-%    stage - Input Stage, string, e.g. 'FAM(u)'
-%
-% OUTPUT:
-%    MYr - [Year Start, Year End] (MYr ago)
-%    dur - (optional) Unit duration of the era (MYr), for each substage
-%
-% USAGE:
-%    MYr = era2MYr('FAM(u)')
-%
-% 
-% Chen Chen
-% 2.23.2016
-% 
-
+%%
+%% Title                : A massive increase in visual range preceded the origin of terrestrial vertebrates
+%% Authors              : Chen Chen, Malcolm A. MacIver
+%% Authors' Affiliation : Northwestern University
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% INPUT:
+%%    stage - Input Stage, string, e.g. 'FAM(u)'
+%% OUTPUT:
+%%    MYr - [Year Start, Year End] (MYr ago)
+%%    dur - (optional) Unit duration of the era (MYr), for each substage
+%% USAGE:
+%%    MYr = era2MYr('FAM(u)')
 %% Handle Input
 %(Data from ICS - International Chronostratigraphic Chart v 2015/01)
 

@@ -1,14 +1,22 @@
 function figExt06_sensitivity
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 2 panel figure depicting aquatic visual range for upward and horizontal viewing under different water conditions
+%%
+%% Title                : A massive increase in visual range preceded the origin of terrestrial vertebrates
+%% Authors              : Ugurcan Mugan, Malcolm A. MacIver
+%% Authors' Affiliation : Northwestern University
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 global BIGEYEROOT
-%% INITIALIZE
+%% Initialize variables
     close all;   
     load OM_TF_ST.mat
     load FinnedDigitedOrbitLength.mat
     
     pupil_TF = [mean(noElpistoOrb)-std(noElpistoOrb) mean(noElpistoOrb)+std(noElpistoOrb)].*0.449;
     pupil_ST = [mean(noSecAqOrb)-std(noSecAqOrb) mean(noSecAqOrb)+std(noSecAqOrb)].*0.449;
-    fishpupil=mean(noElpistoOrb)*.449;
-    tetrapodpupil=mean(noSecAqOrb)*.449;
+    finnedpupil=mean(noElpistoOrb)*.449;
+    digitedpupil=mean(noSecAqOrb)*.449;
+%% Fined required data files and ask whether to run again    
     [e,em]=fileExists;  
     while(~all(e))
         notFound=find(e==0);
@@ -32,14 +40,14 @@ global BIGEYEROOT
         end
     end
     
-    load('Aquatic_visRangeSensitivity.mat');
-    load('visibilityAquatic_All.mat');
-    visualRangeSensitivity=[smooth(visualRangeSensitivity(:,1,1),7),smooth(visualRangeSensitivity(:,2,1),7),smooth(visualRangeSensitivity(:,3,1),7),...
-        smooth(visualRangeSensitivity(:,4,1),7),smooth(visualRangeSensitivity(:,1,2),7),smooth(visualRangeSensitivity(:,2,2),7),...
-        smooth(visualRangeSensitivity(:,3,2),7),smooth(visualRangeSensitivity(:,4,2),7)];
+    load('visibilityAquaticSensitivity.mat');
+    load('visibilityAquatic.mat');
+    visualRangeSensitivity=[smooth(visualRangeAquaticSensitivity(:,1,1),7),smooth(visualRangeAquaticSensitivity(:,2,1),7),smooth(visualRangeAquaticSensitivity(:,3,1),7),...
+        smooth(visualRangeAquaticSensitivity(:,4,1),7),smooth(visualRangeAquaticSensitivity(:,1,2),7),smooth(visualRangeAquaticSensitivity(:,2,2),7),...
+        smooth(visualRangeAquaticSensitivity(:,3,2),7),smooth(visualRangeAquaticSensitivity(:,4,2),7)];
     linewidthdef=2;
 
-%% PLOT
+%% Plot figure 6 panel
     fig_props.noYsubplots = 1;
     fig_props.noXsubplots = 2;
 
@@ -51,33 +59,27 @@ global BIGEYEROOT
     fig_props.bottom_margin=2;
     create_BE_figure
     fig_props.sub_pW = fig_props.sub_pW-.5;
-    time_subsamp = 1;
-    time_limit = 0.4;
-    text_pos = [-5,2*time_limit/10,50];
-    text_color = [0 0 0];
-    text_size = 12;
-    pn = {'Color','FontSize','FontWeight',};
-    pv = {text_color,text_size,'bold'};
+
     colors=get(gca,'colororder'); clf;
     x=17;
 % Sensitivity Upward Viewing
     plotnoX= 1;
     plotnoY= 1;
     ha1 = create_BE_axes(plotnoX,plotnoY,fig_props);
-    hl1.A=line('XData',pupilValues*10^3,'YData',visualRangeSensitivity(:,1),...
+    hl1.A=line('XData',DrangeAquatic*10^3,'YData',visualRangeAquaticSensitivity(:,1),...
         'color',colors(1,:),'linewidth',linewidthdef);
     hold on;
     for i=2:4
         str=char(i+'A'-1);
-        hl1.(str)=line('XData',pupilValues*10^3,'YData',visualRangeSensitivity(:,i),...
+        hl1.(str)=line('XData',DrangeAquatic*10^3,'YData',visualRangeAquaticSensitivity(:,i),...
             'color',colors(i,:),'linewidth',linewidthdef);
     end
-    hl1.E=line('XData',pupilValues*10^3,'YData',visualRange_River(:,1,1),...
+    hl1.E=line('XData',DrangeAquatic*10^3,'YData',visualRangeAquatic(:,1,1),...
         'color',colors(5,:),'linewidth',linewidthdef);
     ylim1=get(gca,'ylim');
-    line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],...
+    line([finnedpupil,finnedpupil],[ylim1(1),ylim1(2)],...
         'linewidth',linewidthdef,'color','r','linestyle',':');
-    line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],...
+    line([digitedpupil,digitedpupil],[ylim1(1),ylim1(2)],...
             'linewidth',linewidthdef,'color','b','linestyle',':');
     ylabel('\bfvisual range (\itr) \rm\bf(m)','interpreter','tex',...
         'fontsize',12,'fontname','helvetica');
@@ -91,19 +93,19 @@ global BIGEYEROOT
     plotnoX=2;
     plotnoY=1;
     ha2=create_BE_axes(plotnoX,plotnoY,fig_props);
-    hl2.A=line('XData',pupilValues*10^3,'YData',visualRangeSensitivity(:,5),...
+    hl2.A=line('XData',DrangeAquatic*10^3,'YData',visualRangeAquaticSensitivity(:,5),...
         'color',colors(1,:),'linewidth',linewidthdef);
     hold on;
     for i=6:8
         str=char(i+'A'-4);
-        hl1.(str)=line('XData',pupilValues*10^3,'YData',visualRangeSensitivity(:,i),...
+        hl1.(str)=line('XData',DrangeAquatic*10^3,'YData',visualRangeAquaticSensitivity(:,i),...
             'color',colors(i-4,:),'linewidth',linewidthdef);
     end
-    hl1.E=line('XData',pupilValues*10^3,'YData',visualRange_River(:,1,2),...
+    hl1.E=line('XData',DrangeAquatic*10^3,'YData',visualRangeAquatic(:,1,2),...
         'color',colors(5,:),'linewidth',linewidthdef);
-    line([fishpupil,fishpupil],[ylim1(1),ylim1(2)],...
+    line([finnedpupil,finnedpupil],[ylim1(1),ylim1(2)],...
         'linewidth',linewidthdef,'color','r','linestyle',':');
-    line([tetrapodpupil,tetrapodpupil],[ylim1(1),ylim1(2)],...
+    line([digitedpupil,digitedpupil],[ylim1(1),ylim1(2)],...
             'linewidth',linewidthdef,'color','b','linestyle',':');
     ylabel('\bfvisual range (\itr) \rm\bf(m)','interpreter','tex',...
         'fontsize',12,'fontname','helvetica');
@@ -113,8 +115,8 @@ global BIGEYEROOT
         'fontsize',13,'fontname','helvetica');
     axis square
     
-hLegend=legend('high turbidity @15 m','clear @15 m',...
-    'absorption  dominated @15 m','scattering dominated @15 m','baseline @8 m');
+hLegend=legend('high turbidity @8 m','clear @8 m',...
+    'absorption  dominated @8 m','scattering dominated @8 m','baseline @8 m');
 set(hLegend,'box','off'); set(hLegend,'interpreter','tex'); 
 set(hLegend,'fontsize',11,'fontname','helvetica'); set(hLegend,'orientation','horizontal')
 rect=[0.375 0 0.25 0.1]; set(hLegend,'Position',rect)
@@ -123,9 +125,7 @@ filename=[BIGEYEROOT 'figExt06_sensitivity/figures/core_figures/water_sensitivit
 print(filename,'-painters','-dpdf','-r600');
     
 function [e,em]=fileExists
-    e4={exist('Aquatic_visRangeSensitivity.mat','file')==2, 'Aquatic_contrastLimitedSensitivity.m'};
-    e3={exist('Aquatic_meteoRangeSensitivity.mat','file')==2, 'Aquatic_firingThreshSensitivity.m'};
-    %e2={exist('visibilityAquatic_All.mat','file')==2, 'Aquatic_contrastLimiting.m'};
-    %e1={exist('meteoAquatic_All.mat','file')==2,'Aquatic_firingThresh.m'};
-    e=[e3{1},e4{1}];
-    em={e3{2},e4{2}};
+    e1={exist('visibilityAquaticSensitivity.mat','file')==2, 'Aquatic_contrastThreshSensitivity.m'};
+    e2={exist('meteoAquaticSensitivity.mat','file')==2, 'Aquatic_firingThreshSensitivity.m'};
+    e=[e2{1},e1{1}];
+    em={e2{2},e1{2}};

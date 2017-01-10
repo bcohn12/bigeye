@@ -1,4 +1,4 @@
-function Aquatic_contrastLimitingSensitivity
+function Aquatic_contrastThreshSensitivity
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Visual range calculation with increased contrast threshold
 %%

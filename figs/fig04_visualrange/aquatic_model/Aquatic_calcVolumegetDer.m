@@ -1,4 +1,4 @@
-function [visualRange_River, visualVolumeAquatic, drdAAquatic, dVdAAquatic,pupilValues] = Aquatic_calcVolumegetDer(CONTRASTTHRESH)
+function [visualRangeAquatic, visualVolumeAquatic, drdAAquatic, dVdAAquatic,DrangeAquatic] = Aquatic_calcVolumegetDer(CONTRASTTHRESH)
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Calculation of volume and derivatives for aquatic conditions
 %%

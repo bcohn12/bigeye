@@ -1,12 +1,4 @@
 function figExt07_contrast
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% 2 panel figure depicting visual range calculated for digited and finned pupil diameter in aquatic and aerial conditions for varying contrast 
-%%
-%% Title                : A massive increase in visual range preceded the origin of terrestrial vertebrates
-%% Authors              : Ugurcan Mugan, Malcolm A. MacIver
-%% Authors' Affiliation : Northwestern University
-%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Initialize variables 
 global BIGEYEROOT
 %% Make sure the data files exist and ask user to rerun
     close all;
@@ -60,6 +52,8 @@ global BIGEYEROOT
     create_BE_figure
     fig_props.sub_pW = fig_props.sub_pW-.5;
     contrastinter=[-0.3 -0.1 0.1 0.3];
+    conditions={'FishAquaticUp','DigitAquaticUp','FishAquaticHor',...
+        'DigitAquaticHor','FishAerial','DigitAerial'};
     
 %% Aquatic Plot
     plotnoY=1;
@@ -82,7 +76,7 @@ global BIGEYEROOT
     end
     xlabel('\bfcontrast','interpreter','tex',...
         'fontsize',12,'fontname','helvetica');
-    ylabel('\bfvisual range ( \itr ) \rm\bf(m)','interpreter','tex',...
+    ylabel('\bfvisual range (\itr) \rm\bf(m)','interpreter','tex',...
         'fontsize',12,'fontname','helvetica');
     x=2;
     text(x,(interp1q(C0RangeNew,visualRange.DigitAquaticUp,x)+0.9),...

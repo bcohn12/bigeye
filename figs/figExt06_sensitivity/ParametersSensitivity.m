@@ -1,4 +1,11 @@
 function ParametersSensitivity
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Parameter initializations from Hydrolight data
+%%
+%% Title                : A massive increase in visual range preceded the origin of terrestrial vertebrates
+%% Authors              : Ugurcan Mugan, Malcolm A. MacIver
+%% Authors' Affiliation : Northwestern University
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 global BIGEYEROOT
     close all;
 
@@ -22,7 +29,7 @@ global BIGEYEROOT
         0.0041 0.0021 0.0011 0.0005 0.0003 0.0001 0.0001 0.0000]; %photopic luminosity function, Mobley Light and Water book
     lambdabar=380:10:770; %luminosity function wavelength domain
     ybarAquaticInterp=@(l) interp1(lambdabar,ybarAquaticLambda,l,'pchip');
-    %% SENSORY VOLUME PARAMS
+    %% Sensory sector volume parameters
 
     elevationCoastal=pi/3; %60 deg 
 
@@ -34,7 +41,7 @@ global BIGEYEROOT
 
     f = @(rho,phi,theta) rho.^2.*sin(phi); %volume equation in spherical coordinates
 
-    %% BEAM ATTENUATION COEFFICIENT
+    %% Beam attenuation coefficients, absorbtion
     %HighTurbidity
     a.HighTurbidity=xlsread('hydrolight/HighTurbidity/MHighTurbidity.xls','a');
     a.HighTurbidity=a.HighTurbidity(:,1);
@@ -47,7 +54,7 @@ global BIGEYEROOT
     %HIGH SCATTERING
     a.ScatDom=xlsread('hydrolight/ScatDom/MScatDom.xls','a');
     a.ScatDom=a.ScatDom(:,1);
-    %% SCATTERING COEFFICIENT
+    %% Scattering 
     %HIGH TURBIDITY
     b.HighTurbidity=xlsread('hydrolight/HighTurbidity/MHighTurbidity.xls','b');
     b.HighTurbidity=b.HighTurbidity(:,1);
@@ -60,105 +67,78 @@ global BIGEYEROOT
     %HIGH SCATTERING
     b.ScatDom=xlsread('hydrolight/ScatDom/MScatDom.xls','b');
     b.ScatDom=b.ScatDom(:,1);
-    %% K-FUNCTION
+    %% Diffuse attenuation coeff, K-func
     %HIGH TURBIDITY
-    Kd.HighTurbidity=xlsread('hydrolight/HighTurbidity/MHighTurbidity.xls','Kd');
-    Kd.HighTurbidity=Kd.HighTurbidity(:,:);
+    K.HighTurbidity.Upward=xlsread('hydrolight/HighTurbidity/MHighTurbidity.xls','Kd');
+    K.HighTurbidity.Upward=K.HighTurbidity.Upward(:,:);
 
-    Ku.HighTurbidity=xlsread('hydrolight/HighTurbidity/MHighTurbidity.xls','Ku');
-    Ku.HighTurbidity=Ku.HighTurbidity(:,:);
-
-    Kh.HighTurbidity=zeros(size(Kd.HighTurbidity,1),size(Kd.HighTurbidity,2));
+    K.HighTurbidity.Horizontal=zeros(size(K.HighTurbidity.Upward,1),size(K.HighTurbidity.Upward,2));
     %CLEAR
-    Kd.Clear=xlsread('hydrolight/Clear/MClear.xls','Kd');
-    Kd.Clear=Kd.Clear(:,:);
+    K.Clear.Upward=xlsread('hydrolight/Clear/MClear.xls','Kd');
+    K.Clear.Upward=K.Clear.Upward(:,:);
 
-    Ku.Clear=xlsread('hydrolight/Clear/MClear.xls','Ku');
-    Ku.Clear=Ku.Clear(:,:);
-
-    Kh.Clear=zeros(size(Kd.Clear,1),size(Kd.Clear,2));
+    K.Clear.Horizontal=zeros(size(K.Clear.Upward,1),size(K.Clear.Upward,2));
     %HIGH ABSORPTION
-    Kd.AbsDom=xlsread('hydrolight/AbsDom/MAbsDom.xls','KLu');
-    Kd.AbsDom=Kd.AbsDom(:,:);
+    K.AbsDom.Upward=xlsread('hydrolight/AbsDom/MAbsDom.xls','KLu');
+    K.AbsDom.Upward=K.AbsDom.Upward(:,:);
 
-    Ku.AbsDom=xlsread('hydrolight/AbsDom/MAbsDom.xls','Ku');
-    Ku.AbsDom=Ku.AbsDom(:,:);
-
-    Kh.AbsDom=zeros(size(Kd.AbsDom,1),size(Kd.AbsDom,2));
+    K.AbsDom.Horizontal=zeros(size(K.AbsDom.Upward,1),size(K.AbsDom.Upward,2));
     %HIGH SCATTERING
-    Kd.ScatDom=xlsread('hydrolight/ScatDom/MScatDom.xls','Kd');
-    Kd.ScatDom=Kd.ScatDom(:,:);
+    K.ScatDom.Upward=xlsread('hydrolight/ScatDom/MScatDom.xls','Kd');
+    K.ScatDom.Upward=K.ScatDom.Upward(:,:);
 
-    Ku.ScatDom=xlsread('hydrolight/ScatDom/MScatDom.xls','Ku');
-    Ku.ScatDom=Ku.ScatDom(:,:);
+    K.ScatDom.Horizontal=zeros(size(K.ScatDom.Upward,1),size(K.ScatDom.Upward,2));
 
-    Kh.ScatDom=zeros(size(Kd.ScatDom,1),size(Kd.ScatDom,2));
-
-    %% SPECTRAL RADIANCE
+    %% Spectral radiance values
     lambda=(355:10:745)';
     %High TURBIDITY
-    Ld.HighTurbidity=xlsread('hydrolight/HighTurbidity/MHighTurbidity.xls','Ld');
-    Ld.HighTurbidity=Ld.HighTurbidity(:,:)*5.03e15;
+    L.HighTurbidity.Upward=xlsread('hydrolight/HighTurbidity/MHighTurbidity.xls','Ld');
+    L.HighTurbidity.Upward=L.HighTurbidity.Upward(:,:)*5.03e15;
 
-    Lu.HighTurbidity=xlsread('hydrolight/HighTurbidity/MHighTurbidity.xls','Lu');
-    Lu.HighTurbidity=Lu.HighTurbidity(:,:)*5.03e15;
-
-    Lh.HighTurbidity=xlsread('hydrolight/HighTurbidity/MHighTurbidity.xls','Lh_2');
-    Lh.HighTurbidity=Lh.HighTurbidity(:,:)*5.03e15;
+    L.HighTurbidity.Horizontal=xlsread('hydrolight/HighTurbidity/MHighTurbidity.xls','Lh_2');
+    L.HighTurbidity.Horizontal=L.HighTurbidity.Horizontal(:,:)*5.03e15;
     %CLEAR
-    Ld.Clear=xlsread('hydrolight/Clear/MClear.xls','Ld');
-    Ld.Clear=Ld.Clear(:,:)*5.03e15;
+    L.Clear.Upward=xlsread('hydrolight/Clear/MClear.xls','Ld');
+    L.Clear.Upward=L.Clear.Upward(:,:)*5.03e15;
 
-    Lu.Clear=xlsread('hydrolight/Clear/MClear.xls','Lu');
-    Lu.Clear=Lu.Clear(:,:)*5.03e15;
-
-    Lh.Clear=xlsread('hydrolight/Clear/MClear.xls','Lh_2');
-    Lh.Clear=Lh.Clear(:,:)*5.03e15;
+    L.Clear.Horizontal=xlsread('hydrolight/Clear/MClear.xls','Lh_2');
+    L.Clear.Horizontal=L.Clear.Horizontal(:,:)*5.03e15;
     %HIGH ABSORPTION
-    Ld.AbsDom=xlsread('hydrolight/AbsDom/MAbsDom.xls','Ld');
-    Ld.AbsDom=Ld.AbsDom(:,:)*5.03e15;
+    L.AbsDom.Upward=xlsread('hydrolight/AbsDom/MAbsDom.xls','Ld');
+    L.AbsDom.Upward=L.AbsDom.Upward(:,:)*5.03e15;
 
-    Lu.AbsDom=xlsread('hydrolight/AbsDom/MAbsDom.xls','Lu');
-    Lu.AbsDom=Lu.AbsDom(:,:)*5.03e15;
-
-    Lh.AbsDom=xlsread('hydrolight/AbsDom/MAbsDom.xls','Lh_2');
-    Lh.AbsDom=Lh.AbsDom(:,:)*5.03e15;
+    L.AbsDom.Horizontal=xlsread('hydrolight/AbsDom/MAbsDom.xls','Lh_2');
+    L.AbsDom.Horizontal=L.AbsDom.Horizontal(:,:)*5.03e15;
     %HIGH SCATTERING
-    Ld.ScatDom=xlsread('hydrolight/ScatDom/MScatDom.xls','Ld');
-    Ld.ScatDom=Ld.ScatDom(:,:)*5.03e15;
+    L.ScatDom.Upward=xlsread('hydrolight/ScatDom/MScatDom.xls','Ld');
+    L.ScatDom.Upward=L.ScatDom.Upward(:,:)*5.03e15;
 
-    Lu.ScatDom=xlsread('hydrolight/ScatDom/MScatDom.xls','Lu');
-    Lu.ScatDom=Lu.ScatDom(:,:)*5.03e15;
+    L.ScatDom.Horizontal=xlsread('hydrolight/ScatDom/MScatDom.xls','Lh_2');
+    L.ScatDom.Horizontal=L.ScatDom.Horizontal(:,:)*5.03e15;
 
-    Lh.ScatDom=xlsread('hydrolight/ScatDom/MScatDom.xls','Lh_2');
-    Lh.ScatDom=Lh.ScatDom(:,:)*5.03e15;
-
-    %% LUMINANCE
+    %% Luminance calculations
     cond={'HighTurbidity','Clear','AbsDom','ScatDom'};
     ybar=ybarAquaticInterp(lambda);
     for j=1:length(cond)
-        for i=1:size(Lh.ScatDom,2)
-            tempU=(Lu.(cond{j})(:,i)/5.03e15).*ybar.*lambda;
-            Bu.(cond{j})(i)=trapz(lambda,tempU);
+        for i=1:size(L.ScatDom.Upward,2)
+            tempH=(L.(cond{j}).Horizontal(:,i)/5.03e15).*ybar.*lambda;
+            BLum.(cond{j}).Horizontal(i)=trapz(tempH);
 
-            tempH=(Lh.(cond{j})(:,i)/5.03e15).*ybar.*lambda;
-            Bh.(cond{j})(i)=trapz(tempH);
-
-            tempD=(Ld.(cond{j})(:,i)/5.03e15).*ybar.*lambda;
-            Bd.(cond{j})(i)=trapz(tempD);
+            tempD=(L.(cond{j}).Upward(:,i)/5.03e15).*ybar.*lambda;
+            BLum.(cond{j}).Upward(i)=trapz(tempD);
         end
     end
-    %% PHOTORECEPTOR ABSORPTION
+    %% Photoreceptor absorbtion based on Warrant et al
     A=1; a0A=800; a1A=3.1;
     B=0.5; a0B=176; a1B=1.52;
 
-    [~,ind_B]=max(Ld.HighTurbidity);
+    [~,ind_B]=max(L.HighTurbidity.Upward);
     lambdaMax_B=lambda(ind_B(1));
-    [~,ind_C]=max(Ld.Clear);
+    [~,ind_C]=max(L.Clear.Upward);
     lambdaMax_C=lambda(ind_C(1));
-    [~,ind_HA]=max(Ld.AbsDom);
+    [~,ind_HA]=max(L.AbsDom.Upward);
     lambdaMax_HA=lambda(ind_HA(1));
-    [~,ind_HS]=max(Ld.ScatDom);
+    [~,ind_HS]=max(L.ScatDom.Upward);
     lambdaMax_HS=lambda(ind_HS(1));
 
     pAbsorb.HighTurbidity=A*exp(-a0A*(log10(lambda./lambdaMax_B)).^2.*...

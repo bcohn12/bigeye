@@ -1,77 +1,58 @@
-function [visualRangeSensitivity,pupilValues]=Aquatic_firingThreshSensitivity
-    global BIGEYEROOT
+function Aquatic_firingThreshSensitivity
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Calculation of visual range based on optical properties with different water types
+%%
+%% Title                : A massive increase in visual range preceded the origin of terrestrial vertebrates
+%% Authors              : Ugurcan Mugan, Malcolm A. MacIver
+%% Authors' Affiliation : Northwestern University
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+global BIGEYEROOT
+%% Intialize variables   
     run ParametersSensitivity.m
     load('ParametersSensitivity.mat');
     
     conditions={'HighTurbidity','Clear','AbsDom','ScatDom'};
-    waterDepth=8;
-    pupilValues=linspace(minpupil,maxpupil,30);   
-    visualRangeSensitivity=zeros(length(pupilValues),length(conditions),2);
+    viewing={'Upward','Horizontal'};
+    waterDepth=8; 
+    epsilon=5e-4;
 
-    for i=1:length(conditions)
-        tol=5e-4;
-        if strcmp(conditions{i},'HighTurbidity')
-            r_down=3; r_hor=1.5; 
-        elseif strcmp(conditions{i},'Clear')
-            r_down=10; r_hor=10;
-        elseif strcmp(conditions{i},'AbsDom')
-            r_down=5; r_hor=3;
-        elseif strcmp(conditions{i},'ScatDom')
-            r_down=2.3; r_hor=1.5;
-        end
-        
-        aValue=a.(conditions{i}); bValue=b.(conditions{i});
-        KdValue=Kd.(conditions{i}); KhValue=Kh.(conditions{i});
-        LdValue=Ld.(conditions{i}); LhValue=Lh.(conditions{i});
-        pAbsorbValue=pAbsorb.(conditions{i});
-
-        for j=1:length(pupilValues)
-                A=pupilValues(j);
-                delta_down=10^(floor(log10(r_down))-4);
-                delta_hor=10^(floor(log10(r_hor))-4);
-
-                possibleSolnDownwelling=10;
-                while abs(possibleSolnDownwelling-1)>tol
-                    possibleSolnDownwelling=firingThresh(waterDepth,lambda,...
-                         pAbsorbValue,aValue,bValue,KdValue,LdValue,...
-                         r_down,A,X,Dt,q,d,k,len,T,M,R);
-
-                     if possibleSolnDownwelling>1
-                         r_down=r_down-delta_down;
-                     else
-                         r_down=r_down+delta_down;
-                     end
-                     clc;
-                     fprintf('pupil iteration: %d %d\n',j,i);
-                     fprintf('solution downwelling: %f\n',possibleSolnDownwelling);
-                     fprintf('r: %f\n',r_down);
-                     fprintf('error downwellling: %f\n', abs(possibleSolnDownwelling-1));
-                end
-
-                possibleSolnHorizontal=10;
-                while abs(possibleSolnHorizontal-1)>tol
-                     possibleSolnHorizontal=firingThresh(waterDepth,lambda,...
-                         pAbsorbValue,aValue,bValue,KhValue,LhValue,...
-                         r_hor,A,X,Dt,q,d,k,len,T,M,R);
-
-                     if possibleSolnHorizontal>1
-                         r_hor=r_hor-delta_hor;
-                     else
-                         r_hor=r_hor+delta_hor;
-                     end
-                     clc;
-                     fprintf('pupil iteration: %d %d\n',j,i);
-                     fprintf('solution horizontal: %f\n',possibleSolnHorizontal);
-                     fprintf('r: %f\n',r_hor);
-                     fprintf('error horizontal: %f\n', abs(possibleSolnHorizontal-1));
-                end  
-
-                visualRangeSensitivity(j,i,1)=r_down;
-                visualRangeSensitivity(j,i,2)=r_hor;
+    %% For each water condition and viewing direction calculate visual range based on optical properties
+    DrangeAquatic=linspace(minpupil,maxpupil,30);   
+    visualRangeAquaticSensitivity=zeros(length(DrangeAquatic),length(conditions),length(viewing));
+    rAll=[3,10,5,2.3;1.5,10,3,1.5];
+    for c=1:length(conditions)
+        aValue=a.(conditions{c}); 
+        bValue=b.(conditions{c});
+        pAbsorbValue=pAbsorb.(conditions{c});
+        for v=1:length(viewing)
+            KValue=K.(conditions{c}).(viewing{v});
+            LValue=L.(conditions{c}).(viewing{v});           
+            
+            r=rAll(c,v);            
+            for j=1:length(DrangeAquatic)
+                    D=DrangeAquatic(j);
+                    delta=10^(floor(log10(r))-4);
+                    
+                    P=10;
+                    while abs(P-1)>epsilon
+                        P=firingThresh(waterDepth,lambda,...
+                             pAbsorbValue,aValue,bValue,KValue,LValue,...
+                             r,D,X,Dt,q,d,k,len,T,M,R);
+                         if P>1
+                             r=r-delta;
+                         else
+                             r=r+delta;
+                         end
+                         clc;
+                         fprintf('condition: %s\nviewing: %s\npupil diameter: %f\nrange: %f\nerror: %f\n',...
+                             conditions{c}, viewing{v}, D, r,abs(P-1) );
+                    end
+                    visualRangeAquaticSensitivity(j,c,v)=r;
+            end
         end
     end
 
-    save([BIGEYEROOT 'figExt06_sensitivity/aquatic_model/Aquatic_meteoRangeSensitivity.mat'],'conditions','visualRangeSensitivity','pupilValues','waterDepth');
+save([BIGEYEROOT 'figExt06_sensitivity/aquatic_model/meteoSensitivityAquatic.mat'],'visualRangeAquaticSensitivity','DrangeAquatic');
      
 function  solution=firingThresh(depth,lambda,photoreceptorAbsorption,aAll,bAll,KAll,LAll,r,A,X,Dt,q,d,k,len,T,M,R) 
     L=LAll(:,depth);
@@ -80,41 +61,21 @@ function  solution=firingThresh(depth,lambda,photoreceptorAbsorption,aAll,bAll,K
     K=KAll(:,depth); K=K(ind);
     b=bAll(:); b=b(ind);
     
-%     alphaInterp=@(l) interp1(lambda,photoreceptorAbsorption,l,'pchip');
-%     aInterp=@(l) interp1(lambda,a,l,'pchip');
-%     bInterp=@(l) interp1(lambda,b,l,'pchip');
-%     LInterp=@(l) interp1(lambda,L,l,'pchip');
-%     KInterp=@(l) interp1(lambda,K,l,'pchip');
-    
     Nfalse=((T*M*A)/(2*r*d))^2*X*Dt;
-    Rh=L.*lambda.*(1-exp(-k*photoreceptorAbsorption*len));
-
-    %Ro=L.*lambda.*(1-exp(-k*photoreceptorAbsorption*len)).*(1-exp((K-a-b)*r));
-    %RhFunc=@(l) LInterp(l).*l.*(1-exp(-k*alphaInterp(l)*len));
-    %RoFunc=@(l) LInterp(l).*l.*(1-exp(-k*alphaInterp(l)*len)).*(1-exp((KInterp(l)-aInterp(l)-bInterp(l))*r));  
+    %Supplementary Appendix, pg 3 for explanation.
+    %Supplementary Appendix, Eq 7,8 pg. 5
     
-    %Ispace=integral(RhFunc,lambda1,lambda2);
-    %Iblack=integral(RoFunc,lambda1,lambda2);
-    Ispace=trapz(lambda,Rh);
-%     for i=1:length(K)
-%         dum=1-exp((K(i)-a(i)-b(i))*r);
-%         if Ispace-abs(dum)<0
-%             dum=0;
-%         end
-%         Ro(i)=Ispace*dum;
-%     end
+    Rh=L.*lambda.*(1-exp(-k*photoreceptorAbsorption*len));
     Ro=Rh.*(1-exp((K-a-b)*r));
-    Iblack=trapz(lambda,Ro);
-    if isinf(Iblack)
-        Iblack=0;
+    
+    %Integral
+    Bh=trapz(lambda,Rh);
+    Bo=trapz(lambda,Ro);
+    if isinf(Bo)
+        Bo=0;
     end
     
-    Nh=((pi/4)^2)*(A^2)*((T/r)^2)*q*Dt*Ispace;
-    No=((pi/4)^2)*(A^2)*((T/r)^2)*q*Dt*Iblack;
-
+    Nh=((pi/4)^2)*(A^2)*((T/r)^2)*q*Dt*Bh;
+    No=((pi/4)^2)*(A^2)*((T/r)^2)*q*Dt*Bo;
+    %Supplementary Appendix, Eq. 9 pg. 5
     solution=(R*sqrt(No+Nh+2*Nfalse))/(abs(No-Nh));
-    
-% function c=times(a,b)
-%     b(isinf(b))=0;
-%     a(isinf(a))=0;
-%     c=builtin('times',a,b);
