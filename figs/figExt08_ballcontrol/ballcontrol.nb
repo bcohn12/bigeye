@@ -1,3 +1,8 @@
+(*** Sequential Action Control controller for a bouncing ball at different time horizons T
+*** Title: A massive increase in visual range perceded the origin of terrestrial vertebrates
+*** Authors: Todd D. Murphey, Malcolm A. MacIver
+*** Author's Affilitation: Northwestern University ***)
+
 (* Content-type: application/vnd.wolfram.mathematica *)
 
 (*** Wolfram Notebook File ***)
