@@ -52,7 +52,6 @@ global BIGEYEROOT
                     P=firingThresh(lambda,...
                          pAbsorb,aValue,bValue,KValue,LValue,...
                          r,D,XAquatic,DtAquatic,qAquatic,d,k,len,T,M,R,C0);
-
                      if P>1
                          r=r-delta;
                      else
@@ -62,8 +61,7 @@ global BIGEYEROOT
                      fprintf('pupil diameter: %f\ncontrast: %f\nrange: %f\nerror: %f\n',...
                          D, C0, r,abs(P-1) );
                 end            
-                tempRange=r;
-                
+                tempRange=r;                
 %% Calculate range based on contrast threshold    
                 Cr(i)=C0*exp((KFunc(lambdaMax)-aFunc(lambdaMax)-bFunc(lambdaMax)).*tempRange);
                 angularSize(i)=atan(T/(2*tempRange))*2*10^3;                 
@@ -79,7 +77,6 @@ global BIGEYEROOT
                         angularSize(i)=atan(T/(2*tempRange))*2*10^3;
                         Cr(i)=C0*exp((KFunc(lambda_down)-aFunc(lambda_down)-bFunc(lambda_down)).*tempRange);
                         Kt(i)=liminalContrast(D,BValue,angularSize(i));
-
                         ind=ind+1;      
                         clc;
                         fprintf('pupil diameter: %f\ncontrast: %f\nrange: %f\nerror: %f\n',...
@@ -95,7 +92,6 @@ save([BIGEYEROOT, 'figExt07_contrast/aquatic_model/daylightVisibilityAquaticCont
             
 function  solution=firingThresh(lambda,photoreceptorAbsorption,a,b,K,L,r,D,X,Dt,q,d,k,len,T,M,R,C0)
     lambda1=lambda(1); lambda2=lambda(end);
-
     alphaInterp=@(l) interp1(lambda,photoreceptorAbsorption,l,'pchip');
     aInterp=@(l) interp1(lambda,a,l,'pchip');
     bInterp=@(l) interp1(lambda,b,l,'pchip');
