@@ -1,7 +1,13 @@
 rm(list=ls())
 
 ########
-#bigEye#
+## An example of a fully resolved tree, time-calibrated, including the stratigraphic ranges, all plotted against the geologic time scale
+##
+## Title: A massive increase in visual range preceded the origin of terrestrial vertebrates
+## Author: Lars Schmitz 
+## Affiliation: Claremont McKenna, Pitzer, and Scripps Colleges
+## DOI for code: 10.5281/zenodo.239228, CC by 
+## January 2017
 ########
 
 #plot for SI: one example of a fully resolved tree, time-calibrated, including the stratigraphic ranges, all plotted against the geologic time scale

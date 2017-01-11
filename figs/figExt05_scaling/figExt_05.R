@@ -1,7 +1,12 @@
 rm(list=ls())
 
 ########
-#bigEye#
+## slope estimates and the associated standard error over all 1000 trees; OU, BM
+## Title: A massive increase in visual range preceded the origin of terrestrial vertebrates
+## Author: Lars Schmitz 
+## Affiliation: Claremont McKenna, Pitzer, and Scripps Colleges
+## DOI for code: 10.5281/zenodo.239228, CC by 
+## January 2017
 ########
 
 #investigating whether size correction is necessary (see more detailed explanation lines 29ff.)

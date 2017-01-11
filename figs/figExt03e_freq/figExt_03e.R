@@ -1,9 +1,13 @@
 rm(list=ls())
 
 ########
-#bigEye#
+## Posterior probabilities of shifts
+## Title: A massive increase in visual range preceded the origin of terrestrial vertebrates
+## Author: Lars Schmitz 
+## Affiliation: Claremont McKenna, Pitzer, and Scripps Colleges
+## DOI for code: 10.5281/zenodo.239228, CC by 
+## January 2017
 ########
-
 #summarizing information from the posterior probabilities for shifts along branches (bayOU results)
 
 #required files:

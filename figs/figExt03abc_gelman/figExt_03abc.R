@@ -1,5 +1,15 @@
 rm(list=ls())
 
+########
+## Gelman’s R plots for log likelihood, alpha , and variance estimates from one example tree in our sample
+## Title: A massive increase in visual range preceded the origin of terrestrial vertebrates
+## Author: Lars Schmitz 
+## Affiliation: Claremont McKenna, Pitzer, and Scripps Colleges
+## DOI for code: 10.5281/zenodo.239228, CC by 
+## January 2017
+########
+
+
 #calling libraries
 require(ape)
 require(phytools)

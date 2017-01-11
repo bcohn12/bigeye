@@ -1,7 +1,12 @@
 rm(list=ls())
 
 ########
-#bigEye#
+## Corresponding adaptive peaks in relative eye sizes
+## Title: A massive increase in visual range preceded the origin of terrestrial vertebrates
+## Author: Lars Schmitz 
+## Affiliation: Claremont McKenna, Pitzer, and Scripps Colleges
+## DOI for code: 10.5281/zenodo.239228, CC by 
+## January 2017
 ########
 
 #summarizing information from the magnitude of theta2 along branches (bayOU results)
