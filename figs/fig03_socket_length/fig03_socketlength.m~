@@ -1,6 +1,5 @@
 function fig03_socket_length()
 global BIGEYEROOT
-close all
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Statistical summary of raw socket length data based on grouping
@@ -79,11 +78,10 @@ fig_props.noYsubplots = 1;
 fig_props.noXsubplots = 2;
 
 fig_props.figW = 18;   % cm
-fig_props.figH = 11;  % cm
+fig_props.figH = 9;  % cm
 
 fig_props.ml = 0.8;
 fig_props.mt = 0.8;
-fig_props.bottom_margin=2.5;
 
 circleSize=5;
 create_BE_figure
@@ -197,7 +195,7 @@ text((1)+horiz_line_len+0.01, meanOrb, [num2str(meanOrb,2) ' mm'])
 
 set(gca,'ylim',[0 70])
 set(gca,'xlim',[0 1.25])
-set(gca,'xtick', [1/4 1/2 3/4 1],'xticklabel',{'Finned','Finned-Transitional','Digited','Digited-Aquatic'})
+set(gca,'xtick', [1/4 1/2 3/4 1],'xticklabel',{'Finned','Finned-\nTransitional','Digited','Digited-\nAquatic'})
 set(gca,'XTickLabelRotation',-45');
 ylabel('eye socket length (mm)')
 
@@ -270,7 +268,7 @@ text((1)+horiz_line_len+0.01, rootReturn, [num2str(rootReturn,2)])
 set(gca,'ylim',[-0.3 0.5])
 set(gca,'xlim',[0 1.25])
 ylabel('Residuals')
-set(gca,'xtick', [1/4 1/2 3/4 1],'xticklabel',{'Finned','Finned-Transitional','Digited','Digited-Aquatic'})
+set(gca,'xtick', [1/4 1/2 3/4 1],'xticklabel',{'Finned','Finned-\nTransitional','Digited','Digited-\nAquatic'})
 set(gca,'XTickLabelRotation',-45);
 
 filename=[BIGEYEROOT 'fig03_socket_length/orbitData.pdf'];

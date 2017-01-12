@@ -5,6 +5,8 @@ function [MYr,varargout] = era2MYr(stage)
 %% Title                : A massive increase in visual range preceded the origin of terrestrial vertebrates
 %% Authors              : Chen Chen, Malcolm A. MacIver
 %% Authors' Affiliation : Northwestern University
+%% DOI for code: 10.5281/zenodo.239228, CC by 
+%% January 2017
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% INPUT:
 %%    stage - Input Stage, string, e.g. 'FAM(u)'
