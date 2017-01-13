@@ -1,3 +1,13 @@
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Custom subplot parameter settings
+%%
+%% Title                : A massive increase in visual range preceded the origin of terrestrial vertebrates
+%% Authors              : Ugurcan Mugan, Malcolm A. MacIver
+%% Authors' Affiliation : Northwestern University
+%% DOI for code: 10.5281/zenodo.239228, CC by 
+%% January 2017
+%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 if ~isfield(fig_props,'left_margin')
     fig_props.left_margin = 1.2;         %Left margin
 end
