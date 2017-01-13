@@ -112,3 +112,5 @@ Rscript rollbackinstaller.R -cwd
 
 Windows users may have to install Rtools first (there will be a
 prompt), which requires a subsequent restart.
+
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">A massive increase in visual range preceded the origin of terrestrial vertebrates </span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Malcolm A. MacIver, Lars Schmitz, Ugurcan Mugan, Todd D. Murphey, Curtis D. Mobley</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
