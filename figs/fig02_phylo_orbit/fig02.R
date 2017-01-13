@@ -6,7 +6,9 @@ rm(list=ls())
 ## Title: A massive increase in visual range preceded the origin of terrestrial vertebrates
 ## Author: Lars Schmitz 
 ## Affiliation: Claremont McKenna, Pitzer, and Scripps Colleges
-## DOI for code: 10.5281/zenodo.239228, CC by 
+## DOI for code: 10.5281/zenodo.239228
+## This work is licensed under the Creative Commons Attribution 4.0 International License.
+## To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.
 ## January 2017
 ########
 
