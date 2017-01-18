@@ -112,4 +112,4 @@ filepath=[BIGEYEROOT, '/data/vision/imagecontrast/'];
         close all;
     end
 
-save([BIGEYEROOT 'figExt07_contrast/image_contrast/imageContrastValues'],'bugContrast','fishContrast','baseFileNames');
+save([BIGEYEROOT 'figExt07_contrast/image_contrast/imageContrastValues'],'bugContrast','fishContrast','fileNames');
