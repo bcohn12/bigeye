@@ -7,7 +7,8 @@ function ParametersSensitivity
 %% Authors' Affiliation : Northwestern University
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 global BIGEYEROOT
-    close all;
+parametersPath=[BIGEYEROOT 'data/vision/'];
+close all;
 
     q=0.36; %units: n/a, detection efficien
     eta=0.5; %Walzl et al 2007
