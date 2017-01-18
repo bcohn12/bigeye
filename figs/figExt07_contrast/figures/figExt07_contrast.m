@@ -196,7 +196,7 @@ global BIGEYEROOT
         'BackgroundColor',[1 1 1]);
     axis square
     
-filename=[BIGEYEROOT 'figExt07_contrast/figures/core_figures/contrast_sensitivity.pdf'];
+filename=[BIGEYEROOT 'figExt07_contrast/figures/contrast_sensitivity.pdf'];
 print(filename,'-painters','-dpdf','-r600');
 function [e,em]=fileExists
     e1={exist('daylightVisibilityAerialContrast.mat','file')==2,'Aerial_contrastRangeRelation.m'};

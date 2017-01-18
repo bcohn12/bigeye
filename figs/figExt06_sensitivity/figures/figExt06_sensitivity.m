@@ -121,7 +121,7 @@ set(hLegend,'box','off'); set(hLegend,'interpreter','tex');
 set(hLegend,'fontsize',11,'fontname','helvetica'); set(hLegend,'orientation','horizontal')
 rect=[0.375 0 0.25 0.1]; set(hLegend,'Position',rect)
 
-filename=[BIGEYEROOT 'figExt06_sensitivity/figures/core_figures/water_sensitivity.pdf'];
+filename=[BIGEYEROOT 'figExt06_sensitivity/figures/water_sensitivity.pdf'];
 print(filename,'-painters','-dpdf','-r600');
     
 function [e,em]=fileExists
