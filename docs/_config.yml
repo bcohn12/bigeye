@@ -1,0 +1,28 @@
+# Dependencies
+markdown:            kramdown
+highlighter:         rouge
+
+# Permalinks
+#
+# Use of `relative_permalinks` ensures post links from the index work properly.
+permalink:           /:title
+
+# Setup
+title:               A massive increase in visual range preceded the origin of terrestrial vertebrates
+tagline:             'Repository for the computational visual ecology model, phylogenetic comparative framework '
+description:         'Authors: Malcolm A. MacIver, Lars Schmitz, Ugurcan Mugan, Todd D. Murphey, Curtis D. Mobley'
+baseurl:             /
+paginate:            5
+rss:                 atom.xml
+
+# About/contact
+author:
+  name:             Ugurcan Mugan, Malcolm A. MacIver
+  github:           maciverlab
+  email:            umugan@u.northwestern.edu
+
+# Custom vars
+version:             0.0.1
+
+github:
+  repo:           https://github.com/maciverlab/bigeye
