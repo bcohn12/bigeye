@@ -78,10 +78,10 @@ disp(['; the 3rd quartile is ' num2str(prctile(x,75))])
 %
 
 fig_props.noYsubplots = 1;
-fig_props.noXsubplots = 2;
+fig_props.noXsubplots = 1;
 
-fig_props.figW = 18;   % cm
-fig_props.figH = 11;  % cm
+fig_props.figW = 9;   % cm
+fig_props.figH = 10;  % cm
 
 fig_props.ml = 0.8;
 fig_props.mt = 0.8;
@@ -203,11 +203,6 @@ set(gca,'xtick', [1/4 1/2 3/4 1],'xticklabel',{'Finned','Finned-Transitional','D
 set(gca,'XTickLabelRotation',-45');
 ylabel('eye socket length (mm)')
 
-
-plotnoX = 2;
-plotnoY = 1;
-ha4 = create_BE_axes(plotnoX,plotnoY,fig_props);
-
 [~,~,rawResGroups]=xlsread('BMresgroups.xlsx');
 rawResGroups=rawResGroups(2:end,:);
 
@@ -225,55 +220,17 @@ returnResVals=cell2mat(rawResGroups(indReturn,2));
     
 relsizeTF= 100.*(noElpistoOrb./noElpistoSkl);
 
-line(repmat(1/4,length(relsizeTF),1), ...
-    finnedResVals, ...
-    'linestyle','none', ...
-    'marker','o','markersize',circleSize,'markeredgecolor','black','markerfacecolor',[1 0 0])
-
-% special marker for screbinodus
+%only elpisto
 rootFinned=0.02058466;
-line([(1/4)-horiz_line_len (1/4)+horiz_line_len],[rootFinned, rootFinned],'color',[1 0 0], 'linewidth',1.5)
 
-text((1/4)+horiz_line_len+0.01, rootFinned , [num2str(rootFinned,2)])
-
-hold on
-
-% only elpistos
-line(repmat(1/2,length(onlyElpistoOrb)),transitionalResVals, ...
-    'linestyle','none', ...
-    'marker','o','markersize',circleSize,'markeredgecolor','black','markerfacecolor',[1 0 0])
-
-% plot special color for the specimen used in legend
+%only transitional
 rootTransitional=0.1725637;
-line([(1/2)-horiz_line_len (1/2)+horiz_line_len],[rootTransitional, rootTransitional],'color',[1 0 0],'linewidth',1.5)
-text((1/2)+horiz_line_len+0.01, rootTransitional, [num2str(rootTransitional,2)])
 
 % digited tetrapods minus adelospondyl-colosteid clade
-
-line(repmat(3/4,length(noSecAqOrb),1),digitedResVals, ...
-    'linestyle','none', ...
-    'marker','o','markersize',circleSize,'markeredgecolor','black','markerfacecolor',[0 0 1])
 rootDigited=0.2038828;
-line([(3/4)-horiz_line_len (3/4)+horiz_line_len],[rootDigited rootDigited],'color',[0 0 1],'linewidth',1.5)
-text((3/4)+horiz_line_len+0.01, rootDigited, [num2str(rootDigited,2)])
 
-%plot only sec aq
-line(repmat(1,length(SecAqOrb),1),returnResVals, ...
-    'linestyle','none', ...
-    'marker','o','markersize',circleSize,'markeredgecolor','black','markerfacecolor', ...
-    [0 0 1],'linewidth',1.5)
-
-%special marker for sample
+% only sec aq
 rootReturn=0.04520924;
-line([(1)-horiz_line_len (1)+horiz_line_len],[rootReturn rootReturn],'color',[0 0 1],'linewidth',1.5)
-text((1)+horiz_line_len+0.01, rootReturn, [num2str(rootReturn,2)])
-
-
-set(gca,'ylim',[-0.3 0.5])
-set(gca,'xlim',[0 1.25])
-ylabel('Residuals')
-set(gca,'xtick', [1/4 1/2 3/4 1],'xticklabel',{'Finned','Finned-Transitional','Digited','Digited-Aquatic'})
-set(gca,'XTickLabelRotation',-45);
 
 filename=[BIGEYEROOT 'fig03_socket_length/orbitData.pdf'];
 print(filename,'-painters','-dpdf','-r600');
