@@ -1,15 +1,19 @@
 rm(list=ls())
 
 ########
-## Summary of our phylogenetic comparative study 
+## Summary of our phylogenetic comparative study
 ##
 ## Title: A massive increase in visual range preceded the origin of terrestrial vertebrates
-## Author: Lars Schmitz 
+## Author: Lars Schmitz
 ## Affiliation: Claremont McKenna, Pitzer, and Scripps Colleges
 ## DOI for code: 10.5281/zenodo.239228
 ## This work is licensed under the Creative Commons Attribution 4.0 International License.
 ## To view a copy of this license, visit http://creativecommons.org/licenses/by/4.0/.
 ## January 2017
+########
+
+########
+#bigEye#
 ########
 
 #call libraries
@@ -87,7 +91,7 @@ legend(1,60, # places a legend at the appropriate place
        title="optimal eye size compared to root" ) 
 
 #rect(2, 38, 26, 42, border="black")
-text(1, 51, label="relative eye size", pos=4)
+text(1, 51, label="residual eye socket size", pos=4)
 points(6, 50, pch=21, col="black", bg="dark grey", cex=min(circle.size))
 points(6, 49, pch=21, col="black", bg="dark grey", cex=max(circle.size))
 text(9.5, 49.75, label="min", pos=4)
