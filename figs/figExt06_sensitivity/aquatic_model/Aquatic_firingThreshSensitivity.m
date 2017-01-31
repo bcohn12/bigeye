@@ -29,13 +29,14 @@ global BIGEYEROOT
         bValue=b.(conditions{c});
         pAbsorbValue=pAbsorb.(conditions{c});
         for v=1:length(viewing)
+            fprintf('condition: %s\nviewing: %s\n',conditions{c}, viewing{v});
             KValue=K.(conditions{c}).(viewing{v});
             LValue=L.(conditions{c}).(viewing{v});           
             
-            r=rAll(c,v);            
+            r=rAll(v,c);            
             for j=1:length(DrangeAquatic)
                     D=DrangeAquatic(j);
-                    delta=10^(floor(log10(r))-4);
+                    delta=10^(floor(log10(r))-5);
                     
                     P=10;
                     while abs(P-1)>epsilon
@@ -47,9 +48,9 @@ global BIGEYEROOT
                          else
                              r=r+delta;
                          end
-                         clc;
-                         fprintf('condition: %s\nviewing: %s\npupil diameter: %f\nrange: %f\nerror: %f\n',...
-                             conditions{c}, viewing{v}, D, r,abs(P-1) );
+                         %clc;
+                         %fprintf('condition: %s\nviewing: %s\npupil diameter: %f\nrange: %f\nerror: %f\n',...
+                         %    conditions{c}, viewing{v}, D, r,abs(P-1) );
                     end
                     visualRangeAquaticSensitivity(j,c,v)=r;
             end
