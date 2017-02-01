@@ -128,7 +128,7 @@ global BIGEYEROOT
                     %while apparent contrast is below liminal contrast the object
                     %is invisible, decrease range until apparent contrast is
                     %greater than the liminal contrast
-                    while (10^(Kt(i))-abs(Cr(i))>5e-4)
+%                     while (10^(Kt(i))-abs(Cr(i))>1e-4)
                         tempRange=tempVisualRange(j); %decrease visual range
                         %Recalculate angular size, contrast threshold and apparent
                         %contrast based on the decreased range
