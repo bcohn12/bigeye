@@ -113,7 +113,7 @@ Rscript rollbackinstaller.R -cwd
 Windows users may have to install Rtools first (there will be a
 prompt), which requires a subsequent restart.
 
-6) Before running the Matlab code run the [startup](https://github.com/maciverlab/bigeye/blob/master/bigeye_startup.m) code to link all files and folders. 
+6) Before running the Matlab code run the startup code [bigeye_startup](https://github.com/maciverlab/bigeye/blob/master/bigeye_startup.m), to link all files and folders. 
 
 
 7) For a complete overview and instructions for script execution for both R and Matlab, please visit the project site [https://maciverlab.github.io/projects/bigeye/bigeye-explanation.html](https://maciverlab.github.io/projects/bigeye/bigeye-explanation.html) 
